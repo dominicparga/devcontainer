@@ -1,0 +1,168 @@
+dotfiles() {
+    ############################################################################
+    # description of cmdline parser
+
+local _usage="
+USAGE
+    ${0} [h help] [COMMAND]
+
+DESCRIPTION
+       Wrapper for quick interaction with and quick access to the dotfiles.
+
+       Each OPTION stands for one script execution.
+       The first executed script gets all left arguments.
+       Hence every option can be called separatedly using the -h flag.
+
+       h help [COMMAND]
+              Print this help message without any further script execution.
+              Calls '-h' for COMMAND.
+
+       gi gitignore
+              Recreates the .gitignore-file using the custom creation script.
+              Takes no args.
+
+       c custom
+              Creates the custom folder and uses drafts for non-existing files.
+              See '${0} custom -h' for more info.
+
+       s symlinks
+              Sets the symlinks to these dotfiles.
+              See '${0} symlinks -h' for more info.
+
+       install-system
+              Installs the system.
+              See '${0} install-system -h' for more info.
+"
+
+    ############################################################################
+    # some extra functions and local variables
+
+    # executes subcommands' help or prints dotfiles' usage and returns
+    __help() {
+        # if help for dotfiles itself
+        if [[ "${#}" -eq 0 ]]; then
+            echo "${_usage}"
+            return 0
+        # if help for a subfunction
+        else
+            case "${1}" in
+            h|help)
+                echo "${_usage}"
+                return 0
+                ;;
+            gi|gitignore)
+                echo "${_usage}"
+                return 0
+                ;;
+            c|custom)
+                sh "${DOTFILES}/utils/create_custom.sh" -h
+                return "${?}"
+                ;;
+            s|symlinks)
+                sh "${DOTFILES}/utils/integrate_dotfiles.sh" -h
+                return "${?}"
+                ;;
+            install-system)
+                sh "${DOTFILES}/utils/install_system.sh" -h
+                return 0
+                ;;
+            *)
+                echo "Error: unknown dotfiles command ${1}" >&2
+                echo
+                return 1
+                ;;
+            esac
+        fi
+    }
+
+    # parses -* and --* until different argument comes
+    __parse_subargs() {
+        while [[ "${#}" -gt 0 ]]; do
+            case "${1}" in
+            -*|--*)
+                _subargs+=("${1}")
+                shift
+                ;;
+            *)
+                return 0
+                ;;
+            esac
+        done
+    }
+
+    ############################################################################
+    # no args -> print usage and exit
+
+    if [[ "${#}" -eq 0 ]]; then
+        __help
+        return "${?}"
+    fi
+
+    ############################################################################
+    # cmdline parser
+    # contains option parsing and help-message
+
+    while [[ "${#}" -gt 0 ]]; do
+        case "${1}" in
+        h|help)
+            shift
+            __help "${@}"
+            return "${?}"
+            ;;
+        gi|gitignore)
+            shift
+            # execute
+            sh "${DOTFILES}/custom/create_gitignore.sh"\
+              > "${DOTFILES}/.gitignore"
+            echo "New .gitignore created."
+            return "${?}"
+            ;;
+        c|custom)
+            shift
+            sh "${DOTFILES}/utils/create_custom.sh"
+            return "${?}"
+            ;;
+        s|symlinks)
+            shift
+
+            # parse subargs
+            local _subargs=()
+            __parse_subargs "${@}"
+            # execute
+            sh "${DOTFILES}/utils/integrate_dotfiles.sh" "${_subargs[@]}"
+            return "${?}"
+
+            ;;
+        install-system)
+            shift
+
+            # parse subargs
+            local _subargs=()
+            __parse_subargs "${@}"
+            # execute
+            sh "${DOTFILES}/utils/install_system.sh" "${_subargs[@]}"
+            return "${?}"
+
+            ;;
+        -*|--*)
+            echo "Error: unknown option ${1}" >&2
+            echo
+            _errcode=1
+            ;;
+        *)
+            echo "Error: unknown dotfiles command ${1}" >&2
+            echo
+            _errcode=1
+            ;;
+        esac
+
+        if [[ ! -z "${_errcode}" ]]; then
+            echo "${_usage}"
+            return ${_errcode}
+        fi
+    done
+}
+
+if [[ -n "${ZSH_NAME}" ]]; then
+    dotfiles "${@}"
+fi
