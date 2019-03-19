@@ -1,0 +1,19 @@
+is_machine() {
+    case "${1}" in
+    macOS|macos|mac)
+        [[ "$(uname -s)" = "Darwin"* ]]
+        ;;
+    linux|ubuntu|Linux|Ubuntu)
+        [[ "$(uname -s)" = "Linux"* ]]
+        ;;
+    *)
+        echo "unknown machine: ${1}"
+        echo "current machine: $(uname -s)"
+        false
+        ;;
+    esac
+}
+
+if [[ -n "${ZSH_NAME}" ]]; then
+    is_machine "${@}"
+fi
