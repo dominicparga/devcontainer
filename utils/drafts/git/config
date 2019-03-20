@@ -1,0 +1,7 @@
+[user]
+    name = undefined user
+    email = undefined email
+[diff]
+    tool = visual
+[difftool "visual"]
+    cmd = ${VISUAL} --wait --diff $LOCAL $REMOTE

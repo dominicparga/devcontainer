@@ -1,0 +1,185 @@
+{
+    ////////////////////////////////////////////////////////////////////////////
+    // window settings
+    "window.title": "${activeEditorMedium}${separator}${rootName}",
+    "window.titleBarStyle": "custom",
+    "window.zoomLevel": 0,
+    "workbench.editor.showTabs": true,
+    "workbench.sideBar.location": "left",
+    "workbench.statusBar.visible": true,
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.colorTheme": "Dracula",
+    // settings ui
+    "workbench.settings.editor": "json",
+    "workbench.settings.useSplitJSON": true,
+    "workbench.settings.openDefaultSettings": false,
+    ////////////////////////////////////////////////////////////////////////////
+    // editor settings
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true
+    },
+    "explorer.confirmDragAndDrop": false,
+    "extensions.ignoreRecommendations": false,
+    "editor.cursorSmoothCaretAnimation": true,
+    "editor.lineNumbers": "on",
+    "editor.rulers": [
+        80,
+        100,
+        120
+    ],
+    "editor.cursorStyle": "line",
+    "editor.renderLineHighlight": "none",
+    "editor.formatOnSave": false,
+    // whitespaces
+    "editor.renderWhitespace": "none",
+    // tabs
+    "editor.insertSpaces": true,
+    "editor.tabSize": 4,
+    "editor.detectIndentation": false,
+    // line wrapping
+    "editor.wordWrap": "off",
+    // minimap
+    "editor.minimap.enabled": true,
+    "editor.minimap.maxColumn": 120,
+    // utility
+    "files.autoSave": "onFocusChange",
+    "files.autoSaveDelay": 1000,
+    "editor.suggestSelection": "recentlyUsed",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    // text settings
+    "editor.fontSize": 15,
+    "editor.fontFamily": "Menlo, Monaco, 'Courier New', monospace",
+    ////////////////////////////////////////////////////////////////////////////
+    // brackets
+    "editor.matchBrackets": false,
+    "bracket-pair-colorizer-2.forceUniqueOpeningColor": false,
+    "bracket-pair-colorizer-2.forceIterationColorCycle": false,
+    "bracket-pair-colorizer-2.colorMode": "Consecutive",
+    "bracket-pair-colorizer-2.highlightActiveScope": true,
+    "bracket-pair-colorizer-2.activeScopeCSS": [
+        "borderStyle : solid",
+        "borderWidth : 1px",
+        "borderColor : {color}",
+        "opacity     : 1.00",
+    ],
+    "bracket-pair-colorizer-2.showBracketsInGutter": true,
+    "bracket-pair-colorizer-2.showBracketsInRuler": false,
+    "bracket-pair-colorizer-2.showVerticalScopeLine": false,
+    "bracket-pair-colorizer-2.showHorizontalScopeLine": false,
+    ////////////////////////////////////////////////////////////////////////////
+    // privacy
+    "telemetry.enableTelemetry": false,
+    "telemetry.enableCrashReporter": true,
+    ////////////////////////////////////////////////////////////////////////////
+    // vim
+    "vim.leader": ",",
+    "vim.hlsearch": true,
+    "vim.useSystemClipboard": true,
+    "vim.enableNeovim": false,
+    "vim.scroll": 20,
+    // moving cursor over folded text without entering it
+    "vim.foldfix": true,
+    ////////////////////////////////////////////////////////////////////////////
+    // specific stuff
+    // git
+    "[git-commit]": {
+        "editor.rulers": [ 50, 72 ],
+    },
+    // shellscript
+    "[shellscript]": {
+        "editor.rulers": [ 80 ],
+    },
+    // python
+    "[python]": {
+        "editor.rulers": [ 72, 79 ],
+    },
+    "python.pythonPath": "${env:PYTHON_INTERPRETER_PATH}",
+    "python.autoComplete.addBrackets": true,
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.linting.pylintArgs": [
+        "--max-line-length=79"
+    ],
+    "python.jediEnabled": false,
+    // cpp
+    "[cpp]": {
+        "editor.rulers": [ 100 ],
+    },
+    // java
+    "[java]": {
+        "editor.rulers": [ 100 ],
+    },
+    "java.configuration.checkProjectSettingsExclusions": false,
+    // html
+    "[html]": {
+        "editor.rulers": [ 80 ],
+        "editor.tabSize": 2,
+    },
+    // css
+    "[css]": {
+        "editor.rulers": [ 80 ],
+        "editor.tabSize": 2,
+    },
+    // typescript
+    "[typescript]": {
+        "editor.rulers": [ 80 ],
+        "editor.tabSize": 2,
+    },
+    "[typescriptreact]": {
+        "editor.rulers": [ 80 ],
+        "editor.tabSize": 2,
+    },
+    ////////////////////////////////////////////////////////////////////////////
+    // kutgw
+    // cquery
+    "cquery.launch.command": "cquery",
+    // filetype stuff
+    "files.associations": {
+        "SConscript": "python",
+        "SConstruct": "python",
+        // "*.thor": "ruby",
+        // "*.jsx": "javascript",
+    },
+    // LaTeX
+    "latex-workshop.view.pdf.viewer": "tab",
+    // TODOs
+    "todohighlight.defaultStyle": {
+        "color": "#5E71A4",
+        "backgroundColor": "#282A36",
+        "overviewRulerColor": "#000000",
+        "border": "1px solid #5E71A4",
+        "borderRadius": "2px",
+        "isWholeLine": false,
+    },
+    "todohighlight.keywords": [
+        {
+            "text": "TODO:",
+            "color": "#5E71A4",
+            "backgroundColor": "#282A36",
+            "overviewRulerColor": "#000000",
+            "border": "1px solid #5E71A4",
+            "borderRadius": "2px",
+            "isWholeLine": false,
+        },
+        {
+            "text": "FIXME:",
+            "color": "#5E71A4",
+            "backgroundColor": "#282A36",
+            "overviewRulerColor": "#000000",
+            "border": "1px solid #5E71A4",
+            "borderRadius": "2px",
+            "isWholeLine": false,
+        },
+        "HINT:",
+        "INFO:",
+        "WARN:",
+        "ERROR:",
+        "ERR:",
+    ],
+    ////////////////////////////////////////////////////////////////////////////
+    // occasionally added stuff
+}
