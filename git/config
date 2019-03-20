@@ -1,0 +1,58 @@
+[push]
+    default = simple
+[core]
+    autocrlf = input
+    safecrlf = true
+[remote "origin"]
+    prune = true
+[alias]
+    # general
+    s = "status"
+    h = "help"
+
+    # efficient staging
+    unstage = "reset HEAD --"
+    save    = !"git add -A && git commit -m 'SAVEPOINT'"
+    wip     = !"git add -A && git commit -m 'WIP'"
+    undo    = "reset HEAD~1 --mixed"
+
+    # commit
+    a   = "add"
+    aa  = !"git add -A && git status"
+    c   = "commit"
+    ca  = !"git add -A && git status && git commit"
+    cm  = "commit -m"
+    cam = !"git add -A && git status && git commit -m"
+
+    # merging
+    m       = "merge"
+    squash  = "merge --squash"
+    squeeze = "merge --squash"
+
+    # branching
+    co      = "checkout"
+    cob     = "checkout -b"
+    discard = "checkout --"
+    # list branches sorted by last modified
+    b  = "branch"
+    ba  = "branch -a"
+    bv = !"git for-each-ref --sort='-authordate' --format='%(authordate)%09%(objectname:short)%09%(refname)' refs/heads | sed -e 's-refs/heads/--'"
+
+    # show last n commits where n is given as parameter (default is 3)
+    last = !"last() { git log -${1:-3} HEAD; }; last"
+
+    # local and global network history
+    hist  = !"git ggraph"
+    graph  = !"git ggraph"
+    lgraph = !"git localgraph1"
+    ggraph = !"git globalgraph1"
+
+    globalgraph1 = !"git localgraph1 --all"
+    globalgraph2 = !"git localgraph2 --all"
+    globalgraph3 = !"git localgraph3 --all"
+
+    localgraph1 = "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)'"
+    localgraph2 = "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'"
+    localgraph3 = "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset) %C(bold cyan)(committed: %cD)%C(reset) %C(auto)%d%C(reset)%n''          %C(white)%s%C(reset)%n''          %C(dim white)- %an <%ae> %C(reset) %C(dim white)(committer: %cn <%ce>)%C(reset)'"
+[include]
+    path = "~/.gitconfig.custom"
