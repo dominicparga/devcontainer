@@ -13,6 +13,15 @@ export EDITOR='vi'
 export VISUAL='code'
 
 ################################################################################
+# git
+
+if [[ "$(which ${VISUAL})" != "${VISUAL} not found" ]]; then
+    export GIT_EDITOR="${VISUAL} --wait"
+else
+    export GIT_EDITOR="${EDITOR}"
+fi
+
+################################################################################
 # python
 
 if ( is_machine 'macOS' ); then
