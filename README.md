@@ -162,7 +162,8 @@ Executing `dotfiles help` may help.
 
 ### shell scripting
 
-- bash autocompletion for bash on macOS (since macOS has bash 3.2 ._.)
+- dotfiles: add function for quickly editing shellrc (other files?)
+- macOS: bash autocompletion (since macOS has bash 3.2 ._.)
 - add shebangs to executable files
 - macOS: install Nord and Dracula
 - ubuntu: install Dracula
