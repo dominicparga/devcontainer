@@ -59,7 +59,6 @@ elif [[ -n "${BASH}" ]]; then
 
     _dirs=( "${_shell_lib}" "${_custom_shell_lib}" )
     for _dir in "${_dirs[@]}"; do
-        echo "${_dir}"
         if [[ -d "${_dir}/func" ]]; then
             # is folder empty?
             if [[ -n "$(ls -A "${_dir}/func")" ]]; then

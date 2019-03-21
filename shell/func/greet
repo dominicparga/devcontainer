@@ -1,0 +1,14 @@
+greet() {
+    local _used_shell="unknown"
+    if [[ -n "${ZSH_NAME}" ]]; then _used_shell="zsh"; fi
+    if [[ -n "${BASH}" ]];     then _used_shell="bash"; fi
+
+    echo ""
+    echo "Hello ${USER}."
+    echo "I'm a ${_used_shell} window at your service."
+    echo ""
+}
+
+if [[ -n "${ZSH_NAME}" ]]; then
+    greet
+fi
