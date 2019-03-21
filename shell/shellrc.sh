@@ -204,13 +204,6 @@ fi
 . "${_shell_lib}/prompts/right/git_info.sh"
 
 ################################################################################
-# customize shell
-
-if [[ -f "${_custom_shell_lib}/extend_shellrc.sh" ]]; then
-    . "${_custom_shell_lib}/extend_shellrc.sh"
-fi
-
-################################################################################
 # cleanup
 
 #unset DOTFILES

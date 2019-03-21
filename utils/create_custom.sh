@@ -47,6 +47,7 @@ _dirs=(
     "custom"
     "git"
     "shell"
+    "shell/func"
     "shell/ssh"
     "vscode"
 )

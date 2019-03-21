@@ -42,9 +42,14 @@
     last = !"last() { git log -${1:-3} HEAD; }; last"
 
     # local and global network history
-    hist  = !"git ggraph"
-    graph  = !"git ggraph"
-    lgraph = !"git localgraph1"
+    localhist  = !"git localgraph1"
+    lhist      = !"git localgraph1"
+    localgraph = !"git localgraph1"
+    lgraph     = !"git localgraph1"
+
+    hist   = !"git globalgraph1"
+    ghist  = !"git globalgraph1"
+    graph  = !"git globalgraph1"
     ggraph = !"git globalgraph1"
 
     globalgraph1 = !"git localgraph1 --all"
