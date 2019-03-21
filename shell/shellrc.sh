@@ -41,7 +41,7 @@ if [[ -n "${ZSH_NAME}" ]]; then
     ############################################################################
     # brew autocompletion
 
-    if [[ "$(which brew)" != 'brew not found' ]]; then
+    if ( which brew 1>/dev/null 2>/dev/null ); then
         # ATTENTION! has to be before 'autoload -Uz compinit'
         FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
     fi
@@ -72,7 +72,7 @@ elif [[ -n "${BASH}" ]]; then
     ############################################################################
     # brew autocompletion
 
-    if [[ "$(which brew)" != 'brew not found' ]]; then
+    if ( which brew 1>/dev/null 2>/dev/null ); then
         for _file in "$(brew --prefix)/etc/bash_completion.d/"*; do
             [[ -f "${_file}" ]] && . "${_file}"
         done
@@ -130,7 +130,7 @@ export EDITOR='vi'
 export VISUAL='code'
 
 # git
-if [[ "$(which ${VISUAL})" != "${VISUAL} not found" ]]; then
+if ( which "${VISUAL}" 1>/dev/null 2>/dev/null); then
     export GIT_EDITOR="${VISUAL} --wait"
 else
     export GIT_EDITOR="${EDITOR}"
