@@ -52,6 +52,13 @@ if [[ -n "${ZSH_NAME}" ]]; then
     autoload -Uz compinit && compinit
     autoload colors && colors
 
+    ############################################################################
+    # kubectl autocompletion
+
+    if ( which kubectl 1>/dev/null 2>/dev/null ); then
+        . <(kubectl completion zsh)
+    fi
+
 elif [[ -n "${BASH}" ]]; then
     ############################################################################
     # own functions
@@ -92,6 +99,13 @@ elif [[ -n "${BASH}" ]]; then
         elif [ -f '/etc/bash_completion' ]; then
             . '/etc/bash_completion'
         fi
+    fi
+
+    ############################################################################
+    # kubectl autocompletion
+
+    if ( which kubectl 1>/dev/null 2>/dev/null ); then
+        . <(kubectl completion bash)
     fi
 fi
 
