@@ -13,6 +13,16 @@ DESCRIPTION
 "
 
 ################################################################################
+# check prerequisites
+
+if [[ -z "${DOTFILES}"  || ! -d "${DOTFILES}" ]]; then
+    echo "Error: \$DOTFILES is set incorrectly." >&2
+    echo
+    echo "${_usage}"
+    exit 1
+fi
+
+################################################################################
 # cmdline parser
 # contains option parsing and help-message
 
@@ -94,4 +104,16 @@ done
 
 if [[ "${_sth_printed}" -eq 0 ]]; then
     echo
+fi
+
+################################################################################
+# create custom shellrc
+
+_file="${DOTFILES}/custom/shell/shellrc.sh"
+if [[ ! -f "${_file}" ]]; then
+    echo "export DOTFILES=\"${DOTFILES}\""  >  "${_file}"
+    echo ''                                 >> "${_file}"
+    echo '. "${DOTFILES}/shell/shellrc.sh"' >> "${_file}"
+    echo ''                                 >> "${_file}"
+    echo 'greet' >> "${_file}"
 fi

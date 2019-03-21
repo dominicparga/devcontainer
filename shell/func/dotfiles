@@ -59,7 +59,7 @@ DESCRIPTION
                 return "${?}"
                 ;;
             s|symlinks)
-                sh "${DOTFILES}/utils/integrate_dotfiles.sh" -h
+                sh "${DOTFILES}/utils/symlink_dotfiles.sh" -h
                 return "${?}"
                 ;;
             install-system)
@@ -129,7 +129,7 @@ DESCRIPTION
             local _subargs=()
             __parse_subargs "${@}"
             # execute
-            sh "${DOTFILES}/utils/integrate_dotfiles.sh" "${_subargs[@]}"
+            sh "${DOTFILES}/utils/symlink_dotfiles.sh" "${_subargs[@]}"
             return "${?}"
 
             ;;
