@@ -1,0 +1,7 @@
+crlf_to_lf() {
+    find ./ -type f -exec dos2unix {} \;
+}
+
+if [[ -n "${ZSH_NAME}" ]]; then
+    is_cmd_installed "${@}"
+fi
