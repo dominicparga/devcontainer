@@ -33,7 +33,7 @@ while [[ "${#}" -gt 0 ]]; do
         ;;
     esac
 
-    if [[ ! -z "${_errcode}" ]]; then
+    if [[ -n "${_errcode}" ]]; then
         echo "${_usage}"
         exit ${_errcode}
     fi

@@ -119,7 +119,12 @@ DESCRIPTION
             ;;
         c|custom)
             shift
-            sh "${DOTFILES}/utils/create_custom.sh"
+
+            # parse subargs
+            local _subargs=()
+            __parse_subargs "${@}"
+            # execute
+            sh "${DOTFILES}/utils/create_custom.sh" "${_subargs[@]}"
             return "${?}"
             ;;
         s|symlinks)
