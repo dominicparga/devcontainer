@@ -45,6 +45,11 @@ done
 # dirs in /custom/
 _dirs=(
     "custom"
+    "install"
+    "install/macOS"
+    "install/python"
+    "install/ubuntu"
+    "install/vscode"
     "git"
     "shell"
     "shell/func"
@@ -56,6 +61,12 @@ _dirs=(
 _files=(
     "create_gitignore.sh"
     "git/config"
+    "install/macOS/brew_formulae.sh"
+    "install/python/pkgs.sh"
+    "install/ubuntu/apt_pkgs.sh"
+    "install/ubuntu/nord_style.sh"
+    "install/vscode/extensions.sh"
+    "install/vscode/vscode.sh"
     "shell/ssh/config"
     "vscode/settings.json"
     "vscode/keybindings.json"

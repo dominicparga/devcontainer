@@ -164,6 +164,7 @@ Executing `dotfiles help` may help.
 
 - dotfiles: add function for quickly editing shellrc (other files?)
 - macOS: bash autocompletion (since macOS has bash 3.2 ._.)
+- java: change JAVA_HOME
 - add shebangs to executable files
 - macOS: install Nord and Dracula
 - ubuntu: install Dracula
