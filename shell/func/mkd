@@ -1,0 +1,7 @@
+mkd() {
+    mkdir -p "${@}" && cd "${@}"
+}
+
+if [[ -n "${ZSH_NAME}" ]]; then
+    mkd "${@}"
+fi
