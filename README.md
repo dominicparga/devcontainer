@@ -162,6 +162,7 @@ Executing `dotfiles help` may help.
 
 ### shell scripting
 
+- java: change JAVA_HOME
 - add shebangs to executable files
 - macOS: install Nord and Dracula
 - ubuntu: install Dracula
