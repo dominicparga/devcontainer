@@ -17,7 +17,7 @@ The function name `dotfiles` is independent of your chosen foldername.*
 
 ```zsh
 cd ~
-git clone https://github.com/dominicparga/dotfiles.git "dotfiles"
+git clone https://github.com/dominicparga/dotfiles.git
 
 . "${HOME}/dotfiles/shell/shellrc.sh"
 dotfiles symlinks
@@ -30,7 +30,7 @@ dotfiles symlinks
 Changing the default location `${HOME}/dotfiles` needs to rename the folder and change the variable `DOTFILES` defined at top of `${DOTFILES}/shell/shellrc.sh`.
 To provide this without the need of forking the whole project, a file `custom/shell/shellrc.sh` is preferred over the default `shell/shellrc.sh`.
 
-`dotfiles symlinks` creates the file `custom/shellrc.sh`, but you have to remove it manually before.
+`dotfiles symlinks` (respectively `dotfiles custom`) creates the file `custom/shell/shellrc.sh` (amongst others), but you have to remove it manually before.
 
 ```zsh
 # choosing .dotfiles instead of dotfiles as folder name
@@ -69,32 +69,34 @@ For more detailed information, please look [at the contribution section](CONTRIB
 ## Folder structure
 
 The following (incomplete) tree is supported.
+In general, every file in custom can be removed and calling `dotfiles custom` will recreate the default version of it.
 
 ```zsh
 dotfiles/
 ├── custom/
 │   ├── custom/
 │   ├── git/
-│   │   └── config
+│   │   └── config                      # includes git/config per default
+│   ├── install/
+│   │   ├── macOS/
+│   │   ├── python/
+│   │   ├── ubuntu/
+│   │   └── vscode/
 │   ├── shell/
-│   │   ├── func/                       # extends shell/func/*
+│   │   ├── func/                       # extends/overrides shell/func/*
 │   │   ├── ssh/
 │   │   │   └── config                  # symlinked to
 │   │   └── shellrc.sh                  # sources shell/shellrc.sh
 │   └── vscode/
-│       ├── install_extensions.sh       # extends vscode/install_extensions.sh
 │       ├── keybindings.json            # symlinked to
 │       └── settings.json               # symlinked to
 ├── git/
+├── install/
+├── kutgw/
 ├── macOS/
-├── python/
 ├── shell/
-│   ├── func/
-│   └── prompts/
-├── ubuntu/
 ├── utils/
-│   └── drafts/
-├── vscode/
+│   └── drafts/                         # defaults for custom
 └── README.md
 ```
 
@@ -103,8 +105,9 @@ dotfiles/
 | `custom/`                             | `dotfiles/custom/` is ignored by git (thus it could be set under git as well). It is organized exactly like the dotfiles-folder to use personal scripts replacing/extending default ones. The folder `dotfiles/custom/custom/` can be used to store general notes or thoughts, or to keep up good/old/outdated work. It won't be used in any script. |
 | `custom/shell/ssh/config`             | `${HOME}/.ssh/config` symlinks to this. |
 | `git/`                                | `git/config` contains useful git aliases and other configs. From HOME, `custom/git/config` gets linked to. It includes `git/config` and may contain user specific info (e.g. `user.name`). |
-| installation scripts                  | Scripts like `python/install_py_pkgs.sh` helps setting up a system. When using the dotfiles' wrapper function, custom counterparts of them are preferred and replaces the default ones. Exception is `custom/vscode/install_extensions.sh` which extends the default. |
-| `shell/`                              | `shell/` consists of scripts for setting the shell environment. `custom/shell/shellrc.sh` *fully* overwrites `shell/shellrc.sh` - see [Change default location](#change-default-location). |
+| `install/`                            | Scripts like `install/python/pkgs.sh` helps setting up a system. When using the dotfiles' wrapper function, custom counterparts of them are preferred and replaces the default ones. |
+| `kutgw/`                              | It stands for "keep up the good work". |
+| `shell/`                              | `shell/` consists of scripts for setting the shell environment. `custom/shell/shellrc.sh` *fully* overwrites `shell/shellrc.sh`. |
 | `shell/func/`                         | provides useful shell functions. Functions in `custom/shell/func/` are autoloaded/included and overwrite default functions in `shell/func/` if their name is the same. |
 | `shell/prompts/`                      | contains some prompts. |
 | `utils/`                              | contains scripts for interacting with the dotfiles quickly. |
