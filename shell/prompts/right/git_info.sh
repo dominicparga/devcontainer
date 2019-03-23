@@ -14,10 +14,10 @@ if [[ -n "${ZSH_NAME}" ]]; then
     ############################################################################
     # prompt
 
-    __ZSH_THEME_GIT_PROMPT_PREFIX="%{$reset_color%}%{$fg[green]%}["
-    __ZSH_THEME_GIT_PROMPT_SUFFIX="]%{$reset_color%}"
-    __ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[red]%}*%{$reset_color%}"
-    __ZSH_THEME_GIT_PROMPT_CLEAN=""
+    _zsh_theme_git_prompt_prefix="%{$reset_color%}%{$fg[green]%}["
+    _zsh_theme_git_prompt_suffix="]%{$reset_color%}"
+    _zsh_theme_git_prompt_dirty="%{$fg[red]%}*%{$reset_color%}"
+    _zsh_theme_git_prompt_clean=""
 
     # show git branch/tag, or name-rev if on detached head
     __parse_git_branch() {
@@ -27,16 +27,16 @@ if [[ -n "${ZSH_NAME}" ]]; then
     # show red star if there are uncommitted changes
     __parse_git_dirty() {
         if command git diff-index --quiet HEAD 2> /dev/null; then
-            echo "${__ZSH_THEME_GIT_PROMPT_CLEAN}"
+            echo "${_zsh_theme_git_prompt_clean}"
         else
-            echo "${__ZSH_THEME_GIT_PROMPT_DIRTY}"
+            echo "${_zsh_theme_git_prompt_dirty}"
         fi
     }
 
     # if in a git repo, show dirty indicator + git branch
     __git_custom_status() {
         local _git_where="$(__parse_git_branch)"
-        [ -n "${_git_where}" ] && echo "$(__parse_git_dirty)${__ZSH_THEME_GIT_PROMPT_PREFIX}${_git_where#(refs/heads/|tags/)}${__ZSH_THEME_GIT_PROMPT_SUFFIX}"
+        [ -n "${_git_where}" ] && echo "$(__parse_git_dirty)${_zsh_theme_git_prompt_prefix}${_git_where#(refs/heads/|tags/)}${_zsh_theme_git_prompt_suffix}"
     }
 
     # show current rbenv version if different from rbenv global
@@ -52,6 +52,11 @@ if [[ -n "${ZSH_NAME}" ]]; then
         RPS1='$(__git_custom_status) ${EPS1}'
     fi
 
+
+    unset __parse_git_branch
+    unset __parse_git_dirty
+    unset __git_custom_status
+    unset __rbenv_version_status
 
 
 elif [[ "${BASH}" ]]; then
