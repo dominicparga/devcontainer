@@ -2,7 +2,7 @@ alert() {
     # Add an "alert" alias for long running commands. Use like so:
     # sleep 10; alert
 
-    if ( is_machine "macOS" ); then
+    if ( is_machine 'macOS' ); then
         # find sounds in
         # ~/Library/Sounds
         # /System/Library/Sounds
@@ -12,7 +12,7 @@ alert() {
         _cmd+=" sound name \"${1:-Glass}\""
 
         osascript -e "${_cmd}"
-    elif ( is_machine "linux" ); then
+    elif ( is_machine 'linux' ); then
         notify-send -u low 'Terminal work finished.'
     fi
 }
