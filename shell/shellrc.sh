@@ -159,6 +159,13 @@ if ( is_machine 'macOS' ); then
     export PATH="${HOME}/Library/Python/3.7/bin:${PATH}"
 fi
 
+# nodejs and npm
+if ( is_machine 'linux'); then
+    VERSION='v11.10.0'
+    DISTRO='linux-x64'
+    export PATH="/usr/local/lib/nodejs/node-${VERSION}-${DISTRO}:${PATH}"
+fi
+
 # java
 if ( is_machine 'macOS' ); then
     export JAVA_HOME="$(/usr/libexec/java_home)"

@@ -34,6 +34,7 @@ brew install htop
 brew cask install microsoft-office
 brew cask install musescore
 brew install neovim
+brew install node
 brew install python
 brew install python@2
 brew cask install spotify

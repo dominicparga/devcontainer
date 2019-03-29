@@ -4,13 +4,14 @@
 # masking
 # Please edit cmdline parser below as well!
 
-                     #          added: cmdline parser  help msg
-_mask_apt=1          # 000001 - added:        y            y
-_mask_brew=2         # 000010 - added:        y            y
-_mask_nord=4         # 000100 - added:        y            y
-_mask_py_pkgs=8      # 001000 - added:        y            y
-_mask_vscode=16      # 010000 - added:        y            y
-_mask_vscode_ext=32  # 100000 - added:        y            y
+                     #           added: cmdline parser  help msg
+_mask_apt=1          # 0000001 - added:        y            y
+_mask_brew=2         # 0000010 - added:        y            y
+_mask_nord=4         # 0000100 - added:        y            y
+_mask_npm=4          # 0001000 - added:        y            y
+_mask_py_pkgs=8      # 0010000 - added:        y            y
+_mask_vscode=16      # 0100000 - added:        y            y
+_mask_vscode_ext=32  # 1000000 - added:        y            y
 
 
 # load function to determine machine
@@ -31,6 +32,7 @@ if ( is_machine "macOS" ); then
     _mask_all=$((${_mask_all} | ${_mask_vscode_ext}))
 elif ( is_machine "Linux" ); then
     _mask_all=$((${_mask_all} | ${_mask_apt}))
+    _mask_all=$((${_mask_all} | ${_mask_npm}))
     _mask_all=$((${_mask_all} | ${_mask_vscode}))
     _mask_all=$((${_mask_all} | ${_mask_vscode_ext}))
 fi
@@ -81,6 +83,9 @@ DESCRIPTION
 
        --nord, --no-nord (default)
               Installs the nord style for ubuntu's terminal.
+
+       --npm (default), --no-nord
+              Installs npm for ubuntu.
 
        --py-pkgs (macOS: default), --no-py-pkgs (linux: default)
               Installs all needed py packages.
@@ -150,6 +155,14 @@ while [[ "${#}" -gt 0 ]]; do
         _mask_enable=$((${_mask_enable} & (${_mask_all} - ${_mask_nord})))
         shift
         ;;
+    --npm)
+        _mask_enable=$((${_mask_enable} | ${_mask_npm}))
+        shift
+        ;;
+    --no-npm)
+        _mask_enable=$((${_mask_enable} & (${_mask_all} - ${_mask_npm})))
+        shift
+        ;;
     --py-pkgs)
         _mask_enable=$((${_mask_enable} | ${_mask_py_pkgs}))
         shift
@@ -214,7 +227,6 @@ fi
 
 ################################################################################
 # install python-packages
-# macOS only
 
 if [[ ${_mask_py_pkgs} -eq $((${_mask_py_pkgs} & ${_mask_enable})) ]]; then
     sh "${DOTFILES}/custom/install/python/pkgs.sh"
@@ -230,11 +242,17 @@ if [[ ${_mask_nord} -eq $((${_mask_nord} & ${_mask_enable})) ]]; then
 fi
 
 ################################################################################
+# install npm
+
+if [[ ${_mask_npm} -eq $((${_mask_npm} & ${_mask_enable})) ]]; then
+    sh "${DOTFILES}/custom/install/ubuntu/npm.sh"
+fi
+
+################################################################################
 # install visual-studio-code
-# linux only
 
 if [[ ${_mask_vscode} -eq $((${_mask_vscode} & ${_mask_enable})) ]]; then
-    sh "${DOTFILES}/custom/install/vscode/vscode.sh"
+    sh "${DOTFILES}/custom/install/ubuntu/vscode.sh"
     echo
 fi
 
