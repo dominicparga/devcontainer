@@ -33,6 +33,7 @@
     ],
     "editor.cursorStyle": "line",
     "editor.renderLineHighlight": "none",
+    "editor.renderFinalNewline": true,
     "editor.formatOnSave": false,
     // whitespaces
     "editor.renderWhitespace": "none",

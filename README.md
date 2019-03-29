@@ -165,6 +165,7 @@ Executing `dotfiles help` may help.
 
 ### shell scripting
 
+- symlinks: too many?
 - dotfiles: add function for quickly editing shellrc (other files?)
 - macOS: bash autocompletion (since macOS has bash 3.2 ._.)
 - java: change JAVA_HOME
