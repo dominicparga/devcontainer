@@ -58,55 +58,55 @@ DESCRIPTION
        so repeating a (no-)flag overwrites previous (no-)flags.
        Examples can be found below.
 
-       -h --help
+       h help
               Print this help message
 
 
-       --all (default)
+       all (default)
               Sets all possible flags dependent of the system:
 
               macOS
-              --no --brew --py-pkgs --vscode-ext
+              no brew py-pkgs vscode-ext
 
               ubuntu
-              --no --apt --vscode --vscode-ext
+              no apt vscode vscode-ext
 
-       --no
+       nothing
               Sets all no-flags.
 
 
-       --apt (default), --no-apt
+       apt (default), no-apt
               Installs all needed apt packages, including python packages.
 
-       --brew (default), --no-brew
+       brew (default), no-brew
               Installs all needed brew formulae.
 
-       --nord, --no-nord (default)
+       nord, no-nord (default)
               Installs the nord style for ubuntu's terminal.
 
-       --npm (default), --no-nord
+       npm (default), no-nord
               Installs npm for ubuntu.
 
-       --py-pkgs (macOS: default), --no-py-pkgs (linux: default)
+       py-pkgs (macOS: default), no-py-pkgs (linux: default)
               Installs all needed py packages.
 
-       --vscode (linux: default), --no-vscode (macOS: default)
+       vscode (linux: default), no-vscode (macOS: default)
               Installs visual studio code
 
-       --vscode-ext (default), --no-vscode-ext
+       vscode-ext (default), no-vscode-ext
               Installs specified vscode extensions.
 
 EXAMPLES for flags
-       --brew
-       --no-brew --brew
-       --brew --no-brew --brew
+       brew
+       no-brew brew
+       brew no-brew brew
        will install brew packages.
 
-       --no-brew
-       --brew --brew --no-brew
+       no-brew
+       brew brew no-brew
        will not install brew packages.
 
-       --no --brew
+       no brew
        will install only brew packages.
 
 "
@@ -119,80 +119,76 @@ EXAMPLES for flags
 while [[ "${#}" -gt 0 ]]; do
     case "${1}" in
     # general
-    --all)
+    all)
         _mask_enable=${_mask_all}
         shift
         ;;
-    --no)
+    no|nothing)
         _mask_enable=0
         shift
         ;;
-    -h|--help)
+    h|help)
         _errcode=0
         ;;
     # others
-    --apt)
+    apt)
         _mask_enable=$((${_mask_enable} | ${_mask_apt}))
         shift
         ;;
-    --no-apt)
+    no-apt)
         _mask_enable=$((${_mask_enable} & (${_mask_all} - ${_mask_apt})))
         shift
         ;;
-    --brew)
+    brew)
         _mask_enable=$((${_mask_enable} | ${_mask_brew}))
         shift
         ;;
-    --no-brew)
+    no-brew)
         _mask_enable=$((${_mask_enable} & (${_mask_all} - ${_mask_brew})))
         shift
         ;;
-    --nord)
+    nord)
         _mask_enable=$((${_mask_enable} | ${_mask_nord}))
         shift
         ;;
-    --no-nord)
+    no-nord)
         _mask_enable=$((${_mask_enable} & (${_mask_all} - ${_mask_nord})))
         shift
         ;;
-    --npm)
+    npm)
         _mask_enable=$((${_mask_enable} | ${_mask_npm}))
         shift
         ;;
-    --no-npm)
+    no-npm)
         _mask_enable=$((${_mask_enable} & (${_mask_all} - ${_mask_npm})))
         shift
         ;;
-    --py-pkgs)
+    py-pkgs)
         _mask_enable=$((${_mask_enable} | ${_mask_py_pkgs}))
         shift
         ;;
-    --no-py-pkgs)
+    no-py-pkgs)
         _mask_enable=$((${_mask_enable} & (${_mask_all} - ${_mask_py_pkgs})))
         shift
         ;;
-    --vscode)
+    vscode)
         _mask_enable=$((${_mask_enable} | ${_mask_vscode}))
         shift
         ;;
-    --no-vscode)
+    no-vscode)
         _mask_enable=$((${_mask_enable} & (${_mask_all} - ${_mask_vscode})))
         shift
         ;;
-    --vscode-ext)
+    vscode-ext)
         _mask_enable=$((${_mask_enable} | ${_mask_vscode_ext}))
         shift
         ;;
-    --no-vscode-ext)
+    no-vscode-ext)
         _mask_enable=$((${_mask_enable} & (${_mask_all} - ${_mask_vscode_ext})))
         shift
         ;;
-    -*|--*)
-        echo "Error: unknown option ${1}" >&2
-        echo
-        _errcode=1
-        ;;
     *)
+        echo "hello_${1}_bye"
         echo "Error: unknown argument ${1}" >&2
         echo
         _errcode=1

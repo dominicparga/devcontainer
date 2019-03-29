@@ -38,7 +38,7 @@ DESCRIPTION
        so repeating a (no-)flag overwrites previous (no-)flags.
        Examples can be found below.
 
-       -h --help
+       h help
               Print this help message
 
        -f
@@ -46,33 +46,33 @@ DESCRIPTION
               replaced silently.
 
 
-       --all (default)
+       all (default)
               Sets all flags.
 
-       --no
+       no nothing
               Sets all no-flags.
 
 
-       --shell (default), --no-shell
+       shell (default), no-shell
               Sets the links for .bashrc and .zshrc
 
-       --git (default), --no-git
+       git (default), no-git
               Sets the links to the respective git configs.
 
-       --vscode (default), --no-vscode
+       vscode (default), no-vscode
               Sets the links to the respective vscode settings.
 
 EXAMPLES for flags
-       --shell
-       --no-shell --shell
-       --shell --no-shell --shell
+       shell
+       no-shell shell
+       shell no-shell shell
        will symlink shell files.
 
-       --no-shell
-       --shell --shell --no-shell
+       no-shell
+       shell shell no-shell
        will not symlink shell files.
 
-       --no --shell
+       no shell
        will symlink only shell files.
 "
 
@@ -83,7 +83,7 @@ EXAMPLES for flags
 while [[ "${#}" -gt 0 ]]; do
     case "${1}" in
 # general
-    -h|--help)
+    h|help)
         _errcode=0
         ;;
     -f)
@@ -91,39 +91,39 @@ while [[ "${#}" -gt 0 ]]; do
         shift
         ;;
 # installs
-    --all)
+    all)
         _mask_enable=${mask_all}
         shift
         ;;
-    --no)
+    no|nothing)
         _mask_enable=0
         shift
         ;;
-    --shell)
+    shell)
         _mask_enable=$((${_mask_enable} | ${_mask_shell}))
         shift
         ;;
-    --no-shell)
+    no-shell)
         _mask_enable=$((${_mask_enable} & (${mask_all} - ${_mask_shell})))
         shift
         ;;
-    --git)
+    git)
         _mask_enable=$((${_mask_enable} | ${_mask_git}))
         shift
         ;;
-    --no-git)
+    no-git)
         _mask_enable=$((${_mask_enable} & (${mask_all} - ${_mask_git})))
         shift
         ;;
-    --vscode)
+    vscode)
         _mask_enable=$((${_mask_enable} | ${_mask_vscode}))
         shift
         ;;
-    --no-vscode)
+    no-vscode)
         _mask_enable=$((${_mask_enable} & (${mask_all} - ${_mask_vscode})))
         shift
         ;;
-    -*|--*)
+    -*)
         echo "Error: unknown option ${1}" >&2
         echo
         _errcode=1

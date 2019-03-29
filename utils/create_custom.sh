@@ -8,7 +8,7 @@ USAGE
 DESCRIPTION
        Creates the custom folder and uses drafts for non-existing files.
 
-       -h --help
+       h help
               Print this help message
 "
 
@@ -28,7 +28,7 @@ fi
 
 while [[ "${#}" -gt 0 ]]; do
     case "${1}" in
-    -h|--help)
+    h|help)
         _errcode=0
         ;;
     esac

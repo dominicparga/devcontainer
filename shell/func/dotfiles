@@ -11,11 +11,11 @@ DESCRIPTION
 
        Each OPTION stands for one script execution.
        The first executed script gets all left arguments.
-       Hence every option can be called separatedly using the -h flag.
+       Hence every option can be called separatedly using the 'help' flag.
 
        h help [COMMAND]
               Print this help message without any further script execution.
-              Calls '-h' for COMMAND.
+              Calls 'help' for COMMAND.
 
        gi gitignore
               Recreates the .gitignore-file using the custom creation script.
@@ -23,20 +23,20 @@ DESCRIPTION
 
        c custom
               Creates the custom folder and uses drafts for non-existing files.
-              See '${0} custom -h' for more info.
+              See '${0} custom help' for more info.
 
        s symlinks
               Sets the symlinks to these dotfiles.
-              See '${0} symlinks -h' for more info.
+              See '${0} symlinks help' for more info.
 
        i install
               Installs the specified part of the system, but nothing happens per
               default.
-              See '${0} install -h' for more info.
+              See '${0} install help' for more info.
 
        install-system
               Installs the system.
-              See '${0} install-system -h' for more info.
+              See '${0} install-system help' for more info.
 "
 
     ############################################################################
@@ -60,15 +60,15 @@ DESCRIPTION
                 return 0
                 ;;
             c|custom)
-                sh "${DOTFILES}/utils/create_custom.sh" -h
+                sh "${DOTFILES}/utils/create_custom.sh" h
                 return "${?}"
                 ;;
             s|symlinks)
-                sh "${DOTFILES}/utils/symlink_dotfiles.sh" -h
+                sh "${DOTFILES}/utils/symlink_dotfiles.sh" h
                 return "${?}"
                 ;;
             i|install|install-system)
-                sh "${DOTFILES}/utils/install_system.sh" -h
+                sh "${DOTFILES}/utils/install_system.sh" h
                 return 0
                 ;;
             *)
@@ -80,16 +80,12 @@ DESCRIPTION
         fi
     }
 
-    # parses -* and --* until different argument comes
     __parse_subargs() {
         while [[ "${#}" -gt 0 ]]; do
             case "${1}" in
-            -*|--*)
+            *)
                 _subargs+=("${1}")
                 shift
-                ;;
-            *)
-                return 0
                 ;;
             esac
         done
@@ -147,10 +143,10 @@ DESCRIPTION
             shift
 
             # parse subargs
-            local _subargs=()
+            local _subargs=('nothing')
             __parse_subargs "${@}"
             # execute
-            sh "${DOTFILES}/utils/install_system.sh" "--no ${_subargs[@]}"
+            sh "${DOTFILES}/utils/install_system.sh" "${_subargs[@]}"
             return "${?}"
 
             ;;
@@ -164,11 +160,6 @@ DESCRIPTION
             sh "${DOTFILES}/utils/install_system.sh" "${_subargs[@]}"
             return "${?}"
 
-            ;;
-        -*|--*)
-            echo "Error: unknown option ${1}" >&2
-            echo
-            _errcode=1
             ;;
         *)
             echo "Error: unknown dotfiles command ${1}" >&2
