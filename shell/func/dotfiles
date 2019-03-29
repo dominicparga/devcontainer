@@ -29,6 +29,11 @@ DESCRIPTION
               Sets the symlinks to these dotfiles.
               See '${0} symlinks -h' for more info.
 
+       i install
+              Installs the specified part of the system, but nothing happens per
+              default.
+              See '${0} install -h' for more info.
+
        install-system
               Installs the system.
               See '${0} install-system -h' for more info.
@@ -62,7 +67,7 @@ DESCRIPTION
                 sh "${DOTFILES}/utils/symlink_dotfiles.sh" -h
                 return "${?}"
                 ;;
-            install-system)
+            i|install|install-system)
                 sh "${DOTFILES}/utils/install_system.sh" -h
                 return 0
                 ;;
@@ -135,6 +140,17 @@ DESCRIPTION
             __parse_subargs "${@}"
             # execute
             sh "${DOTFILES}/utils/symlink_dotfiles.sh" "${_subargs[@]}"
+            return "${?}"
+
+            ;;
+        i|install)
+            shift
+
+            # parse subargs
+            local _subargs=()
+            __parse_subargs "${@}"
+            # execute
+            sh "${DOTFILES}/utils/install_system.sh" "--no ${_subargs[@]}"
             return "${?}"
 
             ;;
