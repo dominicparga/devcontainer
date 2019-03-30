@@ -92,7 +92,7 @@ while [[ "${#}" -gt 0 ]]; do
         ;;
 # installs
     all)
-        _mask_enable=${mask_all}
+        _mask_enable=${_mask_all}
         shift
         ;;
     no|nothing)
@@ -104,7 +104,7 @@ while [[ "${#}" -gt 0 ]]; do
         shift
         ;;
     no-shell)
-        _mask_enable=$((${_mask_enable} & (${mask_all} - ${_mask_shell})))
+        _mask_enable=$((${_mask_enable} & (${_mask_all} - ${_mask_shell})))
         shift
         ;;
     git)
@@ -112,7 +112,7 @@ while [[ "${#}" -gt 0 ]]; do
         shift
         ;;
     no-git)
-        _mask_enable=$((${_mask_enable} & (${mask_all} - ${_mask_git})))
+        _mask_enable=$((${_mask_enable} & (${_mask_all} - ${_mask_git})))
         shift
         ;;
     vscode)
@@ -120,7 +120,7 @@ while [[ "${#}" -gt 0 ]]; do
         shift
         ;;
     no-vscode)
-        _mask_enable=$((${_mask_enable} & (${mask_all} - ${_mask_vscode})))
+        _mask_enable=$((${_mask_enable} & (${_mask_all} - ${_mask_vscode})))
         shift
         ;;
     -*)
