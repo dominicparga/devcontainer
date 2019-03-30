@@ -60,15 +60,15 @@ DESCRIPTION
                 return 0
                 ;;
             c|custom)
-                sh "${DOTFILES}/utils/create_custom.sh" h
+                bash "${DOTFILES}/utils/create_custom.sh" h
                 return "${?}"
                 ;;
             s|symlinks)
-                sh "${DOTFILES}/utils/symlink_dotfiles.sh" h
+                bash "${DOTFILES}/utils/symlink_dotfiles.sh" h
                 return "${?}"
                 ;;
             i|install|install-system)
-                sh "${DOTFILES}/utils/install_system.sh" h
+                bash "${DOTFILES}/utils/install_system.sh" h
                 return 0
                 ;;
             *)
@@ -113,7 +113,7 @@ DESCRIPTION
         gi|gitignore)
             shift
             # execute
-            sh "${DOTFILES}/custom/create_gitignore.sh"\
+            bash "${DOTFILES}/custom/create_gitignore.sh"\
               > "${DOTFILES}/.gitignore"
             echo "New .gitignore created."
             return "${?}"
@@ -125,7 +125,7 @@ DESCRIPTION
             local _subargs=()
             __parse_subargs "${@}"
             # execute
-            sh "${DOTFILES}/utils/create_custom.sh" "${_subargs[@]}"
+            bash "${DOTFILES}/utils/create_custom.sh" "${_subargs[@]}"
             return "${?}"
             ;;
         s|symlinks)
@@ -135,7 +135,7 @@ DESCRIPTION
             local _subargs=()
             __parse_subargs "${@}"
             # execute
-            sh "${DOTFILES}/utils/symlink_dotfiles.sh" "${_subargs[@]}"
+            bash "${DOTFILES}/utils/symlink_dotfiles.sh" "${_subargs[@]}"
             return "${?}"
 
             ;;
@@ -146,7 +146,7 @@ DESCRIPTION
             local _subargs=('nothing')
             __parse_subargs "${@}"
             # execute
-            sh "${DOTFILES}/utils/install_system.sh" "${_subargs[@]}"
+            bash "${DOTFILES}/utils/install_system.sh" "${_subargs[@]}"
             return "${?}"
 
             ;;
@@ -157,7 +157,7 @@ DESCRIPTION
             local _subargs=()
             __parse_subargs "${@}"
             # execute
-            sh "${DOTFILES}/utils/install_system.sh" "${_subargs[@]}"
+            bash "${DOTFILES}/utils/install_system.sh" "${_subargs[@]}"
             return "${?}"
 
             ;;

@@ -52,8 +52,8 @@ cd ~
 git clone https://github.com/dominicparga/dotfiles.git "dotfiles"
 
 . "${HOME}/dotfiles/shell/shellrc.sh"
-sh "${DOTFILES}/utils/create_custom.sh"
-sh "${DOTFILES}/utils/symlink_dotfiles.sh"
+bash "${DOTFILES}/utils/create_custom.sh"
+bash "${DOTFILES}/utils/symlink_dotfiles.sh"
 ```
 
 Fully manually, `custom/` and all symlinks has to be created by hand.

@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 ################################################################################
 # check prerequisites
@@ -144,7 +144,7 @@ done
 ################################################################################
 # create custom folder
 
-sh "${DOTFILES}/utils/create_custom.sh"
+bash "${DOTFILES}/utils/create_custom.sh"
 
 ################################################################################
 # all links will be processed in one loop
