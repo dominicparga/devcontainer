@@ -15,7 +15,7 @@ DESCRIPTION
 ################################################################################
 # check prerequisites
 
-if [[ -z "${DOTFILES}"  || ! -d "${DOTFILES}" ]]; then
+if [[ -z "${DOTFILES}" ]] || [[ ! -d "${DOTFILES}" ]]; then
     echo "Error: \$DOTFILES is set incorrectly." >&2
     echo
     echo "${_usage}"
