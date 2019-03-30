@@ -44,14 +44,12 @@
 
     # local and global network history
     localhist  = !"git localgraph1"
-    lhist      = !"git localgraph1"
     localgraph = !"git localgraph1"
-    lgraph     = !"git localgraph1"
+    l          = !"git localgraph1"
 
-    hist   = !"git globalgraph1"
-    ghist  = !"git globalgraph1"
-    graph  = !"git globalgraph1"
-    ggraph = !"git globalgraph1"
+    hist  = !"git globalgraph1"
+    graph = !"git globalgraph1"
+    la    = !"git globalgraph1"
 
     globalgraph1 = !"git localgraph1 --all"
     globalgraph2 = !"git localgraph2 --all"

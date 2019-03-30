@@ -136,10 +136,12 @@ g last <N>
 # shows global branch history
 g hist
 g graph
+g la
 
 # shows HEAD history
 g localhist
 g localgraph
+g l
 ```
 
 In addition, visual-studio-code is opening as diff-tool and for commit-messages.
