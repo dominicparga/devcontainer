@@ -38,7 +38,7 @@ elif ( is_machine "Linux" ); then
 fi
 
 # init enabled mask
-_mask_enable=$((${_mask_all}))
+_mask_enable=0
 
 ################################################################################
 # description of cmdline parser
@@ -62,51 +62,51 @@ DESCRIPTION
               Print this help message
 
 
-       all (default)
+       all
               Sets all possible flags dependent of the system:
 
               macOS
-              no brew py-pkgs vscode-ext
+              brew py-pkgs vscode-ext
 
               ubuntu
-              no apt vscode vscode-ext
+              apt npm vscode vscode-ext
 
        nothing
               Sets all no-flags.
 
 
-       apt (default), no-apt
+       apt, no-apt
               Installs all needed apt packages, including python packages.
 
-       brew (default), no-brew
+       brew, no-brew
               Installs all needed brew formulae.
 
-       nord, no-nord (default)
+       nord, no-nord
               Installs the nord style for ubuntu's terminal.
 
-       npm (default), no-nord
+       npm, no-npm
               Installs npm for ubuntu.
 
-       py-pkgs (macOS: default), no-py-pkgs (linux: default)
+       py-pkgs, no-py-pkgs
               Installs all needed py packages.
 
-       vscode (linux: default), no-vscode (macOS: default)
+       vscode, no-vscode
               Installs visual studio code
 
-       vscode-ext (default), no-vscode-ext
+       vscode-ext, no-vscode-ext
               Installs specified vscode extensions.
 
 EXAMPLES for flags
-       brew
-       no-brew brew
-       brew no-brew brew
+       $ brew
+       $ no-brew brew
+       $ brew no-brew brew
        will install brew packages.
 
-       no-brew
-       brew brew no-brew
+       $ no-brew
+       $ brew brew no-brew
        will not install brew packages.
 
-       no brew
+       $ no brew
        will install only brew packages.
 
 "
@@ -188,7 +188,6 @@ while [[ "${#}" -gt 0 ]]; do
         shift
         ;;
     *)
-        echo "hello_${1}_bye"
         echo "Error: unknown argument ${1}" >&2
         echo
         _errcode=1

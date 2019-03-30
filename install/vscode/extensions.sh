@@ -6,7 +6,7 @@ _extensions=(
     arcticicestudio.nord-visual-studio-code
     be5invis.vscode-icontheme-nomo-dark
     coenraads.bracket-pair-colorizer-2
-#    cquera-project.cquery
+    # cquera-project.cquery
     daltonjorge.scala
     davidanson.vscode-markdownlint
     davidhouchin.whitespace-plus
@@ -14,23 +14,23 @@ _extensions=(
     dracula-theme.theme-dracula
     laurenttreguier.vscode-simple-icons
     mechatroner.rainbow-csv
-#    minhthai.vscode-todo-parser
+    # minhthai.vscode-todo-parser
     monokai.theme-monokai-pro-vscode
     ms-python.python
     ms-vscode.cpptools
-#    naco-siren.gradle-language
+    # naco-siren.gradle-language
     pkief.material-icon-theme
     pnp.polacode
     redhat.java
     robertohuertasm.vscode-icons
-#    twxs.cmake
-#    vector-of-bool.cmake-tools
+    # twxs.cmake
+    # vector-of-bool.cmake-tools
     vscjava.vscode-java-debug
     vscjava.vscode-java-pack
     vscjava.vscode-java-test
     vscjava.vscode-maven
     vscodevim.vim
-#    wayou.vscode-todo-highlight
+    # wayou.vscode-todo-highlight
 )
 
 ################################################################################
