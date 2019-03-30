@@ -2,14 +2,14 @@
 # update brew first
 
 if ( which brew 1>/dev/null 2>/dev/null ); then
-    echo "Installing homebrew..."
-    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-else
     echo "Updating homebrew and formulae..."
     brew update
     brew upgrade
     brew cask upgrade
     brew cleanup
+else
+    echo "Installing homebrew..."
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi
 
 ################################################################################
