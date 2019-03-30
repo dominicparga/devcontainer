@@ -95,7 +95,7 @@ for _dir in "${_dirs[@]}"; do
     fi
 done
 
-if [ "${_sth_printed}" ]; then
+if [ "${_sth_printed}" -eq 0 ]; then
     echo
 fi
 
