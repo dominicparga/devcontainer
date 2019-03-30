@@ -20,7 +20,7 @@ _mask_git=2     # 010 - added:        y            y
 _mask_vscode=4  # 100 - added:        y            y
 
 _mask_all=7 # 2**n - 1
-_mask_enable=${_mask_all}
+_mask_enable=0
 
 ################################################################################
 # description of cmdline parser
@@ -46,20 +46,20 @@ DESCRIPTION
               replaced silently.
 
 
-       all (default)
+       all
               Sets all flags.
 
        no nothing
               Sets all no-flags.
 
 
-       shell (default), no-shell
+       shell, no-shell
               Sets the links for .bashrc and .zshrc
 
-       git (default), no-git
+       git, no-git
               Sets the links to the respective git configs.
 
-       vscode (default), no-vscode
+       vscode, no-vscode
               Sets the links to the respective vscode settings.
 
 EXAMPLES for flags
@@ -235,7 +235,7 @@ if [[ -z "${_force}" ]]; then
         fi
     done
 
-    if [[ "${REPLY}" = "n" ]]; then
+    if [[ "${REPLY}" == "n" ]]; then
         echo "Some following files do already exist."
         for _link in "${_links[@]}"; do
             if [[ -f "${_link}" ]]; then
@@ -249,6 +249,6 @@ fi
 
 if [[ "${REPLY:-y}" =~ ^[yY]$ ]]; then
     for _i in "${!_links[@]}"; do
-        ln -sf ${_force} "${_targets[${_i}]}" "${_links[${_i}]}"
+        ln -sf "${_targets[${_i}]}" "${_links[${_i}]}"
     done
 fi

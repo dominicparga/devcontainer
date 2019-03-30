@@ -30,7 +30,7 @@ if ( is_machine "macOS" ); then
     _mask_all=$((${_mask_all} | ${_mask_brew}))
     _mask_all=$((${_mask_all} | ${_mask_py_pkgs}))
     _mask_all=$((${_mask_all} | ${_mask_vscode_ext}))
-elif ( is_machine "Linux" ); then
+elif ( is_machine "linux" ); then
     _mask_all=$((${_mask_all} | ${_mask_apt}))
     _mask_all=$((${_mask_all} | ${_mask_npm}))
     _mask_all=$((${_mask_all} | ${_mask_vscode}))
