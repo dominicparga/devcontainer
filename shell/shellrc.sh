@@ -221,7 +221,7 @@ fi
 ################################################################################
 # prompt
 
-. "${_shell_lib}/prompts/left/short_path.sh"
+. "${_shell_lib}/prompts/left/lightweighted.sh"
 . "${_shell_lib}/prompts/right/git_info.sh"
 
 ################################################################################
