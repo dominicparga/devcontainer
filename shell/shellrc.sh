@@ -56,7 +56,11 @@ if [[ -n "${ZSH_NAME}" ]]; then
     # heroku autocompletion
 
     if ( which heroku 1>/dev/null 2>/dev/null ); then
-        . <(heroku autocomplete:script zsh)
+        # heroku autocomplete setup
+        HEROKU_AC_ZSH_SETUP_PATH="${HOME}/Library/Caches/heroku/autocomplete/zsh_setup"
+        if [[ -f ${HEROKU_AC_ZSH_SETUP_PATH} ]]; then
+            . ${HEROKU_AC_ZSH_SETUP_PATH}
+        fi
     fi
 
     ############################################################################
@@ -118,7 +122,11 @@ elif [[ -n "${BASH}" ]]; then
     # heroku autocompletion
 
     if ( which heroku 1>/dev/null 2>/dev/null ); then
-        . <(heroku autocomplete:script bash)
+        # heroku autocomplete:script bash
+        HEROKU_AC_BASH_SETUP_PATH="${HOME}/Library/Caches/heroku/autocomplete/bash_setup"
+        if [[ -f ${HEROKU_AC_BASH_SETUP_PATH} ]]; then
+            . ${HEROKU_AC_BASH_SETUP_PATH}
+        fi
     fi
 
     ############################################################################

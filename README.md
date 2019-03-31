@@ -182,6 +182,7 @@ For more detailed information, please look [at the contribution section](CONTRIB
 - dotfiles: print info of all features and new functionality
 - editing: function for quickly editing shellrc (other files?)
 - java: function for changing java version
+- kubectl: probably too slow like <(heroku ...)?
 - LaTeX: script for creating a LaTeX folder structure
 - LaTeX: install
 - macOS: install Nord and Dracula
