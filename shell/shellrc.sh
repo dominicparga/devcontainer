@@ -55,13 +55,14 @@ if [[ -n "${ZSH_NAME}" ]]; then
     ############################################################################
     # heroku autocompletion
 
-    if ( which heroku 1>/dev/null 2>/dev/null ); then
-        # heroku autocomplete setup
-        HEROKU_AC_ZSH_SETUP_PATH="${HOME}/Library/Caches/heroku/autocomplete/zsh_setup"
-        if [[ -f ${HEROKU_AC_ZSH_SETUP_PATH} ]]; then
-            . ${HEROKU_AC_ZSH_SETUP_PATH}
-        fi
-    fi
+    # works without these lines and these lines make startup slow
+    # if ( which heroku 1>/dev/null 2>/dev/null ); then
+    #     # heroku autocomplete setup
+    #     HEROKU_AC_ZSH_SETUP_PATH="${HOME}/Library/Caches/heroku/autocomplete/zsh_setup"
+    #     if [[ -f ${HEROKU_AC_ZSH_SETUP_PATH} ]]; then
+    #         . ${HEROKU_AC_ZSH_SETUP_PATH}
+    #     fi
+    # fi
 
     ############################################################################
     # kubectl autocompletion
