@@ -142,11 +142,6 @@ while [[ "${#}" -gt 0 ]]; do
 done
 
 ################################################################################
-# create custom folder
-
-bash "${DOTFILES}/utils/create_custom.sh"
-
-################################################################################
 # all links will be processed in one loop
 
 _targets=()
@@ -167,10 +162,6 @@ if [[ ${_mask_shell} -eq $((${_mask_shell} & ${_mask_enable})) ]]; then
         "${HOME}/.zshrc"
     )
 
-    # ssh
-    if [[ ! -d "${HOME}/.ssh" ]]; then
-        mkdir "${HOME}/.ssh"
-    fi
     _targets+=("${DOTFILES}/custom/shell/ssh/config")
     _links+=("${HOME}/.ssh/config")
 fi
@@ -248,6 +239,12 @@ if [[ -z "${_force}" ]]; then
 fi
 
 if [[ "${REPLY:-y}" =~ ^[yY]$ ]]; then
+    if [[ ! -d "${HOME}/.ssh" ]]; then
+        mkdir -v "${HOME}/.ssh"
+    fi
+
+    bash "${DOTFILES}/utils/create_custom.sh"
+
     for _i in "${!_links[@]}"; do
         ln -sf "${_targets[${_i}]}" "${_links[${_i}]}"
     done

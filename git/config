@@ -12,9 +12,8 @@
 
     # efficient staging
     unstage = "reset HEAD --"
-    save    = !"git add -A && git commit -m 'SAVEPOINT'"
     wip     = !"git add -A && git commit -m 'WIP'"
-    undo    = "reset HEAD~1 --soft"
+    undo    = "reset HEAD^ --soft"
 
     # commit
     a   = "add"

@@ -25,9 +25,9 @@ DESCRIPTION
               Creates the custom folder and uses drafts for non-existing files.
               See '${0} custom help' for more info.
 
-       s symlinks
+       s symlink
               Sets the symlinks to these dotfiles.
-              See '${0} symlinks help' for more info.
+              See '${0} symlink help' for more info.
 
        i install
               Installs the specified part of the system, but nothing happens per
@@ -63,7 +63,7 @@ DESCRIPTION
                 bash "${DOTFILES}/utils/create_custom.sh" h
                 return "${?}"
                 ;;
-            s|symlinks)
+            s|symlink)
                 bash "${DOTFILES}/utils/symlink_dotfiles.sh" h
                 return "${?}"
                 ;;
@@ -128,7 +128,7 @@ DESCRIPTION
             bash "${DOTFILES}/utils/create_custom.sh" "${_subargs[@]}"
             return "${?}"
             ;;
-        s|symlinks)
+        s|symlink)
             shift
 
             # parse subargs
