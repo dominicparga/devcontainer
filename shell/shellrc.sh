@@ -182,8 +182,7 @@ fi
 ################################################################################
 # aliases
 
-alias cd='cd -P'
-alias cp='cp -i'
+alias cp='cp -i -P'
 alias mv='mv -i'
 alias grep='grep --color=auto'
 
