@@ -182,36 +182,36 @@ fi
 ################################################################################
 # aliases
 
-alias cd="cd -P"
-alias cp="cp -i"
-alias mv="mv -i"
-alias grep="grep --color=auto"
+alias cd='cd -P'
+alias cp='cp -i'
+alias mv='mv -i'
+alias grep='grep --color=auto'
 
-alias c="clear"
+alias c='clear'
 # macOS: --color=auto needed for coreutils
-alias l="ls -1GF --color=auto"
-alias la="l -a"
-alias ll="l -lh"
-alias lla="ll -a"
+alias l='ls -1GF --color=auto'
+alias la='l -a'
+alias ll='l -lh'
+alias lla='ll -a'
 
-alias .2="cd ../.."
-alias ..="cd .."
-alias .3="cd ../../.."
-alias ...="cd ../.."
-alias .4="cd ../../../.."
-alias ....="cd ../../../.."
-alias .5="cd ../../../../.."
-alias .....="cd ../../../../.."
-alias .6="cd ../../../../../.."
-alias ......="cd ../../../../../.."
+alias .2='cd ../..'
+alias ..='cd ..'
+alias .3='cd ../../..'
+alias ...='cd ../..'
+alias .4='cd ../../../..'
+alias ....='cd ../../../..'
+alias .5='cd ../../../../..'
+alias .....='cd ../../../../..'
+alias .6='cd ../../../../../..'
+alias ......='cd ../../../../../..'
 
 alias cddot="cd ${DOTFILES}"
 
 # 'A' for ANSI line graphics
 # 'C' for colorization
-alias tree="tree -AC"
+alias tree='tree -AC'
 
-alias g=git
+alias g='git'
 
 alias py='python'
 alias py2='python2'
