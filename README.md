@@ -3,73 +3,61 @@
 Dry and short:  
 These dotfiles should speed up a personal workflow and help installing and setting up a personal working system.
 Focus lays on keeping overview since using this repo should feel like speeding up manual steps.
-Therefore, kind of plugin-structure isn't realized.
+Therefore, kind of plugin-structure is not implemented.
 Instead, (more or less) slight customization of existing files is supported providing some flexibility without the need of forking the whole project.
 
-## Usage
+## Features
 
-The project has to be cloned to `${HOME}/dotfiles` and the provided wrapper function can be used to set all symlinks.
-Executing the following will create a folder `custom/...` in the dotfiles folder and create all needed symlinks in HOME.
+Per default, useful aliases and functions are provided.
+Further, a function `dotfiles` is provided and contains a bunch of handy functions.
 
-*__NOTE:__ This default location can be changed.
-See [Change default location](#change-default-location) below for more infos.
-The function name `dotfiles` is independent of your chosen foldername.*
+### Shell environment
 
-```zsh
-cd ~
-git clone https://github.com/dominicparga/dotfiles.git
+Beside autocompletion for several tools, aliases and exports can be found in [`shell/shellrc.sh`](https://github.com/dominicparga/dotfiles/blob/master/shell/shellrc.sh).
+Some commands like `grep` or `tree` are just flagged to use colors.
+Those are not mentioned here.
 
-. "${HOME}/dotfiles/shell/shellrc.sh"
-dotfiles symlinks
-```
+| new cmd | note |
+|:---------:|------|
+| SAFETY ALIASES |
+| <kbd>cp</kbd> | is alias for `cp -i -P`, so asks before replacing existing file. |
+| <kbd>mv</kbd> | is alias for `mv -i`, so asks before replacing existing file. |
+| COMMAND ls |
+| <kbd>l</kbd> | shows items as a colored list. |
+| <kbd>la</kbd> | shows hidden items as well. |
+| <kbd>ll</kbd> | shows items as a colored list and rights. |
+| <kbd>lla</kbd> | shows hidden items as well. |
+| WORKING QUICKLY |
+| <kbd>c</kbd> | is alias for `clear`. |
+| <kbd>g</kbd> | is alias for `git`. |
+| <kbd>..</kbd> | is alias for `cd ..`. |
+| <kbd>.2</kbd> or <kbd>...</kbd> | goes back 2 folders. |
+| <kbd>.3</kbd> or <kbd>....</kbd> | goes back 3 folders. |
+| ... | ... |
+| <kbd>.6</kbd> or <kbd>.......</kbd> | goes back 6 folders. |
+| <kbd>mkd</kbd> | creates folder(s) and enters it. |
+| MORE HANDY FUNCTIONS |
+| <kbd>alert</kbd> | can be called like `sleep 2; alert`. |
+| <kbd>dotfiles</kbd> | for setting scripts and installing tools. |
+| <kbd>gitignore</kbd> | uses the `gitignore.io` API to return gitignore entries. |
 
-`custom/` contains some generic info that should probably be updated by hand (e.g. gitconfg's `user.name`).
+### Git aliases
 
-### Change default location
+Have a look at the handy [git aliases](https://github.com/dominicparga/dotfiles/blob/master/git/config).
+In addition, visual-studio-code is opening as diff-tool and for commit-messages.
 
-Changing the default location `${HOME}/dotfiles` needs to rename the folder and change the variable `DOTFILES` defined at top of `${DOTFILES}/shell/shellrc.sh`.
-To provide this without the need of forking the whole project, a file `custom/shell/shellrc.sh` is preferred over the default `shell/shellrc.sh`.
+### System setup
 
-`dotfiles symlinks` (respectively `dotfiles custom`) creates the file `custom/shell/shellrc.sh` (amongst others), but you have to remove it manually before.
+You can setup your system (macOS, linux) using `dotfiles install-system`.
+Executing `dotfiles help` may help.
 
-```zsh
-# choosing .dotfiles instead of dotfiles as folder name
-export DOTFILES="${HOME}/.dotfiles"
-
-cd ~
-git clone https://github.com/dominicparga/dotfiles.git "${DOTFILES}"
-
-. "${DOTFILES}/shell/shellrc.sh"
-dotfiles symlinks
-```
-
-### Manual setup
-
-The wrapper function calls the following scripts.
-
-```zsh
-cd ~
-git clone https://github.com/dominicparga/dotfiles.git "dotfiles"
-
-. "${HOME}/dotfiles/shell/shellrc.sh"
-bash "${DOTFILES}/utils/create_custom.sh"
-bash "${DOTFILES}/utils/symlink_dotfiles.sh"
-```
-
-Fully manually, `custom/` and all symlinks has to be created by hand.
-
-## Contributing
-
-These dotfiles are created in a __modular__ and __lightweight__ way.
-For example, to find the `shellrc.sh`, the respective script is located in `shell`.
-This should be kept (in general) since looking for, e.g., "python" should not need you to look in other folders than `python/`.
-
-For more detailed information, please look [at the contribution section](CONTRIBUTING.md).
-
-## Folder structure
+## Structure
 
 The following (incomplete) tree is supported.
 In general, every file in custom can be removed and calling `dotfiles custom` will recreate the default version of it.
+
+The idea behind the custom folder is, besides supporting private files (e.g. ssh-configs), to reduce the need of forking/merging the project.
+Every symlink will link to a file in custom, that usually executes the draft outside the custom folder per default.
 
 ```zsh
 dotfiles/
@@ -114,43 +102,65 @@ dotfiles/
 | `utils/drafts/` | Contains drafts that will be copied into a fresh created `custom/`. It is the solution to the problem of having (frequently changing) user dependent scripts (e.g. vscode's `settings.json`) and a git repo, that shouldn't need to be forked only for slight changes. |
 | `vscode/`                             | [Visual studio code](https://code.visualstudio.com/) uses some `settings.json` and `keybindings.json` for user settings and keybindings. Since these files slightly change a lot in usage, often temporary, they are provided as drafts and symlinked to `custom/vscode/...`. |
 
-## Features
+## Usage
 
-Per default, useful aliases are provided.
+The project has to be cloned to `${HOME}/dotfiles` and the provided wrapper function can be used to set all symlinks.
+Executing the following will create a folder `custom/...` in the dotfiles folder and create all needed symlinks in HOME.
 
-### Shell aliases
-
-Please refer to [`shell/aliases.sh`](https://github.com/dominicparga/dotfiles/blob/master/shell/aliases.sh).
-
-### Git aliases
-
-Have a look at the great [`git aliases`](https://github.com/dominicparga/dotfiles/blob/master/git/config).
-Besides obvious ones, there are as well:
+*__NOTE:__ This default location can be changed.
+See [Change default location](#change-default-location) below for more infos.
+The function name `dotfiles` is independent of your chosen foldername.*
 
 ```zsh
-# g is alias for git
+cd ~
+git clone https://github.com/dominicparga/dotfiles.git
 
-# shows last <N> (default: 3) logs
-g last <N>
-
-# shows global branch history
-g hist
-g graph
-g la
-
-# shows HEAD history
-g localhist
-g localgraph
-g l
+. "${HOME}/dotfiles/shell/shellrc.sh"
+dotfiles symlink all
 ```
 
-In addition, visual-studio-code is opening as diff-tool and for commit-messages.
+`custom/` contains some generic info that should probably be updated by hand (e.g. gitconfg's `user.name`).
 
-### System setup
+### Change default location
 
-You can setup your system (macOS, linux) using `dotfiles install-system`.
+Changing the default location `${HOME}/dotfiles` needs to rename the folder and change the variable `DOTFILES` defined at top of `${DOTFILES}/shell/shellrc.sh`.
+To provide this without the need of forking the whole project, a file `custom/shell/shellrc.sh` is preferred over the default `shell/shellrc.sh`.
 
-Executing `dotfiles help` may help.
+`dotfiles symlinks` (respectively `dotfiles custom`) creates the file `custom/shell/shellrc.sh` (amongst others), but you have to remove it manually before.
+
+```zsh
+# choosing .dotfiles instead of dotfiles as folder name
+export DOTFILES="${HOME}/.dotfiles"
+
+cd ~
+git clone https://github.com/dominicparga/dotfiles.git "${DOTFILES}"
+
+. "${DOTFILES}/shell/shellrc.sh"
+dotfiles symlink all
+```
+
+### Manual setup
+
+The wrapper function calls the following scripts.
+
+```zsh
+cd ~
+git clone https://github.com/dominicparga/dotfiles.git "dotfiles"
+
+. "${HOME}/dotfiles/shell/shellrc.sh"
+bash "${DOTFILES}/utils/create_custom.sh"
+bash "${DOTFILES}/utils/symlink_dotfiles.sh"
+```
+
+Fully manually, `custom/` and all symlinks has to be created by hand.
+
+## Contributing
+
+These dotfiles are created in a __modular__ and __lightweight__ way.
+For example, to find the `shellrc.sh`, the respective script is located in `shell`.
+This should be kept (in general) since looking for, e.g., "python" should not need you to look in other folders than `python/`.
+
+For more detailed information, please look [at the contribution section](CONTRIBUTING.md).
 
 ## TODO
 
@@ -167,16 +177,14 @@ Executing `dotfiles help` may help.
 
 ### shell scripting
 
-- symlinks: too many?
-- dotfiles: add function for quickly editing shellrc (other files?)
-- macOS: bash autocompletion (since macOS has bash 3.2 ._.)
-- java: change JAVA_HOME
-- add shebangs to executable files
+- alert: add usage description to alert function (sound arg)
+- alert: add message to alert as input arg
+- dotfiles: print info of all features and new functionality
+- editing: function for quickly editing shellrc (other files?)
+- java: function for changing java version
+- LaTeX: script for creating a LaTeX folder structure
+- LaTeX: install
 - macOS: install Nord and Dracula
+- prompt: function for changing prompt
 - ubuntu: install Dracula
-- ubuntu: implement alert function
-- add usage description to alert function (sound arg)
-- add message to alert as input arg
-- macOS: install LaTeX
-- ubuntu: install LaTeX
-- script for creating a LaTeX folder structure
+- vscode: cool keybindings
