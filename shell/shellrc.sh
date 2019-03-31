@@ -53,6 +53,13 @@ if [[ -n "${ZSH_NAME}" ]]; then
     autoload colors && colors
 
     ############################################################################
+    # heroku autocompletion
+
+    if ( which heroku 1>/dev/null 2>/dev/null ); then
+        . <(heroku autocomplete:script zsh)
+    fi
+
+    ############################################################################
     # kubectl autocompletion
 
     if ( which kubectl 1>/dev/null 2>/dev/null ); then
@@ -105,6 +112,13 @@ elif [[ -n "${BASH}" ]]; then
         if [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]]; then
             . "/usr/local/etc/profile.d/bash_completion.sh"
         fi
+    fi
+
+    ############################################################################
+    # heroku autocompletion
+
+    if ( which heroku 1>/dev/null 2>/dev/null ); then
+        . <(heroku autocomplete:script bash)
     fi
 
     ############################################################################
