@@ -3,34 +3,58 @@
 # in ALPHABETICAL order
 
 _extensions=(
+    # color and icon themes
     arcticicestudio.nord-visual-studio-code
     be5invis.vscode-icontheme-nomo-dark
-    coenraads.bracket-pair-colorizer-2
-    # cquera-project.cquery
-    daltonjorge.scala
-    davidanson.vscode-markdownlint
-    davidhouchin.whitespace-plus
-    donjayamanne.githistory
     dracula-theme.theme-dracula
     laurenttreguier.vscode-simple-icons
-    mechatroner.rainbow-csv
-    # minhthai.vscode-todo-parser
     monokai.theme-monokai-pro-vscode
-    ms-python.python
-    ms-vscode.cpptools
-    # naco-siren.gradle-language
     pkief.material-icon-theme
-    pnp.polacode
-    redhat.java
     robertohuertasm.vscode-icons
+
+    # editor utils
+    coenraads.bracket-pair-colorizer-2
+    davidhouchin.whitespace-plus
+    # minhthai.vscode-todo-parser
+    pnp.polacode
+    # slevesque.vscode-hexdump
+    vscodevim.vim
+    # wayou.vscode-todo-highlight
+
+    # git
+    donjayamanne.githistory
+    # waderyan.gitblame
+
+    # markdown
+    davidanson.vscode-markdownlint
+
+    # python
+    kevinrose.vsc-python-indent
+    ms-python.python
+
+    # c cpp
+    # cquera-project.cquery
+    ms-vscode.cpptools
     # twxs.cmake
     # vector-of-bool.cmake-tools
+
+    # java
+    redhat.java
     vscjava.vscode-java-debug
     vscjava.vscode-java-pack
     vscjava.vscode-java-test
+
+    # scala
+    daltonjorge.scala
+
+    # gradle
+    # naco-siren.gradle-language
+
+    # maven
     vscjava.vscode-maven
-    vscodevim.vim
-    # wayou.vscode-todo-highlight
+
+    # csv
+    mechatroner.rainbow-csv
 )
 
 ################################################################################
