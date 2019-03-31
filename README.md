@@ -149,7 +149,7 @@ git clone https://github.com/dominicparga/dotfiles.git "dotfiles"
 
 . "${HOME}/dotfiles/shell/shellrc.sh"
 bash "${DOTFILES}/utils/create_custom.sh"
-bash "${DOTFILES}/utils/symlink_dotfiles.sh"
+bash "${DOTFILES}/utils/symlink_dotfiles.sh" all
 ```
 
 Fully manually, `custom/` and all symlinks has to be created by hand.
