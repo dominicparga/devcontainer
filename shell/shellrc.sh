@@ -89,15 +89,21 @@ elif [[ -n "${BASH}" ]]; then
     fi
 
     ############################################################################
-    # (from previous, default bashrc on ubuntu)
-    # enable programmable completion features (you don't need to enable this, if
-    # it's already enabled in /etc/bash.bashrc and /etc/profile)
+    # bash autocompletion
 
-    if ! shopt -oq posix; then
-        if [ -f '/usr/share/bash-completion/bash_completion' ]; then
-            . '/usr/share/bash-completion/bash_completion'
-        elif [ -f '/etc/bash_completion' ]; then
-            . '/etc/bash_completion'
+    if ( is_machine 'linux'); then
+        # source /etc/bash.bashrc or /etc/profile ?
+        if ! shopt -oq posix; then
+            if [ -f '/usr/share/bash-completion/bash_completion' ]; then
+                . '/usr/share/bash-completion/bash_completion'
+            elif [ -f '/etc/bash_completion' ]; then
+                . '/etc/bash_completion'
+            fi
+        fi
+    elif ( is_machine 'macOS' ); then
+        # bash-completion@2 installed via brew
+        if [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]]; then
+            . "/usr/local/etc/profile.d/bash_completion.sh"
         fi
     fi
 
