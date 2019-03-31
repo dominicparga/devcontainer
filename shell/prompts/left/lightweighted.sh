@@ -18,7 +18,9 @@ __prompt_cmd() {
         local _c_blue="%{${fg[blue]}%}"
         local _c_cyan="%{${fg[cyan]}%}"
         local _c_green="%{${fg[green]}%}"
+        local _c_magenta="%{${fg[magenta]}%}"
         local _c_red="%{${fg[red]}%}"
+        local _c_yellow="%{${fg[yellow]}%}"
         local _c_last_exit="%(?.${_c_green}.${_c_red})"
 
         local _b_start='%B'
@@ -43,7 +45,9 @@ __prompt_cmd() {
         local _c_blue='\[\e[0;34m\]'
         local _c_cyan='\[\e[0;36m\]'
         local _c_green='\[\e[0;32m\]'
+        local _c_magenta='\[\e[0;35m\]'
         local _c_red='\[\e[0;31m\]'
+        local _c_yellow='\[\e[0;33m\]'
 
         local _b_start='\[\e[1m\]'
         local _b_end='\[\e[0m\]'
@@ -76,12 +80,19 @@ __prompt_cmd() {
     elif [[ -n "${BASH}" ]]; then
         PS1="${_window_title}${PS1}"
     fi
+    # opening [
+    PS1+="${_c_default}${_b_start}[${_b_end}"
     # debian root (if changed)
     PS1+="${_c_default}${_debian_chroot:+(${_debian_chroot})}"
+    # $USERNAME
+    PS1+="${_c_magenta}${_b_start}${_username}${_b_end}"
     # current dir
-    PS1+="${_c_blue}${_short_pwd}"
+    PS1+="${_c_default}${_b_start}:${_b_end}"
+    PS1+="${_c_cyan}${_b_start}${_short_pwd}${_b_end}"
+    # closing ]
+    PS1+="${_c_default}${_b_start}]${_b_end}"
     # colored dollar sign depending on successful precommand
-    PS1+="${_c_last_exit}\$${_c_default} "
+    PS1+="${_c_last_exit}${_b_start}\$${_b_end}${_c_default} "
 }
 
 if [[ -n "${ZSH_NAME}" ]]; then
