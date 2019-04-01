@@ -3,5 +3,5 @@ crlf_to_lf() {
 }
 
 if [[ -n "${ZSH_NAME}" ]]; then
-    is_cmd_installed "${@}"
+    crlf_to_lf "${@}"
 fi
