@@ -6,10 +6,19 @@ Focus lays on keeping overview since using this repo should feel like speeding u
 Therefore, kind of plugin-structure is not implemented.
 Instead, (more or less) slight customization of existing files is supported providing some flexibility without the need of forking the whole project.
 
+Hence, the general idea of these files is:  
+
+1. Create a `custom` folder inside the folder `dotfiles` (ignored by git).
+2. Create all necessary dotfiles in `custom`.
+3. Include and source files of this project.
+4. Create symlinks from `$HOME` linking to files in `custom folder`.
+
+All these steps can be done automatically by using the provided function `dotfiles`.
+
 ## Features
 
-Per default, useful aliases and functions are provided.
-Further, a function `dotfiles` is provided and contains a bunch of handy functions.
+Besides the function `dotfiles` for handy setup, useful aliases and functions are provided.
+These dotfiles are used with `bash` and `zsh`.
 
 ### Shell environment
 
@@ -25,7 +34,7 @@ Those are not mentioned here.
 | COMMAND ls |
 | <kbd>l</kbd> | shows items as a colored list. |
 | <kbd>la</kbd> | shows hidden items as well. |
-| <kbd>ll</kbd> | shows items as a colored list and rights. |
+| <kbd>ll</kbd> | shows items as a colored list and access rights. |
 | <kbd>lla</kbd> | shows hidden items as well. |
 | WORKING QUICKLY |
 | <kbd>c</kbd> | is alias for `clear`. |
@@ -55,6 +64,7 @@ Executing `dotfiles help` may help.
 
 The following (incomplete) tree is supported.
 In general, every file in custom can be removed and calling `dotfiles custom` will recreate the default version of it.
+So playing around with this project is only cricital in the case that own changes in custom are removed manually. ;)
 
 The idea behind the custom folder is, besides supporting private files (e.g. ssh-configs), to reduce the need of forking/merging the project.
 Every symlink will link to a file in custom, that usually executes the draft outside the custom folder per default.
@@ -62,7 +72,7 @@ Every symlink will link to a file in custom, that usually executes the draft out
 ```zsh
 dotfiles/
 ├── custom/
-│   ├── custom/
+│   ├── custom/                         # completely untouched by the project
 │   ├── git/
 │   │   └── config                      # includes git/config per default
 │   ├── install/
@@ -119,9 +129,9 @@ git clone https://github.com/dominicparga/dotfiles.git
 dotfiles symlink all
 ```
 
-`custom/` contains some generic info that should probably be updated by hand (e.g. gitconfg's `user.name`).
+*__NOTE:__ `custom/` contains some generic info that should probably be updated by hand (e.g. gitconfig's `user.name`).*
 
-### Change default location
+### Optional: Change default location
 
 Changing the default location `${HOME}/dotfiles` needs to rename the folder and change the variable `DOTFILES` defined at top of `${DOTFILES}/shell/shellrc.sh`.
 To provide this without the need of forking the whole project, a file `custom/shell/shellrc.sh` is preferred over the default `shell/shellrc.sh`.
@@ -129,7 +139,7 @@ To provide this without the need of forking the whole project, a file `custom/sh
 `dotfiles symlinks` (respectively `dotfiles custom`) creates the file `custom/shell/shellrc.sh` (amongst others), but you have to remove it manually before.
 
 ```zsh
-# choosing .dotfiles instead of dotfiles as folder name
+# e.g. choosing .dotfiles instead of dotfiles as folder name
 export DOTFILES="${HOME}/.dotfiles"
 
 cd ~
@@ -139,7 +149,7 @@ git clone https://github.com/dominicparga/dotfiles.git "${DOTFILES}"
 dotfiles symlink all
 ```
 
-### Manual setup
+### Optional: Manual setup
 
 The wrapper function calls the following scripts.
 
@@ -161,6 +171,12 @@ For example, to find the `shellrc.sh`, the respective script is located in `shel
 This should be kept (in general) since looking for, e.g., "python" should not need you to look in other folders than `python/`.
 
 For more detailed information, please look [at the contribution section](CONTRIBUTING.md).
+
+## Troubleshooting
+
+If Ubuntu doesn't run the scripts as expected, check how `sh` is linked.
+These dotfiles are used with bash and zsh.
+For instance, `dash` does not support `[[ ... ]]`, which is used a lot here.
 
 ## TODO
 
