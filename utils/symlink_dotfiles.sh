@@ -191,13 +191,11 @@ if [[ ${_mask_vscode} -eq $((${_mask_vscode} & ${_mask_enable})) ]]; then
         . "${DOTFILES}/shell/func/is_machine"
     fi
 
-
     # set settings.json as target
     _targets+=(
         "${DOTFILES}/custom/vscode/settings.json"
         "${DOTFILES}/custom/vscode/keybindings.json"
     )
-
 
     # set links dependent of OS
     if ( is_machine "macOS" ); then
