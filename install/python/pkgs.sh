@@ -3,9 +3,11 @@ _pip_packages=(
     autopep8
     docopt
     pylint
+    setuptools
+    pip
 )
 for _item in ${_pip_packages[@]}; do
-    pip3 install --user ${_item}
-    pip2 install --user ${_item}
+    python3 -m pip install -U ${_item}
+    python2 -m pip install -U ${_item}
     echo
 done

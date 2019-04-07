@@ -180,13 +180,20 @@ else
 fi
 
 # python
-if ( is_machine 'macOS' ); then
+if ( is_machine 'linux' ); then
     # used in vscode to find a default python interpreter
-    export PYTHON_INTERPRETER_PATH='/usr/local/bin/python3'
-
-    export PATH="${HOME}/Library/Python/2.7/bin:${PATH}"
-    export PATH="${HOME}/Library/Python/3.7/bin:${PATH}"
+    export PYTHON_INTERPRETER_PATH='' # TODO
+elif ( is_machine 'macOS' ); then
+    # path
+    export PATH="/usr/local/opt/sqlite/bin:${PATH}"
+    export PATH="/usr/local/opt/python/libexec/bin:${PATH}"
+    # used in vscode to find a default python interpreter
+    export PYTHON_INTERPRETER_PATH='/usr/local/opt/python3'
+    # for pipenv
+    export LC_ALL='en_US.UTF-8'
+    export LANG='en_US.UTF-8'
 fi
+export PIPENV_VENV_IN_PROJECT='yes'
 
 # nodejs and npm
 if ( is_machine 'linux'); then
