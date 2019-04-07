@@ -203,5 +203,7 @@ For instance, `dash` does not support `[[ ... ]]`, which is used a lot here.
 - LaTeX: install
 - macOS: install Nord and Dracula
 - prompt: function for changing prompt
+- python: pip install $(pip list --outdated | awk '{ print $1 }') --upgrade
 - ubuntu: install Dracula
+- ubuntu: set PYTHON_INTERPRETER_PATH in shellrc
 - vscode: cool keybindings
