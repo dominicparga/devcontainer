@@ -106,6 +106,12 @@
     "python.linting.pylintArgs": [
         "--max-line-length=79"
     ],
+    "python.venvFolders": [
+        "envs",
+        ".pyenv",
+        ".direnv",
+        ".venv"
+    ],
     "python.jediEnabled": false,
     // cpp
     "[cpp]": {
