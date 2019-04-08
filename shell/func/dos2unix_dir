@@ -1,0 +1,11 @@
+dos2unix_dir() {
+    if [[ ! -d ${1} ]]; then
+        echo "Please specify a folder."
+    else
+        find "${1}" -type f -exec dos2unix {} \;
+    fi
+}
+
+if [[ -n "${ZSH_NAME}" ]]; then
+    dos2unix_dir "${@}"
+fi
