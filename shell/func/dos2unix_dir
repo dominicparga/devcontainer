@@ -1,6 +1,7 @@
 dos2unix_dir() {
     if [[ ! -d ${1} ]]; then
         echo "Please specify a folder."
+        return 1
     else
         find "${1}" -type f -exec dos2unix {} \;
     fi
