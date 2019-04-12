@@ -13,6 +13,21 @@ Hence, the general idea of these files is:
 3. Include and source files of this project.
 4. Create symlinks from `$HOME` linking to files in `custom folder`.
 
+So result in home will be
+
+```zsh
+~/
+├── .bashrc -> ${HOME}/.profile
+├── .gitconfig -> ${HOME}/dotfiles/custom/git/config*
+├── .gitconfig.general -> ${HOME}/dotfiles/git/config*
+├── .profile -> ${HOME}/dotfiles/custom/shell/shellrc.sh
+├── .ssh
+│   ├── config -> ${HOME}/dotfiles/custom/shell/ssh/config*
+│   └── ...
+├── .zshrc -> ${HOME}/.profile
+└── ...
+```
+
 All these steps can be done automatically by using the provided function `dotfiles`.
 
 ## Features
@@ -54,6 +69,40 @@ Those are not mentioned here.
 
 Have a look at the handy [git aliases](https://github.com/dominicparga/dotfiles/blob/master/git/config).
 In addition, visual-studio-code is opening as diff-tool and for commit-messages.
+
+`g` is alias for `git` (see above).
+
+| alias | note |
+|:---------:|------|
+| GENERAL |
+| <kbd>g h</kbd> | helps using `git help` more often ;) (`g h ALIAS` shows the replacement for the alias). |
+| <kbd>g s</kbd> | is alias for `git status` and one of the most used aliases. |
+| EFFICIENT STAGING |
+| <kbd>g unstage FILES </kbd> | removes all changes from the index with respect to the given FILES (but keeps the changes in workspace). Simply spoken, all green FILES in `git status` become red again. |
+| <kbd>g discard FILES</kbd> | removes all changes from the workspace with respect to the given FILES. Simply spoken, all red FILES in `git status` disappear. (__ATTENTION!__ Obviously, those changes will be lost.) |
+| <kbd>g undo</kbd> | removes the last commit from history, but keeps its changes in the index. __ATTENTION!__ This alias can be very handy but it is recommended using this only for local commits, since removing pushed commits messes up the history. |
+| COMMITTING |
+| <kbd>g a FILES</kbd> | adds the given files. |
+| <kbd>g aa</kbd> | adds all changes and executes git status afterwards. |
+| <kbd>g c</kbd> | commits. |
+| <kbd>g ca</kbd> | commits after `g aa`. |
+| <kbd>g cm "commits a commit lol"</kbd> | commits with a message. |
+| <kbd>g cam "commits a commit lol"</kbd> | is `g ca` with a message. |
+| MERGING |
+| <kbd>g m BRANCH</kbd> | `git merge BRANCH` |
+| <kbd>g squash BRANCH/COMMIT</kbd> | merges content without merging the git history. So the resulting commit looks like it has cherry-picked all commits of BRANCH/COMMIT. |
+| <kbd>g squeeze BRANCH/COMMIT</kbd> | is a different name for `g squash ...`. |
+| BRANCHING |
+| <kbd>g co BRANCH/COMMIT</kbd> | `git checkout BRANCH/COMMIT` |
+| <kbd>g cob BRANCH</kbd> | `git checkout -b BRANCH` |
+| <kbd>g b</kbd> | `git branch` |
+| <kbd>g ba</kbd> | `git branch --list -a` |
+| <kbd>g bv</kbd> | `git branch --list -v` |
+| <kbd>g bav</kbd> | `git branch --list -av` |
+| LOGGING |
+| <kbd>g last N</kbd> | logs the last N commit messages. Default for N is 3. |
+| <kbd>g l</kbd> | shows the history of the local branch as a graph. |
+| <kbd>g la</kbd> | shows the global history as a graph. |
 
 ### System setup
 
@@ -204,7 +253,6 @@ For instance, `dash` does not support `[[ ... ]]`, which is used a lot here.
 - macOS: install Nord and Dracula
 - prompt: function for changing prompt
 - python: pip install $(pip list --outdated | awk '{ print $1 }') --upgrade
-- README: add git shortcuts
 - README: add vscode (vim-)keybindings
 - ubuntu: install Dracula
 - ubuntu: set PYTHON_INTERPRETER_PATH in shellrc
