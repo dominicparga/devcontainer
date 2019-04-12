@@ -8,10 +8,10 @@ Instead, (more or less) slight customization of existing files is supported prov
 
 Hence, the general idea of these files is:  
 
-1. Create a `custom` folder inside the folder `dotfiles` (ignored by git).
+1. Create a `custom` folder inside the folder `dotfiles` (ignored by git).
 2. Create all necessary dotfiles in `custom`.
 3. Include and source files of this project.
-4. Create symlinks from `$HOME` linking to files in `custom folder`.
+4. Create symlinks from `$HOME` linking to files in `custom folder`.
 
 All these steps can be done automatically by using the provided function `dotfiles`.
 
