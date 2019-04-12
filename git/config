@@ -7,14 +7,15 @@
     prune = true
 [alias]
     # general
-    s = "status"
     h = "help"
+    s = "status"
 
     # efficient staging
     unstage = "reset HEAD --"
+    discard = "checkout --"
     undo    = "reset HEAD^ --soft"
 
-    # commit
+    # committing
     a   = "add"
     aa  = !"git add -A && git status"
     c   = "commit"
@@ -30,7 +31,6 @@
     # branching
     co      = "checkout"
     cob     = "checkout -b"
-    discard = "checkout --"
     # list branches sorted by last modified
     b  = "branch"
     ba  = "branch --list -a"
