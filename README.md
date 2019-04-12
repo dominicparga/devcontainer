@@ -208,4 +208,3 @@ For instance, `dash` does not support `[[ ... ]]`, which is used a lot here.
 - README: add vscode (vim-)keybindings
 - ubuntu: install Dracula
 - ubuntu: set PYTHON_INTERPRETER_PATH in shellrc
-- vscode: cool keybindings
