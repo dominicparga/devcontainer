@@ -28,6 +28,11 @@ _extensions=(
     # markdown
     davidanson.vscode-markdownlint
 
+    # toml
+    bungcip.better-toml
+    # csv
+    mechatroner.rainbow-csv
+
     # rust
     rust-lang.rust
 
@@ -55,9 +60,6 @@ _extensions=(
 
     # maven
     vscjava.vscode-maven
-
-    # csv
-    mechatroner.rainbow-csv
 )
 
 ################################################################################

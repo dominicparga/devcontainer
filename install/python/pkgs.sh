@@ -1,12 +1,12 @@
 _pip_packages=(
-    pipenv
     autopep8
     docopt
+    matplotlib
+    numpy
+    pip
+    pipenv
     pylint
     setuptools
-    pip
-    numpy
-    matplotlib
 )
 for _item in ${_pip_packages[@]}; do
     python3 -m pip install -U ${_item}

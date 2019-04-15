@@ -179,6 +179,20 @@ else
     export GIT_EDITOR="${EDITOR}"
 fi
 
+# java
+if ( is_machine 'macOS' ); then
+    export JAVA_HOME="$(/usr/libexec/java_home)"
+    export PATH="${JAVA_HOME}:${PATH}"
+    export PATH="${JAVA_HOME}/bin:${PATH}"
+fi
+
+# nodejs and npm
+if ( is_machine 'linux'); then
+    VERSION='v11.10.0'
+    DISTRO='linux-x64'
+    export PATH="/usr/local/lib/nodejs/node-${VERSION}-${DISTRO}:${PATH}"
+fi
+
 # python
 if ( is_machine 'linux' ); then
     # used in vscode to find a default python interpreter
