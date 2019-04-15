@@ -28,6 +28,9 @@ _extensions=(
     # markdown
     davidanson.vscode-markdownlint
 
+    # rust
+    rust-lang.rust
+
     # python
     kevinrose.vsc-python-indent
     ms-python.python

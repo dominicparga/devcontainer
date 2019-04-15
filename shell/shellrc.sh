@@ -195,6 +195,9 @@ elif ( is_machine 'macOS' ); then
 fi
 export PIPENV_VENV_IN_PROJECT='yes'
 
+# rust
+export PATH="${HOME}/.cargo/bin:${PATH}"
+
 # nodejs and npm
 if ( is_machine 'linux'); then
     VERSION='v11.10.0'
