@@ -5,6 +5,8 @@ _pip_packages=(
     pylint
     setuptools
     pip
+    numpy
+    matplotlib
 )
 for _item in ${_pip_packages[@]}; do
     python3 -m pip install -U ${_item}
