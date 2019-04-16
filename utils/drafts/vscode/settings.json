@@ -214,7 +214,7 @@
         ////////////////////////////////////////////////////////////////////////
         // code interaction
         {
-            "before": ["#"],
+            "before": ["<leader>", "#"],
             "commands": [
                 "editor.action.commentLine",
             ]
@@ -276,7 +276,7 @@
         ////////////////////////////////////////////////////////////////////////
         // code interaction
         {
-            "before": ["#"],
+            "before": ["<leader>", "#"],
             "commands": [
                 "editor.action.commentLine",
             ]
