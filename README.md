@@ -30,6 +30,30 @@ So result in home will be
 
 All these steps can be done automatically by using the provided function `dotfiles`.
 
+## Table of Contents
+
+[Features](#features)
+
+* [Shell environment](#shell-environment)
+
+* [git aliases](#git-aliases)
+
+* [System setup](#system-setup)
+
+[Structure](#structure)
+
+[Usage](#usage)
+
+* [Optional: Change default location](#optional:-change-default-location)
+
+* [Optional: Manual setup](#optional:-manual-setup)
+
+[Contributing](#contributing)
+
+[Troubleshooting](#troubleshooting)
+
+[TODO](#todo)
+
 ## Features
 
 Besides the function `dotfiles` for handy setup, useful aliases and functions are provided.
@@ -231,29 +255,29 @@ For instance, `dash` does not support `[[ ... ]]`, which is used a lot here.
 
 ### add notes
 
-- installation notes
-  - download nord
-  - install xcode-tools
-  - hidden files
-  - virtualbox needs sth.
-  - teamviewer settings
-  - magnet aus Apple Store
-- refactor 3-lines
+* installation notes
+  * download nord
+  * install xcode-tools
+  * hidden files
+  * virtualbox needs sth.
+  * teamviewer settings
+  * magnet aus Apple Store
+* refactor 3-lines
 
 ### shell scripting
 
-- alert: add usage description to alert function (sound arg)
-- alert: add message to alert as input arg
-- dotfiles: print info of all features and new functionality
-- editing: function for quickly editing shellrc (other files?)
-- java: function for changing java version
-- kubectl: probably too slow like <(heroku ...)?
-- LaTeX: script for creating a LaTeX folder structure
-- LaTeX: install
-- macOS: install Nord and Dracula
-- prompt: function for changing prompt
-- python: pip install $(pip list --outdated | awk '{ print $1 }') --upgrade
-- README: add vscode (vim-)keybindings
-- ubuntu: install Dracula
-- ubuntu: set PYTHON_INTERPRETER_PATH in shellrc
-- vscode: add snippets
+* alert: add usage description to alert function (sound arg)
+* alert: add message to alert as input arg
+* dotfiles: print info of all features and new functionality
+* editing: function for quickly editing shellrc (other files?)
+* java: function for changing java version
+* kubectl: probably too slow like <(heroku ...)?
+* LaTeX: script for creating a LaTeX folder structure
+* LaTeX: install
+* macOS: install Nord and Dracula
+* prompt: function for changing prompt
+* python: pip install $(pip list --outdated | awk '{ print $1 }') --upgrade
+* README: add vscode (vim-)keybindings
+* ubuntu: install Dracula
+* ubuntu: set PYTHON_INTERPRETER_PATH in shellrc
+* vscode: add snippets
