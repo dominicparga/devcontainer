@@ -44,26 +44,26 @@ Those are not mentioned here.
 | new cmd | note |
 |:---------:|------|
 | SAFETY ALIASES |
-| <kbd>cp</kbd> | is alias for `cp -i -P`, so asks before replacing existing file. |
-| <kbd>mv</kbd> | is alias for `mv -i`, so asks before replacing existing file. |
+| `cp` | is alias for `cp -i -P`, so asks before replacing existing file. |
+| `mv` | is alias for `mv -i`, so asks before replacing existing file. |
 | COMMAND ls |
-| <kbd>l</kbd> | shows items as a colored list. |
-| <kbd>la</kbd> | shows hidden items as well. |
-| <kbd>ll</kbd> | shows items as a colored list and access rights. |
-| <kbd>lla</kbd> | shows hidden items as well. |
+| `l` | shows items as a colored list. |
+| `la` | shows hidden items as well. |
+| `ll` | shows items as a colored list and access rights. |
+| `lla` | shows hidden items as well. |
 | WORKING QUICKLY |
-| <kbd>c</kbd> | is alias for `clear`. |
-| <kbd>g</kbd> | is alias for `git`. |
-| <kbd>..</kbd> | is alias for `cd ..`. |
-| <kbd>.2</kbd> or <kbd>...</kbd> | goes back 2 folders. |
-| <kbd>.3</kbd> or <kbd>....</kbd> | goes back 3 folders. |
+| `c` | is alias for `clear`. |
+| `g` | is alias for `git`. |
+| `..` | is alias for `cd ..`. |
+| `.2` or `...` | goes back 2 folders. |
+| `.3` or `....` | goes back 3 folders. |
 | ... | ... |
-| <kbd>.6</kbd> or <kbd>.......</kbd> | goes back 6 folders. |
-| <kbd>mkd</kbd> | creates folder(s) and enters it. |
+| `.6` or `.......` | goes back 6 folders. |
+| `mkd` | creates folder(s) and enters it. |
 | MORE HANDY FUNCTIONS |
-| <kbd>alert</kbd> | can be called like `sleep 2; alert`. |
-| <kbd>dotfiles</kbd> | for setting scripts and installing tools. |
-| <kbd>gitignore</kbd> | uses the `gitignore.io` API to return gitignore entries. |
+| `alert` | can be called like `sleep 2; alert`. |
+| `dotfiles` | for setting scripts and installing tools. |
+| `gitignore` | uses the `gitignore.io` API to return gitignore entries. |
 
 ### Git aliases
 
@@ -75,34 +75,34 @@ In addition, visual-studio-code is opening as diff-tool and for commit-messages.
 | alias | note |
 |:---------:|------|
 | GENERAL |
-| <kbd>g h</kbd> | helps using `git help` more often ;) (`g h ALIAS` shows the replacement for the alias). |
-| <kbd>g s</kbd> | is alias for `git status` and one of the most used aliases. |
+| `g h` | helps using `git help` more often ;) (`g h ALIAS` shows the replacement for the alias). |
+| `g s` | is alias for `git status` and one of the most used aliases. |
 | EFFICIENT STAGING |
-| <kbd>g unstage FILES </kbd> | removes all changes from the index with respect to the given FILES (but keeps the changes in workspace). Simply spoken, all green FILES in `git status` become red again. |
-| <kbd>g discard FILES</kbd> | removes all changes from the workspace with respect to the given FILES. Simply spoken, all red FILES in `git status` disappear. (__ATTENTION!__ Obviously, those changes will be lost.) |
-| <kbd>g undo</kbd> | removes the last commit from history, but keeps its changes in the index. __ATTENTION!__ This alias can be very handy but it is recommended using this only for local commits, since removing pushed commits messes up the history. |
+| `g unstage FILES ` | removes all changes from the index with respect to the given FILES (but keeps the changes in workspace). Simply spoken, all green FILES in `git status` become red again. |
+| `g discard FILES` | removes all changes from the workspace with respect to the given FILES. Simply spoken, all red FILES in `git status` disappear. (__ATTENTION!__ Obviously, those changes will be lost.) |
+| `g undo` | removes the last commit from history, but keeps its changes in the index. __ATTENTION!__ This alias can be very handy but it is recommended using this only for local commits, since removing pushed commits messes up the history. |
 | COMMITTING |
-| <kbd>g a FILES</kbd> | adds the given files. |
-| <kbd>g aa</kbd> | adds all changes and executes git status afterwards. |
-| <kbd>g c</kbd> | commits. |
-| <kbd>g ca</kbd> | commits after `g aa`. |
-| <kbd>g cm "commits a commit lol"</kbd> | commits with a message. |
-| <kbd>g cam "commits a commit lol"</kbd> | is `g ca` with a message. |
+| `g a FILES` | adds the given files. |
+| `g aa` | adds all changes and executes git status afterwards. |
+| `g c` | commits. |
+| `g ca` | commits after `g aa`. |
+| `g cm "commits a commit lol"` | commits with a message. |
+| `g cam "commits a commit lol"` | is `g ca` with a message. |
 | MERGING |
-| <kbd>g m BRANCH</kbd> | `git merge BRANCH` |
-| <kbd>g squash BRANCH/COMMIT</kbd> | merges content without merging the git history. So the resulting commit looks like it has cherry-picked all commits of BRANCH/COMMIT. |
-| <kbd>g squeeze BRANCH/COMMIT</kbd> | is a different name for `g squash ...`. |
+| `g m BRANCH` | `git merge BRANCH` |
+| `g squash BRANCH/COMMIT` | merges content without merging the git history. So the resulting commit looks like it has cherry-picked all commits of BRANCH/COMMIT. |
+| `g squeeze BRANCH/COMMIT` | is a different name for `g squash ...`. |
 | BRANCHING |
-| <kbd>g co BRANCH/COMMIT</kbd> | `git checkout BRANCH/COMMIT` |
-| <kbd>g cob BRANCH</kbd> | `git checkout -b BRANCH` |
-| <kbd>g b</kbd> | `git branch` |
-| <kbd>g ba</kbd> | `git branch --list -a` |
-| <kbd>g bv</kbd> | `git branch --list -v` |
-| <kbd>g bav</kbd> | `git branch --list -av` |
+| `g co BRANCH/COMMIT` | `git checkout BRANCH/COMMIT` |
+| `g cob BRANCH` | `git checkout -b BRANCH` |
+| `g b` | `git branch` |
+| `g ba` | `git branch --list -a` |
+| `g bv` | `git branch --list -v` |
+| `g bav` | `git branch --list -av` |
 | LOGGING |
-| <kbd>g last N</kbd> | logs the last N commit messages. Default for N is 3. |
-| <kbd>g l</kbd> | shows the history of the local branch as a graph. |
-| <kbd>g la</kbd> | shows the global history as a graph. |
+| `g last N` | logs the last N commit messages. Default for N is 3. |
+| `g l` | shows the history of the local branch as a graph. |
+| `g la` | shows the global history as a graph. |
 
 ### System setup
 
