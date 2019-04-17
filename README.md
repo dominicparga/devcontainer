@@ -32,29 +32,19 @@ All these steps can be done automatically by using the provided function `dotfil
 
 ## Table of Contents
 
-[Features](#features)
+1. [Features](#features)
+    1. [Shell environment](#shell-environment)
+    2. [git aliases](#git-aliases)
+    3. [System setup](#system-setup)
+2. [Structure](#structure)
+3. [Usage](#usage)
+    1. [Optional: Change default location](#optional-change-default-location)
+    2. [Optional: Manual setup](#optional-manual-setup)
+4. [Contributing](#contributing)
+5. [Troubleshooting](#troubleshooting)
+6. [TODO](#todo)
 
-* [Shell environment](#shell-environment)
-
-* [git aliases](#git-aliases)
-
-* [System setup](#system-setup)
-
-[Structure](#structure)
-
-[Usage](#usage)
-
-* [Optional: Change default location](#optional:-change-default-location)
-
-* [Optional: Manual setup](#optional:-manual-setup)
-
-[Contributing](#contributing)
-
-[Troubleshooting](#troubleshooting)
-
-[TODO](#todo)
-
-## Features
+## Features <a name="features"></a>
 
 Besides the function `dotfiles` for handy setup, useful aliases and functions are provided.
 These dotfiles are used with `bash` and `zsh`.
