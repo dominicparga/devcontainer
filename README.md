@@ -38,8 +38,8 @@ All these steps can be done automatically by using the provided function `dotfil
     3. [System setup](#system-setup)
 2. [Structure](#structure)
 3. [Usage](#usage)
-    1. [Optional: Change default location](#optional-change-default-location)
-    2. [Optional: Manual setup](#optional-manual-setup)
+    1. [Optional: Change default location](#change-default-location)
+    2. [Optional: Manual setup](#manual-setup)
 4. [Contributing](#contributing)
 5. [Troubleshooting](#troubleshooting)
 6. [TODO](#todo)
@@ -49,7 +49,7 @@ All these steps can be done automatically by using the provided function `dotfil
 Besides the function `dotfiles` for handy setup, useful aliases and functions are provided.
 These dotfiles are used with `bash` and `zsh`.
 
-### Shell environment
+### Shell environment <a name="shell-environment"></a>
 
 Beside autocompletion for several tools, aliases and exports can be found in [`shell/shellrc.sh`](https://github.com/dominicparga/dotfiles/blob/master/shell/shellrc.sh).
 Some commands like `grep` or `tree` are just flagged to use colors.
@@ -79,7 +79,7 @@ Those are not mentioned here.
 | `dotfiles` | for setting scripts and installing tools. |
 | `gitignore` | uses the `gitignore.io` API to return gitignore entries. |
 
-### Git aliases
+### Git aliases <a name="git-aliases"></a>
 
 Have a look at the handy [git aliases](https://github.com/dominicparga/dotfiles/blob/master/git/config).
 In addition, visual-studio-code is opening as diff-tool and for commit-messages.
@@ -118,12 +118,12 @@ In addition, visual-studio-code is opening as diff-tool and for commit-messages.
 | `g l` | shows the history of the local branch as a graph. |
 | `g la` | shows the global history as a graph. |
 
-### System setup
+### System setup <a name="system-setup"></a>
 
 You can setup your system (macOS, linux) using `dotfiles install-system`.
 Executing `dotfiles help` may help.
 
-## Structure
+## Structure <a name="structure"></a>
 
 The following (incomplete) tree is supported.
 In general, every file in custom can be removed and calling `dotfiles custom` will recreate the default version of it.
@@ -175,7 +175,7 @@ dotfiles/
 | `utils/drafts/` | Contains drafts that will be copied into a fresh created `custom/`. It is the solution to the problem of having (frequently changing) user dependent scripts (e.g. vscode's `settings.json`) and a git repo, that shouldn't need to be forked only for slight changes. |
 | `vscode/`                             | [Visual studio code](https://code.visualstudio.com/) uses some `settings.json` and `keybindings.json` for user settings and keybindings. Since these files slightly change a lot in usage, often temporary, they are provided as drafts and symlinked to `custom/vscode/...`. |
 
-## Usage
+## Usage <a name="usage"></a>
 
 The project has to be cloned to `${HOME}/dotfiles` and the provided wrapper function can be used to set all symlinks.
 Executing the following will create a folder `custom/...` in the dotfiles folder and create all needed symlinks in HOME.
@@ -194,7 +194,7 @@ dotfiles symlink all
 
 *__NOTE:__ `custom/` contains some generic info that should probably be updated by hand (e.g. gitconfig's `user.name`).*
 
-### Optional: Change default location
+### Optional: Change default location <a name="change-default-location"></a>
 
 Changing the default location `${HOME}/dotfiles` needs to rename the folder and change the variable `DOTFILES` defined at top of `${DOTFILES}/shell/shellrc.sh`.
 To provide this without the need of forking the whole project, a file `custom/shell/shellrc.sh` is preferred over the default `shell/shellrc.sh`.
@@ -212,7 +212,7 @@ git clone https://github.com/dominicparga/dotfiles.git "${DOTFILES}"
 dotfiles symlink all
 ```
 
-### Optional: Manual setup
+### Optional: Manual setup <a name="manual-setup"></a>
 
 The wrapper function calls the following scripts.
 
@@ -227,7 +227,7 @@ bash "${DOTFILES}/utils/symlink_dotfiles.sh" all
 
 Fully manually, `custom/` and all symlinks has to be created by hand.
 
-## Contributing
+## Contributing <a name="contributing"></a>
 
 These dotfiles are created in a __modular__ and __lightweight__ way.
 For example, to find the `shellrc.sh`, the respective script is located in `shell`.
@@ -235,13 +235,13 @@ This should be kept (in general) since looking for, e.g., "python" should not ne
 
 For more detailed information, please look [at the contribution section](CONTRIBUTING.md).
 
-## Troubleshooting
+## Troubleshooting <a name="troubleshooting"></a>
 
 If Ubuntu doesn't run the scripts as expected, check how `sh` is linked.
 These dotfiles are used with bash and zsh.
 For instance, `dash` does not support `[[ ... ]]`, which is used a lot here.
 
-## TODO
+## TODO <a name="todo"></a>
 
 ### add notes
 
