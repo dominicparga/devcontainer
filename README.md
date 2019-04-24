@@ -118,6 +118,9 @@ In addition, visual-studio-code is opening as diff-tool and for commit-messages.
 | `g l` | shows the history of the local branch as a graph. |
 | `g la` | shows the global history as a graph. |
 
+> __Note:__ `g l` uses `git log` and `g la` adds the flag `--all`.
+> Due to `git help log`, this flag refers to stored references in `.git/refs`.
+
 ### System setup <a name="system-setup"></a>
 
 You can setup your system (macOS, linux) using `dotfiles install-system`.
@@ -180,9 +183,9 @@ dotfiles/
 The project has to be cloned to `${HOME}/dotfiles` and the provided wrapper function can be used to set all symlinks.
 Executing the following will create a folder `custom/...` in the dotfiles folder and create all needed symlinks in HOME.
 
-*__NOTE:__ This default location can be changed.
-See [Change default location](#change-default-location) below for more infos.
-The function name `dotfiles` is independent of your chosen foldername.*
+> __Note:__ This default location can be changed.
+> See [Change default location](#change-default-location) below for more infos.
+> The function name `dotfiles` is independent of your chosen foldername.
 
 ```zsh
 cd ~
@@ -192,7 +195,7 @@ git clone https://github.com/dominicparga/dotfiles.git
 dotfiles symlink all
 ```
 
-*__NOTE:__ `custom/` contains some generic info that should probably be updated by hand (e.g. gitconfig's `user.name`).*
+> __Note:__ `custom/` contains some generic info that should probably be updated by hand (e.g. gitconfig's `user.name`).
 
 ### Optional: Change default location <a name="change-default-location"></a>
 
