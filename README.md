@@ -256,6 +256,7 @@ For instance, `dash` does not support `[[ ... ]]`, which is used a lot here.
   * teamviewer settings
   * magnet aus Apple Store
 * refactor 3-lines
+* readonly PROGNAME=$(basename $0)
 
 ### shell scripting
 
