@@ -226,24 +226,19 @@ if ( is_machine 'macOS' ); then
     export PATH="${JAVA_HOME}/bin:${PATH}"
 fi
 
-# other macOS/brew related stuff
+# compiler needs since brew doesn't replace macOS bins
 if ( is_machine 'macOS' ); then
     # icu4c
     # export PATH="/usr/local/opt/icu4c/bin:${PATH}"
     # export PATH="/usr/local/opt/icu4c/sbin:${PATH}"
-    # readline
-    # export LDFLAGS="-L/usr/local/opt/readline/lib"
-    # export CPPFLAGS="-I/usr/local/opt/readline/include"
-fi
-
-# compiler needs
-if ( is_machine 'macOS' ); then
-    # icu4c
     export LDFLAGS="-L/usr/local/opt/icu4c/lib"
     export CPPFLAGS="-I/usr/local/opt/icu4c/include"
     # sqlite
     export LDFLAGS="-L/usr/local/opt/sqlite/lib"
     export CPPFLAGS="-I/usr/local/opt/sqlite/include"
+    # readline
+    export LDFLAGS="-L/usr/local/opt/readline/lib"
+    export CPPFLAGS="-I/usr/local/opt/readline/include"
 fi
 
 ################################################################################
