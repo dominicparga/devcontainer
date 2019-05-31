@@ -86,6 +86,10 @@
     "[shellscript]": {
         "editor.rulers": [ 80 ],
     },
+    // rust
+    "[rust]": {
+        "editor.rulers": [ 100 ],
+    },
     // python
     "[python]": {
         "editor.rulers": [ 72, 79 ],
