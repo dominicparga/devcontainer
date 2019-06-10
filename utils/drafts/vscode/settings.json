@@ -36,8 +36,8 @@
     "editor.renderFinalNewline": true,
     "editor.formatOnSave": false,
     // whitespaces
-    "editor.renderWhitespace": "boundary",
-    "files.trimTrailingWhitespace": true,
+    "editor.renderWhitespace": "none",
+    "files.trimTrailingWhitespace": false, // some files need false!
     // tabs
     "editor.insertSpaces": true,
     "editor.tabSize": 4,
@@ -86,14 +86,17 @@
     // shellscript
     "[shellscript]": {
         "editor.rulers": [ 80 ],
+        "editor.trimAutoWhitespace": true,
     },
     // rust
     "[rust]": {
         "editor.rulers": [ 100 ],
+        "editor.trimAutoWhitespace": true,
     },
     // python
     "[python]": {
         "editor.rulers": [ 72, 79 ],
+        "editor.trimAutoWhitespace": true,
     },
     "python.pythonPath": "${env:PYTHON_INTERPRETER_PATH}",
     "python.autoComplete.addBrackets": true,
