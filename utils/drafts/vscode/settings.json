@@ -11,7 +11,7 @@
     "workbench.colorTheme": "Dracula",
     // settings ui
     "workbench.settings.editor": "json",
-    "workbench.settings.useSplitJSON": false,
+    "workbench.settings.useSplitJSON": true,
     "workbench.settings.openDefaultSettings": false,
     ////////////////////////////////////////////////////////////////////////////
     // editor settings
@@ -36,7 +36,8 @@
     "editor.renderFinalNewline": true,
     "editor.formatOnSave": false,
     // whitespaces
-    "editor.renderWhitespace": "none",
+    "editor.renderWhitespace": "boundary",
+    "files.trimTrailingWhitespace": true,
     // tabs
     "editor.insertSpaces": true,
     "editor.tabSize": 4,
@@ -85,6 +86,10 @@
     // shellscript
     "[shellscript]": {
         "editor.rulers": [ 80 ],
+    },
+    // rust
+    "[rust]": {
+        "editor.rulers": [ 100 ],
     },
     // python
     "[python]": {
@@ -186,7 +191,7 @@
     "vim.scroll": 20,
     // moving cursor over folded text without entering it
     "vim.foldfix": true,
-    // serach
+    // search
     "vim.hlsearch": true,
     "vim.smartcase": true,
     // easymotion
@@ -196,6 +201,7 @@
     "vim.easymotionMarkerWidthPerChar": 9,
     "vim.easymotionMarkerHeight": 22,
     // keybindings
+    "vim.changeWordIncludesWhitespace": true,
     "vim.visualModeKeyBindingsNonRecursive": [
         ////////////////////////////////////////////////////////////////////////
         // utils
@@ -214,19 +220,19 @@
         ////////////////////////////////////////////////////////////////////////
         // code interaction
         {
-            "before": ["<leader>", "#"],
+            "before": ["<leader>", "/"], // dont forget normal-mode
             "commands": [
                 "editor.action.commentLine",
             ]
         },
         {
-            "before": [">"],
+            "before": [">"], // dont forget normal-mode
             "commands": [
                 "editor.action.indentLines"
             ]
         },
         {
-            "before": ["<"],
+            "before": ["<"], // dont forget normal-mode
             "commands": [
                 "editor.action.outdentLines"
             ]
@@ -273,22 +279,28 @@
                 "workbench.action.navigateForward",
             ]
         },
+        {
+            "before": ["<leader>", "#"],
+            "commands": [
+                "editor.action.goToDeclaration",
+            ]
+        },
         ////////////////////////////////////////////////////////////////////////
         // code interaction
         {
-            "before": ["<leader>", "#"],
+            "before": ["<leader>", "/"], // dont forget visual-mode
             "commands": [
                 "editor.action.commentLine",
             ]
         },
         {
-            "before": [">"],
+            "before": [">"], // dont forget visual-mode
             "commands": [
                 "editor.action.indentLines"
             ]
         },
         {
-            "before": ["<"],
+            "before": ["<"], // dont forget visual-mode
             "commands": [
                 "editor.action.outdentLines"
             ]
@@ -399,55 +411,55 @@
         },
         // tab access via number
         {
-            "before": ["<leader>", "1"],
+            "before": ["<leader>", "t", "1"],
             "commands": [
                 "workbench.action.openEditorAtIndex1",
             ]
         },
         {
-            "before": ["<leader>", "2"],
+            "before": ["<leader>", "t", "2"],
             "commands": [
                 "workbench.action.openEditorAtIndex2",
             ]
         },
         {
-            "before": ["<leader>", "3"],
+            "before": ["<leader>", "t", "3"],
             "commands": [
                 "workbench.action.openEditorAtIndex3",
             ]
         },
         {
-            "before": ["<leader>", "4"],
+            "before": ["<leader>", "t", "4"],
             "commands": [
                 "workbench.action.openEditorAtIndex4",
             ]
         },
         {
-            "before": ["<leader>", "5"],
+            "before": ["<leader>", "t", "5"],
             "commands": [
                 "workbench.action.openEditorAtIndex5",
             ]
         },
         {
-            "before": ["<leader>", "6"],
+            "before": ["<leader>", "t", "6"],
             "commands": [
                 "workbench.action.openEditorAtIndex6",
             ]
         },
         {
-            "before": ["<leader>", "7"],
+            "before": ["<leader>", "t", "7"],
             "commands": [
                 "workbench.action.openEditorAtIndex7",
             ]
         },
         {
-            "before": ["<leader>", "8"],
+            "before": ["<leader>", "t", "8"],
             "commands": [
                 "workbench.action.openEditorAtIndex8",
             ]
         },
         {
-            "before": ["<leader>", "9"],
+            "before": ["<leader>", "t", "9"],
             "commands": [
                 "workbench.action.openEditorAtIndex9",
             ]
