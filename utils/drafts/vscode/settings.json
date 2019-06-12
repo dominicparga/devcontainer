@@ -140,6 +140,10 @@
         "editor.rulers": [ 80 ],
         "editor.tabSize": 2,
     },
+    // LaTeX
+    "latex-workshop.view.pdf.viewer": "tab",
+    "latex-workshop.hover.preview.scale": 1,
+    "latex-workshop.latex.outDir": "%DIR%/../build",
     ////////////////////////////////////////////////////////////////////////////
     // kutgw
     // cquery
@@ -151,8 +155,6 @@
         // "*.thor": "ruby",
         // "*.jsx": "javascript",
     },
-    // LaTeX
-    "latex-workshop.view.pdf.viewer": "tab",
     // TODOs
     "todohighlight.defaultStyle": {
         "color": "#5E71A4",
