@@ -141,6 +141,9 @@
         "editor.tabSize": 2,
     },
     // LaTeX
+    "[latex]": {
+        "editor.wordWrap": "on",
+    },
     "latex-workshop.view.pdf.viewer": "tab",
     "latex-workshop.hover.preview.scale": 1,
     "latex-workshop.latex.outDir": "%DIR%/../build",
