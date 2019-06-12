@@ -40,6 +40,9 @@ _extensions=(
     kevinrose.vsc-python-indent
     ms-python.python
 
+    # LaTeX
+    james-yu.latex-workshop
+
     # c cpp
     # cquera-project.cquery
     ms-vscode.cpptools

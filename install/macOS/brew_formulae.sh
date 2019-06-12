@@ -24,6 +24,7 @@ brew install sbt
 brew cask install alfred
 brew install bash
 brew install bash-completion@2
+brew cask install mactex
 brew install coreutils
 brew cask install discord
 brew cask install dropbox
