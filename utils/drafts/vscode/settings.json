@@ -148,51 +148,6 @@
     "latex-workshop.hover.preview.scale": 1,
     "latex-workshop.latex.outDir": "%DIR%/../build",
     ////////////////////////////////////////////////////////////////////////////
-    // kutgw
-    // cquery
-    "cquery.launch.command": "cquery",
-    // filetype stuff
-    "files.associations": {
-        "SConscript": "python",
-        "SConstruct": "python",
-        // "*.thor": "ruby",
-        // "*.jsx": "javascript",
-    },
-    // TODOs
-    "todohighlight.defaultStyle": {
-        "color": "#5E71A4",
-        "backgroundColor": "#282A36",
-        "overviewRulerColor": "#000000",
-        "border": "1px solid #5E71A4",
-        "borderRadius": "2px",
-        "isWholeLine": false,
-    },
-    "todohighlight.keywords": [
-        {
-            "text": "TODO:",
-            "color": "#5E71A4",
-            "backgroundColor": "#282A36",
-            "overviewRulerColor": "#000000",
-            "border": "1px solid #5E71A4",
-            "borderRadius": "2px",
-            "isWholeLine": false,
-        },
-        {
-            "text": "FIXME:",
-            "color": "#5E71A4",
-            "backgroundColor": "#282A36",
-            "overviewRulerColor": "#000000",
-            "border": "1px solid #5E71A4",
-            "borderRadius": "2px",
-            "isWholeLine": false,
-        },
-        "HINT:",
-        "INFO:",
-        "WARN:",
-        "ERROR:",
-        "ERR:",
-    ],
-    ////////////////////////////////////////////////////////////////////////////
     // vim
     "vim.leader": ",",
     "vim.useSystemClipboard": true,
@@ -472,6 +427,51 @@
                 "workbench.action.openEditorAtIndex9",
             ]
         },
+    ],
+    ////////////////////////////////////////////////////////////////////////////
+    // kutgw
+    // cquery
+    "cquery.launch.command": "cquery",
+    // filetype stuff
+    "files.associations": {
+        "SConscript": "python",
+        "SConstruct": "python",
+        // "*.thor": "ruby",
+        // "*.jsx": "javascript",
+    },
+    // TODOs
+    "todohighlight.defaultStyle": {
+        "color": "#5E71A4",
+        "backgroundColor": "#282A36",
+        "overviewRulerColor": "#000000",
+        "border": "1px solid #5E71A4",
+        "borderRadius": "2px",
+        "isWholeLine": false,
+    },
+    "todohighlight.keywords": [
+        {
+            "text": "TODO:",
+            "color": "#5E71A4",
+            "backgroundColor": "#282A36",
+            "overviewRulerColor": "#000000",
+            "border": "1px solid #5E71A4",
+            "borderRadius": "2px",
+            "isWholeLine": false,
+        },
+        {
+            "text": "FIXME:",
+            "color": "#5E71A4",
+            "backgroundColor": "#282A36",
+            "overviewRulerColor": "#000000",
+            "border": "1px solid #5E71A4",
+            "borderRadius": "2px",
+            "isWholeLine": false,
+        },
+        "HINT:",
+        "INFO:",
+        "WARN:",
+        "ERROR:",
+        "ERR:",
     ],
     ////////////////////////////////////////////////////////////////////////////
     // occasionally added stuff
