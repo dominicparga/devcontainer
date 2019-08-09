@@ -267,7 +267,6 @@ For instance, `dash` does not support `[[ ... ]]`, which is used a lot here.
 * java: function for changing java version
 * kubectl: probably too slow like <(heroku ...)?
 * LaTeX: script for creating a LaTeX folder structure
-* LaTeX: install
 * macOS: install Nord and Dracula
 * prompt: function for changing prompt
 * python: pip install $(pip list --outdated | awk '{ print $1 }') --upgrade
