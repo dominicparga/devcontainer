@@ -187,6 +187,8 @@ Executing the following will create a folder `custom/...` in the dotfiles folder
 > See [Change default location](#change-default-location) below for more infos.
 > The function name `dotfiles` is independent of your chosen foldername.
 
+The command `symlink` creates the symlinks verbosely, so don't be surprised of the ~10 lines of feedback.
+
 ```zsh
 cd ~
 git clone https://github.com/dominicparga/dotfiles.git
@@ -194,6 +196,9 @@ git clone https://github.com/dominicparga/dotfiles.git
 . "${HOME}/dotfiles/shell/shellrc.sh"
 dotfiles symlink all
 ```
+
+Sometimes, a syntax-error is shown, e.g. in `shell/func/alert`.
+It does not occur (and everything is working as expected) after opening a new terminal-window.
 
 > __Note:__ `custom/` contains some generic info that should probably be updated by hand (e.g. gitconfig's `user.name`).
 
