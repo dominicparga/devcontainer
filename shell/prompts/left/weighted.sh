@@ -94,13 +94,14 @@ __prompt_cmd() {
     # closing ]
     PS1+="${_c_default}${_b_start}]${_b_end}"
     # colored dollar sign depending on successful precommand
-    PS1+="${_c_last_exit}${_b_start}\$${_b_end}${_c_default} "
+    PS1+="${_c_default}${_b_start}\$${_b_end}${_c_default} "
 }
 
 if [[ -n "${ZSH_NAME}" ]]; then
     __prompt_cmd
 elif [[ -n "${BASH}" ]]; then
-    PROMPT_COMMAND=__prompt_cmd
+    # PROMPT_COMMAND=__prompt_cmd
+    __prompt_cmd
 fi
 
 PS2="____$ "
