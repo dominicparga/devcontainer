@@ -57,6 +57,7 @@ __prompt_cmd() {
         else
             _c_last_exit="${_c_red}"
         fi
+        _c_last_exit="${_c_default}"
 
         # details
         local _used_shell='bash'
@@ -94,7 +95,7 @@ __prompt_cmd() {
     # closing ]
     PS1+="${_c_default}${_b_start}]${_b_end}"
     # colored dollar sign depending on successful precommand
-    PS1+="${_c_default}${_b_start}\$${_b_end}${_c_default} "
+    PS1+="${_c_last_exit}${_b_start}\$${_b_end}${_c_default} "
 }
 
 if [[ -n "${ZSH_NAME}" ]]; then
