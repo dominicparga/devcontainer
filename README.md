@@ -34,15 +34,17 @@ All these steps can be done automatically by using the provided function `dotfil
 
 1. [Features](#features)
     1. [Shell environment](#shell-environment)
-    2. [git aliases](#git-aliases)
-    3. [System setup](#system-setup)
-2. [Structure](#structure)
-3. [Usage](#usage)
+    1. [git aliases](#git-aliases)
+    1. [System setup](#system-setup)
+1. [Structure](#structure)
+1. [Usage](#usage)
     1. [Optional: Change default location](#change-default-location)
-    2. [Optional: Manual setup](#manual-setup)
-4. [Contributing](#contributing)
-5. [Troubleshooting](#troubleshooting)
-6. [TODO](#todo)
+    1. [Optional: Manual setup](#manual-setup)
+1. [Contributing](#contributing)
+1. [FAQ / Troubleshooting](#faq)
+    1. [Syntax error (e.g. with brackets)](#syntax-error-with-brackets)
+    1. [`Zsh`: Insecure files or directories](#insecure-files-and-dirs)
+1. [TODO](#todo)
 
 ## Features <a name="features"></a>
 
@@ -243,11 +245,27 @@ This should be kept (in general) since looking for, e.g., "python" should not ne
 
 For more detailed information, please look [at the contribution section](CONTRIBUTING.md).
 
-## Troubleshooting <a name="troubleshooting"></a>
+## FAQ / Troubleshooting <a name="faq"></a>
 
-If Ubuntu doesn't run the scripts as expected, check how `sh` is linked.
-These dotfiles are used with bash and zsh.
-For instance, `dash` does not support `[[ ... ]]`, which is used a lot here.
+### Syntax error (e.g. with brackets) <a name="syntax-error-with-brackets"></a>
+
+These dotfiles are used with `bash` and `zsh`.
+Check if `sh` is symlinked
+
+```zsh
+ls -1GF --color=auto -lh -a $(which sh)`)
+```
+
+For instance, `dash` (not `bash`) does not support `[[ ... ]]`, which is used a lot here.
+
+### `Zsh`: Insecure files or directories <a name="insecure-files-and-dirs"></a>
+
+Your file permissions for your `dotfiles` are probably too loose.
+Execute the following to set the permissions to `drwxr-xr-x`.
+
+```zsh
+chmod -R 755 ${DOTFILES}
+```
 
 ## TODO <a name="todo"></a>
 
