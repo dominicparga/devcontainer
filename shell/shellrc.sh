@@ -41,7 +41,7 @@ if [[ -n "${ZSH_NAME}" ]]; then
     ############################################################################
     # brew autocompletion
 
-    if ( which brew 1>/dev/null 2>/dev/null ); then
+    if ( command -v brew 1>/dev/null 2>/dev/null ); then
         # ATTENTION! has to be before 'autoload -Uz compinit'
         FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
     fi
@@ -56,7 +56,7 @@ if [[ -n "${ZSH_NAME}" ]]; then
     # heroku autocompletion
 
     # works without these lines and these lines make startup slow
-    # if ( which heroku 1>/dev/null 2>/dev/null ); then
+    # if ( command -v heroku 1>/dev/null 2>/dev/null ); then
     #     # heroku autocomplete setup
     #     HEROKU_AC_ZSH_SETUP_PATH="${HOME}/Library/Caches/heroku/autocomplete/zsh_setup"
     #     if [[ -f ${HEROKU_AC_ZSH_SETUP_PATH} ]]; then
@@ -67,7 +67,7 @@ if [[ -n "${ZSH_NAME}" ]]; then
     ############################################################################
     # kubectl autocompletion
 
-    if ( which kubectl 1>/dev/null 2>/dev/null ); then
+    if ( command -v kubectl 1>/dev/null 2>/dev/null ); then
         . <(kubectl completion zsh)
     fi
 
@@ -91,7 +91,7 @@ elif [[ -n "${BASH}" ]]; then
     ############################################################################
     # brew autocompletion
 
-    if ( which brew 1>/dev/null 2>/dev/null ); then
+    if ( command -v brew 1>/dev/null 2>/dev/null ); then
         for _file in "$(brew --prefix)/etc/bash_completion.d/"*; do
             [[ -f "${_file}" ]] && . "${_file}"
         done
@@ -122,7 +122,7 @@ elif [[ -n "${BASH}" ]]; then
     ############################################################################
     # heroku autocompletion
 
-    if ( which heroku 1>/dev/null 2>/dev/null ); then
+    if ( command -v heroku 1>/dev/null 2>/dev/null ); then
         # heroku autocomplete:script bash
         HEROKU_AC_BASH_SETUP_PATH="${HOME}/Library/Caches/heroku/autocomplete/bash_setup"
         if [[ -f ${HEROKU_AC_BASH_SETUP_PATH} ]]; then
@@ -133,7 +133,7 @@ elif [[ -n "${BASH}" ]]; then
     ############################################################################
     # kubectl autocompletion
 
-    if ( which kubectl 1>/dev/null 2>/dev/null ); then
+    if ( command -v kubectl 1>/dev/null 2>/dev/null ); then
         . <(kubectl completion bash)
     fi
 fi
@@ -173,7 +173,7 @@ export EDITOR='vi'
 export VISUAL='code'
 
 # git
-if ( which "${VISUAL}" 1>/dev/null 2>/dev/null); then
+if ( command -v "${VISUAL}" 1>/dev/null 2>/dev/null); then
     export GIT_EDITOR="${VISUAL} --wait"
 else
     export GIT_EDITOR="${EDITOR}"

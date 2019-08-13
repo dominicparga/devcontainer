@@ -46,7 +46,7 @@ if [[ -n "${ZSH_NAME}" ]]; then
     }
 
     # put fancy stuff on the right
-    if which rbenv &> /dev/null; then
+    if command -v rbenv &> /dev/null; then
         RPS1='$(__git_custom_status)%{$fg[red]%}$(__rbenv_version_status)%{$reset_color%} ${EPS1}'
     else
         RPS1='$(__git_custom_status) ${EPS1}'

@@ -1,7 +1,7 @@
 ################################################################################
 # update brew first
 
-if ( which brew 1>/dev/null 2>/dev/null ); then
+if ( command -v brew 1>/dev/null 2>/dev/null ); then
     echo "Updating homebrew and formulae..."
     brew update
     brew upgrade
