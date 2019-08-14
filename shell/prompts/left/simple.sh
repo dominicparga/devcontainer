@@ -1,13 +1,14 @@
-
 __prompt_cmd() {
-    ############################################################################
+    local _last_exit_code="${?}"
+
+    #---------------------------------------------------------------------------
     # set variable identifying the chroot you work in (used in the prompt below)
 
     if [ -z "${_debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
         local _debian_chroot=$(cat /etc/debian_chroot)
     fi
 
-    ############################################################################
+    #---------------------------------------------------------------------------
     # prepare colors and details
 
     if [[ -n "${ZSH_NAME}" ]]; then
@@ -38,8 +39,7 @@ __prompt_cmd() {
         # colors
         # b - bold
         # c - color
-        local _last_exit_code="${?}"
-        local _c_last_exit=''
+        local _c_last_exit="${_c_default}"
 
         local _c_default='\[\e[0m\]'
         local _c_blue='\[\e[0;34m\]'
@@ -52,13 +52,14 @@ __prompt_cmd() {
         local _b_start='\[\e[1m\]'
         local _b_end='\[\e[0m\]'
 
-        if [[ ${_last_exit_code} = 0 ]]; then
-            _c_last_exit="${_c_green}"
-        else
-            _c_last_exit="${_c_red}"
-        fi
-        # since dynamic change is unsupported yet
-        _c_last_exit="${_c_default}"
+        # TODO (see also below with PROMPT_COMMAND)
+        # Dynamic color of $ depending on $? works, but virtual-envs doesn't
+        # due to reset of PS1.
+        # if [[ ${_last_exit_code} = 0 ]]; then
+        #     _c_last_exit="${_c_green}"
+        # else
+        #     _c_last_exit="${_c_red}"
+        # fi
 
         # details
         local _used_shell='bash'
@@ -68,6 +69,9 @@ __prompt_cmd() {
         local _short_pwd='\W'
         local _long_pwd='\w'
     fi
+
+    #---------------------------------------------------------------------------
+    # stick everything together
 
     # reset
     PS1=''
@@ -88,6 +92,8 @@ __prompt_cmd() {
     PS1+="${_c_default}${_debian_chroot:+(${_debian_chroot})}"
     # $USERNAME
     PS1+="${_c_magenta}${_b_start}${_username}${_b_end}"
+    # hostname
+    # PS1+="${_c_magenta}${_b_start}@${_hostname}${_b_end}"
     # current dir
     PS1+="${_c_default}${_b_start}:${_b_end}"
     PS1+="${_c_cyan}${_b_start}${_short_pwd}${_b_end}"
@@ -100,8 +106,11 @@ __prompt_cmd() {
 if [[ -n "${ZSH_NAME}" ]]; then
     __prompt_cmd
 elif [[ -n "${BASH}" ]]; then
+    # TODO (see also above with setting _c_last_exit)
+    # Dynamic color of $ depending on $? works, but virtual-envs doesn't
+    # due to reset of PS1.
     # PROMPT_COMMAND=__prompt_cmd
     __prompt_cmd
 fi
 
-PS2="____$ "
+PS2='____$ '
