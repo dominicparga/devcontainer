@@ -60,7 +60,7 @@ if [[ -n "${ZSH_NAME}" ]]; then
     #     # heroku autocomplete setup
     #     HEROKU_AC_ZSH_SETUP_PATH="${HOME}/Library/Caches/heroku/autocomplete/zsh_setup"
     #     if [[ -f ${HEROKU_AC_ZSH_SETUP_PATH} ]]; then
-    #         . ${HEROKU_AC_ZSH_SETUP_PATH}
+    #         source ${HEROKU_AC_ZSH_SETUP_PATH}
     #     fi
     # fi
 
@@ -68,7 +68,7 @@ if [[ -n "${ZSH_NAME}" ]]; then
     # kubectl autocompletion
 
     if ( command -v kubectl 1>/dev/null 2>/dev/null ); then
-        . <(kubectl completion zsh)
+        source <(kubectl completion zsh)
     fi
 
 elif [[ -n "${BASH}" ]]; then
@@ -82,7 +82,7 @@ elif [[ -n "${BASH}" ]]; then
             # is folder empty?
             if [[ -n "$(ls -A "${_dir}/func")" ]]; then
                 for _file in "${_dir}/func/"*; do
-                    . "${_file}";
+                    source "${_file}";
                 done
             fi
         fi
@@ -93,11 +93,11 @@ elif [[ -n "${BASH}" ]]; then
 
     if ( command -v brew 1>/dev/null 2>/dev/null ); then
         for _file in "$(brew --prefix)/etc/bash_completion.d/"*; do
-            [[ -f "${_file}" ]] && . "${_file}"
+            [[ -f "${_file}" ]] && source "${_file}"
         done
 
         _file="$(brew --prefix)/etc/profile.d/bash_completion.sh"
-        [[ -f "${_file}" ]] && . "${_file}"
+        [[ -f "${_file}" ]] && source "${_file}"
     fi
 
     ############################################################################
@@ -107,15 +107,15 @@ elif [[ -n "${BASH}" ]]; then
         # source /etc/bash.bashrc or /etc/profile ?
         if ! shopt -oq posix; then
             if [ -f '/usr/share/bash-completion/bash_completion' ]; then
-                . '/usr/share/bash-completion/bash_completion'
+                source '/usr/share/bash-completion/bash_completion'
             elif [ -f '/etc/bash_completion' ]; then
-                . '/etc/bash_completion'
+                source '/etc/bash_completion'
             fi
         fi
     elif ( is_machine 'macOS' ); then
         # bash-completion@2 installed via brew
         if [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]]; then
-            . "/usr/local/etc/profile.d/bash_completion.sh"
+            source "/usr/local/etc/profile.d/bash_completion.sh"
         fi
     fi
 
@@ -126,7 +126,7 @@ elif [[ -n "${BASH}" ]]; then
         # heroku autocomplete:script bash
         HEROKU_AC_BASH_SETUP_PATH="${HOME}/Library/Caches/heroku/autocomplete/bash_setup"
         if [[ -f ${HEROKU_AC_BASH_SETUP_PATH} ]]; then
-            . ${HEROKU_AC_BASH_SETUP_PATH}
+            source ${HEROKU_AC_BASH_SETUP_PATH}
         fi
     fi
 
@@ -134,7 +134,7 @@ elif [[ -n "${BASH}" ]]; then
     # kubectl autocompletion
 
     if ( command -v kubectl 1>/dev/null 2>/dev/null ); then
-        . <(kubectl completion bash)
+        source <(kubectl completion bash)
     fi
 fi
 
@@ -188,9 +188,9 @@ fi
 
 # nodejs and npm
 if ( is_machine 'linux'); then
-    VERSION='v11.10.0'
-    DISTRO='linux-x64'
-    export PATH="/usr/local/lib/nodejs/node-${VERSION}-${DISTRO}:${PATH}"
+    _npm_version='v11.10.0'
+    _npm_distro='linux-x64'
+    export PATH="/usr/local/lib/nodejs/node-${_npm_version}-${_npm_distro}/bin:${PATH}"
 fi
 
 # python
@@ -211,20 +211,6 @@ export PIPENV_VENV_IN_PROJECT='yes'
 
 # rust
 export PATH="${HOME}/.cargo/bin:${PATH}"
-
-# nodejs and npm
-if ( is_machine 'linux'); then
-    VERSION='v11.10.0'
-    DISTRO='linux-x64'
-    export PATH="/usr/local/lib/nodejs/node-${VERSION}-${DISTRO}:${PATH}"
-fi
-
-# java
-if ( is_machine 'macOS' ); then
-    export JAVA_HOME="$(/usr/libexec/java_home)"
-    export PATH="${JAVA_HOME}:${PATH}"
-    export PATH="${JAVA_HOME}/bin:${PATH}"
-fi
 
 # compiler needs since brew doesn't replace macOS bins
 if ( is_machine 'macOS' ); then
@@ -288,8 +274,8 @@ fi
 ################################################################################
 # prompt
 
-. "${_shell_lib}/prompts/left/default.sh"
-. "${_shell_lib}/prompts/right/git_info.sh"
+source "${_shell_lib}/prompts/left/default.sh"
+source "${_shell_lib}/prompts/right/git_info.sh"
 
 ################################################################################
 # cleanup
