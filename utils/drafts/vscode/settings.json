@@ -1,5 +1,5 @@
 {
-    ////////////////////////////////////////////////////////////////////////////
+    //------------------------------------------------------------------------//
     // window settings
     "window.title": "${activeEditorMedium}${separator}${rootName}",
     "window.titleBarStyle": "custom",
@@ -13,7 +13,7 @@
     "workbench.settings.editor": "json",
     "workbench.settings.useSplitJSON": true,
     "workbench.settings.openDefaultSettings": false,
-    ////////////////////////////////////////////////////////////////////////////
+    //------------------------------------------------------------------------//
     // editor settings
     "files.exclude": {
         "**/.git": true,
@@ -56,7 +56,7 @@
     // text settings
     "editor.fontSize": 15,
     "editor.fontFamily": "Menlo, Monaco, 'Courier New', monospace",
-    ////////////////////////////////////////////////////////////////////////////
+    //------------------------------------------------------------------------//
     // brackets
     "editor.matchBrackets": false,
     "bracket-pair-colorizer-2.forceUniqueOpeningColor": false,
@@ -73,12 +73,19 @@
     "bracket-pair-colorizer-2.showBracketsInRuler": false,
     "bracket-pair-colorizer-2.showVerticalScopeLine": false,
     "bracket-pair-colorizer-2.showHorizontalScopeLine": false,
-    ////////////////////////////////////////////////////////////////////////////
+    //------------------------------------------------------------------------//
     // privacy
     "telemetry.enableTelemetry": false,
     "telemetry.enableCrashReporter": true,
-    ////////////////////////////////////////////////////////////////////////////
+    //------------------------------------------------------------------------//
     // specific stuff
+    "files.associations": {
+        "SConscript": "python",
+        "SConstruct": "python",
+        "TAG_EDITMSG": "git-commit",
+        // "*.thor": "ruby",
+        // "*.jsx": "javascript",
+    },
     // git
     "[git-commit]": {
         "editor.rulers": [ 50, 72 ],
@@ -147,7 +154,7 @@
     "latex-workshop.view.pdf.viewer": "tab",
     "latex-workshop.hover.preview.scale": 1,
     "latex-workshop.latex.outDir": "%DIR%/../build",
-    ////////////////////////////////////////////////////////////////////////////
+    //------------------------------------------------------------------------//
     // vim
     "vim.leader": ",",
     "vim.useSystemClipboard": true,
@@ -166,7 +173,7 @@
     // keybindings
     "vim.changeWordIncludesWhitespace": true,
     "vim.visualModeKeyBindingsNonRecursive": [
-        ////////////////////////////////////////////////////////////////////////
+        //--------------------------------------------------------------------//
         // utils
         {
             "before": ["<leader>", "p"],
@@ -180,7 +187,7 @@
                 "workbench.action.showCommands",
             ]
         },
-        ////////////////////////////////////////////////////////////////////////
+        //--------------------------------------------------------------------//
         // code interaction
         {
             "before": ["<leader>", "/"], // dont forget normal-mode
@@ -202,7 +209,7 @@
         },
     ],
     "vim.normalModeKeyBindingsNonRecursive": [
-        ////////////////////////////////////////////////////////////////////////
+        //--------------------------------------------------------------------//
         // utils
         {
             "before": ["<leader>", "p"],
@@ -228,7 +235,7 @@
                 "editor.action.insertCursorAbove",
             ]
         },
-        ////////////////////////////////////////////////////////////////////////
+        //--------------------------------------------------------------------//
         // code navigation
         {
             "before": ["<leader>", "b"],
@@ -248,7 +255,7 @@
                 "editor.action.goToDeclaration",
             ]
         },
-        ////////////////////////////////////////////////////////////////////////
+        //--------------------------------------------------------------------//
         // code interaction
         {
             "before": ["<leader>", "/"], // dont forget visual-mode
@@ -268,7 +275,7 @@
                 "editor.action.outdentLines"
             ]
         },
-       ////////////////////////////////////////////////////////////////////////
+        //--------------------------------------------------------------------//
         // tab splitting
         {
             "before": ["<leader>", "s", "h"],
@@ -294,7 +301,7 @@
                 "workbench.action.splitEditorRight"
             ]
         },
-        ////////////////////////////////////////////////////////////////////////
+        //--------------------------------------------------------------------//
         // tab moving
         {
             "before": ["<leader>", "m", "h"],
@@ -320,7 +327,7 @@
                 "workbench.action.moveEditorToRightGroup"
             ]
         },
-        ////////////////////////////////////////////////////////////////////////
+        //--------------------------------------------------------------------//
         // group navigation
         {
             "before": ["<leader>", "w", "h"],
@@ -346,7 +353,7 @@
                 "workbench.action.navigateRight"
             ]
         },
-        ////////////////////////////////////////////////////////////////////////
+        //--------------------------------------------------------------------//
         // tab navigation
         {
             "before": ["<leader>", "t", "h"],
@@ -428,17 +435,10 @@
             ]
         },
     ],
-    ////////////////////////////////////////////////////////////////////////////
+    //------------------------------------------------------------------------//
     // kutgw
     // cquery
     "cquery.launch.command": "cquery",
-    // filetype stuff
-    "files.associations": {
-        "SConscript": "python",
-        "SConstruct": "python",
-        // "*.thor": "ruby",
-        // "*.jsx": "javascript",
-    },
     // TODOs
     "todohighlight.defaultStyle": {
         "color": "#5E71A4",
@@ -473,6 +473,6 @@
         "ERROR:",
         "ERR:",
     ],
-    ////////////////////////////////////////////////////////////////////////////
+    //------------------------------------------------------------------------//
     // occasionally added stuff
 }
