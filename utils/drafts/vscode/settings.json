@@ -79,6 +79,13 @@
     "telemetry.enableCrashReporter": true,
     ////////////////////////////////////////////////////////////////////////////
     // specific stuff
+    "files.associations": {
+        "SConscript": "python",
+        "SConstruct": "python",
+        "TAG_EDITMSG": "git-commit",
+        // "*.thor": "ruby",
+        // "*.jsx": "javascript",
+    },
     // git
     "[git-commit]": {
         "editor.rulers": [ 50, 72 ],
@@ -432,13 +439,6 @@
     // kutgw
     // cquery
     "cquery.launch.command": "cquery",
-    // filetype stuff
-    "files.associations": {
-        "SConscript": "python",
-        "SConstruct": "python",
-        // "*.thor": "ruby",
-        // "*.jsx": "javascript",
-    },
     // TODOs
     "todohighlight.defaultStyle": {
         "color": "#5E71A4",
