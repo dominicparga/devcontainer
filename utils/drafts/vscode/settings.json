@@ -9,7 +9,7 @@
     "workbench.statusBar.visible": true,
     "workbench.iconTheme": "material-icon-theme",
     "workbench.colorTheme": "Dracula", // Nord
-    // settings ui
+    // settings-ui
     "workbench.settings.editor": "json",
     "workbench.settings.useSplitJSON": true,
     "workbench.settings.openDefaultSettings": false,
@@ -31,6 +31,7 @@
         100,
         120
     ],
+    "editor.cursorSurroundingLines": 8,
     "editor.cursorStyle": "line",
     "editor.renderLineHighlight": "none",
     "editor.renderFinalNewline": true,
