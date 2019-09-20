@@ -63,6 +63,11 @@
     // - Cascadia Code and Menlo have * in the line's center
     //   e.g. 3*4, /* comment */, x *= 4, * item in markdown
     "editor.fontFamily": "Cascadia Code, Menlo, Courier, monospace",
+    // replaces (only visually!) common chars, e.g. >=
+    // - safe when searching >, =, >=
+    // - keep width of original chars (2 for >=)
+    // - shows original char under block-cursor
+    "editor.fontLigatures": true,
     "editor.fontSize": 16,
     //------------------------------------------------------------------------//
     // brackets
