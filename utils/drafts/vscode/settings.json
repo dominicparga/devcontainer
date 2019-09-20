@@ -31,7 +31,7 @@
         100,
         120
     ],
-    "editor.cursorSurroundingLines": 8,
+    "editor.cursorSurroundingLines": 12,
     "editor.cursorStyle": "line",
     "editor.renderLineHighlight": "none",
     "editor.renderFinalNewline": true,
