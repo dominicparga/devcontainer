@@ -8,7 +8,7 @@
     "workbench.sideBar.location": "left",
     "workbench.statusBar.visible": true,
     "workbench.iconTheme": "material-icon-theme",
-    "workbench.colorTheme": "Dracula",
+    "workbench.colorTheme": "Dracula", // Nord
     // settings ui
     "workbench.settings.editor": "json",
     "workbench.settings.useSplitJSON": true,
@@ -53,9 +53,17 @@
     "editor.suggestSelection": "first",
     // DO NOT SET MANUALLY
     "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
-    // text settings
-    "editor.fontSize": 15,
-    "editor.fontFamily": "Menlo, Monaco, 'Courier New', monospace",
+    // font settings
+    // - Cascadia Code is from Microsoft, easily installed (< 1 min) via GitHub
+    //   GitHub-Link: https://github.com/microsoft/cascadia-code/releases
+    // - Menlo is macOS
+    // - Courier and monospace are thinner and just fallbacks for the other two
+    //
+    // - all fonts are monospace-fonts
+    // - Cascadia Code and Menlo have * in the line's center
+    //   e.g. 3*4, /* comment */, x *= 4, * item in markdown
+    "editor.fontFamily": "Cascadia Code, Menlo, Courier, monospace",
+    "editor.fontSize": 16,
     //------------------------------------------------------------------------//
     // brackets
     "editor.matchBrackets": false,
