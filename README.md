@@ -32,6 +32,7 @@ All these steps can be done automatically by using the provided function `dotfil
 
 ## Table of Contents
 
+1. [News](#news)
 1. [Features](#features)
     1. [Shell environment](#shell-environment)
     1. [git aliases](#git-aliases)
@@ -45,6 +46,22 @@ All these steps can be done automatically by using the provided function `dotfil
     1. [Syntax error (e.g. with brackets)](#syntax-error-with-brackets)
     1. [`Zsh`: Insecure files or directories](#insecure-files-and-dirs)
 1. [TODO](#todo)
+
+## News <a name="news"></a>
+
+The project works fine and is running stable. `:)`
+However, the goal of this project is to provide a very clean and flat setup.
+The current setup is clean and short, but not as flat as it could be.
+Main reason for this are the install-scripts and the `dotfiles`-tool, which is just a wrapper for these.
+For instance, some users already had a setup.
+It was easy to refactor their setup, but some info has been missing about the changes made by the `symlink`-scripts.
+The scripts are programmed carefully and ask before removing something, but it should be clearer in the code itself.
+It is probably better to move the install-content from here to [the howto-repo][web_github_howto] to reduce the complexity of these dotfiles.
+
+Further, tools are activated automatically dependent of the computers-system and whether the tools are installed.
+Maybe this can be reduced to a config-file (or similar since it's bash..) for easier overview and easier configuration, e.g. when only some tools should be used.
+
+At last, the TODOs from this README should be converted to issues.
 
 ## Features <a name="features"></a>
 
@@ -297,3 +314,5 @@ chmod -R 755 ${DOTFILES}
 * ubuntu: install Dracula
 * ubuntu: set PYTHON_INTERPRETER_PATH in shellrc
 * vscode: add snippets
+
+[web_github_howto]: https://github.com/dominicparga/howto
