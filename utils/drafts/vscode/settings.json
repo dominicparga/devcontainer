@@ -101,6 +101,7 @@
         // "*.jsx": "javascript",
     },
     // git
+    "scm.defaultViewMode": "list",
     "[git-commit]": {
         "editor.rulers": [ 50, 72 ],
     },

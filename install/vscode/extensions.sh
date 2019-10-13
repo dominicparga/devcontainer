@@ -2,7 +2,7 @@
 # fill in custom extensions here
 # in ALPHABETICAL order
 
-_extensions=(
+extensions=(
     # color and icon themes
     arcticicestudio.nord-visual-studio-code
     be5invis.vscode-icontheme-nomo-dark
@@ -68,8 +68,8 @@ _extensions=(
 ################################################################################
 # install extensions
 
-for _item in ${_extensions[@]}; do
+for item in ${extensions[@]}; do
     # force for updating
-    code --force --install-extension ${_item}
+    code --force --install-extension ${item}
 done
 #code --disable-extensions
