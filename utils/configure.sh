@@ -140,12 +140,14 @@ ln "${cp_ln_args}" -s "${file}" "${HOME}/.ssh/config"
 # Set system_vscode_dir dependent of system.
 # See https://code.visualstudio.com/docs/getstarted/settings#_settings-file-locations
 source "${DOTFILES}/shell/func/is_machine"
-if ( is_machine "macOS" ); then
+if ( is_machine 'macOS' ); then
     system_vscode_dir="${HOME}/Library/Application Support/Code/User"
-elif ( is_machine "linux" ); then
+elif ( is_machine 'linux' ); then
     system_vscode_dir="${HOME}/.config/Code/User"
+else
+    echo -e "${color_error}ERROR: Could not find vscode-folder due to unknown system $(uname -s)${color_reset}"
+    exit 1
 fi
-system_vscode_dir="${HOME}/Library/Application Support/Code/User"
 dotfiles_vscode_dir="${DOTFILES}/vscode"
 dotfiles_custom_vscode_dir="${custom_dir}/vscode"
 
