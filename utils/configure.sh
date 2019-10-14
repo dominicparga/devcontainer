@@ -145,7 +145,7 @@ if ( is_machine 'macOS' ); then
 elif ( is_machine 'linux' ); then
     system_vscode_dir="${HOME}/.config/Code/User"
 else
-    echo -e "${color_error}ERROR: Could not find vscode-folder due to unknown system $(uname -s)${color_reset}"
+    echo -e "${color_error}ERROR: Could not find vscode-folder due to unknown system${color_reset}"
     exit 1
 fi
 dotfiles_vscode_dir="${DOTFILES}/vscode"
