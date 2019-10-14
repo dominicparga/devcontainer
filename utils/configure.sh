@@ -89,8 +89,12 @@ mkdir "${custom_dir}/vscode/" 2> /dev/null
 
 # copy dotfiles/git/config into custom
 cp "${cp_ln_args}" -P "${DOTFILES}/git/config" "${custom_dir}/git/config"
-# dotfiles/git/config.general <- dotfiles/custom/git/config.general
+# link: dotfiles/git <- dotfiles/custom/git <- ~/git
+ln "${cp_ln_args}" -s "${custom_dir}/git/config.general" "${HOME}/.gitconfig.general"
 ln "${cp_ln_args}" -s "${DOTFILES}/git/config.general" "${custom_dir}/git/config.general"
+
+ln "${cp_ln_args}" -s "${custom_dir}/git/config" "${HOME}/.gitconfig"
+ln "${cp_ln_args}" -s "${DOTFILES}/git/config" "${custom_dir}/git/config"
 
 #------------------------------------------------------------------------------#
 # setup custom/shell
