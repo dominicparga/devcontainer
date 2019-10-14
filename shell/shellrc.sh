@@ -7,8 +7,10 @@ esac
 #------------------------------------------------------------------------------#
 # initialization
 
-if [[ -z "${DOTFILES}" ]]; then
-    export DOTFILES="${HOME}/dotfiles"
+if [[ -z "${DOTFILES}" ]] || [[ ! -d "${DOTFILES}" ]]; then
+    echo -e "ERROR: \${DOTFILES} is set incorrectly or is empty: ${DOTFILES}" >&2
+    sleep 4
+    exit 1
 fi
 _shell_lib="${DOTFILES}/shell"
 _custom_shell_lib="${DOTFILES}/custom/shell"

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+export DOTFILES="$(dirname $(pwd)${0:1})"
+
+bash "${DOTFILES}/utils/configure.sh"

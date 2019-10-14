@@ -8,27 +8,42 @@ Instead, (more or less) slight customization of existing files is supported prov
 
 Hence, the general idea of these files is:  
 
-1. Create a `custom` folder inside the folder `dotfiles` (ignored by git).
-2. Create all necessary dotfiles in `custom`.
-3. Include and source files of this project.
-4. Create symlinks from `$HOME` linking to files in `custom folder`.
+1. Create a `custom`-folder (ignored by git) inside the folder `dotfiles`.
+2. Create all necessary dotfiles in `custom` by copying originals or linking to them.
+3. Create symlinks from `${HOME}` linking to files in `custom`-folder.
 
 So result in home will be
 
 ```zsh
+DOTFILES="${HOME}/dotfiles"
+
 ~/
-├── .bashrc -> ${HOME}/.profile
-├── .gitconfig -> ${HOME}/dotfiles/custom/git/config*
-├── .gitconfig.general -> ${HOME}/dotfiles/git/config*
-├── .profile -> ${HOME}/dotfiles/custom/shell/shellrc.sh
+├── .gitconfig@ -> ${DOTFILES}/custom/git/config*
+├── .gitconfig.general@ -> ${DOTFILES}/custom/git/config.general*
+│
+├── .bashrc@ -> ${HOME}/.profile
+├── .zshrc@ -> ${HOME}/.profile
+├── .profile@ -> ${DOTFILES}/custom/shell/shellrc.sh
+│
 ├── .ssh
-│   ├── config -> ${HOME}/dotfiles/custom/shell/ssh/config*
+│   ├── config@ -> ${DOTFILES}/custom/shell/ssh/config*
 │   └── ...
-├── .zshrc -> ${HOME}/.profile
 └── ...
 ```
 
-All these steps can be done automatically by using the provided function `dotfiles`.
+`Visual Studio code` is also configured.
+Paths are linux-related (see [vscode-website](https://code.visualstudio.com/docs/getstarted/settings#_settings-file-locations))
+
+```zsh
+DOTFILES="${HOME}/dotfiles"
+
+# path is linux-related
+${HOME}/.config/Code/User/
+├── settings.json@ -> ${DOTFILES}/custom/vscode/settings.json
+└── keybindings.json@ -> ${DOTFILES}/custom/vscode/keybindings.json
+```
+
+All these steps can be done automatically by using the provided script `dotfiles`.
 
 ## Table of Contents
 
