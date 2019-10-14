@@ -100,22 +100,22 @@ fi
 # -> create and fill it
 # Further, echo default-shellrc since it depends on dynamic value ${DOTFILES}
 if [[ ! -e "${file}" ]]; then
-    echo "#$(yes \- | head -n78 | tr -d '[:space:]')#"        >  "${new_file}"
-    echo "# If not running interactively, don't do anything"  >> "${new_file}"
-    echo ''                                                   >> "${new_file}"
-    echo 'case $- in'                                         >> "${new_file}"
-    echo '    *i*) ;;'                                        >> "${new_file}"
-    echo '      *) return ;;'                                 >> "${new_file}"
-    echo 'esac'                                               >> "${new_file}"
-    echo ''                                                   >> "${new_file}"
-    echo "#$(yes \- | head -n78 | tr -d '[:space:]')#"        >> "${new_file}"
-    echo '# setup'                                            >> "${new_file}"
-    echo ''                                                   >> "${new_file}"
-    echo "export DOTFILES=\"${DOTFILES}\""                    >> "${new_file}"
-    echo ''                                                   >> "${new_file}"
-    echo 'source "${DOTFILES}/shell/shellrc.sh"'              >> "${new_file}"
-    echo ''                                                   >> "${new_file}"
-    echo 'greet'                                              >> "${new_file}"
+    echo "#$(yes \- | head -n78 | tr -d '[:space:]')#"        >  "${file}"
+    echo "# If not running interactively, don't do anything"  >> "${file}"
+    echo ''                                                   >> "${file}"
+    echo 'case $- in'                                         >> "${file}"
+    echo '    *i*) ;;'                                        >> "${file}"
+    echo '      *) return ;;'                                 >> "${file}"
+    echo 'esac'                                               >> "${file}"
+    echo ''                                                   >> "${file}"
+    echo "#$(yes \- | head -n78 | tr -d '[:space:]')#"        >> "${file}"
+    echo '# setup'                                            >> "${file}"
+    echo ''                                                   >> "${file}"
+    echo "export DOTFILES=\"${DOTFILES}\""                    >> "${file}"
+    echo ''                                                   >> "${file}"
+    echo 'source "${DOTFILES}/shell/shellrc.sh"'              >> "${file}"
+    echo ''                                                   >> "${file}"
+    echo 'greet'                                              >> "${file}"
 fi
 # create symlinks in $HOME
 echo -e "${color_info}INFO: ${HOME}/.profile@ -> ${custom_dir}/shell/shellrc.sh${color_reset}"
@@ -133,14 +133,18 @@ echo -e "${color_success}SUCCESS: shellrc configured${color_reset}"
 echo -e "${color_info}INFO: Creating and linking custom ssh..${color_reset}"
 echo -e "${color_info}INFO: ${HOME}/.ssh/config@ -> ${DOTFILES}/custom/shell/ssh/config${color_reset}"
 file="${custom_dir}/shell/ssh/config"
-new_file="${custom_dir}/shell/ssh/new_config"
-if [[ ! -e "${new_file}" ]]; then
-    echo '# Add your ssh configs here' > "${new_file}"
+# if already existing, ask for removing it 
+if [[ -e "${file}" ]]; then
+    echo -e "${color_warn}WARN: custom ssh-config found -> remove and recreate?${color_reset}"
+    rm -i "${file}"
 fi
-cp -i -P "${new_file}" "${file}"
-rm "${new_file}"
-mkdir -p -v "${HOME}/.ssh/"
+# If file has been removed or not existed yet
+# -> create and fill it
+if [[ ! -e "${file}" ]]; then
+    echo '# Add your ssh-configs here' > "${file}"
+fi
 # link: dotfiles/custom/shell/ssh/config <- ${HOME}/.ssh/config
+mkdir -p -v "${HOME}/.ssh/"
 ln -i -s "${file}" "${HOME}/.ssh/config"
 echo -e "${color_success}SUCCESS: ssh configured${color_reset}"
 
