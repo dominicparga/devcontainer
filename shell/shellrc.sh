@@ -141,8 +141,11 @@ fi
 #------------------------------------------------------------------------------#
 # history
 
+# history-length in terminal
 HISTSIZE=10000
-SAVEHIST=10000
+# history-length in HISTFILE
+SAVEHIST=10000     # zsh
+HISTFILESIZE=10000 # bash
 
 if [[ -n "${ZSH_NAME}" ]]; then
     HISTFILE="${HOME}/.zsh_history"
