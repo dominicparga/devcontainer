@@ -71,6 +71,7 @@ done
 #------------------------------------------------------------------------------#
 # create folders
 
+echo -e "${color_info}INFO: Creating custom-folders..${color_reset}"
 custom_dir="${DOTFILES}/custom"
 
 # custom
@@ -83,21 +84,26 @@ mkdir "${custom_dir}/shell/func/" 2> /dev/null
 mkdir "${custom_dir}/shell/ssh/" 2> /dev/null
 # custom/vscode
 mkdir "${custom_dir}/vscode/" 2> /dev/null
+echo -e "${color_success}SUCCESS: custom-folders created${color_reset}"
 
 #------------------------------------------------------------------------------#
 # setup custom/git
 
-# link: dotfiles/git <- dotfiles/custom/git <- ~/git
+echo -e "${color_info}INFO: Copying and linking git-files..${color_reset}"
+echo -e "${color_info}INFO: ~/.gitconfig@ -> \${DOTFILES}/custom/git/config == \${DOTFILES}/git/config${color_reset}"
 # copy dotfiles/git/config into custom
 cp "${cp_ln_args}" -P "${DOTFILES}/git/config" "${custom_dir}/git/config"
 ln "${cp_ln_args}" -s "${custom_dir}/git/config" "${HOME}/.gitconfig"
+echo -e "${color_info}INFO: ~/.gitconfig.general@ -> \${DOTFILES}/custom/git/config.general@ -> \${DOTFILES}/git/config.general${color_reset}"
 # link to config.general
-ln "${cp_ln_args}" -s "${custom_dir}/git/config.general" "${HOME}/.gitconfig.general"
 ln "${cp_ln_args}" -s "${DOTFILES}/git/config.general" "${custom_dir}/git/config.general"
+ln "${cp_ln_args}" -s "${custom_dir}/git/config.general" "${HOME}/.gitconfig.general"
+echo -e "${color_success}SUCCESS: git-files configured${color_reset}"
 
 #------------------------------------------------------------------------------#
 # setup custom/shell
 
+echo -e "${color_info}INFO: Creating and linking custom shellrc..${color_reset}"
 # echo default shellrc since it depends on dynamic value ${DOTFILES}
 file="${custom_dir}/shell/shellrc.sh"
 new_file="${custom_dir}/shell/new_shellrc.sh"
@@ -121,7 +127,10 @@ if [[ ! -e "${new_file}" ]]; then
 fi
 cp "${cp_ln_args}" -P "${new_file}" "${file}"
 rm "${new_file}"
+echo -e "${color_success}SUCCESS: shellrc configured${color_reset}"
 
+echo -e "${color_info}INFO: Creating and linking custom ssh..${color_reset}"
+echo -e "${color_info}INFO: ~/.ssh/config@ -> \${DOTFILES}/custom/shell/ssh/config${color_reset}"
 # create empty ssh-config in custom and link to it
 file="${custom_dir}/shell/ssh/config"
 new_file="${custom_dir}/shell/ssh/new_config"
@@ -133,17 +142,19 @@ rm "${new_file}"
 mkdir "${HOME}/.ssh/" 2> /dev/null
 # dotfiles/custom/shell/ssh/config <- ~/.ssh/config
 ln "${cp_ln_args}" -s "${file}" "${HOME}/.ssh/config"
+echo -e "${color_success}SUCCESS: ssh configured${color_reset}"
 
 #------------------------------------------------------------------------------#
 # setup custom/vscode
 
-# Set system_vscode_dir dependent of system.
+echo -e "${color_info}INFO: Creating and linking vscode-setup..${color_reset}"
+# Set VSCODE_HOME dependent of system.
 # See https://code.visualstudio.com/docs/getstarted/settings#_settings-file-locations
 source "${DOTFILES}/shell/func/is_machine"
 if ( is_machine 'macOS' ); then
-    system_vscode_dir="${HOME}/Library/Application Support/Code/User"
+    VSCODE_HOME="${HOME}/Library/Application Support/Code/User"
 elif ( is_machine 'linux' ); then
-    system_vscode_dir="${HOME}/.config/Code/User"
+    VSCODE_HOME="${HOME}/.config/Code/User"
 else
     echo -e "${color_error}ERROR: Could not find vscode-folder due to unknown system${color_reset}"
     exit 1
@@ -151,9 +162,10 @@ fi
 dotfiles_vscode_dir="${DOTFILES}/vscode"
 dotfiles_custom_vscode_dir="${custom_dir}/vscode"
 
-# link: dotfiles/vscode <- dotfiles/custom/vscode <- system_vscode
-ln "${cp_ln_args}" -s "${dotfiles_custom_vscode_dir}/settings.json" "${system_vscode_dir}/settings.json"
+echo -e "${color_info}INFO: \${VSCODE_HOME}/settings.json@ -> \${DOTFILES}/custom/vscode/settings.json@ -> \${DOTFILES}/vscode/settings.json${color_reset}"
 ln "${cp_ln_args}" -s "${dotfiles_vscode_dir}/settings.json" "${dotfiles_custom_vscode_dir}/settings.json"
-
-ln "${cp_ln_args}" -s "${dotfiles_custom_vscode_dir}/keybindings.json" "${system_vscode_dir}/keybindings.json"
+ln "${cp_ln_args}" -s "${dotfiles_custom_vscode_dir}/settings.json" "${VSCODE_HOME}/settings.json"
+echo -e "${color_info}INFO: \${VSCODE_HOME}/keybindings.json@ -> \${DOTFILES}/custom/vscode/keybindings.json@ -> \${DOTFILES}/vscode/keybindings.json${color_reset}"
 ln "${cp_ln_args}" -s "${dotfiles_vscode_dir}/keybindings.json" "${dotfiles_custom_vscode_dir}/keybindings.json"
+ln "${cp_ln_args}" -s "${dotfiles_custom_vscode_dir}/keybindings.json" "${VSCODE_HOME}/keybindings.json"
+echo -e "${color_success}SUCCESS: vscode-setup configured${color_reset}"

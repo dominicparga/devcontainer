@@ -29,3 +29,4 @@ color_bg_light_gray='\e[47m'
 color_info="${color_fg_blue}"
 color_warn="${color_fg_yellow}"
 color_error="${color_fg_red}"
+color_success="${color_fg_green}"
