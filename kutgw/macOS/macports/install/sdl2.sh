@@ -1,1 +1,0 @@
-sudo port -N install libsdl2
