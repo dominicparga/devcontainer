@@ -79,11 +79,11 @@ echo -e "${color_info}INFO: Copying and linking git-files..${color_reset}"
 echo -e "${color_info}INFO: ${HOME}/.gitconfig@ -> ${DOTFILES}/custom/git/config == ${DOTFILES}/git/config${color_reset}"
 # copy dotfiles/git/config into custom
 cp -i -P "${DOTFILES}/git/config" "${custom_dir}/git/config"
-ln -i -s "${custom_dir}/git/config" "${HOME}/.gitconfig"
+ln -i -v -s "${custom_dir}/git/config" "${HOME}/.gitconfig"
 echo -e "${color_info}INFO: ${HOME}/.gitconfig.general@ -> ${DOTFILES}/custom/git/config.general@ -> ${DOTFILES}/git/config.general${color_reset}"
 # link to config.general
-ln -i -s "${DOTFILES}/git/config.general" "${custom_dir}/git/config.general"
-ln -i -s "${custom_dir}/git/config.general" "${HOME}/.gitconfig.general"
+ln -i -v -s "${DOTFILES}/git/config.general" "${custom_dir}/git/config.general"
+ln -i -v -s "${custom_dir}/git/config.general" "${HOME}/.gitconfig.general"
 echo -e "${color_success}SUCCESS: git-files configured${color_reset}"
 
 #------------------------------------------------------------------------------#
@@ -94,12 +94,13 @@ file="${custom_dir}/shell/shellrc.sh"
 # if already existing, ask for removing it 
 if [[ -e "${file}" ]]; then
     echo -e "${color_warn}WARN: custom shellrc found -> remove and recreate?${color_reset}"
-    rm -i "${file}"
+    rm -i -v "${file}"
 fi
 # If file has been removed or not existed yet
 # -> create and fill it
 # Further, echo default-shellrc since it depends on dynamic value ${DOTFILES}
 if [[ ! -e "${file}" ]]; then
+    touch "${file}"
     echo "#$(yes \- | head -n78 | tr -d '[:space:]')#"        >  "${file}"
     echo "# If not running interactively, don't do anything"  >> "${file}"
     echo ''                                                   >> "${file}"
@@ -116,14 +117,16 @@ if [[ ! -e "${file}" ]]; then
     echo 'source "${DOTFILES}/shell/shellrc.sh"'              >> "${file}"
     echo ''                                                   >> "${file}"
     echo 'greet'                                              >> "${file}"
+
+    echo "created '${file}'"
 fi
 # create symlinks in $HOME
 echo -e "${color_info}INFO: ${HOME}/.profile@ -> ${custom_dir}/shell/shellrc.sh${color_reset}"
-ln -i -s "${custom_dir}/shell/shellrc.sh" "${HOME}/.profile"
+ln -i -v -s "${custom_dir}/shell/shellrc.sh" "${HOME}/.profile"
 echo -e "${color_info}INFO: ${HOME}/.zshrc@ -> ${HOME}/.profile@${color_reset}"
-ln -i -s "${HOME}/.profile" "${HOME}/.zshrc"
+ln -i -v -s "${HOME}/.profile" "${HOME}/.zshrc"
 echo -e "${color_info}INFO: ${HOME}/.bashrc@ -> ${HOME}/.profile@${color_reset}"
-ln -i -s "${HOME}/.profile" "${HOME}/.bashrc"
+ln -i -v -s "${HOME}/.profile" "${HOME}/.bashrc"
 echo -e "${color_success}SUCCESS: shellrc configured${color_reset}"
 
 #------------------------------------------------------------------------------#
@@ -136,16 +139,18 @@ file="${custom_dir}/shell/ssh/config"
 # if already existing, ask for removing it 
 if [[ -e "${file}" ]]; then
     echo -e "${color_warn}WARN: custom ssh-config found -> remove and recreate?${color_reset}"
-    rm -i "${file}"
+    rm -i -v "${file}"
 fi
 # If file has been removed or not existed yet
 # -> create and fill it
 if [[ ! -e "${file}" ]]; then
+    touch "${file}"
     echo '# Add your ssh-configs here' > "${file}"
+    echo "created '${file}'"
 fi
 # link: dotfiles/custom/shell/ssh/config <- ${HOME}/.ssh/config
 mkdir -p -v "${HOME}/.ssh/"
-ln -i -s "${file}" "${HOME}/.ssh/config"
+ln -i -v -s "${file}" "${HOME}/.ssh/config"
 echo -e "${color_success}SUCCESS: ssh configured${color_reset}"
 
 #------------------------------------------------------------------------------#
@@ -169,9 +174,9 @@ dotfiles_custom_vscode_dir="${custom_dir}/vscode"
 
 # set vscode-links
 echo -e "${color_info}INFO: ${VSCODE_HOME}/settings.json@ -> ${DOTFILES}/custom/vscode/settings.json@ -> ${DOTFILES}/vscode/settings.json${color_reset}"
-ln -i -s "${dotfiles_vscode_dir}/settings.json" "${dotfiles_custom_vscode_dir}/settings.json"
-ln -i -s "${dotfiles_custom_vscode_dir}/settings.json" "${VSCODE_HOME}/settings.json"
+ln -i -v -s "${dotfiles_vscode_dir}/settings.json" "${dotfiles_custom_vscode_dir}/settings.json"
+ln -i -v -s "${dotfiles_custom_vscode_dir}/settings.json" "${VSCODE_HOME}/settings.json"
 echo -e "${color_info}INFO: ${VSCODE_HOME}/keybindings.json@ -> ${DOTFILES}/custom/vscode/keybindings.json@ -> ${DOTFILES}/vscode/keybindings.json${color_reset}"
-ln -i -s "${dotfiles_vscode_dir}/keybindings.json" "${dotfiles_custom_vscode_dir}/keybindings.json"
-ln -i -s "${dotfiles_custom_vscode_dir}/keybindings.json" "${VSCODE_HOME}/keybindings.json"
+ln -i -v -s "${dotfiles_vscode_dir}/keybindings.json" "${dotfiles_custom_vscode_dir}/keybindings.json"
+ln -i -v -s "${dotfiles_custom_vscode_dir}/keybindings.json" "${VSCODE_HOME}/keybindings.json"
 echo -e "${color_success}SUCCESS: vscode-setup configured${color_reset}"
