@@ -75,14 +75,15 @@ In general, automatic tests (and a Docker-Image?) could help with testing.
 
 ## Usage <a name="usage"></a>
 
+Long story short, download these files (`git clone` or from releases) and execute `./configure`.
+Every file-creation or -replacement is interactive and verbose.
+
 ### Configuration <a name="configuration"></a>
 
 You can setup your dotfiles using the provided `configure`-file (`macOS`, `linux`).
 The `configure` initially sets `${DOTFILES}` dependent on its own location and calls `utils/configure.sh` creating the `custom`-folder and symlinks given the variable `${DOTFILES}` (set in `configure`).
 
 Executing the following will create a folder `custom/` in the dotfiles folder and create all needed symlinks in there, but also in `${HOME}` and in `vscode`'s home (where `settings.json` lays, which is system-dependent).
-
-> __Note:__ Every file-creation or -replacement is interactive and verbose.
 
 ```zsh
 # location of the dotfiles, probably in ${HOME}
@@ -132,30 +133,29 @@ Those are not mentioned here.
 | new cmd | note |
 |:---------:|------|
 | SAFETY ALIASES |
-| `cp` | is alias for `cp -i -P`, so asks before replacing existing file. |
-| `mv` | is alias for `mv -i`, so asks before replacing existing file. |
+| `cp` | is alias for `cp -i -P`, so asks before replacing existing files |
+| `mv` | is alias for `mv -i`, so asks before replacing existing files |
 | COMMAND ls |
-| `l` | shows items as a colored list. |
-| `la` | shows hidden items as well. |
-| `ll` | shows items as a colored list and access rights. |
-| `lla` | shows hidden items as well. |
+| `l` | shows items as a colored list |
+| `la` | shows hidden items as well |
+| `ll` | shows items as a colored list and access rights |
+| `lla` | shows hidden items as well |
 | WORKING QUICKLY |
-| `c` | is alias for `clear`. |
-| `g` | is alias for `git`. |
-| `..` | is alias for `cd ..`. |
-| `.2` or `...` | goes back 2 folders. |
-| `.3` or `....` | goes back 3 folders. |
+| `c` | is alias for `clear` |
+| `g` | is alias for `git` |
+| `..` | is alias for `cd ..` |
+| `.2` or `...` | goes back 2 folders |
+| `.3` or `....` | goes back 3 folders |
 | ... | ... |
-| `.6` or `.......` | goes back 6 folders. |
-| `mkd` | creates folder(s) and enters it. |
+| `.6` or `.......` | goes back 6 folders |
+| `mkd` | creates folder(s) and enters it |
 | MORE HANDY FUNCTIONS |
-| `alert` | can be called like `sleep 2; alert`. |
-| `dotfiles` | for setting scripts and installing tools. |
-| `gitignore` | uses the `gitignore.io` API to return gitignore entries. |
+| `alert` | can be called like `sleep 2; alert` |
+| `gitignore` | uses the `gitignore.io` API to echo gitignore entries, which can be piped into a `.gitignore`-file |
 
 ### Git aliases <a name="git-aliases"></a>
 
-Have a look at the handy [git aliases](https://github.com/dominicparga/dotfiles/blob/master/git/config).
+Have a look at the handy [git aliases][web_github_git_aliases].
 In addition, visual-studio-code is opening as diff-tool and for commit-messages.
 
 `g` is alias for `git` (see above).
@@ -189,8 +189,8 @@ In addition, visual-studio-code is opening as diff-tool and for commit-messages.
 | `g bav` | `git branch --list -av` |
 | LOGGING |
 | `g last N` | logs the last N commit messages. Default for N is 3. |
-| `g l` | shows the history of the local branch as a graph. |
-| `g la` | shows the global history as a graph. |
+| `g l` | shows the history of currently HEADed commit as a graph. |
+| `g la` | shows the global history as a graph. So it extends `g l` by, e.g., parallel histories. |
 
 > __Note:__ `g l` uses `git log` and `g la` adds the flag `--all`.
 > Due to `git help log`, this flag refers to stored references in `.git/refs`.
@@ -201,7 +201,7 @@ In general, every file in `custom` can be removed and calling `configure` will r
 So playing around with this project is only cricital in the case that own changes in `custom` are removed manually.
 The idea behind the `custom`-folder is, besides supporting private files (e.g. ssh-configs), to reduce the need of forking/merging the project.
 
-The following (incomplete) tree is supported.
+The following (incomplete) tree is supported after configuration.
 Symlinks are marked with `@` at the end of their name and can be replaced manually for further customization.
 
 ```zsh
@@ -209,16 +209,16 @@ dotfiles/
 ├── custom/
 │   ├── custom/                         # completely untouched by the project
 │   ├── git/
-│   │   ├── config                      # includes config.general per default
-│   │   └── config.general@
+│   │   ├── config                      # includes ~/.gitconfig.general@
+│   │   └── config.general@             # -> dotfiles/git/config.general
 │   ├── shell/
 │   │   ├── func/                       # extends/overrides shell/func/*
 │   │   ├── ssh/
 │   │   │   └── config
 │   │   └── shellrc.sh                  # sources shell/shellrc.sh
 │   └── vscode/
-│       ├── keybindings.json@
-│       └── settings.json@
+│       ├── keybindings.json@           # -> dotfiles/vscode/keybindings.json
+│       └── settings.json@              # -> dotfiles/vscode/settings.json
 ├── git/
 │   └── ...
 ├── kutgw/
@@ -228,9 +228,8 @@ dotfiles/
 ├── utils/
 │   └── ...
 ├── vscode/
-│   ├── extensions.sh
-│   ├── keybindings.json
-│   └── settings.json
+│   ├── extensions.sh                   # install vscode-extensions
+│   └── ...
 └── README.md
 ```
 
@@ -244,25 +243,26 @@ dotfiles/
 | `shell/func/`                         | provides useful shell functions. Functions in `custom/shell/func/` are autoloaded/included and overwrite default functions in `shell/func/` if their name is the same. |
 | `shell/prompts/`                      | contains some prompts. |
 | `utils/`                              | contains scripts for configuration. |
-| `vscode/`                             | [Visual studio code](https://code.visualstudio.com/) uses some `settings.json` and `keybindings.json` for user settings and keybindings. |
+| `vscode/`                             | [Visual studio code][web_vscode] uses some `settings.json` and `keybindings.json` for user settings and keybindings. |
 
 ## Contributing <a name="contributing"></a>
 
 These dotfiles are created in a __modular__ and __lightweight__ way.
 For example, to find the `shellrc.sh`, the respective script is located in `shell`.
-This should be kept (in general) since looking for, e.g., "python" should not need you to look in other folders than `python/`.
 
 For more detailed information, please look [at the contribution section](CONTRIBUTING.md).
 
 ## FAQ / Troubleshooting <a name="faq"></a>
 
+Weird experiences from friends and others, which are using this repo, are mentioned below.
+
 ### Syntax error (e.g. with brackets) <a name="syntax-error-with-brackets"></a>
 
 These dotfiles are used with `bash` and `zsh`.
-Check if `sh` is symlinked correctly
+Check if `sh` is symlinked correctly with
 
 ```zsh
-ls -1GF --color=auto -lh -a $(which sh)`)
+ls -1GF --color=auto -lh -a $(which sh)
 ```
 
 For instance, `dash` (not `bash`) does not support `[[ ... ]]`, which is used a lot here.
@@ -276,4 +276,6 @@ Execute the following to set the permissions to `drwxr-xr-x`.
 chmod -R 755 ${DOTFILES}
 ```
 
+[web_github_git_aliases]: https://github.com/dominicparga/dotfiles/blob/master/git/config.general
 [web_github_howto]: https://github.com/dominicparga/howto
+[web_vscode]: https://code.visualstudio.com/
