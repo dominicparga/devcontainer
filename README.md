@@ -51,6 +51,7 @@ These dotfiles are tested with `macOS` and `linux` (`ubuntu`).
 
 1. [News](#news)
 1. [Usage](#usage)
+    1. [Configuration](#configuration)
     1. [Change default location after configuration](#change-default-location)
 1. [Features](#features)
     1. [Shell environment](#shell-environment)
@@ -74,7 +75,7 @@ In general, automatic tests (and a Docker-Image?) could help with testing.
 
 ## Usage <a name="usage"></a>
 
-### System setup <a name="system-setup"></a>
+### Configuration <a name="configuration"></a>
 
 You can setup your dotfiles using the provided `configure`-file (`macOS`, `linux`).
 The `configure` initially sets `${DOTFILES}` dependent on its own location and calls `utils/configure.sh` creating the `custom`-folder and symlinks given the variable `${DOTFILES}` (set in `configure`).
