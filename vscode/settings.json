@@ -8,8 +8,8 @@
     "workbench.sideBar.location": "left",
     "workbench.statusBar.visible": true,
     "workbench.iconTheme": "material-icon-theme",
-    "workbench.colorTheme": "Dracula",
-    // settings ui
+    "workbench.colorTheme": "Dracula", // Nord
+    // settings-ui
     "workbench.settings.editor": "json",
     "workbench.settings.useSplitJSON": true,
     "workbench.settings.openDefaultSettings": false,
@@ -31,6 +31,7 @@
         100,
         120
     ],
+    "editor.cursorSurroundingLines": 8,
     "editor.cursorStyle": "line",
     "editor.renderLineHighlight": "none",
     "editor.renderFinalNewline": true,
@@ -53,9 +54,22 @@
     "editor.suggestSelection": "first",
     // DO NOT SET MANUALLY
     "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
-    // text settings
-    "editor.fontSize": 15,
-    "editor.fontFamily": "Menlo, Monaco, 'Courier New', monospace",
+    // font settings
+    // - Cascadia Code is from Microsoft, easily installed (< 1 min) via GitHub
+    //   GitHub-Link: https://github.com/microsoft/cascadia-code/releases
+    // - Menlo is macOS
+    // - Courier and monospace are thinner and just fallbacks for the other two
+    //
+    // - all fonts are monospace-fonts
+    // - Cascadia Code and Menlo have * in the line's center
+    //   e.g. 3*4, /* comment */, x *= 4, * item in markdown
+    "editor.fontFamily": "Cascadia Code, Menlo, Courier, monospace",
+    // replaces (only visually!) common chars, e.g. >=
+    // - safe when searching >, =, >=
+    // - keep width of original chars (2 for >=)
+    // - shows original char under block-cursor
+    "editor.fontLigatures": true,
+    "editor.fontSize": 16,
     //------------------------------------------------------------------------//
     // brackets
     "editor.matchBrackets": false,
@@ -87,6 +101,7 @@
         // "*.jsx": "javascript",
     },
     // git
+    "scm.defaultViewMode": "tree",
     "[git-commit]": {
         "editor.rulers": [ 50, 72 ],
     },
@@ -166,9 +181,9 @@
     "vim.smartcase": true,
     // easymotion
     "vim.easymotion": true,
-    "vim.easymotionMarkerFontFamily": "Menlo, Monaco, 'Courier New', monospace, Consolas",
-    "vim.easymotionMarkerFontSize": "14",
-    "vim.easymotionMarkerWidthPerChar": 9,
+    "vim.easymotionMarkerFontFamily": "Cascadia Code, Menlo, Courier, monospace",
+    "vim.easymotionMarkerFontSize": "16",
+    "vim.easymotionMarkerWidthPerChar": 10,
     "vim.easymotionMarkerHeight": 22,
     // keybindings
     "vim.changeWordIncludesWhitespace": true,

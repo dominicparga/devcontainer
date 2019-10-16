@@ -1,46 +1,62 @@
 # dotfiles
 
-Dry and short:  
-These dotfiles should speed up a personal workflow and help installing and setting up a personal working system.
+Dry and short:
+
+These dotfiles should speed up a personal workflow and help setting it up.
 Focus lays on keeping overview since using this repo should feel like speeding up manual steps.
 Therefore, kind of plugin-structure is not implemented.
 Instead, (more or less) slight customization of existing files is supported providing some flexibility without the need of forking the whole project.
 
-Hence, the general idea of these files is:  
+Hence, the general idea of these files is:
 
-1. Create a `custom` folder inside the folder `dotfiles` (ignored by git).
-2. Create all necessary dotfiles in `custom`.
-3. Include and source files of this project.
-4. Create symlinks from `$HOME` linking to files in `custom folder`.
+1. Create a `custom`-folder (ignored by git) inside the folder `dotfiles` (can be changed).
+2. Create all necessary dotfiles in `custom` by copying originals or symlinking to them.
+3. Create symlinks from `${HOME}` linking to files in `custom`-folder.
 
+Since everything is, kind of, filtered through this `custom`-folder, every option can be changed pretty easily without forking.
 So result in home will be
 
 ```zsh
+DOTFILES="${HOME}/dotfiles" # can be changed
+
 ~/
-├── .bashrc -> ${HOME}/.profile
-├── .gitconfig -> ${HOME}/dotfiles/custom/git/config*
-├── .gitconfig.general -> ${HOME}/dotfiles/git/config*
-├── .profile -> ${HOME}/dotfiles/custom/shell/shellrc.sh
+├── .gitconfig@ -> ${DOTFILES}/custom/git/config*
+├── .gitconfig.general@ -> ${DOTFILES}/custom/git/config.general*
+│
+├── .bashrc@ -> ${HOME}/.profile
+├── .zshrc@ -> ${HOME}/.profile
+├── .profile@ -> ${DOTFILES}/custom/shell/shellrc.sh
+│
 ├── .ssh
-│   ├── config -> ${HOME}/dotfiles/custom/shell/ssh/config*
+│   ├── config@ -> ${DOTFILES}/custom/shell/ssh/config*
 │   └── ...
-├── .zshrc -> ${HOME}/.profile
 └── ...
 ```
 
-All these steps can be done automatically by using the provided function `dotfiles`.
+`Visual Studio code` is also configured.
+Following paths are linux-related (see [vscode-website](https://code.visualstudio.com/docs/getstarted/settings#_settings-file-locations)).
+
+```zsh
+DOTFILES="${HOME}/dotfiles" # can be changed
+
+# path here is linux-related
+${HOME}/.config/Code/User/
+├── settings.json@ -> ${DOTFILES}/custom/vscode/settings.json
+└── keybindings.json@ -> ${DOTFILES}/custom/vscode/keybindings.json
+```
+
+These dotfiles are tested with `macOS` and `linux` (`ubuntu`).
 
 ## Table of Contents
 
 1. [News](#news)
+1. [Usage](#usage)
+    1. [Configuration](#configuration)
+    1. [Change default location after configuration](#change-default-location)
 1. [Features](#features)
     1. [Shell environment](#shell-environment)
     1. [git aliases](#git-aliases)
-    1. [System setup](#system-setup)
 1. [Structure](#structure)
-1. [Usage](#usage)
-    1. [Optional: Change default location](#change-default-location)
-    1. [Optional: Manual setup](#manual-setup)
 1. [Contributing](#contributing)
 1. [FAQ / Troubleshooting](#faq)
     1. [Syntax error (e.g. with brackets)](#syntax-error-with-brackets)
@@ -49,24 +65,63 @@ All these steps can be done automatically by using the provided function `dotfil
 
 ## News <a name="news"></a>
 
-The project works fine and is running stable. `:)`
-However, the goal of this project is to provide a very clean and flat setup.
-The current setup is clean and short, but not as flat as it could be.
-Main reason for this are the install-scripts and the `dotfiles`-tool, which is just a wrapper for these.
-For instance, some users already had a setup.
-It was easy to refactor their setup, but some info has been missing about the changes made by the `symlink`-scripts.
-The scripts are programmed carefully and ask before removing something, but it should be clearer in the code itself.
-It is probably better to move the install-content from here to [the howto-repo][web_github_howto] to reduce the complexity of these dotfiles.
+Version `2.0.0` has been finished.
+It moves boilerplate-code (for installation) to [the howto-repo][web_github_howto].
+This allows a more flat and clean code-structure.
+Due to semantic versoning, the new version implies a breaking change.
+This affects symlinks in `${HOME}/` and `${DOTFILES}/custom/`.
 
-Further, tools are activated automatically dependent of the computers-system and whether the tools are installed.
-Maybe this can be reduced to a config-file (or similar since it's bash..) for easier overview and easier configuration, e.g. when only some tools should be used.
+In general, automatic tests (and a Docker-Image?) could help with testing.
 
-At last, the TODOs from this README should be converted to issues.
+## Usage <a name="usage"></a>
+
+### Configuration <a name="configuration"></a>
+
+You can setup your dotfiles using the provided `configure`-file (`macOS`, `linux`).
+The `configure` initially sets `${DOTFILES}` dependent on its own location and calls `utils/configure.sh` creating the `custom`-folder and symlinks given the variable `${DOTFILES}` (set in `configure`).
+
+Executing the following will create a folder `custom/` in the dotfiles folder and create all needed symlinks in there, but also in `${HOME}` and in `vscode`'s home (where `settings.json` lays, which is system-dependent).
+
+> __Note:__ Every file-creation or -replacement is interactive and verbose.
+
+```zsh
+# location of the dotfiles, probably in ${HOME}
+cd ~
+
+# if repo-name 'dotfiles' is okay
+git clone https://github.com/dominicparga/dotfiles.git
+cd dotfiles
+# if another name should be used, e.g. dotties
+git clone https://github.com/dominicparga/dotfiles.git dotties
+cd dotties
+
+./configure
+```
+
+Opening a new window will use the new setup.
+
+> __Note:__ `custom/` contains some generic info that should probably be updated by hand (e.g. gitconfig's `user.name`).
+
+### Change default location after configuration <a name="change-default-location"></a>
+
+You can change the default-location of your dotfiles easily by moving the dotfiles-folder around and executing `configure` again.
+
+```zsh
+cd ~
+mv dotfiles dotties
+cd dotties
+./configure
+# Change hardcoded DOTFILES-path in `custom/shell/shellrc.sh`
+```
+
+Consider that `custom/shell/shellrc.sh` contains the location hardcoded after calling `configure`.
+This is necessary to be fully custom here (e.g. moving `shellrc.sh` around).
+If you keep your `custom/shell/shellrc.sh`, you have to change the hardcoded path as well.
 
 ## Features <a name="features"></a>
 
-Besides the function `dotfiles` for handy setup, useful aliases and functions are provided.
-These dotfiles are used with `bash` and `zsh`.
+Besides some handy functions and a clean way of structuring your dotfiles, useful aliases and functions are provided.
+These dotfiles are used with `bash` and `zsh` on `macOS` and some `linux`-distributions.
 
 ### Shell environment <a name="shell-environment"></a>
 
@@ -106,7 +161,7 @@ In addition, visual-studio-code is opening as diff-tool and for commit-messages.
 `g` is alias for `git` (see above).
 
 | alias | note |
-|:---------:|------|
+|:-----:|------|
 | GENERAL |
 | `g h` | helps using `git help` more often ;) (`g h ALIAS` shows the replacement for the alias). |
 | `g s` | is alias for `git status` and one of the most used aliases. |
@@ -140,46 +195,42 @@ In addition, visual-studio-code is opening as diff-tool and for commit-messages.
 > __Note:__ `g l` uses `git log` and `g la` adds the flag `--all`.
 > Due to `git help log`, this flag refers to stored references in `.git/refs`.
 
-### System setup <a name="system-setup"></a>
-
-You can setup your system (macOS, linux) using `dotfiles install-system`.
-Executing `dotfiles help` may help.
-
 ## Structure <a name="structure"></a>
 
-The following (incomplete) tree is supported.
-In general, every file in custom can be removed and calling `dotfiles custom` will recreate the default version of it.
-So playing around with this project is only cricital in the case that own changes in custom are removed manually. ;)
+In general, every file in `custom` can be removed and calling `configure` will recreate the default version of it.
+So playing around with this project is only cricital in the case that own changes in `custom` are removed manually.
+The idea behind the `custom`-folder is, besides supporting private files (e.g. ssh-configs), to reduce the need of forking/merging the project.
 
-The idea behind the custom folder is, besides supporting private files (e.g. ssh-configs), to reduce the need of forking/merging the project.
-Every symlink will link to a file in custom, that usually executes the draft outside the custom folder per default.
+The following (incomplete) tree is supported.
+Symlinks are marked with `@` at the end of their name and can be replaced manually for further customization.
 
 ```zsh
 dotfiles/
 ├── custom/
 │   ├── custom/                         # completely untouched by the project
 │   ├── git/
-│   │   └── config                      # includes git/config per default
-│   ├── install/
-│   │   ├── macOS/
-│   │   ├── python/
-│   │   ├── ubuntu/
-│   │   └── vscode/
+│   │   ├── config                      # includes config.general per default
+│   │   └── config.general@
 │   ├── shell/
 │   │   ├── func/                       # extends/overrides shell/func/*
 │   │   ├── ssh/
-│   │   │   └── config                  # symlinked to
+│   │   │   └── config
 │   │   └── shellrc.sh                  # sources shell/shellrc.sh
 │   └── vscode/
-│       ├── keybindings.json            # symlinked to
-│       └── settings.json               # symlinked to
+│       ├── keybindings.json@
+│       └── settings.json@
 ├── git/
-├── install/
+│   └── ...
 ├── kutgw/
-├── macOS/
+│   └── ...
 ├── shell/
+│   └── ...
 ├── utils/
-│   └── drafts/                         # defaults for custom
+│   └── ...
+├── vscode/
+│   ├── extensions.sh
+│   ├── keybindings.json
+│   └── settings.json
 └── README.md
 ```
 
@@ -187,72 +238,13 @@ dotfiles/
 |---------------------------------------|-------------|
 | `custom/`                             | `dotfiles/custom/` is ignored by git (thus it could be set under git as well). It is organized exactly like the dotfiles-folder to use personal scripts replacing/extending default ones. The folder `dotfiles/custom/custom/` can be used to store general notes or thoughts, or to keep up good/old/outdated work. It won't be used in any script. |
 | `custom/shell/ssh/config`             | `${HOME}/.ssh/config` symlinks to this. |
-| `git/`                                | `git/config` contains useful git aliases and other configs. From HOME, `custom/git/config` gets linked to. It includes `git/config` and may contain user specific info (e.g. `user.name`). |
-| `install/`                            | Scripts like `install/python/pkgs.sh` helps setting up a system. When using the dotfiles' wrapper function, custom counterparts of them are preferred and replaces the default ones. |
+| `git/`                                | `git/config.general` contains useful git aliases and other settings. From `${HOME}`, `custom/git/config` and `custom/git/config.general` gets linked to. The file `git/config` is copied after initial configuration and may contain user specific info (e.g. `user.name`). |
 | `kutgw/`                              | It stands for "keep up the good work". |
-| `shell/`                              | `shell/` consists of scripts for setting the shell environment. `custom/shell/shellrc.sh` *fully* overwrites `shell/shellrc.sh`. |
+| `shell/`                              | `shell/` consists of scripts for setting the shell environment. `custom/shell/shellrc.sh` *fully* replaces `shell/shellrc.sh`. |
 | `shell/func/`                         | provides useful shell functions. Functions in `custom/shell/func/` are autoloaded/included and overwrite default functions in `shell/func/` if their name is the same. |
 | `shell/prompts/`                      | contains some prompts. |
-| `utils/`                              | contains scripts for interacting with the dotfiles quickly. |
-| `utils/drafts/` | Contains drafts that will be copied into a fresh created `custom/`. It is the solution to the problem of having (frequently changing) user dependent scripts (e.g. vscode's `settings.json`) and a git repo, that shouldn't need to be forked only for slight changes. |
-| `vscode/`                             | [Visual studio code](https://code.visualstudio.com/) uses some `settings.json` and `keybindings.json` for user settings and keybindings. Since these files slightly change a lot in usage, often temporary, they are provided as drafts and symlinked to `custom/vscode/...`. |
-
-## Usage <a name="usage"></a>
-
-The project has to be cloned to `${HOME}/dotfiles` and the provided wrapper function can be used to set all symlinks.
-Executing the following will create a folder `custom/...` in the dotfiles folder and create all needed symlinks in HOME.
-
-> __Note:__ This default location can be changed.
-> See [Change default location](#change-default-location) below for more infos.
-> The function name `dotfiles` is independent of your chosen foldername.
-
-The command `symlink` creates the symlinks verbosely, so don't be surprised of the ~10 lines of feedback.
-
-```zsh
-cd ~
-git clone https://github.com/dominicparga/dotfiles.git
-
-. "${HOME}/dotfiles/shell/shellrc.sh"
-dotfiles symlink all
-```
-
-Sometimes, a syntax-error is shown, e.g. in `shell/func/alert`.
-It does not occur (and everything is working as expected) after opening a new terminal-window.
-
-> __Note:__ `custom/` contains some generic info that should probably be updated by hand (e.g. gitconfig's `user.name`).
-
-### Optional: Change default location <a name="change-default-location"></a>
-
-Changing the default location `${HOME}/dotfiles` needs to rename the folder and change the variable `DOTFILES` defined at top of `${DOTFILES}/shell/shellrc.sh`.
-To provide this without the need of forking the whole project, a file `custom/shell/shellrc.sh` is preferred over the default `shell/shellrc.sh`.
-
-`dotfiles symlinks` (respectively `dotfiles custom`) creates the file `custom/shell/shellrc.sh` (amongst others), but you have to remove it manually before.
-
-```zsh
-# e.g. choosing .dotfiles instead of dotfiles as folder name
-export DOTFILES="${HOME}/.dotfiles"
-
-cd ~
-git clone https://github.com/dominicparga/dotfiles.git "${DOTFILES}"
-
-. "${DOTFILES}/shell/shellrc.sh"
-dotfiles symlink all
-```
-
-### Optional: Manual setup <a name="manual-setup"></a>
-
-The wrapper function calls the following scripts.
-
-```zsh
-cd ~
-git clone https://github.com/dominicparga/dotfiles.git "dotfiles"
-
-. "${HOME}/dotfiles/shell/shellrc.sh"
-bash "${DOTFILES}/utils/create_custom.sh"
-bash "${DOTFILES}/utils/symlink_dotfiles.sh" all
-```
-
-Fully manually, `custom/` and all symlinks has to be created by hand.
+| `utils/`                              | contains scripts for configuration. |
+| `vscode/`                             | [Visual studio code](https://code.visualstudio.com/) uses some `settings.json` and `keybindings.json` for user settings and keybindings. |
 
 ## Contributing <a name="contributing"></a>
 
@@ -267,7 +259,7 @@ For more detailed information, please look [at the contribution section](CONTRIB
 ### Syntax error (e.g. with brackets) <a name="syntax-error-with-brackets"></a>
 
 These dotfiles are used with `bash` and `zsh`.
-Check if `sh` is symlinked
+Check if `sh` is symlinked correctly
 
 ```zsh
 ls -1GF --color=auto -lh -a $(which sh)`)
@@ -283,36 +275,5 @@ Execute the following to set the permissions to `drwxr-xr-x`.
 ```zsh
 chmod -R 755 ${DOTFILES}
 ```
-
-## TODO <a name="todo"></a>
-
-### add notes
-
-* installation notes
-  * download nord
-  * install xcode-tools
-  * hidden files
-  * virtualbox needs sth.
-  * teamviewer settings
-  * magnet aus Apple Store
-* refactor 3-lines
-* readonly PROGNAME=$(basename $0)
-
-### shell scripting
-
-* alert: add usage description to alert function (sound arg)
-* alert: add message to alert as input arg
-* dotfiles: print info of all features and new functionality
-* editing: function for quickly editing shellrc (other files?)
-* java: function for changing java version
-* kubectl: probably too slow like <(heroku ...)?
-* LaTeX: script for creating a LaTeX folder structure
-* macOS: install Nord and Dracula
-* prompt: function for changing prompt
-* python: pip install $(pip list --outdated | awk '{ print $1 }') --upgrade
-* README: add vscode (vim-)keybindings
-* ubuntu: install Dracula
-* ubuntu: set PYTHON_INTERPRETER_PATH in shellrc
-* vscode: add snippets
 
 [web_github_howto]: https://github.com/dominicparga/howto
