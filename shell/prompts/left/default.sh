@@ -1,16 +1,20 @@
-is_color_prompt() {
-    case "${TERM}" in
-    xterm-color|*-256color)
-        return 0
-        ;;
-    *)
-        return 1
-        ;;
-    esac
+is_colored() {
+    # https://unix.stackexchange.com/questions/198794/where-does-the-term-environment-variable-default-get-set
+    if tput Co &> /dev/null; then
+        if [[ $(tput Co) -gt 2 ]]; then
+            return 0
+        fi
+    elif tput colors &> /dev/null; then
+        if [[ $(tput colors) -gt 2 ]]; then
+            return 0
+        fi
+    fi
+
+    return 1
 }
 
 prompt_cmd() {
-    local _last_exit_code="${?}"
+    local last_exit_code="${?}"
 
     #---------------------------------------------------------------------------
     # set variable identifying the chroot you work in (used in the prompt below)
@@ -23,7 +27,7 @@ prompt_cmd() {
     # prepare colors and details
 
     if [[ -n "${ZSH_NAME}" ]]; then
-        if ( is_color_prompt ); then
+        if ( is_colored ); then
             # colors
             # b - bold
             # c - color
@@ -49,7 +53,7 @@ prompt_cmd() {
         local long_pwd='%~'
 
     elif [[ -n "${BASH}" ]]; then
-        if ( is_color_prompt ); then
+        if ( is_colored ); then
             # colors
             # b - bold
             # c - color
@@ -69,7 +73,7 @@ prompt_cmd() {
             # TODO (see also below with PROMPT_COMMAND)
             # Dynamic color of $ depending on $? works, but virtual-envs doesn't
             # due to reset of PS1.
-            # if [[ ${_last_exit_code} = 0 ]]; then
+            # if [[ ${last_exit_code} = 0 ]]; then
             #     c_last_exit="${c_green}"
             # else
             #     c_last_exit="${c_red}"
