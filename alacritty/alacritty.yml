@@ -12,6 +12,7 @@
   # available, otherwise `xterm-256color` is used.
   #TERM: xterm-256color
 
+#------------------------------------------------------------------------------#
 window:
   # Window dimensions (changes require restart)
   #
@@ -68,6 +69,7 @@ window:
   # Window class (Linux only):
   #class: Alacritty
 
+#------------------------------------------------------------------------------#
 scrolling:
   # Maximum number of lines in the scrollback buffer.
   # Specifying '0' will disable scrolling.
@@ -89,6 +91,7 @@ scrolling:
   # Scroll to the bottom when new text is written to the terminal.
   auto_scroll: false
 
+#------------------------------------------------------------------------------#
 # Spaces per Tab (changes require restart)
 #
 # This setting defines the width of a tab in cells.
@@ -98,7 +101,9 @@ scrolling:
 # change the `it` value in terminfo when altering this setting.
 tabspaces: 8
 
+#------------------------------------------------------------------------------#
 # Font configuration (changes require restart)
+
 font:
   # Normal (roman) font face
   #normal:
@@ -170,7 +175,9 @@ font:
 # If `true`, bold text is drawn using the bright color variants.
 draw_bold_text_with_bright_colors: true
 
+#------------------------------------------------------------------------------#
 # Colors (Tomorrow Night Bright)
+
 colors:
   # Default colors
   primary:
@@ -248,6 +255,7 @@ colors:
   #
   indexed_colors: []
 
+#------------------------------------------------------------------------------#
 # Visual Bell
 #
 # Any time the BEL code is received, Alacritty "rings" the visual bell. Once
@@ -274,12 +282,14 @@ visual_bell:
   duration: 0
   color: '0xffffff'
 
+#------------------------------------------------------------------------------#
 # Background opacity
 #
 # Window opacity as a floating point number from `0.0` to `1.0`.
 # The value `0.0` is completely transparent and `1.0` is opaque.
 background_opacity: 1.0
 
+#------------------------------------------------------------------------------#
 # Mouse bindings
 #
 # Available fields:
@@ -332,6 +342,7 @@ mouse:
     # on them. The available modifiers are documented in the key binding section.
     modifiers: None
 
+#------------------------------------------------------------------------------#
 selection:
   semantic_escape_chars: ",│`|:\"' ()[]{}<>"
 
@@ -341,6 +352,7 @@ selection:
 # Allow terminal applications to change Alacritty's window title.
 dynamic_title: true
 
+#------------------------------------------------------------------------------#
 cursor:
   # Cursor style
   #
@@ -354,9 +366,11 @@ cursor:
   # window is not focused.
   unfocused_hollow: true
 
+#------------------------------------------------------------------------------#
 # Live config reload (changes require restart)
 live_config_reload: true
 
+#------------------------------------------------------------------------------#
 # Shell
 #
 # You can set `shell.program` to the path of your favorite shell, e.g. `/bin/fish`.
@@ -377,6 +391,7 @@ live_config_reload: true
 # directory of the parent process will be used.
 working_directory: None
 
+#------------------------------------------------------------------------------#
 # Windows 10 ConPTY backend (Windows only)
 #
 # This will enable better color support and may resolve other issues,
@@ -388,9 +403,11 @@ working_directory: None
 # backend cannot be initialized.
 enable_experimental_conpty_backend: false
 
+#------------------------------------------------------------------------------#
 # Send ESC (\x1b) before characters when alt is pressed.
 alt_send_esc: true
 
+#------------------------------------------------------------------------------#
 debug:
   # Display the time it takes to redraw each frame.
   render_timer: false
@@ -415,6 +432,7 @@ debug:
   # Record all characters and escape sequences as test data.
   ref_test: false
 
+#------------------------------------------------------------------------------#
 # Key bindings
 #
 # Key bindings are specified as a list of objects. Each binding will specify a
@@ -507,6 +525,8 @@ debug:
 #   - AppCursor
 #   - ~AppKeypad
 #   - AppKeypad
+
+#------------------------------------------------------------------------------#
 key_bindings:
   # (Windows/Linux only)
   #- { key: V,        mods: Control|Shift, action: Paste            }
