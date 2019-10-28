@@ -176,13 +176,23 @@ echo -e "${color_info}INFO: Creating and linking vscode-setup..${color_reset}"
 
 # Set VSCODE_HOME dependent of system.
 # See https://code.visualstudio.com/docs/getstarted/settings#_settings-file-locations
-source "${DOTFILES}/shell/func/is_machine"
-if ( is_machine 'macOS' ); then
-    VSCODE_HOME="${HOME}/Library/Application Support/Code/User"
-elif ( is_machine 'linux' ); then
-    VSCODE_HOME="${HOME}/.config/Code/User"
-else
-    echo -e "${color_error}ERROR: Could not find vscode-folder due to unknown system${color_reset}"
+
+# macOS
+# linux - microsoft-release
+# linux - open-source-release
+for dir in \
+    "${HOME}/Library/Application Support/Code/User" \
+    "${HOME}/.config/Code/User" \
+    "${HOME}/.config/Code - OSS/User"
+do
+    if [[ -e "${dir}" ]]; then
+        VSCODE_HOME="${dir}"
+        break
+    fi
+done
+# check if var is set, which means the directory exists
+if [[ -z "${VSCODE_HOME}" ]]; then
+    echo -e "${color_error}ERROR: Could not find vscode-folder${color_reset}"
     exit 1
 fi
 dotfiles_vscode_dir="${DOTFILES}/vscode"
