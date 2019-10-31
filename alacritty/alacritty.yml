@@ -61,7 +61,7 @@ window:
   #
   # Values for `startup_mode` (macOS only):
   #   - SimpleFullscreen
-  startup_mode: Windowed
+  startup_mode: Maximized
 
   # Window title
   #title: Alacritty
@@ -112,7 +112,7 @@ font:
     family: Cascadia Code
     style: Bold
   italic:
-    family: monospace
+    family: Cascadia Code
     style: Italic
   size: 14.0
 
