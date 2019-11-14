@@ -110,6 +110,14 @@
         "editor.rulers": [ 80 ],
         "editor.trimAutoWhitespace": true,
     },
+    "shellcheck.enable": true,
+    "shellcheck.run": "onType",
+    "shellcheck.executablePath": "shellcheck",
+    "shellcheck.exclude": [],
+    // "--shell=sh" for POSIX
+    "shellcheck.customArgs": ["--shell=sh"],
+    "shellcheck.ignorePatterns": {},
+    "shellcheck.useWSL": false,
     // rust
     "[rust]": {
         "editor.rulers": [ 100 ],
