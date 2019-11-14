@@ -104,46 +104,141 @@ tabspaces: 4
 #------------------------------------------------------------------------------#
 # Font configuration (changes require restart)
 
-font:
-  normal:
-    family: Cascadia Code
-    style: Regular
-  bold:
-    family: Cascadia Code
-    style: Bold
-  italic:
-    family: monospace
-    style: Italic
-  size: 14.0
+fonts:
+  cascadia_code: &cascadia_code
+    normal:
+      family: cascadia code
+      style: Regular
+    bold:
+      family: cascadia code
+      style: Bold
+    italic:
+      family: cascadia code
+      style: Italic
+    size: 14.0
+    offset:
+      x: 0
+      y: 0
+    glyph_offset:
+      x: 0
+      y: 0
+    use_thin_strokes: false
+  courier: &courier
+    normal:
+      family: courier
+      style: Regular
+    bold:
+      family: courier
+      style: Bold
+    italic:
+      family: courier
+      style: Italic
+    size: 14.0
+    offset:
+      x: 0
+      y: 0
+    glyph_offset:
+      x: 0
+      y: 0
+    use_thin_strokes: false
+  monospace: &monospace
+    normal:
+      family: monospace
+      style: Regular
+    bold:
+      family: monospace
+      style: Bold
+    italic:
+      family: monospace
+      style: Italic
+    size: 14.0
+    offset:
+      x: 0
+      y: 0
+    glyph_offset:
+      x: 0
+      y: 0
+    use_thin_strokes: false
+  default_font: &default_font
+    # Normal (roman) font face
+    normal:
+      # Font family
+      #
+      # Default:
+      #   - (macOS) Menlo
+      #   - (Linux) monospace
+      #   - (Windows) Consolas
+      family: monospace
 
-  # Offset is the extra space around each character. `offset.y` can be thought of
-  # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
-  offset:
-    x: 0
-    y: 0
+      # The `style` can be specified to pick a specific face.
+      style: Regular
 
-  # Glyph offset determines the locations of the glyphs within their cells with
-  # the default being at the bottom. Increasing `x` moves the glyph to the right,
-  # increasing `y` moves the glyph upwards.
-  glyph_offset:
-    x: 0
-    y: 0
+    # Bold font face
+    bold:
+      # Font family
+      #
+      # If the bold family is not specified, it will fall back to the
+      # value specified for the normal font.
+      family: monospace
 
-  # Thin stroke font rendering (macOS only)
-  #
-  # Thin strokes are suitable for retina displays, but for non-retina screens
-  # it is recommended to set `use_thin_strokes` to `false`
-  #
-  # macOS >= 10.14.x:
-  #
-  # If the font quality on non-retina display looks bad then set
-  # `use_thin_strokes` to `true` and enable font smoothing by running the
-  # following command:
-  #   `defaults write -g CGFontRenderingFontSmoothingDisabled -bool NO`
-  #
-  # This is a global setting and will require a log out or restart to take
-  # effect.
-  use_thin_strokes: true
+      # The `style` can be specified to pick a specific face.
+      style: Bold
+
+    # Italic font face
+    italic:
+      # Font family
+      #
+      # If the italic family is not specified, it will fall back to the
+      # value specified for the normal font.
+      family: monospace
+
+      # The `style` can be specified to pick a specific face.
+      style: Italic
+
+    # Bold italic font face
+    bold_italic:
+      # Font family
+      #
+      # If the bold italic family is not specified, it will fall back to the
+      # value specified for the normal font.
+      family: monospace
+
+      # The `style` can be specified to pick a specific face.
+      style: Bold Italic
+
+    # Point size
+    size: 11.0
+
+    # Offset is the extra space around each character. `offset.y` can be thought of
+    # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
+    offset:
+      x: 0
+      y: 0
+
+    # Glyph offset determines the locations of the glyphs within their cells with
+    # the default being at the bottom. Increasing `x` moves the glyph to the right,
+    # increasing `y` moves the glyph upwards.
+    glyph_offset:
+      x: 0
+      y: 0
+
+    # Thin stroke font rendering (macOS only)
+    #
+    # Thin strokes are suitable for retina displays, but for non-retina screens
+    # it is recommended to set `use_thin_strokes` to `false`
+    #
+    # macOS >= 10.14.x:
+    #
+    # If the font quality on non-retina display looks bad then set
+    # `use_thin_strokes` to `true` and enable font smoothing by running the
+    # following command:
+    #   `defaults write -g CGFontRenderingFontSmoothingDisabled -bool NO`
+    #
+    # This is a global setting and will require a log out or restart to take
+    # effect.
+    use_thin_strokes: false
+
+font: *cascadia_code
 
 # If `true`, bold text is drawn using the bright color variants.
 draw_bold_text_with_bright_colors: true
@@ -283,6 +378,7 @@ schemes:
     #   `- { index: 16, color: '0xff00ff' }`
     #
     indexed_colors: []
+
 colors: *nord
 
 #------------------------------------------------------------------------------#
