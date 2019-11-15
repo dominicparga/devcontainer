@@ -1,5 +1,7 @@
+#!/usr/bin/env sh
+
 dos2unix_dir() {
-    if [[ ! -d ${1} ]]; then
+    if [ ! -d "${1}" ]; then
         echo "Please specify a folder."
         return 1
     else
@@ -7,6 +9,6 @@ dos2unix_dir() {
     fi
 }
 
-if [[ -n "${ZSH_NAME}" ]]; then
+if [ -n "${ZSH_NAME}" ]; then
     dos2unix_dir "${@}"
 fi

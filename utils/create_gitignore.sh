@@ -1,24 +1,22 @@
+#!/usr/bin/env sh
+
 #------------------------------------------------------------------------------#
 # download output from gitignore and append it to content
 
-content+="\
+__CONTENT="\
 #------------------------------------------------------------------------------#
-# gitignore"
+# gitignore\
+"
 
-ignored_items=(
-    macos
-    visualstudiocode
-)
-
-ignored_items="${ignored_items[@]}"
-content+="$(curl -L -s https://www.gitignore.io/api/${ignored_items// /,})\n"
+__IGNORED_ITEMS="macos,visualstudiocode"
+__CONTENT="${__CONTENT}$(curl -L -s https://www.gitignore.io/api/${__IGNORED_ITEMS})\n"
 
 
 
 #------------------------------------------------------------------------------#
 # append custom
 
-content+="\n\n\n\
+__CONTENT="${__CONTENT}\n\n\n\
 #------------------------------------------------------------------------------#
 # Custom
 
@@ -31,4 +29,4 @@ content+="\n\n\n\
 #------------------------------------------------------------------------------#
 # print to console for piping
 
-echo "${content}"
+echo "${__CONTENT}"

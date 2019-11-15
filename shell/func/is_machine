@@ -1,19 +1,25 @@
+#!/usr/bin/env sh
+
 is_machine() {
-    case "${1}" in
-    macOS|macos|mac)
-        [[ "$(uname -s)" = "Darwin"* ]]
+    __MACHINE=$(echo "${1}" | tr '[:upper:]' '[:lower:]')
+
+    case "${__MACHINE}" in
+    'macos'|'mac')
+        uname --kernel-name | \
+        grep --quiet --ignore-case --regexp='darwin.*';
         ;;
-    linux|ubuntu|Linux|Ubuntu)
-        [[ "$(uname -s)" = "Linux"* ]]
+    'linux')
+        uname --kernel-name | \
+        grep --quiet --ignore-case --regexp='linux.*';
         ;;
     *)
         echo "unknown machine: ${1}"
-        echo "current machine: $(uname -s)"
+        echo "current machine: $(uname --kernel-name)"
         false
         ;;
     esac
 }
 
-if [[ -n "${ZSH_NAME}" ]]; then
+if [ -n "${ZSH_NAME}" ]; then
     is_machine "${@}"
 fi

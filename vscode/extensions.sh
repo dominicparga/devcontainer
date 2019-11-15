@@ -1,3 +1,5 @@
+#!/usr/bin/env sh
+
 #------------------------------------------------------------------------------#
 # fill in custom extensions here
 # '--force' for updating

@@ -1,8 +1,10 @@
+#!/usr/bin/env sh
+
 gitignore() {
-    curl -L -s "https://www.gitignore.io/api/${@}"
+    curl -L -s "https://www.gitignore.io/api/${*}"
     echo
 }
 
-if [[ -n "${ZSH_NAME}" ]]; then
+if [ -n "${ZSH_NAME}" ]; then
     gitignore "${@}"
 fi

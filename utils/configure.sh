@@ -3,7 +3,7 @@
 #------------------------------------------------------------------------------#
 # description of cmdline-parser
 
-usage="
+__USAGE="
 USAGE
     ${0} [OPTION]...
 
@@ -21,188 +21,193 @@ DESCRIPTION
 # exit as soon as error occurs
 set -e
 
-if [[ -z "${DOTFILES}" ]] || [[ ! -d "${DOTFILES}" ]]; then
-    echo -e "ERROR: \${DOTFILES} is set incorrectly: ${DOTFILES}" >&2
+if [ -z "${DOTFILES}" ] || [ ! -d "${DOTFILES}" ]; then
+    echo "ERROR: \${DOTFILES} is set incorrectly: ${DOTFILES}" >&2
     echo
-    echo "${usage}"
+    echo "${__USAGE}"
     exit 1
 fi
 
-source "${DOTFILES}/utils/formatting.sh"
+. "${DOTFILES}/utils/formatting.sh"
 
 #------------------------------------------------------------------------------#
 # cmdline-parser
 
-while [[ "${#}" -gt 0 ]]; do
+while [ "${#}" -gt 0 ]; do
     case "${1}" in
-    -h|--help)
-        errcode=0
+    '-h'|'--help')
+        __ERRCODE=0
         ;;
-    -*)
-        echo -e "${color_error}Unknown argument ${1}${color_reset}"
-        errcode=1
+    '-'*)
+        echo -e "${__COLOR_ERR}Unknown argument ${1}${__COLOR_RESET}"
+        __ERRCODE=1
         ;;
     *)
-        echo -e "${color_error}Unknown value ${1}${color_reset}"
-        errcode=1
+        echo -e "${__COLOR_ERR}Unknown value ${1}${__COLOR_RESET}"
+        __ERRCODE=1
         ;;
     esac
 
-    if [[ -n "${errcode}" ]]; then
-        echo -e "${color_info}${usage}${color_reset}"
-        exit ${errcode}
+    if [ -n "${__ERRCODE}" ]; then
+        echo -e "${__COLOR_INFO}${__USAGE}${__COLOR_RESET}"
+        exit ${__ERRCODE}
     fi
 done
 
 #------------------------------------------------------------------------------#
 # create folders
 
-echo -e "${color_info}INFO: Creating custom-folders..${color_reset}"
-custom_dir="${DOTFILES}/custom"
+echo -e "${__COLOR_INFO}INFO: Creating custom-folders..${__COLOR_RESET}"
+__CUSTOM_DIR="${DOTFILES}/custom"
 
 # custom
-mkdir -p -v "${custom_dir}/"
+mkdir -p -v "${__CUSTOM_DIR}/"
 # custom/alacritty
-mkdir -p -v "${custom_dir}/alacritty/"
+mkdir -p -v "${__CUSTOM_DIR}/alacritty/"
 # custom/git
-mkdir -p -v "${custom_dir}/git/"
+mkdir -p -v "${__CUSTOM_DIR}/git/"
 # custom/shell
-mkdir -p -v "${custom_dir}/shell/"
-mkdir -p -v "${custom_dir}/shell/func/"
-mkdir -p -v "${custom_dir}/shell/ssh/"
+mkdir -p -v "${__CUSTOM_DIR}/shell/"
+mkdir -p -v "${__CUSTOM_DIR}/shell/func/"
+mkdir -p -v "${__CUSTOM_DIR}/shell/ssh/"
 # custom/vscode
-mkdir -p -v "${custom_dir}/vscode/"
-echo -e "${color_success}SUCCESS: custom-folders created${color_reset}"
+mkdir -p -v "${__CUSTOM_DIR}/vscode/"
+echo -e "${__COLOR_SUCC}SUCCESS: custom-folders created${__COLOR_RESET}"
 
 #------------------------------------------------------------------------------#
 # setup custom/git
 
-echo -e "${color_info}INFO: Copying and linking git-files..${color_reset}"
+echo -e "${__COLOR_INFO}INFO: Copying and linking git-files..${__COLOR_RESET}"
 # copy dotfiles/git/config into custom
-echo -e "${color_info}INFO: ${HOME}/.gitconfig@ -> ${DOTFILES}/custom/git/config == ${DOTFILES}/git/config${color_reset}"
-cp -i -P "${DOTFILES}/git/config" "${custom_dir}/git/config"
-ln -i -v -s "${custom_dir}/git/config" "${HOME}/.gitconfig"
+echo -e "${__COLOR_INFO}INFO: ${HOME}/.gitconfig@ -> ${DOTFILES}/custom/git/config == ${DOTFILES}/git/config${__COLOR_RESET}"
+cp -i -P "${DOTFILES}/git/config" "${__CUSTOM_DIR}/git/config"
+ln -i -v -s "${__CUSTOM_DIR}/git/config" "${HOME}/.gitconfig"
 # link to config.general
-echo -e "${color_info}INFO: ${HOME}/.gitconfig.general@ -> ${DOTFILES}/custom/git/config.general@ -> ${DOTFILES}/git/config.general${color_reset}"
-ln -i -v -s "${DOTFILES}/git/config.general" "${custom_dir}/git/config.general"
-ln -i -v -s "${custom_dir}/git/config.general" "${HOME}/.gitconfig.general"
-echo -e "${color_success}SUCCESS: git-files configured${color_reset}"
+echo -e "${__COLOR_INFO}INFO: ${HOME}/.gitconfig.general@ -> ${DOTFILES}/custom/git/config.general@ -> ${DOTFILES}/git/config.general${__COLOR_RESET}"
+ln -i -v -s "${DOTFILES}/git/config.general" "${__CUSTOM_DIR}/git/config.general"
+ln -i -v -s "${__CUSTOM_DIR}/git/config.general" "${HOME}/.gitconfig.general"
+echo -e "${__COLOR_SUCC}SUCCESS: git-files configured${__COLOR_RESET}"
 
 #------------------------------------------------------------------------------#
 # setup custom/shell
 
-echo -e "${color_info}INFO: Creating and linking custom shellrc..${color_reset}"
-file="${custom_dir}/shell/shellrc.sh"
+echo -e "${__COLOR_INFO}INFO: Creating and linking custom shellrc..${__COLOR_RESET}"
+__FILE="${__CUSTOM_DIR}/shell/shellrc.sh"
 # if already existing, ask for removing it 
-if [[ -e "${file}" ]]; then
-    echo -e "${color_warn}WARN: custom shellrc found -> remove and recreate?${color_reset}"
-    rm -i -v "${file}"
+if [ -e "${__FILE}" ]; then
+    echo -e "${__COLOR_WARN}WARN: custom shellrc found -> remove and recreate?${__COLOR_RESET}"
+    rm -i -v "${__FILE}"
 fi
 # If file has been removed or not existed yet
 # -> create and fill it
 # Further, echo default-shellrc since it depends on dynamic value ${DOTFILES}
-if [[ ! -e "${file}" ]]; then
-    touch "${file}"
-    echo "#$(yes \- | head -n78 | tr -d '[:space:]')#"        >  "${file}"
-    echo "# If not running interactively, don't do anything"  >> "${file}"
-    echo ''                                                   >> "${file}"
-    echo 'case $- in'                                         >> "${file}"
-    echo '    *i*) ;;'                                        >> "${file}"
-    echo '      *) return ;;'                                 >> "${file}"
-    echo 'esac'                                               >> "${file}"
-    echo ''                                                   >> "${file}"
-    echo "#$(yes \- | head -n78 | tr -d '[:space:]')#"        >> "${file}"
-    echo '# setup'                                            >> "${file}"
-    echo ''                                                   >> "${file}"
-    echo "export DOTFILES=\"${DOTFILES}\""                    >> "${file}"
-    echo ''                                                   >> "${file}"
-    echo 'source "${DOTFILES}/shell/shellrc.sh"'              >> "${file}"
-    echo ''                                                   >> "${file}"
-    echo 'greet'                                              >> "${file}"
+if [ ! -e "${__FILE}" ]; then
+    touch "${__FILE}"
+    {
+        echo '#!/usr/bin/env sh';
+        echo '';
+        echo "#$(yes - | head -n78 | tr -d '[:space:]')#";
+        echo "# If not running interactively, don't do anything";
+        echo '';
+        echo 'case $- in';
+        echo '    *i*) ;;';
+        echo '      *) return ;;';
+        echo 'esac';
+        echo '';
+        echo "#$(yes - | head -n78 | tr -d '[:space:]')#";
+        echo '# setup';
+        echo '';
+        echo "export DOTFILES=\"${DOTFILES}\"";
+        echo '';
+        echo '. "${DOTFILES}/shell/shellrc.sh"';
+        echo '';
+        echo 'greet';
+        echo '';
+    } > "${__FILE}"
 
-    echo "created '${file}'"
+    echo "created '${__FILE}'"
 fi
 # create symlinks in $HOME
-echo -e "${color_info}INFO: ${HOME}/.profile@ -> ${custom_dir}/shell/shellrc.sh${color_reset}"
-ln -i -v -s "${custom_dir}/shell/shellrc.sh" "${HOME}/.profile"
-echo -e "${color_info}INFO: ${HOME}/.zshrc@ -> ${HOME}/.profile@${color_reset}"
+echo -e "${__COLOR_INFO}INFO: ${HOME}/.profile@ -> ${__CUSTOM_DIR}/shell/shellrc.sh${__COLOR_RESET}"
+ln -i -v -s "${__CUSTOM_DIR}/shell/shellrc.sh" "${HOME}/.profile"
+echo -e "${__COLOR_INFO}INFO: ${HOME}/.zshrc@ -> ${HOME}/.profile@${__COLOR_RESET}"
 ln -i -v -s "${HOME}/.profile" "${HOME}/.zshrc"
-echo -e "${color_info}INFO: ${HOME}/.bashrc@ -> ${HOME}/.profile@${color_reset}"
+echo -e "${__COLOR_INFO}INFO: ${HOME}/.bashrc@ -> ${HOME}/.profile@${__COLOR_RESET}"
 ln -i -v -s "${HOME}/.profile" "${HOME}/.bashrc"
-echo -e "${color_success}SUCCESS: shellrc configured${color_reset}"
+echo -e "${__COLOR_SUCC}SUCCESS: shellrc configured${__COLOR_RESET}"
 
 #------------------------------------------------------------------------------#
 # setup custom/shell/ssh
 
 # create empty ssh-config in custom and link to it
-echo -e "${color_info}INFO: Creating and linking custom ssh..${color_reset}"
-echo -e "${color_info}INFO: ${HOME}/.ssh/config@ -> ${DOTFILES}/custom/shell/ssh/config${color_reset}"
-file="${custom_dir}/shell/ssh/config"
-# if already existing, ask for removing it 
-if [[ -e "${file}" ]]; then
-    echo -e "${color_warn}WARN: custom ssh-config found -> remove and recreate?${color_reset}"
-    rm -i -v "${file}"
+echo -e "${__COLOR_INFO}INFO: Creating and linking custom ssh..${__COLOR_RESET}"
+echo -e "${__COLOR_INFO}INFO: ${HOME}/.ssh/config@ -> ${DOTFILES}/custom/shell/ssh/config${__COLOR_RESET}"
+__FILE="${__CUSTOM_DIR}/shell/ssh/config"
+# if already existing, ask for removing it
+if [ -e "${__FILE}" ]; then
+    echo -e "${__COLOR_WARN}WARN: custom ssh-config found -> remove and recreate?${__COLOR_RESET}"
+    rm -i -v "${__FILE}"
 fi
 # If file has been removed or not existed yet
 # -> create and fill it
-if [[ ! -e "${file}" ]]; then
-    touch "${file}"
-    echo '# Add your ssh-configs here' > "${file}"
-    echo "created '${file}'"
+if [ ! -e "${__FILE}" ]; then
+    touch "${__FILE}"
+    echo '# Add your ssh-configs here' > "${__FILE}"
+    echo "created '${__FILE}'"
 fi
 # link: dotfiles/custom/shell/ssh/config <- ${HOME}/.ssh/config
 mkdir -p -v "${HOME}/.ssh/"
-ln -i -v -s "${file}" "${HOME}/.ssh/config"
-echo -e "${color_success}SUCCESS: ssh configured${color_reset}"
+ln -i -v -s "${__FILE}" "${HOME}/.ssh/config"
+echo -e "${__COLOR_SUCC}SUCCESS: ssh configured${__COLOR_RESET}"
 
 #------------------------------------------------------------------------------#
 # setup custom/alacritty
 
-echo -e "${color_info}INFO: Copying and linking alacritty-files..${color_reset}"
-file="${HOME}/.config/alacritty/alacritty.yml"
-if [[ -e "${file}" ]]; then
-    echo -e "${color_warn}WARN: ${file} found -> remove?${color_reset}"
-    rm -i -v "${file}"
+echo -e "${__COLOR_INFO}INFO: Copying and linking alacritty-files..${__COLOR_RESET}"
+__FILE="${HOME}/.config/alacritty/alacritty.yml"
+if [ -e "${__FILE}" ]; then
+    echo -e "${__COLOR_WARN}WARN: ${__FILE} found -> remove?${__COLOR_RESET}"
+    rm -i -v "${__FILE}"
 fi
-echo -e "${color_info}INFO: ${HOME}/.alacritty.yml@ -> ${custom_dir}/alacritty/alacritty.yml -> ${DOTFILES}/alacritty/alacritty.yml${color_reset}"
-ln -i -v -s "${DOTFILES}/alacritty/alacritty.yml" "${custom_dir}/alacritty/alacritty.yml"
-ln -i -v -s "${custom_dir}/alacritty/alacritty.yml" "${HOME}/.alacritty.yml"
-echo -e "${color_success}SUCCESS: alacritty-files configured${color_reset}"
+echo -e "${__COLOR_INFO}INFO: ${HOME}/.alacritty.yml@ -> ${__CUSTOM_DIR}/alacritty/alacritty.yml -> ${DOTFILES}/alacritty/alacritty.yml${__COLOR_RESET}"
+ln -i -v -s "${DOTFILES}/alacritty/alacritty.yml" "${__CUSTOM_DIR}/alacritty/alacritty.yml"
+ln -i -v -s "${__CUSTOM_DIR}/alacritty/alacritty.yml" "${HOME}/.alacritty.yml"
+echo -e "${__COLOR_SUCC}SUCCESS: alacritty-files configured${__COLOR_RESET}"
 
 #------------------------------------------------------------------------------#
 # setup custom/vscode
 
-echo -e "${color_info}INFO: Creating and linking vscode-setup..${color_reset}"
+echo -e "${__COLOR_INFO}INFO: Creating and linking vscode-setup..${__COLOR_RESET}"
 
-# Set VSCODE_HOME dependent of system.
+# Set __VSCODE_HOME dependent of system.
 # See https://code.visualstudio.com/docs/getstarted/settings#_settings-file-locations
 
 # macOS
 # linux - microsoft-release
 # linux - open-source-release
-for dir in \
+for __DIR in \
     "${HOME}/Library/Application Support/Code/User" \
     "${HOME}/.config/Code/User" \
     "${HOME}/.config/Code - OSS/User"
 do
-    if [[ -e "${dir}" ]]; then
-        VSCODE_HOME="${dir}"
+    if [ -e "${__DIR}" ]; then
+        __VSCODE_HOME="${__DIR}"
         break
     fi
 done
 # check if var is set, which means the directory exists
-if [[ -z "${VSCODE_HOME}" ]]; then
-    echo -e "${color_error}ERROR: Could not find vscode-folder${color_reset}"
+if [ -z "${__VSCODE_HOME}" ]; then
+    echo -e "${__COLOR_ERR}ERROR: Could not find vscode-folder${__COLOR_RESET}"
     exit 1
 fi
-dotfiles_vscode_dir="${DOTFILES}/vscode"
-dotfiles_custom_vscode_dir="${custom_dir}/vscode"
+__DOTFILES_VSCODE_DIR="${DOTFILES}/vscode"
+__DOTFILES_CUSTOM_VSCODE_DIR="${__CUSTOM_DIR}/vscode"
 
 # set vscode-links
-echo -e "${color_info}INFO: ${VSCODE_HOME}/settings.json@ -> ${DOTFILES}/custom/vscode/settings.json@ -> ${DOTFILES}/vscode/settings.json${color_reset}"
-ln -i -v -s "${dotfiles_vscode_dir}/settings.json" "${dotfiles_custom_vscode_dir}/settings.json"
-ln -i -v -s "${dotfiles_custom_vscode_dir}/settings.json" "${VSCODE_HOME}/settings.json"
-echo -e "${color_info}INFO: ${VSCODE_HOME}/keybindings.json@ -> ${DOTFILES}/custom/vscode/keybindings.json@ -> ${DOTFILES}/vscode/keybindings.json${color_reset}"
-ln -i -v -s "${dotfiles_vscode_dir}/keybindings.json" "${dotfiles_custom_vscode_dir}/keybindings.json"
-ln -i -v -s "${dotfiles_custom_vscode_dir}/keybindings.json" "${VSCODE_HOME}/keybindings.json"
-echo -e "${color_success}SUCCESS: vscode-setup configured${color_reset}"
+echo -e "${__COLOR_INFO}INFO: ${__VSCODE_HOME}/settings.json@ -> ${DOTFILES}/custom/vscode/settings.json@ -> ${DOTFILES}/vscode/settings.json${__COLOR_RESET}"
+ln -i -v -s "${__DOTFILES_VSCODE_DIR}/settings.json" "${__DOTFILES_CUSTOM_VSCODE_DIR}/settings.json"
+ln -i -v -s "${__DOTFILES_CUSTOM_VSCODE_DIR}/settings.json" "${__VSCODE_HOME}/settings.json"
+echo -e "${__COLOR_INFO}INFO: ${__VSCODE_HOME}/keybindings.json@ -> ${DOTFILES}/custom/vscode/keybindings.json@ -> ${DOTFILES}/vscode/keybindings.json${__COLOR_RESET}"
+ln -i -v -s "${__DOTFILES_VSCODE_DIR}/keybindings.json" "${__DOTFILES_CUSTOM_VSCODE_DIR}/keybindings.json"
+ln -i -v -s "${__DOTFILES_CUSTOM_VSCODE_DIR}/keybindings.json" "${__VSCODE_HOME}/keybindings.json"
+echo -e "${__COLOR_SUCC}SUCCESS: vscode-setup configured${__COLOR_RESET}"

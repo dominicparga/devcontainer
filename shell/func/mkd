@@ -1,7 +1,9 @@
+#!/usr/bin/env sh
+
 mkd() {
-    mkdir -p "${@}" && cd "${@}"
+    { mkdir -p "${1}" && cd "${1}"; } || return 1
 }
 
-if [[ -n "${ZSH_NAME}" ]]; then
-    mkd "${@}"
+if [ -n "${ZSH_NAME}" ]; then
+    mkd "${1}"
 fi

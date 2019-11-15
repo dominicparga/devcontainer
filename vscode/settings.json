@@ -106,6 +106,10 @@
         "editor.rulers": [ 50, 72 ]
     },
     // shellscript
+    // SC1090 - Can't follow non-constant source.
+    // SC1091 - Not following
+    // SC2016 - ${...} doesn't expand in '...', use "..."
+    // SC2139 - Expansion when defined, not when used.
     "[shellscript]": {
         "editor.rulers": [ 80 ],
         "editor.trimAutoWhitespace": true
@@ -113,9 +117,8 @@
     "shellcheck.enable": true,
     "shellcheck.run": "onType",
     "shellcheck.executablePath": "shellcheck",
-    "shellcheck.exclude": [],
-    // "--shell=sh" for POSIX
-    "shellcheck.customArgs": ["--shell=sh"],
+    "shellcheck.exclude": ["SC1090", "SC1091", "SC2016", "SC2139"],
+    "shellcheck.customArgs": [],
     "shellcheck.ignorePatterns": {},
     "shellcheck.useWSL": false,
     // rust
