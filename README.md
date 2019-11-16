@@ -61,7 +61,7 @@ These dotfiles are tested with `macOS` and `linux` (`ubuntu`).
 1. [Structure](#structure)
 1. [Contributing](#contributing)
 1. [FAQ / Troubleshooting](#faq)
-    1. [Syntax error (e.g. with brackets)](#syntax-error-with-brackets)
+    1. [Syntax error](#syntax-error)
     1. [`Zsh`: Insecure files or directories](#insecure-files-and-dirs)
 1. [TODO](#todo)
 
@@ -258,23 +258,25 @@ For more detailed information, please look [at the contribution section](CONTRIB
 
 Weird experiences from friends and others, which are using this repo, are mentioned below.
 
-### Syntax error (e.g. with brackets) <a name="syntax-error-with-brackets"></a>
+### Syntax error <a name="syntax-error"></a>
 
 These dotfiles are used with `bash` and `zsh`.
-Hence, not every code-snippet could be in `POSIX` (e.g. arrays).
-Check if `sh` is symlinked correctly with
+Check how `sh` is symlinked, e.g. via
 
 ```zsh
 ls -1GF --color=auto -lh -a $(which sh)
 ```
 
-### `Zsh`: Insecure files or directories <a name="insecure-files-and-dirs"></a>
+For instance, `Debian` uses `dash` instead of `bash`.
+In this case, you have to change the system-shell with `chsh` or change the used shell in your terminal.
+
+### Insecure files or directories <a name="insecure-files-and-dirs"></a>
 
 Your file permissions for your `dotfiles` are probably too loose.
 Execute the following to set the permissions to `drwxr-xr-x`.
 
 ```zsh
-chmod -R 755 ${DOTFILES}
+chmod -R 755 "${DOTFILES}"
 ```
 
 [web_github_git_aliases]: https://github.com/dominicparga/dotfiles/blob/master/git/config.general
