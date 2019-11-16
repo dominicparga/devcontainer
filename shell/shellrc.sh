@@ -16,13 +16,14 @@ if [ -z "${DOTFILES}" ] || [ ! -d "${DOTFILES}" ]; then
 fi
 export __SHELL_LIB="${DOTFILES}/shell"
 export __CUSTOM_SHELL_LIB="${DOTFILES}/custom/shell"
+. "${DOTFILES}/utils/faq.sh"
 
 #------------------------------------------------------------------------------#
 # load gear for used shell
 
-if [ -n "${ZSH_NAME}" ]; then
+if ( __is_zsh ); then
     . "${DOTFILES}/shell/gear.zsh"
-elif [ -n "${BASH}" ]; then
+elif ( __is_bash ); then
     . "${DOTFILES}/shell/gear.bash"
 fi
 
