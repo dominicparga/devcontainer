@@ -61,9 +61,12 @@ PS1="${PS1}${__COLOR_FG_CYAN}${__BOLD_START}${__SHORT_PWD}${__BOLD_END}${__COLOR
 PS1="${PS1}${__BOLD_START}]${__BOLD_END}"
 
 # colored dollar sign depending on successful precommand
+__COLOR_LAST_EXIT_0="${__COLOR_FG_YELLOW}"
+__COLOR_LAST_EXIT_1="${__COLOR_FG_MAGENTA}"
+__LAST_EXIT_CHAR='#'
 if ( __is_zsh ); then
-    __COLOR_LAST_EXIT="%(?.${__COLOR_FG_GREEN}.${__COLOR_FG_RED})"
-    PS1="${PS1}${__COLOR_LAST_EXIT}${__BOLD_START}\$${__BOLD_END}${__COLOR_RESET} "
+    __COLOR_LAST_EXIT="%(?.${__COLOR_LAST_EXIT_0}.${__COLOR_LAST_EXIT_1})"
+    PS1="${PS1}${__COLOR_LAST_EXIT}${__BOLD_START}${__LAST_EXIT_CHAR}${__BOLD_END}${__COLOR_RESET} "
 elif ( __is_bash ); then
     __color_last_exit() {
         # shellcheck disable=2181
@@ -71,14 +74,14 @@ elif ( __is_bash ); then
         if [ "${?}" = 0 ]; then
             # shellcheck disable=2059
             # -> printf should interpret variable
-            printf "${__COLOR_FG_GREEN}"
+            printf "${__COLOR_LAST_EXIT_0}"
         else
             # shellcheck disable=2059
             # -> printf should interpret variable
-            printf "${__COLOR_FG_RED}"
+            printf "${__COLOR_LAST_EXIT_1}"
         fi
     }
-    PS1="${PS1}\$(__color_last_exit)${__BOLD_START}\$${__BOLD_END}${__COLOR_RESET} "
+    PS1="${PS1}\$(__color_last_exit)${__BOLD_START}${__LAST_EXIT_CHAR}${__BOLD_END}${__COLOR_RESET} "
 fi
 
 # if longer command -> begin next line with PS2
