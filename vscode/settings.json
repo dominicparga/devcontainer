@@ -213,8 +213,26 @@
                 "workbench.action.showCommands"
             ]
         },
+        {
+            "before": ["<leader>", "e"],
+            "commands": [
+                "workbench.action.toggleSidebarVisibility"
+            ]
+        },
         //--------------------------------------------------------------------//
         // code interaction
+        {
+            "before": ["<leader>", "U"],
+            "commands": [
+                "editor.action.transformToUppercase"
+            ]
+        },
+        {
+            "before": ["<leader>", "u"],
+            "commands": [
+                "editor.action.transformToLowercase"
+            ]
+        },
         {
             "before": ["<leader>", "/"], // dont forget normal-mode
             "commands": [
@@ -261,6 +279,12 @@
                 "editor.action.insertCursorAbove"
             ]
         },
+        {
+            "before": ["<leader>", "e"],
+            "commands": [
+                "workbench.action.toggleSidebarVisibility"
+            ]
+        },
         //--------------------------------------------------------------------//
         // code navigation
         {
@@ -283,6 +307,18 @@
         },
         //--------------------------------------------------------------------//
         // code interaction
+        {
+            "before": ["<leader>", "U"],
+            "commands": [
+                "editor.action.transformToUppercase"
+            ]
+        },
+        {
+            "before": ["<leader>", "u"],
+            "commands": [
+                "editor.action.transformToLowercase"
+            ]
+        },
         {
             "before": ["<leader>", "/"], // dont forget visual-mode
             "commands": [
