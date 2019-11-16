@@ -36,25 +36,6 @@ autoload -Uz compinit && compinit
 autoload colors && colors
 
 #------------------------------------------------------------------------------#
-# loading heroku autocompletion
-
-# works without these lines and th    // "--shell=sh" for POSIXese lines make startup slow
-# if ( command -v heroku 1>/dev/null 2>/dev/null ); then
-#     # heroku autocomplete setup
-#     HEROKU_AC_ZSH_SETUP_PATH="${HOME}/Library/Caches/heroku/autocomplete/zsh_setup"
-#     if [[ -f ${HEROKU_AC_ZSH_SETUP_PATH} ]]; then
-#         source ${HEROKU_AC_ZSH_SETUP_PATH}
-#     fi
-# fi
-
-#------------------------------------------------------------------------------#
-# loading kubectl autocompletion
-
-if ( command -v kubectl 1>/dev/null 2>/dev/null ); then
-    source <(kubectl completion zsh)
-fi
-
-#------------------------------------------------------------------------------#
 # history
 
 # history-length in terminal
