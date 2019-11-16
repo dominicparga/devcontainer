@@ -15,7 +15,6 @@ if ( __is_colored ); then
     __BOLD_END='\033[0m'
 
     # foreground colors
-    __COLOR_FG_DEFAULT='\033[39m'
     __COLOR_FG_BLACK='\033[30m'
     __COLOR_FG_RED='\033[31m'
     __COLOR_FG_GREEN='\033[32m'
@@ -26,7 +25,6 @@ if ( __is_colored ); then
     __COLOR_FG_LIGHT_GRAY='\033[37m'
 
     # background colors
-    __COLOR_BG_DEFAULT='\033[49m'
     __COLOR_BG_BLACK='\033[40m'
     __COLOR_BG_RED='\033[41m'
     __COLOR_BG_GREEN='\033[42m'
