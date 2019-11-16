@@ -9,6 +9,7 @@
     # general
     h = "help"
     s = "status"
+    hash = "rev-parse --verify HEAD"
 
     # efficient staging
     unstage = "reset HEAD --"
