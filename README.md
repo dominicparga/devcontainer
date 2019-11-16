@@ -20,6 +20,8 @@ So result in home will be
 DOTFILES="${HOME}/dotfiles" # can be changed
 
 ~/
+├── .alacritty.yml@ -> ${DOTFILES}/custom/alacritty/alacritty.yml*
+│
 ├── .gitconfig@ -> ${DOTFILES}/custom/git/config*
 ├── .gitconfig.general@ -> ${DOTFILES}/custom/git/config.general*
 │
@@ -259,13 +261,12 @@ Weird experiences from friends and others, which are using this repo, are mentio
 ### Syntax error (e.g. with brackets) <a name="syntax-error-with-brackets"></a>
 
 These dotfiles are used with `bash` and `zsh`.
+Hence, not every code-snippet could be in `POSIX` (e.g. arrays).
 Check if `sh` is symlinked correctly with
 
 ```zsh
 ls -1GF --color=auto -lh -a $(which sh)
 ```
-
-For instance, `dash` (not `bash`) does not support `[[ ... ]]`, which is used a lot here.
 
 ### `Zsh`: Insecure files or directories <a name="insecure-files-and-dirs"></a>
 
