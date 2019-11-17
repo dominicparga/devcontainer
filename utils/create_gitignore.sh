@@ -16,17 +16,19 @@ __CONTENT="${__CONTENT}$(curl -L -s https://www.gitignore.io/api/${__IGNORED_ITE
 #------------------------------------------------------------------------------#
 # append custom
 
-__CONTENT="${__CONTENT}\n\n\n\
+__CONTENT="${__CONTENT}\n\
+\n\
+\n\
 #------------------------------------------------------------------------------#
 # Custom
 
 /custom/
 
-.vscode/"
+.vscode/\n"
 
 
 
 #------------------------------------------------------------------------------#
 # print to console for piping
 
-echo "${__CONTENT}"
+printf "${__CONTENT}"
