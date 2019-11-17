@@ -9,20 +9,22 @@ __is_bash() {
 }
 
 is_machine() {
+    # -s is same as --kernel-name
+    # but, of course, macOS doesn't support full flag o_O
     __MACHINE=$(echo "${1}" | tr '[:upper:]' '[:lower:]')
 
     case "${__MACHINE}" in
     'macos'|'mac')
-        uname --kernel-name | \
+        uname -s | \
         grep --quiet --ignore-case --regexp='darwin.*';
         ;;
     'linux')
-        uname --kernel-name | \
+        uname -s | \
         grep --quiet --ignore-case --regexp='linux.*';
         ;;
     *)
         echo "unknown machine: ${1}"
-        echo "current machine: $(uname --kernel-name)"
+        echo "current machine: $(uname -s)"
         false
         ;;
     esac
