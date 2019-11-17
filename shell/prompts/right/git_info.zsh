@@ -13,10 +13,10 @@ __get_commit_label() {
 __is_HEAD_dirty() {
     # diff-index returns true if no difference (like cmp returns equality)
     # -> doesn't get untracked files
-    # ! { command git diff-index --quiet HEAD 1>/dev/null 2>&1; }
+    ! { command git diff-index --quiet HEAD 1>/dev/null 2>&1; }
 
     # gets untracked files due to '--other'
-    test $( git ls-files --modified --other --directory --exclude-standard | sed '1 q' | wc -l ) -gt 0
+    # test $( git ls-files --modified --other --directory --exclude-standard | sed '1 q' | wc -l ) -gt 0
 }
 
 __update_RPS1() {
