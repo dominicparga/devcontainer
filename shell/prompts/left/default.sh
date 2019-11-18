@@ -25,7 +25,7 @@ PS1=''
 # window title
 # goal:
 # (zsh) ~/dotfiles
-__WINDOW_TITLE="\033]0;(${__USED_SHELL}) ${__LONG_PWD}\a\]"
+__WINDOW_TITLE="\[\e]0;(${__USED_SHELL}) ${__LONG_PWD}\a\]"
 if ( __is_zsh ); then
     case ${TERM} in
     xterm*)

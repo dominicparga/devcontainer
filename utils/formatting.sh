@@ -10,29 +10,29 @@
 
 if ( __is_colored ); then
     # general formatting
-    __COLOR_RESET='\033[0m'
-    __BOLD_START='\033[1m'
-    __BOLD_END='\033[0m'
+    __COLOR_RESET='\e[0m'
+    __BOLD_START='\e[1m'
+    __BOLD_END='\e[0m'
 
     # foreground colors
-    __COLOR_FG_BLACK='\033[30m'
-    __COLOR_FG_RED='\033[31m'
-    __COLOR_FG_GREEN='\033[32m'
-    __COLOR_FG_YELLOW='\033[33m'
-    __COLOR_FG_BLUE='\033[34m'
-    __COLOR_FG_MAGENTA='\033[35m'
-    __COLOR_FG_CYAN='\033[36m'
-    __COLOR_FG_LIGHT_GRAY='\033[37m'
+    __COLOR_FG_BLACK='\e[30m'
+    __COLOR_FG_RED='\e[31m'
+    __COLOR_FG_GREEN='\e[32m'
+    __COLOR_FG_YELLOW='\e[33m'
+    __COLOR_FG_BLUE='\e[34m'
+    __COLOR_FG_MAGENTA='\e[35m'
+    __COLOR_FG_CYAN='\e[36m'
+    __COLOR_FG_LIGHT_GRAY='\e[37m'
 
     # background colors
-    __COLOR_BG_BLACK='\033[40m'
-    __COLOR_BG_RED='\033[41m'
-    __COLOR_BG_GREEN='\033[42m'
-    __COLOR_BG_YELLOW='\033[43m'
-    __COLOR_BG_BLUE='\033[44m'
-    __COLOR_BG_MAGENTA='\033[45m'
-    __COLOR_BG_CYAN='\033[46m'
-    __COLOR_BG_LIGHT_GRAY='\033[47m'
+    __COLOR_BG_BLACK='\e[40m'
+    __COLOR_BG_RED='\e[41m'
+    __COLOR_BG_GREEN='\e[42m'
+    __COLOR_BG_YELLOW='\e[43m'
+    __COLOR_BG_BLUE='\e[44m'
+    __COLOR_BG_MAGENTA='\e[45m'
+    __COLOR_BG_CYAN='\e[46m'
+    __COLOR_BG_LIGHT_GRAY='\e[47m'
 
     # custom
     __COLOR_INFO="${__COLOR_FG_BLUE}"
