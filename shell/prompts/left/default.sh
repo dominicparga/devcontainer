@@ -63,7 +63,7 @@ PS1="${PS1}${__BOLD_START}]${__BOLD_END}"
 # colored dollar sign depending on successful precommand
 __COLOR_LAST_EXIT_0="${__COLOR_FG_YELLOW}"
 __COLOR_LAST_EXIT_1="${__COLOR_FG_MAGENTA}"
-__CHAR_LAST_EXIT_0=''
+__CHAR_LAST_EXIT_0='0'
 __CHAR_LAST_EXIT_1='x'
 if ( __is_zsh ); then
     # __COLOR_LAST_EXIT="%(?.${__COLOR_LAST_EXIT_0}.${__COLOR_LAST_EXIT_1})"
