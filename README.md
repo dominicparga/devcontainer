@@ -1,5 +1,8 @@
 # dotfiles
 
+[![License][www_license_badge]][www_license]
+[![Tag][www_tag_badge]][www_tag_badge]
+
 Dry and short:
 
 These dotfiles should speed up a personal workflow and help setting it up.
@@ -279,6 +282,10 @@ Execute the following to set the permissions to `drwxr-xr-x`.
 ```zsh
 chmod -R 755 "${DOTFILES}"
 ```
+
+[www_tag_badge]: https://img.shields.io/github/v/tag/dominicparga/dotfiles?sort=semver
+[www_license_badge]: https://img.shields.io/github/license/dominicparga/dotfiles
+[www_license]: https://github.com/dominicparga/dotfiles/blob/master/LICENSE
 
 [web_github_git_aliases]: https://github.com/dominicparga/dotfiles/blob/master/git/config.general
 [web_github_howto]: https://github.com/dominicparga/howto
