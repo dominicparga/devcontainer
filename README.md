@@ -67,6 +67,9 @@ These dotfiles are tested with `macOS` and `linux` (`ubuntu`).
 
 ## News <a name="news"></a>
 
+Version `3.0.0` has been finished.
+It refactors the shellscripts to be cleaner and POSIX-conform (where possible) thanks to the shell-linter `shellcheck`.
+
 Version `2.0.0` has been finished.
 It moves boilerplate-code (for installation) to [the howto-repo][web_github_howto].
 This allows a more flat and clean code-structure.
@@ -74,6 +77,7 @@ Due to semantic versoning, the new version implies a breaking change.
 This affects symlinks in `${HOME}/` and `${DOTFILES}/custom/`.
 
 In general, automatic tests (and a Docker-Image?) could help with testing.
+A changelog could be helpful as well.
 
 ## Usage <a name="usage"></a>
 
@@ -165,11 +169,7 @@ In addition, visual-studio-code is opening as diff-tool and for commit-messages.
 | alias | note |
 |:-----:|------|
 | GENERAL |
-| `g h` | helps using `git help` more often ;) (`g h ALIAS` shows the replacement for the alias). |
-| `g s` | is alias for `git status` and one of the most used aliases. |
-| `g hash` | is alias for `git rev-parse --verify HEAD` and returns the commit-hash, where HEAD is pointing at. |
-| EFFICIENT STAGING |
-| `g unstage FILES ` | removes all changes from the index with respect to the given FILES (but keeps the changes in workspace). Simply spoken, all green FILES in `git status` become red again. |
+| `g h` | helps using `git heRefactor POSIX, add some handy vscode-settings and git-aliaseses all changes from the index with respect to the given FILES (but keeps the changes in workspace). Simply spoken, all green FILES in `git status` become red again. |
 | `g discard FILES` | removes all changes from the workspace with respect to the given FILES. Simply spoken, all red FILES in `git status` disappear. (__ATTENTION!__ Obviously, those changes will be lost.) |
 | `g undo` | removes the last commit from history, but keeps its changes in the index. __ATTENTION!__ This alias can be very handy but it is recommended using this only for local commits, since removing pushed commits messes up the history. |
 | COMMITTING |
