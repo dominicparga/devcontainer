@@ -1,75 +1,67 @@
+#!/usr/bin/env sh
+
 #------------------------------------------------------------------------------#
 # fill in custom extensions here
-# in ALPHABETICAL order
+# '--force' for updating
+# 'code --disable-extensions' would disable installed extensions
 
-extensions=(
-    # color and icon themes
-    arcticicestudio.nord-visual-studio-code
-    be5invis.vscode-icontheme-nomo-dark
-    dracula-theme.theme-dracula
-    laurenttreguier.vscode-simple-icons
-    monokai.theme-monokai-pro-vscode
-    pkief.material-icon-theme
-    robertohuertasm.vscode-icons
+# color and icon themes
+code --force --install-extension arcticicestudio.nord-visual-studio-code
+code --force --install-extension be5invis.vscode-icontheme-nomo-dark
+code --force --install-extension dracula-theme.theme-dracula
+code --force --install-extension laurenttreguier.vscode-simple-icons
+code --force --install-extension monokai.theme-monokai-pro-vscode
+code --force --install-extension pkief.material-icon-theme
+code --force --install-extension robertohuertasm.vscode-icons
 
-    # editor utils
-    coenraads.bracket-pair-colorizer-2
-    davidhouchin.whitespace-plus
-    # minhthai.vscode-todo-parser
-    pnp.polacode
-    # slevesque.vscode-hexdump
-    vscodevim.vim
-    # wayou.vscode-todo-highlight
+# editor utils
+code --force --install-extension coenraads.bracket-pair-colorizer-2
+code --force --install-extension davidhouchin.whitespace-plus
+# code --force --install-extension minhthai.vscode-todo-parser
+code --force --install-extension pnp.polacode
+# code --force --install-extension slevesque.vscode-hexdump
+code --force --install-extension vscodevim.vim
+# code --force --install-extension wayou.vscode-todo-highlight
 
-    # git
-    donjayamanne.githistory
-    # waderyan.gitblame
+# git
+code --force --install-extension donjayamanne.githistory
+# code --force --install-extension waderyan.gitblame
 
-    # markdown
-    davidanson.vscode-markdownlint
+# markdown
+code --force --install-extension davidanson.vscode-markdownlint
 
-    # toml
-    bungcip.better-toml
-    # csv
-    mechatroner.rainbow-csv
+# toml
+code --force --install-extension bungcip.better-toml
+# csv
+code --force --install-extension mechatroner.rainbow-csv
 
-    # rust
-    rust-lang.rust
+# rust
+code --force --install-extension rust-lang.rust
 
-    # python
-    kevinrose.vsc-python-indent
-    ms-python.python
+# python
+code --force --install-extension kevinrose.vsc-python-indent
+code --force --install-extension ms-python.python
 
-    # LaTeX
-    james-yu.latex-workshop
+# LaTeX
+code --force --install-extension james-yu.latex-workshop
 
-    # c cpp
-    # cquera-project.cquery
-    ms-vscode.cpptools
-    # twxs.cmake
-    # vector-of-bool.cmake-tools
+# c cpp
+# code --force --install-extension cquera-project.cquery
+code --force --install-extension ms-vscode.cpptools
+# code --force --install-extension twxs.cmake
+# code --force --install-extension vector-of-bool.cmake-tools
 
-    # java
-    redhat.java
-    vscjava.vscode-java-debug
-    vscjava.vscode-java-pack
-    vscjava.vscode-java-test
+# java
+code --force --install-extension redhat.java
+code --force --install-extension vscjava.vscode-java-debug
+code --force --install-extension vscjava.vscode-java-pack
+code --force --install-extension vscjava.vscode-java-test
 
-    # scala
-    daltonjorge.scala
+# scala
+code --force --install-extension daltonjorge.scala
 
-    # gradle
-    # naco-siren.gradle-language
+# gradle
+# code --force --install-extension naco-siren.gradle-language
 
-    # maven
-    vscjava.vscode-maven
-)
-
-#------------------------------------------------------------------------------#
-# install extensions
-
-for item in ${extensions[@]}; do
-    # force for updating
-    code --force --install-extension ${item}
-done
-#code --disable-extensions
+# maven
+code --force --install-extension vscjava.vscode-maven

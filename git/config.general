@@ -9,10 +9,11 @@
     # general
     h = "help"
     s = "status"
+    hash = "rev-parse --verify HEAD"
 
     # efficient staging
-    unstage = "reset HEAD --"
-    discard = "checkout --"
+    unstage = "restore --staged" # "reset HEAD --"
+    discard = "restore" # "checkout --"
     undo    = "reset HEAD^ --soft"
 
     # committing
@@ -37,8 +38,8 @@
     bv  = "branch --list -v"
     bav  = "branch --list -av"
 
-    # show last n commits where n is given as parameter (default is 3)
-    last = !"last() { git log -${1:-3} HEAD; }; last"
+    # show last n commits where n is given as parameter (default is 1)
+    last = !"last() { git log -${1:-1} HEAD; }; last"
 
     # local and global network history
     localhist  = !"git localgraph1"

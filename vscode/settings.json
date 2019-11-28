@@ -31,7 +31,7 @@
         100,
         120
     ],
-    "editor.cursorSurroundingLines": 8,
+    "editor.cursorSurroundingLines": 0,
     "editor.cursorStyle": "line",
     "editor.renderLineHighlight": "none",
     "editor.renderFinalNewline": true,
@@ -81,7 +81,7 @@
         "borderStyle : solid",
         "borderWidth : 1px",
         "borderColor : {color}",
-        "opacity     : 1.00",
+        "opacity     : 1.00"
     ],
     "bracket-pair-colorizer-2.showBracketsInGutter": true,
     "bracket-pair-colorizer-2.showBracketsInRuler": false,
@@ -96,29 +96,40 @@
     "files.associations": {
         "SConscript": "python",
         "SConstruct": "python",
-        "TAG_EDITMSG": "git-commit",
+        "TAG_EDITMSG": "git-commit"
         // "*.thor": "ruby",
         // "*.jsx": "javascript",
     },
     // git
     "scm.defaultViewMode": "tree",
     "[git-commit]": {
-        "editor.rulers": [ 50, 72 ],
+        "editor.rulers": [ 50, 72 ]
     },
     // shellscript
+    // SC1090 - Can't follow non-constant source.
+    // SC1091 - Not following
+    // SC2016 - ${...} doesn't expand in '...', use "..."
+    // SC2139 - Expansion when defined, not when used.
     "[shellscript]": {
         "editor.rulers": [ 80 ],
-        "editor.trimAutoWhitespace": true,
+        "editor.trimAutoWhitespace": true
     },
+    "shellcheck.enable": true,
+    "shellcheck.run": "onType",
+    "shellcheck.executablePath": "shellcheck",
+    "shellcheck.exclude": ["SC1090", "SC1091", "SC2016", "SC2139"],
+    "shellcheck.customArgs": [],
+    "shellcheck.ignorePatterns": {},
+    "shellcheck.useWSL": false,
     // rust
     "[rust]": {
         "editor.rulers": [ 100 ],
-        "editor.trimAutoWhitespace": true,
+        "editor.trimAutoWhitespace": true
     },
     // python
     "[python]": {
         "editor.rulers": [ 72, 79 ],
-        "editor.trimAutoWhitespace": true,
+        "editor.trimAutoWhitespace": true
     },
     "python.pythonPath": "${env:PYTHON_INTERPRETER_PATH}",
     "python.autoComplete.addBrackets": true,
@@ -136,35 +147,35 @@
     "python.jediEnabled": false,
     // cpp
     "[cpp]": {
-        "editor.rulers": [ 100 ],
+        "editor.rulers": [ 100 ]
     },
     // java
     "[java]": {
-        "editor.rulers": [ 100 ],
+        "editor.rulers": [ 100 ]
     },
     "java.configuration.checkProjectSettingsExclusions": false,
     // html
     "[html]": {
         "editor.rulers": [ 80 ],
-        "editor.tabSize": 2,
+        "editor.tabSize": 2
     },
     // css
     "[css]": {
         "editor.rulers": [ 80 ],
-        "editor.tabSize": 2,
+        "editor.tabSize": 2
     },
     // typescript
     "[typescript]": {
         "editor.rulers": [ 80 ],
-        "editor.tabSize": 2,
+        "editor.tabSize": 2
     },
     "[typescriptreact]": {
         "editor.rulers": [ 80 ],
-        "editor.tabSize": 2,
+        "editor.tabSize": 2
     },
     // LaTeX
     "[latex]": {
-        "editor.wordWrap": "on",
+        "editor.wordWrap": "on"
     },
     "latex-workshop.view.pdf.viewer": "tab",
     "latex-workshop.hover.preview.scale": 1,
@@ -193,21 +204,39 @@
         {
             "before": ["<leader>", "p"],
             "commands": [
-                "workbench.action.quickOpen",
+                "workbench.action.quickOpen"
             ]
         },
         {
             "before": ["<leader>", "P"],
             "commands": [
-                "workbench.action.showCommands",
+                "workbench.action.showCommands"
+            ]
+        },
+        {
+            "before": ["<leader>", "e"],
+            "commands": [
+                "workbench.action.toggleSidebarVisibility"
             ]
         },
         //--------------------------------------------------------------------//
         // code interaction
         {
+            "before": ["<leader>", "U"],
+            "commands": [
+                "editor.action.transformToUppercase"
+            ]
+        },
+        {
+            "before": ["<leader>", "u"],
+            "commands": [
+                "editor.action.transformToLowercase"
+            ]
+        },
+        {
             "before": ["<leader>", "/"], // dont forget normal-mode
             "commands": [
-                "editor.action.commentLine",
+                "editor.action.commentLine"
             ]
         },
         {
@@ -221,7 +250,7 @@
             "commands": [
                 "editor.action.outdentLines"
             ]
-        },
+        }
     ],
     "vim.normalModeKeyBindingsNonRecursive": [
         //--------------------------------------------------------------------//
@@ -229,25 +258,31 @@
         {
             "before": ["<leader>", "p"],
             "commands": [
-                "workbench.action.quickOpen",
+                "workbench.action.quickOpen"
             ]
         },
         {
             "before": ["<leader>", "P"],
             "commands": [
-                "workbench.action.showCommands",
+                "workbench.action.showCommands"
             ]
         },
         {
             "before": ["<leader>", "c", "j"],
             "commands": [
-                "editor.action.insertCursorBelow",
+                "editor.action.insertCursorBelow"
             ]
         },
         {
             "before": ["<leader>", "c", "k"],
             "commands": [
-                "editor.action.insertCursorAbove",
+                "editor.action.insertCursorAbove"
+            ]
+        },
+        {
+            "before": ["<leader>", "e"],
+            "commands": [
+                "workbench.action.toggleSidebarVisibility"
             ]
         },
         //--------------------------------------------------------------------//
@@ -255,27 +290,39 @@
         {
             "before": ["<leader>", "b"],
             "commands": [
-                "workbench.action.navigateBack",
+                "workbench.action.navigateBack"
             ]
         },
         {
             "before": ["<leader>", "f"],
             "commands": [
-                "workbench.action.navigateForward",
+                "workbench.action.navigateForward"
             ]
         },
         {
             "before": ["<leader>", "#"],
             "commands": [
-                "editor.action.goToDeclaration",
+                "editor.action.goToDeclaration"
             ]
         },
         //--------------------------------------------------------------------//
         // code interaction
         {
+            "before": ["<leader>", "U"],
+            "commands": [
+                "editor.action.transformToUppercase"
+            ]
+        },
+        {
+            "before": ["<leader>", "u"],
+            "commands": [
+                "editor.action.transformToLowercase"
+            ]
+        },
+        {
             "before": ["<leader>", "/"], // dont forget visual-mode
             "commands": [
-                "editor.action.commentLine",
+                "editor.action.commentLine"
             ]
         },
         {
@@ -398,57 +445,57 @@
         {
             "before": ["<leader>", "t", "1"],
             "commands": [
-                "workbench.action.openEditorAtIndex1",
+                "workbench.action.openEditorAtIndex1"
             ]
         },
         {
             "before": ["<leader>", "t", "2"],
             "commands": [
-                "workbench.action.openEditorAtIndex2",
+                "workbench.action.openEditorAtIndex2"
             ]
         },
         {
             "before": ["<leader>", "t", "3"],
             "commands": [
-                "workbench.action.openEditorAtIndex3",
+                "workbench.action.openEditorAtIndex3"
             ]
         },
         {
             "before": ["<leader>", "t", "4"],
             "commands": [
-                "workbench.action.openEditorAtIndex4",
+                "workbench.action.openEditorAtIndex4"
             ]
         },
         {
             "before": ["<leader>", "t", "5"],
             "commands": [
-                "workbench.action.openEditorAtIndex5",
+                "workbench.action.openEditorAtIndex5"
             ]
         },
         {
             "before": ["<leader>", "t", "6"],
             "commands": [
-                "workbench.action.openEditorAtIndex6",
+                "workbench.action.openEditorAtIndex6"
             ]
         },
         {
             "before": ["<leader>", "t", "7"],
             "commands": [
-                "workbench.action.openEditorAtIndex7",
+                "workbench.action.openEditorAtIndex7"
             ]
         },
         {
             "before": ["<leader>", "t", "8"],
             "commands": [
-                "workbench.action.openEditorAtIndex8",
+                "workbench.action.openEditorAtIndex8"
             ]
         },
         {
             "before": ["<leader>", "t", "9"],
             "commands": [
-                "workbench.action.openEditorAtIndex9",
+                "workbench.action.openEditorAtIndex9"
             ]
-        },
+        }
     ],
     //------------------------------------------------------------------------//
     // kutgw
@@ -461,7 +508,7 @@
         "overviewRulerColor": "#000000",
         "border": "1px solid #5E71A4",
         "borderRadius": "2px",
-        "isWholeLine": false,
+        "isWholeLine": false
     },
     "todohighlight.keywords": [
         {
@@ -471,7 +518,7 @@
             "overviewRulerColor": "#000000",
             "border": "1px solid #5E71A4",
             "borderRadius": "2px",
-            "isWholeLine": false,
+            "isWholeLine": false
         },
         {
             "text": "FIXME:",
@@ -480,14 +527,14 @@
             "overviewRulerColor": "#000000",
             "border": "1px solid #5E71A4",
             "borderRadius": "2px",
-            "isWholeLine": false,
+            "isWholeLine": false
         },
         "HINT:",
         "INFO:",
         "WARN:",
         "ERROR:",
-        "ERR:",
-    ],
+        "ERR:"
+    ]
     //------------------------------------------------------------------------//
     // occasionally added stuff
 }

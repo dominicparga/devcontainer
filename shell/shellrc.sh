@@ -1,3 +1,5 @@
+#!/usr/bin/env sh
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -7,161 +9,23 @@ esac
 #------------------------------------------------------------------------------#
 # initialization
 
-if [[ -z "${DOTFILES}" ]] || [[ ! -d "${DOTFILES}" ]]; then
-    echo -e "ERROR: \${DOTFILES} is set incorrectly or is empty: ${DOTFILES}" >&2
+if [ -z "${DOTFILES}" ] || [ ! -d "${DOTFILES}" ]; then
+    echo "ERROR: \${DOTFILES} is set incorrectly or is empty: ${DOTFILES}" >&2
     sleep 4
     exit 1
 fi
-_shell_lib="${DOTFILES}/shell"
-_custom_shell_lib="${DOTFILES}/custom/shell"
+export __SHELL_LIB="${DOTFILES}/shell"
+export __CUSTOM_SHELL_LIB="${DOTFILES}/custom/shell"
+
+. "${DOTFILES}/utils/faq.sh"
 
 #------------------------------------------------------------------------------#
-# autoloading
+# load gear for used shell
 
-if [[ -n "${ZSH_NAME}" ]]; then
-    #--------------------------------------------------------------------------#
-    # own functions
-
-    fpath=(
-        "${_custom_shell_lib}/func"
-        "${_shell_lib}/func"
-        "${fpath[@]}"
-    )
-
-    _dirs=( "${_shell_lib}" "${_custom_shell_lib}" )
-    for _dir in "${_dirs[@]}"; do
-        if [[ -d "${_dir}/func" ]]; then
-            # is folder empty?
-            if [[ -n "$(ls -A "${_dir}/func")" ]]; then
-                for _file in "${_dir}/func/"*; do
-                    autoload -Uz "${_file}";
-                done
-            fi
-        fi
-    done
-
-    #--------------------------------------------------------------------------#
-    # brew autocompletion
-
-    if ( command -v brew 1>/dev/null 2>/dev/null ); then
-        # ATTENTION! has to be before 'autoload -Uz compinit'
-        FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
-    fi
-
-    #--------------------------------------------------------------------------#
-    # others
-
-    autoload -Uz compinit && compinit
-    autoload colors && colors
-
-    #--------------------------------------------------------------------------#
-    # heroku autocompletion
-
-    # works without these lines and these lines make startup slow
-    # if ( command -v heroku 1>/dev/null 2>/dev/null ); then
-    #     # heroku autocomplete setup
-    #     HEROKU_AC_ZSH_SETUP_PATH="${HOME}/Library/Caches/heroku/autocomplete/zsh_setup"
-    #     if [[ -f ${HEROKU_AC_ZSH_SETUP_PATH} ]]; then
-    #         source ${HEROKU_AC_ZSH_SETUP_PATH}
-    #     fi
-    # fi
-
-    #--------------------------------------------------------------------------#
-    # kubectl autocompletion
-
-    if ( command -v kubectl 1>/dev/null 2>/dev/null ); then
-        source <(kubectl completion zsh)
-    fi
-
-elif [[ -n "${BASH}" ]]; then
-    #--------------------------------------------------------------------------#
-    # own functions
-    # check in both cases whether directory exists and is not empty
-
-    _dirs=( "${_shell_lib}" "${_custom_shell_lib}" )
-    for _dir in "${_dirs[@]}"; do
-        if [[ -d "${_dir}/func" ]]; then
-            # is folder empty?
-            if [[ -n "$(ls -A "${_dir}/func")" ]]; then
-                for _file in "${_dir}/func/"*; do
-                    source "${_file}";
-                done
-            fi
-        fi
-    done
-
-    #--------------------------------------------------------------------------#
-    # brew autocompletion
-
-    if ( command -v brew 1>/dev/null 2>/dev/null ); then
-        for _file in "$(brew --prefix)/etc/bash_completion.d/"*; do
-            [[ -f "${_file}" ]] && source "${_file}"
-        done
-
-        _file="$(brew --prefix)/etc/profile.d/bash_completion.sh"
-        [[ -f "${_file}" ]] && source "${_file}"
-    fi
-
-    #--------------------------------------------------------------------------#
-    # bash autocompletion
-
-    if ( is_machine 'linux'); then
-        # source /etc/bash.bashrc or /etc/profile ?
-        if ! shopt -oq posix; then
-            if [ -f '/usr/share/bash-completion/bash_completion' ]; then
-                source '/usr/share/bash-completion/bash_completion'
-            elif [ -f '/etc/bash_completion' ]; then
-                source '/etc/bash_completion'
-            fi
-        fi
-    elif ( is_machine 'macOS' ); then
-        # bash-completion@2 installed via brew
-        if [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]]; then
-            source "/usr/local/etc/profile.d/bash_completion.sh"
-        fi
-    fi
-
-    #--------------------------------------------------------------------------#
-    # heroku autocompletion
-
-    if ( command -v heroku 1>/dev/null 2>/dev/null ); then
-        # heroku autocomplete:script bash
-        HEROKU_AC_BASH_SETUP_PATH="${HOME}/Library/Caches/heroku/autocomplete/bash_setup"
-        if [[ -f ${HEROKU_AC_BASH_SETUP_PATH} ]]; then
-            source ${HEROKU_AC_BASH_SETUP_PATH}
-        fi
-    fi
-
-    #--------------------------------------------------------------------------#
-    # kubectl autocompletion
-
-    if ( command -v kubectl 1>/dev/null 2>/dev/null ); then
-        source <(kubectl completion bash)
-    fi
-fi
-
-#------------------------------------------------------------------------------#
-# history
-
-# history-length in terminal
-HISTSIZE=10000
-# history-length in HISTFILE
-SAVEHIST=10000     # zsh
-HISTFILESIZE=10000 # bash
-
-if [[ -n "${ZSH_NAME}" ]]; then
-    HISTFILE="${HOME}/.zsh_history"
-    # append to the history file, don't overwrite it
-    setopt append_history
-    # share history across terminals
-    setopt share_history
-    # immediately append to history file, not just when a term is killed
-    setopt inc_append_history
-
-elif [[ -n "${BASH}" ]]; then
-    HISTFILE="${HOME}/.bash_history"
-    # append to the history file, don't overwrite it
-    shopt -s histappend
+if ( __is_zsh ); then
+    . "${DOTFILES}/shell/gear.zsh"
+elif ( __is_bash ); then
+    . "${DOTFILES}/shell/gear.bash"
 fi
 
 #------------------------------------------------------------------------------#
@@ -178,7 +42,7 @@ export EDITOR='vi'
 export VISUAL='code'
 
 # git
-if ( command -v "${VISUAL}" 1>/dev/null 2>/dev/null); then
+if ( command -v "${VISUAL}" 1>/dev/null 2>&1); then
     export GIT_EDITOR="${VISUAL} --wait"
 else
     export GIT_EDITOR="${EDITOR}"
@@ -186,7 +50,8 @@ fi
 
 # java
 if ( is_machine 'macOS' ); then
-    export JAVA_HOME="$(/usr/libexec/java_home)"
+    JAVA_HOME="$(/usr/libexec/java_home)"
+    export JAVA_HOME
     export PATH="${JAVA_HOME}:${PATH}"
     export PATH="${JAVA_HOME}/bin:${PATH}"
 fi
@@ -217,16 +82,14 @@ export PIPENV_VENV_IN_PROJECT='yes'
 # rust
 export PATH="${HOME}/.cargo/bin:${PATH}"
 
-# compiler needs since brew doesn't replace macOS bins
+# compiler-needs since brew doesn't replace macOS bins
 if ( is_machine 'macOS' ); then
     # icu4c
     # export PATH="/usr/local/opt/icu4c/bin:${PATH}"
     # export PATH="/usr/local/opt/icu4c/sbin:${PATH}"
     export LDFLAGS="-L/usr/local/opt/icu4c/lib"
     export CPPFLAGS="-I/usr/local/opt/icu4c/include"
-    # sqlite
-    export LDFLAGS="-L/usr/local/opt/sqlite/lib"
-    export CPPFLAGS="-I/usr/local/opt/sqlite/include"
+    # sqliteSC2139"
     # readline
     export LDFLAGS="-L/usr/local/opt/readline/lib"
     export CPPFLAGS="-I/usr/local/opt/readline/include"
@@ -279,15 +142,12 @@ fi
 #------------------------------------------------------------------------------#
 # prompt
 
-source "${_shell_lib}/prompts/left/default.sh"
-source "${_shell_lib}/prompts/right/git_info.sh"
+. "${__SHELL_LIB}/prompts/left/default.sh"
+. "${__SHELL_LIB}/prompts/right/git_info.sh"
 
 #------------------------------------------------------------------------------#
 # cleanup
 
 #unset DOTFILES
-unset _shell_lib
-unset _custom_shell_lib
-unset _dir
-unset _dirs
-unset _file
+unset __SHELL_LIB
+unset __CUSTOM_SHELL_LIB

@@ -1,14 +1,16 @@
+#!/usr/bin/env sh
+
 greet() {
-    local _used_shell="unknown"
-    if [[ -n "${ZSH_NAME}" ]]; then _used_shell="zsh"; fi
-    if [[ -n "${BASH}" ]];     then _used_shell="bash"; fi
+    __USED_SHELL="unknown"
+    if [ -n "${ZSH_NAME}" ]; then __USED_SHELL="zsh"; fi
+    if [ -n "${BASH}" ];     then __USED_SHELL="bash"; fi
 
     echo ""
     echo "Hello ${USER}."
-    echo "I'm a ${_used_shell} window at your service."
+    echo "I'm a ${__USED_SHELL} window at your service."
     echo ""
 }
 
-if [[ -n "${ZSH_NAME}" ]]; then
+if [ -n "${ZSH_NAME}" ]; then
     greet
 fi

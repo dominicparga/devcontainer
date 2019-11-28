@@ -20,6 +20,8 @@ So result in home will be
 DOTFILES="${HOME}/dotfiles" # can be changed
 
 ~/
+├── .alacritty.yml@ -> ${DOTFILES}/custom/alacritty/alacritty.yml*
+│
 ├── .gitconfig@ -> ${DOTFILES}/custom/git/config*
 ├── .gitconfig.general@ -> ${DOTFILES}/custom/git/config.general*
 │
@@ -59,7 +61,7 @@ These dotfiles are tested with `macOS` and `linux` (`ubuntu`).
 1. [Structure](#structure)
 1. [Contributing](#contributing)
 1. [FAQ / Troubleshooting](#faq)
-    1. [Syntax error (e.g. with brackets)](#syntax-error-with-brackets)
+    1. [Syntax error](#syntax-error)
     1. [`Zsh`: Insecure files or directories](#insecure-files-and-dirs)
 1. [TODO](#todo)
 
@@ -165,6 +167,7 @@ In addition, visual-studio-code is opening as diff-tool and for commit-messages.
 | GENERAL |
 | `g h` | helps using `git help` more often ;) (`g h ALIAS` shows the replacement for the alias). |
 | `g s` | is alias for `git status` and one of the most used aliases. |
+| `g hash` | is alias for `git rev-parse --verify HEAD` and returns the commit-hash, where HEAD is pointing at. |
 | EFFICIENT STAGING |
 | `g unstage FILES ` | removes all changes from the index with respect to the given FILES (but keeps the changes in workspace). Simply spoken, all green FILES in `git status` become red again. |
 | `g discard FILES` | removes all changes from the workspace with respect to the given FILES. Simply spoken, all red FILES in `git status` disappear. (__ATTENTION!__ Obviously, those changes will be lost.) |
@@ -178,7 +181,7 @@ In addition, visual-studio-code is opening as diff-tool and for commit-messages.
 | `g cam "commits a commit lol"` | is `g ca` with a message. |
 | MERGING |
 | `g m BRANCH` | `git merge BRANCH` |
-| `g squash BRANCH/COMMIT` | merges content without merging the git history. So the resulting commit looks like it has cherry-picked all commits of BRANCH/COMMIT. |
+| `g squash BRANCH/COMMIT` | merges content without merging the git history. So the resulting commit looks like it has cherry-picked all commits of BRANCH/COMMIT. Very nice, if you want to keep some, but not all changes of a branch and merging this branch is not wished. |
 | `g squeeze BRANCH/COMMIT` | is a different name for `g squash ...`. |
 | BRANCHING |
 | `g co BRANCH/COMMIT` | `git checkout BRANCH/COMMIT` |
@@ -188,7 +191,7 @@ In addition, visual-studio-code is opening as diff-tool and for commit-messages.
 | `g bv` | `git branch --list -v` |
 | `g bav` | `git branch --list -av` |
 | LOGGING |
-| `g last N` | logs the last N commit messages. Default for N is 3. |
+| `g last N` | logs the last N commit messages. Default for N is 1. |
 | `g l` | shows the history of currently HEADed commit as a graph. |
 | `g la` | shows the global history as a graph. So it extends `g l` by, e.g., parallel histories. |
 
@@ -256,24 +259,25 @@ For more detailed information, please look [at the contribution section](CONTRIB
 
 Weird experiences from friends and others, which are using this repo, are mentioned below.
 
-### Syntax error (e.g. with brackets) <a name="syntax-error-with-brackets"></a>
+### Syntax error <a name="syntax-error"></a>
 
 These dotfiles are used with `bash` and `zsh`.
-Check if `sh` is symlinked correctly with
+Check how `sh` is symlinked, e.g. via
 
 ```zsh
 ls -1GF --color=auto -lh -a $(which sh)
 ```
 
-For instance, `dash` (not `bash`) does not support `[[ ... ]]`, which is used a lot here.
+For instance, `Debian` uses `dash` instead of `bash`.
+In this case, you have to change the system-shell with `chsh` or change the used shell in your terminal.
 
-### `Zsh`: Insecure files or directories <a name="insecure-files-and-dirs"></a>
+### Insecure files or directories <a name="insecure-files-and-dirs"></a>
 
 Your file permissions for your `dotfiles` are probably too loose.
 Execute the following to set the permissions to `drwxr-xr-x`.
 
 ```zsh
-chmod -R 755 ${DOTFILES}
+chmod -R 755 "${DOTFILES}"
 ```
 
 [web_github_git_aliases]: https://github.com/dominicparga/dotfiles/blob/master/git/config.general
