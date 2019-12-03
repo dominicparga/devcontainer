@@ -1,7 +1,8 @@
 # dotfiles
 
 [![License][www_license_badge]][www_license]
-[![Tag][www_tag_badge]][www_tag_badge]
+[![Tag][www_tags_badge]][www_tags]
+[![Last commit][www_last_commit_badge]][www_last_commit]
 
 Dry and short:
 
@@ -283,9 +284,12 @@ Execute the following to set the permissions to `drwxr-xr-x`.
 chmod -R 755 "${DOTFILES}"
 ```
 
-[www_tag_badge]: https://img.shields.io/github/v/tag/dominicparga/dotfiles?sort=semver
-[www_license_badge]: https://img.shields.io/github/license/dominicparga/dotfiles
+[www_license_badge]: https://img.shields.io/github/license/dominicparga/dotfiles?style=for-the-badge
 [www_license]: https://github.com/dominicparga/dotfiles/blob/master/LICENSE
+[www_tags_badge]: https://img.shields.io/github/v/tag/dominicparga/dotfiles?sort=semver&style=for-the-badge
+[www_tags]: https://github.com/dominicparga/dotfiles/tags
+[www_last_commit_badge]: https://img.shields.io/github/last-commit/dominicparga/dotfiles?style=for-the-badge
+[www_last_commit]: https://github.com/dominicparga/dotfiles/commits
 
 [web_github_git_aliases]: https://github.com/dominicparga/dotfiles/blob/master/git/config.general
 [web_github_howto]: https://github.com/dominicparga/howto
