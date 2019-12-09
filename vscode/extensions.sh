@@ -35,6 +35,9 @@ code --force --install-extension bungcip.better-toml
 # csv
 code --force --install-extension mechatroner.rainbow-csv
 
+# shell
+code --force --install-extension timonwong.shellcheck
+
 # rust
 code --force --install-extension rust-lang.rust
 
