@@ -38,7 +38,7 @@ if ( is_machine 'macOS' ); then
 fi
 
 # general
-export EDITOR='vi'
+export EDITOR='vim'
 export VISUAL='code'
 
 # git
