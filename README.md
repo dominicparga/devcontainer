@@ -67,6 +67,7 @@ These dotfiles are tested with `macOS` and `linux` (`ubuntu`).
 1. [FAQ / Troubleshooting](#faq)
     1. [Syntax error](#syntax-error)
     1. [`Zsh`: Insecure files or directories](#insecure-files-and-dirs)
+    1. [vscode-extensions doesn't work](#vscode-extensions-doesnt-work)
 1. [TODO](#todo)
 
 ## News <a name="news"></a>
@@ -283,6 +284,11 @@ Execute the following to set the permissions to `drwxr-xr-x`.
 ```zsh
 chmod -R 755 "${DOTFILES}"
 ```
+
+### vscode-extensions doesn't work <a name="vscode-extensions-doesnt-work"></a>
+
+You can downgrade installed extensions manually in vscode under `Extensions`.
+Here, you click on the gear next to the installed and affected extension and select `Install Another Version...`.
 
 [www_license_badge]: https://img.shields.io/github/license/dominicparga/dotfiles?style=for-the-badge
 [www_license]: https://github.com/dominicparga/dotfiles/blob/master/LICENSE
