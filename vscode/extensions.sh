@@ -12,7 +12,7 @@ code --force --install-extension dracula-theme.theme-dracula
 code --force --install-extension laurenttreguier.vscode-simple-icons
 code --force --install-extension monokai.theme-monokai-pro-vscode
 code --force --install-extension pkief.material-icon-theme
-code --force --install-extension robertohuertasm.vscode-icons
+code --force --install-extension vscode-icons-team.vscode-icons
 
 # editor utils
 code --force --install-extension coenraads.bracket-pair-colorizer-2
