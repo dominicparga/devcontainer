@@ -38,7 +38,7 @@ if ( is_machine 'macOS' ); then
 fi
 
 # general
-export EDITOR='vi'
+export EDITOR='vim'
 export VISUAL='code'
 
 # git
@@ -66,7 +66,7 @@ fi
 # python
 if ( is_machine 'linux' ); then
     # used in vscode to find a default python interpreter
-    export PYTHON_INTERPRETER_PATH='' # TODO
+    export PYTHON_INTERPRETER_PATH='python'
 elif ( is_machine 'macOS' ); then
     # path
     export PATH="/usr/local/opt/sqlite/bin:${PATH}"

@@ -179,7 +179,7 @@
     },
     "latex-workshop.view.pdf.viewer": "tab",
     "latex-workshop.hover.preview.scale": 1,
-    "latex-workshop.latex.outDir": "%DIR%/../build",
+    "latex-workshop.latex.outDir": "../build",
     //------------------------------------------------------------------------//
     // vim
     "vim.leader": ",",
@@ -202,19 +202,19 @@
         //--------------------------------------------------------------------//
         // utils
         {
-            "before": ["<leader>", "p"],
+            "before": ["<leader>", "p"], // dont forget normal-mode
             "commands": [
                 "workbench.action.quickOpen"
             ]
         },
         {
-            "before": ["<leader>", "P"],
+            "before": ["<leader>", "P"], // dont forget normal-mode
             "commands": [
                 "workbench.action.showCommands"
             ]
         },
         {
-            "before": ["<leader>", "e"],
+            "before": ["<leader>", "e"], // dont forget normal-mode
             "commands": [
                 "workbench.action.toggleSidebarVisibility"
             ]
@@ -222,13 +222,13 @@
         //--------------------------------------------------------------------//
         // code interaction
         {
-            "before": ["<leader>", "U"],
+            "before": ["<leader>", "U"], // dont forget normal-mode
             "commands": [
                 "editor.action.transformToUppercase"
             ]
         },
         {
-            "before": ["<leader>", "u"],
+            "before": ["<leader>", "u"], // dont forget normal-mode
             "commands": [
                 "editor.action.transformToLowercase"
             ]
@@ -256,13 +256,13 @@
         //--------------------------------------------------------------------//
         // utils
         {
-            "before": ["<leader>", "p"],
+            "before": ["<leader>", "p"], // dont forget visual-mode
             "commands": [
                 "workbench.action.quickOpen"
             ]
         },
         {
-            "before": ["<leader>", "P"],
+            "before": ["<leader>", "P"], // dont forget visual-mode
             "commands": [
                 "workbench.action.showCommands"
             ]
@@ -280,7 +280,7 @@
             ]
         },
         {
-            "before": ["<leader>", "e"],
+            "before": ["<leader>", "e"], // dont forget visual-mode
             "commands": [
                 "workbench.action.toggleSidebarVisibility"
             ]
@@ -308,13 +308,13 @@
         //--------------------------------------------------------------------//
         // code interaction
         {
-            "before": ["<leader>", "U"],
+            "before": ["<leader>", "U"], // dont forget visual-mode
             "commands": [
                 "editor.action.transformToUppercase"
             ]
         },
         {
-            "before": ["<leader>", "u"],
+            "before": ["<leader>", "u"], // dont forget visual-mode
             "commands": [
                 "editor.action.transformToLowercase"
             ]

@@ -67,6 +67,8 @@ These dotfiles are tested with `macOS` and `linux` (`ubuntu`).
 1. [FAQ / Troubleshooting](#faq)
     1. [Syntax error](#syntax-error)
     1. [`Zsh`: Insecure files or directories](#insecure-files-and-dirs)
+    1. [vscode-extensions doesn't work](#vscode-extensions-doesnt-work)
+    1. [vscode doesn't take my environment-variable](#vscode-env-vars)
 1. [TODO](#todo)
 
 ## News <a name="news"></a>
@@ -283,6 +285,17 @@ Execute the following to set the permissions to `drwxr-xr-x`.
 ```zsh
 chmod -R 755 "${DOTFILES}"
 ```
+
+### vscode-extensions doesn't work <a name="vscode-extensions-doesnt-work"></a>
+
+You can downgrade installed extensions manually in vscode under `Extensions`.
+Here, you click on the gear next to the installed and affected extension and select `Install Another Version...`.
+
+### vscode doesn't take my environment-variable <a name="vscode-env-vars"></a>
+
+`vscode`-settings canjcontain environment-dependent variables (e.g. `"key": "${env:VAR_NAME}"`).
+Inside of `vscode`, a new terminal does source your `.profile`-file, but the `vscode`-window itself bases the shell-environment from its callee.
+To use env-variables in `vscode`-settings, you set this variable in your shell before opening `vscode` with `code` (e.g. opening current folder with `code .`).
 
 [www_license_badge]: https://img.shields.io/github/license/dominicparga/dotfiles?style=for-the-badge
 [www_license]: https://github.com/dominicparga/dotfiles/blob/master/LICENSE
