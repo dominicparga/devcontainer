@@ -96,15 +96,18 @@
     "files.associations": {
         "SConscript": "python",
         "SConstruct": "python",
-        "TAG_EDITMSG": "git-commit"
+        "TAG_EDITMSG": "git-commit",
+        ".latexmkrc": "perl"
         // "*.thor": "ruby",
         // "*.jsx": "javascript",
     },
+    //------------------------------------------------------------------------//
     // git
     "scm.defaultViewMode": "tree",
     "[git-commit]": {
         "editor.rulers": [ 50, 72 ]
     },
+    //------------------------------------------------------------------------//
     // shellscript
     // SC1090 - Can't follow non-constant source.
     // SC1091 - Not following
@@ -121,11 +124,13 @@
     "shellcheck.customArgs": [],
     "shellcheck.ignorePatterns": {},
     "shellcheck.useWSL": false,
+    //------------------------------------------------------------------------//
     // rust
     "[rust]": {
         "editor.rulers": [ 100 ],
         "editor.trimAutoWhitespace": true
     },
+    //------------------------------------------------------------------------//
     // python
     "[python]": {
         "editor.rulers": [ 72, 79 ],
@@ -145,25 +150,30 @@
         ".venv"
     ],
     "python.jediEnabled": false,
+    //------------------------------------------------------------------------//
     // cpp
     "[cpp]": {
         "editor.rulers": [ 100 ]
     },
+    //------------------------------------------------------------------------//
     // java
     "[java]": {
         "editor.rulers": [ 100 ]
     },
     "java.configuration.checkProjectSettingsExclusions": false,
+    //------------------------------------------------------------------------//
     // html
     "[html]": {
         "editor.rulers": [ 80 ],
         "editor.tabSize": 2
     },
+    //------------------------------------------------------------------------//
     // css
     "[css]": {
         "editor.rulers": [ 80 ],
         "editor.tabSize": 2
     },
+    //------------------------------------------------------------------------//
     // typescript
     "[typescript]": {
         "editor.rulers": [ 80 ],
@@ -173,25 +183,31 @@
         "editor.rulers": [ 80 ],
         "editor.tabSize": 2
     },
+    //------------------------------------------------------------------------//
     // LaTeX
     "[latex]": {
         "editor.wordWrap": "on"
     },
     "latex-workshop.view.pdf.viewer": "tab",
     "latex-workshop.hover.preview.scale": 1,
-    "latex-workshop.latex.outDir": "../build",
-    "latex-workshop.latex.magic.args": [
-        "-synctex=1",
-        "-interaction=nonstopmode",
-        "-file-line-error",
-        "--output-dir=%OUTDIR%",
-        "%DOC%"
-    ],
-    "latex-workshop.latex.magic.bib.args": [
-        "%DOCFILE%",
-        "--input-directory=%OUTDIR%",
-        "--output-directory=%OUTDIR%"
-    ],
+    "latex-workshop.latex.external.build.command": "latexmk",
+    // // relative to main.tex
+    // "latex-workshop.latex.outDir": "build",
+    // "latex-workshop.latex.magic.args": [
+    //     "-lualatex",
+    //     "-shell-escape",
+    //     "-file-line-error",
+    //     "-halt-on-error",
+    //     "-interaction=nonstopmode",
+    //     "-output-dir=%OUTDIR%",
+    //     "-synctex=1",
+    //     "%DOC%"
+    // ],
+    // "latex-workshop.latex.magic.bib.args": [
+    //     "%DOCFILE%",
+    //     "--input-directory=%OUTDIR%",
+    //     "--output-directory=%OUTDIR%"
+    // ],
     //------------------------------------------------------------------------//
     // vim
     "vim.leader": ",",
