@@ -124,7 +124,8 @@ alias cddot="cd ${DOTFILES}"
 
 # 'A' for ANSI line graphics
 # 'C' for colorization
-alias tree='tree -AC'
+# 'F' for types, e.g. dir -> dir/
+alias tree='tree -A -C -F'
 
 alias g='git'
 
