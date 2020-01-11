@@ -98,6 +98,8 @@ fi
 #------------------------------------------------------------------------------#
 # aliases
 
+alias reboot='shutdown now --reboot'
+
 alias cp='cp -i -P'
 alias mv='mv -i'
 alias grep='grep --color=auto'
