@@ -73,10 +73,16 @@ shopt -s histappend
 # shows keys when pressed
 
 # default: emacs
-#bind -m emacs
+bind -m emacs
+#set -o emacs
 # default: vi
 #set -o vi
 
+# - NAVIGATING / JUMPING -
+# right
+bind '"\e[D": backward-char'
+# left
+bind '"\e[C": forward-char'
 # ctrl + right
 bind '"\e[1;5C": forward-word'
 # ctrl + left
@@ -85,6 +91,7 @@ bind '"\e[1;5D": backward-word'
 bind '"\e[H": beginning-of-line'
 # end
 bind '"\e[F": end-of-line'
+# - DELETING -
 # backspace
 bind '"^?": backward-delete-char'
 # delete
@@ -97,5 +104,10 @@ bind '"\e[3;5~": delete-word'
 bind '"\e[1;5H": backward-kill-line'
 # ctrl + end
 bind '"\e[1;5F": kill-line'
+# - NAVIGATING HISTORY -
 # ctrl + r
 bind '"^r": history-incremental-search-backward'
+# up
+bind '"\e[A": previous-history'
+# down
+bind '"\e[B": next-history'

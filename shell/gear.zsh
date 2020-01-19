@@ -64,10 +64,18 @@ setopt inc_append_history
 # shows keys when pressed
 
 # default: emacs
-#bindkey -e
+bindkey -e
 # default: vi
 #bindkey -v
+# default: custom (minimal)
+#bindkey -N custom .safe
+#bindkey -A custom main
 
+# - NAVIGATING / JUMPING -
+# right
+bindkey '^[[D' backward-char
+# left
+bindkey '^[[C' forward-char
 # ctrl + right
 bindkey '^[[1;5C' forward-word
 # ctrl + left
@@ -76,6 +84,7 @@ bindkey '^[[1;5D' backward-word
 bindkey '^[[H' beginning-of-line
 # end
 bindkey '^[[F' end-of-line
+# - DELETING -
 # backspace
 bindkey '^?' backward-delete-char
 # delete
@@ -88,5 +97,10 @@ bindkey '^[[3;5~' delete-word
 bindkey '^[[1;5H' backward-kill-line
 # ctrl + end
 bindkey '^[[1;5F' kill-line
+# - NAVIGATING HISTORY -
 # ctrl + r
 bindkey '^r' history-incremental-search-backward
+# up
+bindkey '^[[A' up-line-or-history
+# down
+bindkey '^[[B' down-line-or-history
