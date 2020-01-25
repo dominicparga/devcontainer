@@ -13,6 +13,8 @@
     "workbench.settings.editor": "json",
     "workbench.settings.useSplitJSON": true,
     "workbench.settings.openDefaultSettings": false,
+    // terminal
+    "terminal.integrated.scrollback": 100000,
     //------------------------------------------------------------------------//
     // editor settings
     "files.exclude": {
