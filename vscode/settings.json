@@ -99,7 +99,9 @@
         "SConscript": "python",
         "SConstruct": "python",
         "TAG_EDITMSG": "git-commit",
-        ".latexmkrc": "perl"
+        ".latexmkrc": "perl",
+        "config": "properties",
+        "config.general": "properties"
         // "*.thor": "ruby",
         // "*.jsx": "javascript",
     },
