@@ -166,6 +166,12 @@
         "editor.quickSuggestions": true,
         "editor.tabSize": 2
     },
+    "markdownlint.config": {
+        "MD012": false, // no multiple blanks
+        "MD013": false, // line length
+        "MD024": false, // no duplicate heading/header
+        "MD033": false, // no inline-html
+    },
     //------------------------------------------------------------------------//
     // python
     "[python]": {
@@ -573,7 +579,7 @@
         "WARN:",
         "ERROR:",
         "ERR:"
-    ]
+    ],
     //------------------------------------------------------------------------//
     // occasionally added stuff
 }
