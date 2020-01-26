@@ -28,6 +28,7 @@
     tags = "tag"
     t = "tag" # same as "tag --list"
     ta = "tag --annotate"
+    tam = "tag --message='See CHANGELOG.md' --annotate"
     td = "tag --delete"
 
     # merging
