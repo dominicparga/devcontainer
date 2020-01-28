@@ -171,6 +171,7 @@
         "MD013": false, // line length
         "MD024": false, // no duplicate heading/header
         "MD033": false, // no inline-html
+        "MD041": false // first line should be '# h1'
     },
     //------------------------------------------------------------------------//
     // python
