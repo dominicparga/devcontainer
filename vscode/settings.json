@@ -196,6 +196,7 @@
     //------------------------------------------------------------------------//
     // rust
     "[rust]": {
+        "editor.wordWrap": "on",
         "editor.rulers": [ 100 ],
         "editor.trimAutoWhitespace": true
     },
