@@ -1,8 +1,11 @@
 # dotfiles
 
-[![License][github/self/license/badge]][github/self/license]
 [![Tag][github/self/tags/badge]][github/self/tags]
+
+[![Changelog][github/self/blob/changelog/badge]][github/self/blob/changelog]
 [![Last commit][github/self/last-commit/badge]][github/self/last-commit]
+
+[![License][github/self/license/badge]][github/self/license]
 
 
 ## Table of Contents
@@ -301,6 +304,8 @@ Inside of `vscode`, a new terminal does source your `.profile`-file, but the `vs
 To use env-variables in `vscode`-settings, you set this variable in your shell before opening `vscode` with `code` (e.g. opening current folder with `code .`).
 
 
+[github/self/blob/changelog]: https://github.com/dominicparga/dotfiles/blob/nightly/CHANGELOG.md
+[github/self/blob/changelog/badge]: https://img.shields.io/badge/CHANGELOG-nightly-blueviolet?style=for-the-badge
 [github/self/contributing]: https://github.com/dominicparga/dotfiles/blob/nightly/CONTRIBUTING.md
 [github/self/git/config.general]: https://github.com/dominicparga/dotfiles/blob/nightly/git/config.general
 [github/self/last-commit]: https://github.com/dominicparga/dotfiles/commits
