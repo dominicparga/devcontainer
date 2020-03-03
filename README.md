@@ -1,8 +1,8 @@
 # dotfiles
 
-[![License][www_license_badge]][www_license]
-[![Tag][www_tags_badge]][www_tags]
-[![Last commit][www_last_commit_badge]][www_last_commit]
+[![License][github/self/license/badge]][github/self/license]
+[![Tag][github/self/tags/badge]][github/self/tags]
+[![Last commit][github/self/last-commit/badge]][github/self/last-commit]
 
 
 ## Table of Contents
@@ -18,10 +18,9 @@
 1. [Contributing](#contributing)
 1. [FAQ / Troubleshooting](#faq)
     1. [Syntax error](#syntax-error)
-    1. [`Zsh`: Insecure files or directories](#insecure-files-and-dirs)
+    1. [Insecure files or directories](#insecure-files-and-dirs)
     1. [vscode-extensions doesn't work](#vscode-extensions-doesnt-work)
     1. [vscode doesn't take my environment-variable](#vscode-env-vars)
-1. [TODO](#todo)
 
 
 ## Dry and short <a name="dry-and-short"></a>
@@ -60,7 +59,7 @@ DOTFILES="${HOME}/dotfiles" # can be changed
 ```
 
 `Visual Studio code` is also configured.
-Following paths are linux-related (see [vscode-website](https://code.visualstudio.com/docs/getstarted/settings#_settings-file-locations)).
+Following paths are linux-related (see [vscode-website][vscode/docs/settings-file-locations]).
 
 ```zsh
 DOTFILES="${HOME}/dotfiles" # can be changed
@@ -131,7 +130,7 @@ These dotfiles are used with `bash` and `zsh` on `macOS` and some `linux`-distri
 
 ### Shell environment <a name="shell-environment"></a>
 
-Beside autocompletion for several tools, aliases and exports can be found in [`shell/shellrc.sh`](https://github.com/dominicparga/dotfiles/blob/master/shell/shellrc.sh).
+Beside autocompletion for several tools, aliases and exports can be found in [`shell/shellrc.sh`][github/self/shell/shellrc.sh].
 Some commands like `grep` or `tree` are just flagged to use colors.
 Those are not mentioned here.
 
@@ -161,7 +160,7 @@ Those are not mentioned here.
 
 ### Git aliases <a name="git-aliases"></a>
 
-Have a look at the handy [git aliases][web_github_git_aliases].
+Have a look at the handy [git aliases][github/self/git/config.general].
 In addition, visual-studio-code is opening as diff-tool and for commit-messages.
 
 `g` is alias for `git` (see above).
@@ -250,7 +249,7 @@ dotfiles/
 | `shell/func/`                         | provides useful shell functions. Functions in `custom/shell/func/` are autoloaded/included and overwrite default functions in `shell/func/` if their name is the same. |
 | `shell/prompts/`                      | contains some prompts. |
 | `utils/`                              | contains scripts for configuration. |
-| `vscode/`                             | [Visual studio code][web_vscode] uses some `settings.json` and `keybindings.json` for user settings and keybindings. |
+| `vscode/`                             | [Visual studio code][vscode] uses some `settings.json` and `keybindings.json` for user settings and keybindings. |
 
 
 ## Contributing <a name="contributing"></a>
@@ -302,13 +301,14 @@ Inside of `vscode`, a new terminal does source your `.profile`-file, but the `vs
 To use env-variables in `vscode`-settings, you set this variable in your shell before opening `vscode` with `code` (e.g. opening current folder with `code .`).
 
 
-[www_license_badge]: https://img.shields.io/github/license/dominicparga/dotfiles?style=for-the-badge
-[www_license]: https://github.com/dominicparga/dotfiles/blob/master/LICENSE
-[www_tags_badge]: https://img.shields.io/github/v/tag/dominicparga/dotfiles?sort=semver&style=for-the-badge
-[www_tags]: https://github.com/dominicparga/dotfiles/tags
-[www_last_commit_badge]: https://img.shields.io/github/last-commit/dominicparga/dotfiles?style=for-the-badge
-[www_last_commit]: https://github.com/dominicparga/dotfiles/commits
-
-[web_github_git_aliases]: https://github.com/dominicparga/dotfiles/blob/master/git/config.general
-[web_github_howto]: https://github.com/dominicparga/howto
-[web_vscode]: https://code.visualstudio.com/
+[github/self/contributing]: https://github.com/dominicparga/dotfiles/blob/nightly/CONTRIBUTING.md
+[github/self/git/config.general]: https://github.com/dominicparga/dotfiles/blob/nightly/git/config.general
+[github/self/last-commit]: https://github.com/dominicparga/dotfiles/commits
+[github/self/last-commit/badge]: https://img.shields.io/github/last-commit/dominicparga/dotfiles?style=for-the-badge
+[github/self/license]: https://github.com/dominicparga/dotfiles/blob/nightly/LICENSE
+[github/self/license/badge]: https://img.shields.io/github/license/dominicparga/dotfiles?style=for-the-badge
+[github/self/shell/shellrc.sh]: https://github.com/dominicparga/dotfiles/blob/nightly/shell/shellrc.sh
+[github/self/tags]: https://github.com/dominicparga/dotfiles/tags
+[github/self/tags/badge]: https://img.shields.io/github/v/tag/dominicparga/dotfiles?sort=semver&style=for-the-badge
+[vscode]: https://code.visualstudio.com/
+[vscode/docs/settings-file-locations]: https://code.visualstudio.com/docs/getstarted/settings#_settings-file-locations
