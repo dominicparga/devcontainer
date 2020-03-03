@@ -13,6 +13,8 @@
     "workbench.settings.editor": "json",
     "workbench.settings.useSplitJSON": true,
     "workbench.settings.openDefaultSettings": false,
+    // terminal
+    "terminal.integrated.scrollback": 100000,
     //------------------------------------------------------------------------//
     // editor settings
     "files.exclude": {
@@ -97,75 +99,16 @@
         "SConscript": "python",
         "SConstruct": "python",
         "TAG_EDITMSG": "git-commit",
-        ".latexmkrc": "perl"
+        ".latexmkrc": "perl",
+        "config": "properties",
+        "config.general": "properties"
         // "*.thor": "ruby",
         // "*.jsx": "javascript",
     },
     //------------------------------------------------------------------------//
-    // git
-    "scm.defaultViewMode": "tree",
-    "[git-commit]": {
-        "editor.rulers": [ 50, 72 ]
-    },
-    //------------------------------------------------------------------------//
-    // shellscript
-    // SC1090 - Can't follow non-constant source.
-    // SC1091 - Not following
-    // SC2016 - ${...} doesn't expand in '...', use "..."
-    // SC2139 - Expansion when defined, not when used.
-    "[shellscript]": {
-        "editor.rulers": [ 80 ],
-        "editor.trimAutoWhitespace": true
-    },
-    "shellcheck.enable": true,
-    "shellcheck.run": "onType",
-    "shellcheck.executablePath": "shellcheck",
-    "shellcheck.exclude": ["SC1090", "SC1091", "SC2016", "SC2139"],
-    "shellcheck.customArgs": [],
-    "shellcheck.ignorePatterns": {},
-    "shellcheck.useWSL": false,
-    //------------------------------------------------------------------------//
-    // rust
-    "[rust]": {
-        "editor.rulers": [ 100 ],
-        "editor.trimAutoWhitespace": true
-    },
-    //------------------------------------------------------------------------//
-    // python
-    "[python]": {
-        "editor.rulers": [ 72, 79 ],
-        "editor.trimAutoWhitespace": true
-    },
-    "python.pythonPath": "${env:PYTHON_INTERPRETER_PATH}",
-    "python.autoComplete.addBrackets": true,
-    "python.linting.enabled": true,
-    "python.linting.pylintEnabled": true,
-    "python.linting.pylintArgs": [
-        "--max-line-length=79"
-    ],
-    "python.venvFolders": [
-        "envs",
-        ".pyenv",
-        ".direnv",
-        ".venv"
-    ],
-    "python.jediEnabled": false,
-    //------------------------------------------------------------------------//
     // cpp
     "[cpp]": {
         "editor.rulers": [ 100 ]
-    },
-    //------------------------------------------------------------------------//
-    // java
-    "[java]": {
-        "editor.rulers": [ 100 ]
-    },
-    "java.configuration.checkProjectSettingsExclusions": false,
-    //------------------------------------------------------------------------//
-    // html
-    "[html]": {
-        "editor.rulers": [ 80 ],
-        "editor.tabSize": 2
     },
     //------------------------------------------------------------------------//
     // css
@@ -174,15 +117,23 @@
         "editor.tabSize": 2
     },
     //------------------------------------------------------------------------//
-    // typescript
-    "[typescript]": {
+    // git
+    "scm.defaultViewMode": "tree",
+    "[git-commit]": {
+        "editor.rulers": [ 50, 72 ]
+    },
+    //------------------------------------------------------------------------//
+    // html
+    "[html]": {
         "editor.rulers": [ 80 ],
         "editor.tabSize": 2
     },
-    "[typescriptreact]": {
-        "editor.rulers": [ 80 ],
-        "editor.tabSize": 2
+    //------------------------------------------------------------------------//
+    // java
+    "[java]": {
+        "editor.rulers": [ 100 ]
     },
+    "java.configuration.checkProjectSettingsExclusions": false,
     //------------------------------------------------------------------------//
     // LaTeX
     "[latex]": {
@@ -208,6 +159,74 @@
     //     "--input-directory=%OUTDIR%",
     //     "--output-directory=%OUTDIR%"
     // ],
+    //------------------------------------------------------------------------//
+    // Markdown
+    "[markdown]": {
+        "editor.wordWrap": "on",
+        "editor.quickSuggestions": true,
+        "editor.tabSize": 2
+    },
+    "markdownlint.config": {
+        "MD012": false, // no multiple blanks
+        "MD013": false, // line length
+        "MD024": false, // no duplicate heading/header
+        "MD033": false, // no inline-html
+        "MD041": false // first line should be '# h1'
+    },
+    //------------------------------------------------------------------------//
+    // python
+    "[python]": {
+        "editor.rulers": [ 72, 79 ],
+        "editor.trimAutoWhitespace": true
+    },
+    "python.pythonPath": "${env:PYTHON_INTERPRETER_PATH}",
+    "python.autoComplete.addBrackets": true,
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.linting.pylintArgs": [
+        "--max-line-length=79"
+    ],
+    "python.venvFolders": [
+        "envs",
+        ".pyenv",
+        ".direnv",
+        ".venv"
+    ],
+    "python.jediEnabled": false,
+    //------------------------------------------------------------------------//
+    // rust
+    "[rust]": {
+        "editor.wordWrap": "on",
+        "editor.rulers": [ 100 ],
+        "editor.trimAutoWhitespace": true
+    },
+    //------------------------------------------------------------------------//
+    // shellscript
+    // SC1090 - Can't follow non-constant source.
+    // SC1091 - Not following
+    // SC2016 - ${...} doesn't expand in '...', use "..."
+    // SC2139 - Expansion when defined, not when used.
+    "[shellscript]": {
+        "editor.rulers": [ 80 ],
+        "editor.trimAutoWhitespace": true
+    },
+    "shellcheck.enable": true,
+    "shellcheck.run": "onType",
+    "shellcheck.executablePath": "shellcheck",
+    "shellcheck.exclude": ["SC1090", "SC1091", "SC2016", "SC2139"],
+    "shellcheck.customArgs": [],
+    "shellcheck.ignorePatterns": {},
+    "shellcheck.useWSL": false,
+    //------------------------------------------------------------------------//
+    // typescript
+    "[typescript]": {
+        "editor.rulers": [ 80 ],
+        "editor.tabSize": 2
+    },
+    "[typescriptreact]": {
+        "editor.rulers": [ 80 ],
+        "editor.tabSize": 2
+    },
     //------------------------------------------------------------------------//
     // vim
     "vim.leader": ",",
@@ -562,7 +581,7 @@
         "WARN:",
         "ERROR:",
         "ERR:"
-    ]
+    ],
     //------------------------------------------------------------------------//
     // occasionally added stuff
 }

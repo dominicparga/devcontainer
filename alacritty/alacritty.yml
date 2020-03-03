@@ -574,6 +574,10 @@ key_bindings:
   - { key: N, mods: control, action: SpawnNewInstance }
   - { key: W, mods: control, action: Quit }
   - { key: Q, mods: control, action: Quit }
+  # - { key: Left,     mods: alt, chars: "\u001bb" }
+  # - { key: Right,    mods: alt, chars: "\u001bf" }
+  # - { key: Left,     mods: control, chars: "\u001bb" }
+  # - { key: Right,    mods: control, chars: "\u001bf" }
 
 # Key bindings are specified as a list of objects. Each binding will specify a
 # key and modifiers required to trigger it, terminal modes where the binding is

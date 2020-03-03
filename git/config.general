@@ -24,6 +24,13 @@
     cm  = "commit -m"
     cam = !"git add -A && git status && git commit -m"
 
+    # tagging
+    tags = "tag"
+    tl = "tag" # same as "tag --list"
+    ta = "tag --annotate"
+    twm = "tag --message='See CHANGELOG.md' --annotate"
+    td = "tag --delete"
+
     # merging
     m       = "merge"
     squash  = "merge --squash"

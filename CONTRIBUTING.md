@@ -2,10 +2,11 @@
 
 👍🎉 First off, thanks for your interest in contributing to this project! 🎉👍
 
-A set of guidelines for contributing can be found [in this github project][www_dominicparga_howto].
+For style-suggestions, please feel free to check [this github-repo][github/dominicparga/howto] out.
 
-This project and everyone participating in it is governed by the [Code of Conduct][www_code_of_conduct].
+This project and everyone participating in it is governed by the [Code of Conduct][github/self/code-of-conduct].
 By participating, you are expected to uphold this code.
 
-[www_dominicparga_howto]: https://github.com/dominicparga/howto/
-[www_code_of_conduct]: CODE_OF_CONDUCT.md
+
+[github/dominicparga/howto]: https://github.com/dominicparga/howto/
+[github/self/code-of-conduct]: https://github.com/dominicparga/dotfiles/blob/nightly/CODE_OF_CONDUCT.md

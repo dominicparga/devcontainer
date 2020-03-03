@@ -98,6 +98,8 @@ fi
 #------------------------------------------------------------------------------#
 # aliases
 
+alias reboot='shutdown now --reboot'
+
 alias cp='cp -i -P'
 alias mv='mv -i'
 alias grep='grep --color=auto'
@@ -124,7 +126,8 @@ alias cddot="cd ${DOTFILES}"
 
 # 'A' for ANSI line graphics
 # 'C' for colorization
-alias tree='tree -AC'
+# 'F' for types, e.g. dir -> dir/
+alias tree='tree -A -C -F'
 
 alias g='git'
 
