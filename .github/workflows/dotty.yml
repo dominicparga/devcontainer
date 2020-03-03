@@ -1,4 +1,4 @@
-name: Dotfiles
+name: Dotty
 on:
   push:
   pull_request:
