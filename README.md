@@ -4,7 +4,27 @@
 [![Tag][www_tags_badge]][www_tags]
 [![Last commit][www_last_commit_badge]][www_last_commit]
 
-Dry and short:
+
+## Table of Contents
+
+1. [Dry and short](#dry-and-short)
+1. [Usage](#usage)
+    1. [Configuration](#configuration)
+    1. [Change default location after configuration](#change-default-location)
+1. [Features](#features)
+    1. [Shell environment](#shell-environment)
+    1. [git aliases](#git-aliases)
+1. [Structure](#structure)
+1. [Contributing](#contributing)
+1. [FAQ / Troubleshooting](#faq)
+    1. [Syntax error](#syntax-error)
+    1. [`Zsh`: Insecure files or directories](#insecure-files-and-dirs)
+    1. [vscode-extensions doesn't work](#vscode-extensions-doesnt-work)
+    1. [vscode doesn't take my environment-variable](#vscode-env-vars)
+1. [TODO](#todo)
+
+
+## Dry and short <a name="dry-and-short"></a>
 
 These dotfiles should speed up a personal workflow and help setting it up.
 Focus lays on keeping overview since using this repo should feel like speeding up manual steps.
@@ -51,44 +71,14 @@ ${HOME}/.config/Code/User/
 └── keybindings.json@ -> ${DOTFILES}/custom/vscode/keybindings.json
 ```
 
-These dotfiles are tested with `macOS` and `linux` (`ubuntu`).
+These dotfiles are tested with `archlinux`.
 
-## Table of Contents
-
-1. [News](#news)
-1. [Usage](#usage)
-    1. [Configuration](#configuration)
-    1. [Change default location after configuration](#change-default-location)
-1. [Features](#features)
-    1. [Shell environment](#shell-environment)
-    1. [git aliases](#git-aliases)
-1. [Structure](#structure)
-1. [Contributing](#contributing)
-1. [FAQ / Troubleshooting](#faq)
-    1. [Syntax error](#syntax-error)
-    1. [`Zsh`: Insecure files or directories](#insecure-files-and-dirs)
-    1. [vscode-extensions doesn't work](#vscode-extensions-doesnt-work)
-    1. [vscode doesn't take my environment-variable](#vscode-env-vars)
-1. [TODO](#todo)
-
-## News <a name="news"></a>
-
-Version `3.0.0` has been finished.
-It refactors the shellscripts to be cleaner and POSIX-conform (where possible) thanks to the shell-linter `shellcheck`.
-
-Version `2.0.0` has been finished.
-It moves boilerplate-code (for installation) to [the howto-repo][web_github_howto].
-This allows a more flat and clean code-structure.
-Due to semantic versoning, the new version implies a breaking change.
-This affects symlinks in `${HOME}/` and `${DOTFILES}/custom/`.
-
-In general, automatic tests (and a Docker-Image?) could help with testing.
-A changelog could be helpful as well.
 
 ## Usage <a name="usage"></a>
 
 Long story short, download these files (`git clone` or from releases) and execute `./configure`.
 Every file-creation or -replacement is interactive and verbose.
+
 
 ### Configuration <a name="configuration"></a>
 
@@ -115,6 +105,7 @@ Opening a new window will use the new setup.
 
 > __Note:__ `custom/` contains some generic info that should probably be updated by hand (e.g. gitconfig's `user.name`).
 
+
 ### Change default location after configuration <a name="change-default-location"></a>
 
 You can change the default-location of your dotfiles easily by moving the dotfiles-folder around and executing `configure` again.
@@ -131,10 +122,12 @@ Consider that `custom/shell/shellrc.sh` contains the location hardcoded after ca
 This is necessary to be fully custom here (e.g. moving `shellrc.sh` around).
 If you keep your `custom/shell/shellrc.sh`, you have to change the hardcoded path as well.
 
+
 ## Features <a name="features"></a>
 
 Besides some handy functions and a clean way of structuring your dotfiles, useful aliases and functions are provided.
 These dotfiles are used with `bash` and `zsh` on `macOS` and some `linux`-distributions.
+
 
 ### Shell environment <a name="shell-environment"></a>
 
@@ -165,6 +158,7 @@ Those are not mentioned here.
 | `alert` | can be called like `sleep 2; alert` |
 | `gitignore` | uses the `gitignore.io` API to echo gitignore entries, which can be piped into a `.gitignore`-file |
 
+
 ### Git aliases <a name="git-aliases"></a>
 
 Have a look at the handy [git aliases][web_github_git_aliases].
@@ -175,7 +169,10 @@ In addition, visual-studio-code is opening as diff-tool and for commit-messages.
 | alias | note |
 |:-----:|------|
 | GENERAL |
-| `g h` | helps using `git heRefactor POSIX, add some handy vscode-settings and git-aliaseses all changes from the index with respect to the given FILES (but keeps the changes in workspace). Simply spoken, all green FILES in `git status` become red again. |
+| `g h` | helps using `git help` more often ;) (`g h ALIAS` shows the replacement for the alias). |
+| `g s` | is alias for `git status` and one of the most used aliases. |
+| `g hash` | is alias for `git rev-parse --verify HEAD` and returns the commit-hash, where HEAD is pointing at. |
+| `g unstage FILES` | removes all changes from the index with respect to the given FILES (but keeps the changes in workspace). Simply spoken, all green FILES in `git status` become red again. |
 | `g discard FILES` | removes all changes from the workspace with respect to the given FILES. Simply spoken, all red FILES in `git status` disappear. (__ATTENTION!__ Obviously, those changes will be lost.) |
 | `g undo` | removes the last commit from history, but keeps its changes in the index. __ATTENTION!__ This alias can be very handy but it is recommended using this only for local commits, since removing pushed commits messes up the history. |
 | COMMITTING |
@@ -203,6 +200,7 @@ In addition, visual-studio-code is opening as diff-tool and for commit-messages.
 
 > __Note:__ `g l` uses `git log` and `g la` adds the flag `--all`.
 > Due to `git help log`, this flag refers to stored references in `.git/refs`.
+
 
 ## Structure <a name="structure"></a>
 
@@ -254,6 +252,7 @@ dotfiles/
 | `utils/`                              | contains scripts for configuration. |
 | `vscode/`                             | [Visual studio code][web_vscode] uses some `settings.json` and `keybindings.json` for user settings and keybindings. |
 
+
 ## Contributing <a name="contributing"></a>
 
 These dotfiles are created in a __modular__ and __lightweight__ way.
@@ -261,9 +260,11 @@ For example, to find the `shellrc.sh`, the respective script is located in `shel
 
 For more detailed information, please look [at the contribution section](CONTRIBUTING.md).
 
+
 ## FAQ / Troubleshooting <a name="faq"></a>
 
 Weird experiences from friends and others, which are using this repo, are mentioned below.
+
 
 ### Syntax error <a name="syntax-error"></a>
 
@@ -277,6 +278,7 @@ ls -1GF --color=auto -lh -a $(which sh)
 For instance, `Debian` uses `dash` instead of `bash`.
 In this case, you have to change the system-shell with `chsh` or change the used shell in your terminal.
 
+
 ### Insecure files or directories <a name="insecure-files-and-dirs"></a>
 
 Your file permissions for your `dotfiles` are probably too loose.
@@ -286,16 +288,19 @@ Execute the following to set the permissions to `drwxr-xr-x`.
 chmod -R 755 "${DOTFILES}"
 ```
 
+
 ### vscode-extensions doesn't work <a name="vscode-extensions-doesnt-work"></a>
 
 You can downgrade installed extensions manually in vscode under `Extensions`.
 Here, you click on the gear next to the installed and affected extension and select `Install Another Version...`.
+
 
 ### vscode doesn't take my environment-variable <a name="vscode-env-vars"></a>
 
 `vscode`-settings canjcontain environment-dependent variables (e.g. `"key": "${env:VAR_NAME}"`).
 Inside of `vscode`, a new terminal does source your `.profile`-file, but the `vscode`-window itself bases the shell-environment from its callee.
 To use env-variables in `vscode`-settings, you set this variable in your shell before opening `vscode` with `code` (e.g. opening current folder with `code .`).
+
 
 [www_license_badge]: https://img.shields.io/github/license/dominicparga/dotfiles?style=for-the-badge
 [www_license]: https://github.com/dominicparga/dotfiles/blob/master/LICENSE
