@@ -158,12 +158,12 @@ The format is based on [Keep a Changelog][keepachangelog], and this project adhe
 [semver]: https://semver.org/
 
 [github/self/unreleased]: https://github.com/dominicparga/dotfiles/compare/v4.0.0...HEAD
-[github/self/v4.0.0]: https://github.com/dominicparga/dotfiles/releases/tag/v3.1.1...v4.0.0
-[github/self/v3.1.1]: https://github.com/dominicparga/dotfiles/releases/tag/v3.1.0...v3.1.1
-[github/self/v3.1.0]: https://github.com/dominicparga/dotfiles/releases/tag/v3.0.2...v3.1.0
-[github/self/v3.0.2]: https://github.com/dominicparga/dotfiles/releases/tag/v3.0.1...v3.0.2
-[github/self/v3.0.1]: https://github.com/dominicparga/dotfiles/releases/tag/v3.0.0...v3.0.1
-[github/self/v3.0.0]: https://github.com/dominicparga/dotfiles/releases/tag/v2.0.1...v3.0.0
-[github/self/v2.0.1]: https://github.com/dominicparga/dotfiles/releases/tag/v2.0.0...v2.0.1
-[github/self/v2.0.0]: https://github.com/dominicparga/dotfiles/releases/tag/v1.0.0...v2.0.0
+[github/self/v4.0.0]: https://github.com/dominicparga/dotfiles/compare/v3.1.1...v4.0.0
+[github/self/v3.1.1]: https://github.com/dominicparga/dotfiles/compare/v3.1.0...v3.1.1
+[github/self/v3.1.0]: https://github.com/dominicparga/dotfiles/compare/v3.0.2...v3.1.0
+[github/self/v3.0.2]: https://github.com/dominicparga/dotfiles/compare/v3.0.1...v3.0.2
+[github/self/v3.0.1]: https://github.com/dominicparga/dotfiles/compare/v3.0.0...v3.0.1
+[github/self/v3.0.0]: https://github.com/dominicparga/dotfiles/compare/v2.0.1...v3.0.0
+[github/self/v2.0.1]: https://github.com/dominicparga/dotfiles/compare/v2.0.0...v2.0.1
+[github/self/v2.0.0]: https://github.com/dominicparga/dotfiles/compare/v1.0.0...v2.0.0
 [github/self/v1.0.0]: https://github.com/dominicparga/dotfiles/releases/tag/v1.0.0
