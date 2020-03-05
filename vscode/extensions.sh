@@ -40,7 +40,7 @@ code --force --install-extension timonwong.shellcheck
 
 # rust
 code --force --install-extension rust-lang.rust
-code --force --install-extension rust-analyzer
+# code --force --install-extension rust-analyzer # still in alpha
 
 # python
 code --force --install-extension kevinrose.vsc-python-indent
