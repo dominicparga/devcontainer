@@ -34,13 +34,15 @@ code --force --install-extension davidanson.vscode-markdownlint
 code --force --install-extension bungcip.better-toml
 # csv
 code --force --install-extension mechatroner.rainbow-csv
+# yaml
+# code --force --install-extension redhat.vscode-yaml
 
 # shell
 code --force --install-extension timonwong.shellcheck
 
 # rust
 code --force --install-extension rust-lang.rust
-# code --force --install-extension rust-analyzer # still in alpha
+# code --force --install-extension matklad.rust-analyzer # still in alpha
 
 # python
 code --force --install-extension kevinrose.vsc-python-indent
