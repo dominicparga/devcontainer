@@ -30,6 +30,8 @@ fi
 
 . "${DOTFILES}/utils/formatting.sh"
 
+echo -e "${__COLOR_INFO}INFO: Setting \${DOTFILES} to '${DOTFILES}'${__COLOR_RESET}"
+
 #------------------------------------------------------------------------------#
 # cmdline-parser
 
