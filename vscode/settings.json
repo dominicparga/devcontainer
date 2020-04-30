@@ -38,6 +38,7 @@
     "editor.renderLineHighlight": "none",
     "editor.renderFinalNewline": true,
     "editor.formatOnSave": false,
+    "editor.tokenColorCustomizations": true,
     // whitespaces
     "editor.renderWhitespace": "none",
     "files.trimTrailingWhitespace": false, // some files need false!
