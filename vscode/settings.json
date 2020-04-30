@@ -3,7 +3,7 @@
     // window settings
     "window.title": "${activeEditorMedium}${separator}${rootName}",
     "window.titleBarStyle": "custom",
-    "window.zoomLevel": 0,
+    "window.zoomLevel": 1,
     "workbench.editor.showTabs": true,
     "workbench.sideBar.location": "left",
     "workbench.statusBar.visible": true,
