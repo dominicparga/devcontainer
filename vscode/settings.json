@@ -101,7 +101,8 @@
         "TAG_EDITMSG": "git-commit",
         ".latexmkrc": "perl",
         "config": "properties",
-        "config.general": "properties"
+        "config.general": "properties",
+        "*.fmi": "properties" // github.com/dominicparga/osmgraphing
         // "*.thor": "ruby",
         // "*.jsx": "javascript",
     },
