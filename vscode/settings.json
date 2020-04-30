@@ -27,7 +27,7 @@
     "explorer.confirmDragAndDrop": false,
     "extensions.ignoreRecommendations": false,
     "editor.cursorSmoothCaretAnimation": true,
-    "editor.lineNumbers": "on",
+    "editor.lineNumbers": "relative",
     "editor.rulers": [
         80,
         100,
