@@ -41,8 +41,8 @@ code --force --install-extension mechatroner.rainbow-csv
 code --force --install-extension timonwong.shellcheck
 
 # rust
-code --force --install-extension rust-lang.rust
-# code --force --install-extension matklad.rust-analyzer # still in alpha
+# code --force --install-extension rust-lang.rust
+code --force --install-extension matklad.rust-analyzer # still in alpha
 
 # python
 code --force --install-extension kevinrose.vsc-python-indent
