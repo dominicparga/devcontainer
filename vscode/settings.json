@@ -74,7 +74,7 @@
     "editor.fontSize": 16,
     //------------------------------------------------------------------------//
     // brackets
-    "editor.matchBrackets": false,
+    "editor.matchBrackets": "never",
     "bracket-pair-colorizer-2.forceUniqueOpeningColor": false,
     "bracket-pair-colorizer-2.forceIterationColorCycle": false,
     "bracket-pair-colorizer-2.colorMode": "Consecutive",
