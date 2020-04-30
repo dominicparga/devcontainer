@@ -202,6 +202,12 @@
         "editor.rulers": [ 100 ],
         "editor.trimAutoWhitespace": true
     },
+    "rust-analyzer.inlayHints.chainingHints": false,
+    "rust-analyzer.inlayHints.parameterHints": false,
+    "rust-analyzer.inlayHints.typeHints": false,
+    "rust-analyzer.cargo.allFeatures": true,
+    "rust-analyzer.cargo.features": [ "gpl" ],
+    "rust-analyzer.updates.askBeforeDownload": true,
     //------------------------------------------------------------------------//
     // shellscript
     // SC1090 - Can't follow non-constant source.
