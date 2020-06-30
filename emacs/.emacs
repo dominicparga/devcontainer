@@ -793,7 +793,7 @@
   :defer t
   :ensure t
   :init (progn
-          (setq langtool-language-tool-jar "/lhome/franzef/opt/languageTool/LanguageTool-4.8/languagetool-commandline.jar")
+          (setq langtool-language-tool-jar "/lhome/franzef/opt/languageTool/LanguageTool-5.0/languagetool-commandline.jar")
           )
   :bind (
          ("C-x 4 w" . langtool-check-buffer)
@@ -955,6 +955,9 @@
           ("M-<down>" . windmove-down))
   )
 
+;; Enable python mode per default for python files
+(add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
+
 ;; Doxymacs with python
 (require 'doxymacs-python)
 (add-hook 'python-mode-hook 'doxymacs-mode)
@@ -1003,24 +1006,6 @@
 (setq browse-url-browser-function 'w3m-browse-url) ;; w3m
 
 ;; -------------------------------------------------------------------
-;; Cython-Mode
-;; -------------------------------------------------------------------
-;; compile command taking several compilation modes into account
-;; (defun cython-compile()
-;;   (interactive)
-;;   (compile "python setup.py build_ext --inplace")
-;; )
-
-;; (use-package cython-mode
-;;   :defer t
-;;   :ensure t
-;;   :init (progn
-;;           (add-to-list 'auto-mode-alist '("\\.pyx$" . cython-mode))
-;;           )
-;;   :bind* ("C-c C-c" . cython-compile)
-;;   )
-
-;; -------------------------------------------------------------------
 ;; Shell
 ;; -------------------------------------------------------------------
 (require 'flymake-shellcheck)
@@ -1043,9 +1028,6 @@
   (swig-switch-compile-command-auto)
   (compile compile-command)
 )
-
-;; Set Shortcut to compile command
-;; (add-hook 'swig-mode-hook (lambda () (local-set-key "\C-c\C-c" 'swig-compile)))
 
 ;; Deactivate autpair
 ;; (add-hook 'swig-mode-hook (lambda () (setq autopair-dont-activate t)))
@@ -1196,6 +1178,7 @@
   :ensure t)
 
 (use-package poly-rst
+  :ensure t
   :mode (
          ("\\.txt$" . poly-rst-mode)
          ("\\.rst$" . poly-rst-mode)

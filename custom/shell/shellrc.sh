@@ -15,7 +15,7 @@ export DOTFILES="/lhome/franzef/workspace/dotfiles/."
 
 . "${DOTFILES}/shell/shellrc.sh"
 
-greet
+# greet
 
 #------------------------------------------------------------------------------#
 
@@ -130,9 +130,14 @@ function token_sv {
 }
 
 
-# Kubernetes
-source <(kubectl completion bash)
+#------------------------------------------------------------------------------#
+# Kubernetes setup
 
+if [[ -n "${ZSH_NAME}" ]]; then
+    source <(kubectl completion zsh)
+elif [[ -n "${BASH}" ]]; then
+    source <(kubectl completion bash)
+fi
 
 # Lidar semantic labelingcod
 export EXPORTER_BASE_OUTPATH=/tmp/lidar
@@ -157,8 +162,22 @@ export PYTHONPATH=$PYTHONPATH:$RECAPP_RELEASE_DIR/lib/python2.7/dist-packages:$R
 # Postgres debug port
 export POSTGRES_PORT=2345
 
-# Python virtualenv
-WORKON_HOME=$HOME/virtualenv
+# Virtual environments for python
+export WORKON_HOME=$HOME/.virtualenvs
+export PIP_VIRTUALENV_BASE=$WORKON_HOME
+# Make sure that the debian package virtualenvwrapper is installed for the following to work
+source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
+
+# pip bash completion start
+_pip_completion()
+{
+    COMPREPLY=( $( COMP_WORDS="${COMP_WORDS[*]}" \
+                   COMP_CWORD=$COMP_CWORD \
+                   PIP_AUTO_COMPLETE=1 $1 ) )
+}
+complete -o default -F _pip_completion pip
+# pip bash completion end
+
 
 # # >>> conda initialize >>>
 # # !! Contents within this block are managed by 'conda init' !!

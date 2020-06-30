@@ -142,6 +142,21 @@ if ( is_machine 'macOS' ); then
     alias java8='javahome -v 1.8 --exec java'
 fi
 
+# Kubernetes
+alias k='kubectl --namespace=development-franzef'
+alias kgs='k get services'
+alias kgp='k get pods'
+alias ka='k apply -f'
+
+# Docker
+alias dor='docker run -it -e "DEBIAN_FRONTEND=noninteractive" -e "TERM=xterm-color" -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --shm-size="16g" --entrypoint "/bin/bash"'
+alias doe='docker exec -it ${1} /bin/bash'
+alias doi='docker images'
+alias docl='docker container list'
+alias dosp='docker system prune -f'
+alias dormi='docker rmi $(docker images --filter "dangling=true" -q --no-trunc)'
+alias doir='docker image rm'
+
 #------------------------------------------------------------------------------#
 # prompt
 
