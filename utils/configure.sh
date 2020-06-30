@@ -74,6 +74,8 @@ mkdir -p -v "${__CUSTOM_DIR}/shell/func/"
 mkdir -p -v "${__CUSTOM_DIR}/shell/ssh/"
 # custom/vscode
 mkdir -p -v "${__CUSTOM_DIR}/vscode/"
+# custom/emacs
+mkdir -p -v "${__CUSTOM_DIR}/emacs/"
 echo -e "${__COLOR_SUCC}SUCCESS: custom-folders created${__COLOR_RESET}"
 
 #------------------------------------------------------------------------------#
@@ -95,7 +97,7 @@ echo -e "${__COLOR_SUCC}SUCCESS: git-files configured${__COLOR_RESET}"
 
 echo -e "${__COLOR_INFO}INFO: Creating and linking custom shellrc..${__COLOR_RESET}"
 __FILE="${__CUSTOM_DIR}/shell/shellrc.sh"
-# if already existing, ask for removing it 
+# if already existing, ask for removing it
 if [ -e "${__FILE}" ]; then
     echo -e "${__COLOR_WARN}WARN: custom shellrc found -> remove and recreate?${__COLOR_RESET}"
     rm -i -v "${__FILE}"
@@ -129,6 +131,7 @@ if [ ! -e "${__FILE}" ]; then
 
     echo "created '${__FILE}'"
 fi
+
 # create symlinks in $HOME
 echo -e "${__COLOR_INFO}INFO: ${HOME}/.profile@ -> ${__CUSTOM_DIR}/shell/shellrc.sh${__COLOR_RESET}"
 ln -i -v -s "${__CUSTOM_DIR}/shell/shellrc.sh" "${HOME}/.profile"
@@ -213,3 +216,30 @@ echo -e "${__COLOR_INFO}INFO: ${__VSCODE_HOME}/keybindings.json@ -> ${DOTFILES}/
 ln -i -v -s "${__DOTFILES_VSCODE_DIR}/keybindings.json" "${__DOTFILES_CUSTOM_VSCODE_DIR}/keybindings.json"
 ln -i -v -s "${__DOTFILES_CUSTOM_VSCODE_DIR}/keybindings.json" "${__VSCODE_HOME}/keybindings.json"
 echo -e "${__COLOR_SUCC}SUCCESS: vscode-setup configured${__COLOR_RESET}"
+
+#------------------------------------------------------------------------------#
+# setup custom/emacs
+
+echo -e "${__COLOR_INFO}INFO: Creating and linking emacs-setup..${__COLOR_RESET}"
+
+# Set __VSCODE_HOME dependent of system.
+# See https://code.visualstudio.com/docs/getstarted/settings#_settings-file-locations
+
+__EMACS_HOME="${HOME}"
+__DOT_EMACS="${HOME}/.emacs"
+__DOT_EMACS_D="${HOME}/.emacs.d"
+
+# check whether the configuration files already exist
+if [ -d "${__DOT_EMACS_D}" ]; then
+    echo -e "${__COLOR_ERR}ERROR: The ${__DOT_EMACS_D} folder does already exist. Back it up and rerun the configuration.${__COLOR_RESET}"
+    exit 1
+fi
+
+__DOTFILES_EMACS_DIR="${DOTFILES}/emacs"
+
+# set emacs links
+echo -e "${__COLOR_INFO}INFO: ${__EMACS_HOME}/.emacs@ -> ${__DOTFILES_EMACS_DIR}/emacs${__COLOR_RESET}"
+ln -i -v -s "${__DOTFILES_EMACS_DIR}/.emacs" "${__DOT_EMACS}"
+echo -e "${__COLOR_INFO}INFO: ${__EMACS_HOME}/.emacs.d@ -> ${__DOTFILES_EMACS_DIR}${__COLOR_RESET}"
+ln -i -v -s "${__DOTFILES_EMACS_DIR}/.emacs.d" "${__DOT_EMACS_D}"
+echo -e "${__COLOR_SUCC}SUCCESS: emacs-setup configured${__COLOR_RESET}"

@@ -3,7 +3,7 @@
     // window settings
     "window.title": "${activeEditorMedium}${separator}${rootName}",
     "window.titleBarStyle": "custom",
-    "window.zoomLevel": 1,
+    "window.zoomLevel": 0,
     "workbench.editor.showTabs": true,
     "workbench.sideBar.location": "left",
     "workbench.statusBar.visible": true,
@@ -22,7 +22,8 @@
         "**/.svn": true,
         "**/.hg": true,
         "**/CVS": true,
-        "**/.DS_Store": true
+        "**/.DS_Store": true,
+        "**/.history": true
     },
     "explorer.confirmDragAndDrop": false,
     "extensions.ignoreRecommendations": false,
@@ -72,7 +73,7 @@
     // - keep width of original chars (2 for >=)
     // - shows original char under block-cursor
     "editor.fontLigatures": true,
-    "editor.fontSize": 16,
+    "editor.fontSize": 14,
     //------------------------------------------------------------------------//
     // brackets
     "editor.matchBrackets": "never",
@@ -594,5 +595,35 @@
         "ERR:"
     ],
     //------------------------------------------------------------------------//
+    // Athena
+    "python.linting.flake8Args": [
+        "--config ${ATHENA_ROOT}/src/.flake8"
+    ],
+    "files.associations": {
+        "SConstruct": "python"
+    },
+    //------------------------------------------------------------------------//
     // occasionally added stuff
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/bower_components": true,
+        "**/.history": true
+    },
+    "git.autofetch": true,
+    "python.autoComplete.extraPaths": [
+        "${env:ATHENA_ROOT}/devel/lib",
+        "${env:ATHENA_ROOT}/install/lib",
+        "${env:ATHENA_ROOT}/install/lib/python2.7/dist-packages",
+        "${env:ATHENA_ROOT}/install/lib/python3/dist-packages",
+        "${env:ATHENA_ROOT}/src/tools/dol/executer"
+    ],
+    "cpplint.cpplintPath": "/lhome/franzef/.local/bin/cpplint",
+    "cSpell.userWords": [
+        "atedol",
+        "chrono",
+        "hanf",
+        "pydol",
+        "roudi"
+    ],
+    "C_Cpp.updateChannel": "Insiders",
 }

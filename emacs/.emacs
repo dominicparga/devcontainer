@@ -1,0 +1,1312 @@
+;;; .emacs --- this file starts here
+
+;;; Commentary:
+
+;;; Code:
+
+;; ==================================================================
+;; Load Packages for different modes
+;; ===================================================================
+
+(setq user-full-name "Fabian Franzelin")
+(setq user-mail-address "fabian.franzelin@de.bosch.com")
+(setq inhibit-startup-echo-area-message "franzef")
+
+;; Package Management
+(require 'package)
+(setq package-enable-at-startup nil)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+;; (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+;; (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/local-lisp"))
+
+;; Initialise packages
+(package-initialize)
+
+(when (not package-archive-contents)
+  (package-refresh-contents))
+
+(unless (package-installed-p 'use-package)
+  (package-install "use-package"))
+(require 'use-package)
+
+;; ===================================================================
+;; Basic Settings
+;; ===================================================================
+
+;disable backup
+(setq backup-inhibited t)
+(setq make-backup-files nil)
+
+;disable auto save
+(setq auto-save-default nil)
+
+;; disable scrollbar
+(scroll-bar-mode -1)
+
+;; disable menu
+(menu-bar-mode nil)
+
+;; enable revert from disk
+(global-auto-revert-mode 1)
+
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+(server-start)
+
+;; Support Wheel Mouse Scrolling
+(mouse-wheel-mode t)
+
+;; Kill this buffer, instead of prompting for which one to kill
+(global-set-key (kbd "C-x k") 'kill-this-buffer)
+
+;; dir-local variables will be applied to remote files.
+(setq enable-remote-dir-locals t)
+
+; Turn on syntax colouring in all modes supporting it:
+(global-font-lock-mode t)
+
+; I want the name of the file I'm editing to be displayed in the
+; title-bar.
+(setq frame-title-format "%b")
+(setq frame-title-format
+      (list (format "%s %%S: %%j " (system-name))
+        '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
+
+;; (set-default-font "Monospace-11")
+;; (set-frame-width (selected-frame) 100)
+;; (set-frame-height (selected-frame) 100)
+
+;; set encoding
+;; set up unicode
+(defvar prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'latin-1)
+(setq buffer-file-coding-system 'utf-8)
+
+;; no splash screen
+(setq inhibit-splash-screen t)
+
+;; no backup files
+(setq make-backup-files nil)
+
+; shift-pageUp/pageDown scrolls other window
+(global-set-key (quote [S-prior]) (quote scroll-other-window-down))
+(global-set-key (quote [S-next]) (quote scroll-other-window))
+
+;; Color theme
+(use-package tangotango-theme
+  :ensure t
+  )
+
+;; Set up recent files so I can get a list if them when I start
+(recentf-mode 1)
+(defvar recentf-max-saved-items 1200)
+
+;; make text mode the default major mode and start auto-fill mode
+;; auto auto-magically
+(setq major-mode 'text-mode)
+;; (add-hook 'text-mode-hook 'turn-on-auto-fill)
+;; (add-hook 'latex-mode-hook 'turn-on-auto-fill)
+
+;; remove toolbar
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+
+;; Syntax-Highlighting
+(global-font-lock-mode t)
+
+;; Key bindings
+(global-set-key "\C-n" 'make-frame)
+(global-set-key "\C-o" 'other-window)
+(global-set-key "\M-f" 'select-frame-by-name)
+
+;; F6 stores a position in a file F7 brings you back to this position
+(global-set-key [f6] '(lambda () (interactive) (point-to-register ?1)))
+(global-set-key [f7] '(lambda () (interactive) (register-to-point ?1)))
+
+;; Show major mode
+(global-set-key "\C-h\C-m" '(lambda() (interactive) (message "%s" major-mode)))
+
+;; higlight the marked region (C-SPC) and use commands (like
+;; latex-environment) on current region.
+(transient-mark-mode t)
+
+;; Indentation
+(setq-default indent-tabs-mode nil)    ; use only spaces and no tabs
+(setq tab-width 4)
+
+;; Save history during sessions
+(savehist-mode t)
+
+;; Delete trailing white spaces
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+;; It reverts when a dired buffer is reselected dired mode
+(use-package dired
+  :config (progn
+            (setq dired-auto-revert-buffer t ; Auto update when buffer is revisited
+                  dired-dwim-target t
+                  dired-recursive-deletes 'always
+                  dired-recursive-copies 'always
+                  delete-by-moving-to-trash t
+                  dired-listing-switches "-alh") ; human readable file sizes
+            (add-hook 'dired-mode-hook 'auto-revert-mode)
+            ))
+
+;; Quick filter dired view
+(use-package dired-narrow
+  :ensure t
+  :bind (:map dired-mode-map ("/" . dired-narrow)))
+
+;; Let kill operate on the whole line when no region is selected
+(use-package whole-line-or-region
+  :ensure t
+  :config (whole-line-or-region-global-mode))
+
+;; Don't ask when symlinks in VCS are encountered, just edit the link, don't care about target location
+(setq vc-follow-symlinks nil)
+
+;; Remove indicators from the mode line
+(use-package diminish
+  :ensure t)
+
+(use-package crux
+  :ensure t
+  :bind (("C-a" . crux-move-beginning-of-line))) ;; Moves point to first non-whitespace first, beginning of line then
+
+;; Helps to keep track of your cursor
+(use-package beacon
+  :ensure t
+  :config (progn
+            (beacon-mode t)
+            (setq beacon-color "#ff0000")))
+
+;; volatile highlights - temporarily highlight changes from pasting etc
+(use-package volatile-highlights
+  :ensure t
+  :diminish volatile-highlights-mode
+  :config
+  (volatile-highlights-mode t))
+
+(global-set-key (kbd "M-<left>")  'windmove-left)
+(global-set-key (kbd "M-<right>") 'windmove-right)
+(global-set-key (kbd "M-<up>")    'windmove-up)
+(global-set-key (kbd "M-<down>")  'windmove-down)
+
+;; winner mode for for redo/undo window configurations
+(winner-mode 1)
+
+;; -------------------------------------------------------------------
+;; Copy & Paste
+;; -------------------------------------------------------------------
+
+;; (transient-mark-mode 1) ; Now on by default: makes the region act
+;; quite like the text "highlight" in many apps.  (setq
+;; shift-select-mode t) ; Now on by default: allows shifted
+;; cursor-keys to control the region.
+(setq mouse-drag-copy-region nil) ;; stops selection with a mouse
+                                  ;; being immediately injected to the
+                                  ;; kill ring
+(setq select-enable-primary nil)  ;; stops killing/yanking
+                                  ;; interacting with primary X11
+                                  ;; selection
+(setq select-enable-clipboard t)  ;; makes killing/yanking interact with clipboard X11 selection
+
+;; when pasting with middle click in Linux X11, paste at cursor position, not at click position
+(setq mouse-yank-at-point t)
+
+;; these will probably be already set to these values, leave them that
+;; way if so!  (setf interprogram-cut-function 'x-select-text) (setf
+;; interprogram-paste-function 'x-cut-buffer-or-selection-value)
+
+;; You need an emacs with bug #902 fixed for this to work properly. It
+;; has now been fixed in CVS HEAD.  it makes "highlight/middlebutton"
+;; style (X11 primary selection based) copy-paste work as expected if
+;; you're used to other modern apps (that is to say, the mere act of
+;; highlighting doesn't overwrite the clipboard or alter the kill
+;; ring, but you can paste in merely highlighted text with the mouse
+;; if you want to)
+(setq select-active-regions t) ;  active region sets primary X11 selection
+(global-set-key [mouse-2] 'mouse-yank-primary)  ; make mouse
+                                                ; middle-click only
+                                                ; paste from primary
+                                                ; X11 selection, not
+                                                ; clipboard and kill
+                                                ; ring.
+
+;; with this, doing an M-y will also affect the X11 clipboard, making
+;; emacs act as a sort of clipboard history, at least of text you've
+;; pasted into it in the first place.  (setq yank-pop-change-selection
+;; t) ; makes rotating the kill ring change the X11 clipboard.
+
+;; ;; -------------------------------------------------------------------
+;; ;; Auto Completion
+;; ;; -------------------------------------------------------------------
+;; (use-package auto-complete
+;;   :defer t
+;;   :ensure t)
+
+;; ;; dirty fix for having AC everywhere
+;; (define-globalized-minor-mode real-global-auto-complete-mode
+;;   auto-complete-mode (lambda ()
+;;                        (if (not (minibufferp (current-buffer)))
+;;                          (auto-complete-mode 1))
+;;                        ))
+;; (real-global-auto-complete-mode t)
+
+;; -------------------------------------------------------------------
+;; Fill Column Indicator
+;; -------------------------------------------------------------------
+(use-package fill-column-indicator
+  :defer t
+  :ensure t
+  :init (progn
+            (setq fci-rule-color "#f8f8f8") ;;#cccccc
+            (define-globalized-minor-mode
+              global-fci-mode fci-mode (lambda () (fci-mode 1)))
+            )
+  )
+
+;; ;; Highlight character at "fill-column" position.
+;; (use-package column-marker
+;;   :ensure t
+;;   :config (progn
+;;             (set-face-background 'column-marker-1 "red")
+;;             (setq truncate-lines 80)
+
+;;             (add-hook 'python-mode-hook
+;;                       (lambda () (interactive)
+;;                         (column-marker-1 fill-column)))
+;;             (add-hook 'ess-mode-hook
+;;                       (lambda () (interactive)
+;;                         (column-marker-1 fill-column)))
+;;             )
+;;   )
+
+;; -------------------------------------------------------------------
+;; Show total line number in the modline
+;; -------------------------------------------------------------------
+(defvar my-mode-line-buffer-line-count nil)
+(make-variable-buffer-local 'my-mode-line-buffer-line-count)
+
+(setq-default mode-line-format
+              '("  " mode-line-modified
+                (list 'line-number-mode "  ")
+                (:eval (when line-number-mode
+                         (let ((str "L%l"))
+                           (when (and (not (buffer-modified-p)) my-mode-line-buffer-line-count)
+                             (setq str (concat str "/" my-mode-line-buffer-line-count)))
+                           str)))
+                "  %p"
+                (list 'column-number-mode "  C%c")
+                "  " mode-line-buffer-identification
+                "  " mode-line-modes))
+
+(defun my-mode-line-count-lines ()
+  (setq my-mode-line-buffer-line-count (int-to-string (count-lines (point-min) (point-max)))))
+
+(add-hook 'find-file-hook 'my-mode-line-count-lines)
+(add-hook 'after-save-hook 'my-mode-line-count-lines)
+(add-hook 'after-revert-hook 'my-mode-line-count-lines)
+(add-hook 'dired-after-readin-hook 'my-mode-line-count-lines)
+
+;; -------------------------------------------------------------------
+;; Insert Pairs of Matching Elements
+;; -------------------------------------------------------------------
+(use-package autopair
+  :defer t
+  :ensure t
+  :init (progn
+          (autopair-global-mode t)
+          )
+  :config (progn
+            (add-hook 'lisp-mode-hook #'(lambda () (setq autopair-dont-activate t)))
+
+            ;; Add single and triple quote to the autopair list
+            (add-hook 'python-mode-hook
+                      #'(lambda ()
+                          ;; (push '(?` . ?`)
+                          ;;       (getf autopair-dont-pair :never))
+                          (setq autopair-handle-action-fns
+                                (list #'autopair-default-handle-action
+                                      #'autopair-python-triple-quote-action))))
+
+            ;; Some useful handler
+            (add-hook 'TeX-mode-hook
+                      #'(lambda ()
+                          (set (make-local-variable 'autopair-handle-action-fns)
+                               (list #'autopair-default-handle-action
+                                     #'autopair-latex-mode-paired-delimiter-action))))
+
+            ;; Latex Math mode pairs
+            (add-hook 'TeX-mode-hook
+                      #'(lambda ()
+                          (modify-syntax-entry ?$ "\"")
+                          (autopair-mode)))
+
+            )
+  )
+
+;; Highlight parens
+(show-paren-mode)
+(setq show-paren-style 'mixed)	;; The entire expression
+
+;; -------------------------------------------------------------------
+;; Save history during sessions
+;; -------------------------------------------------------------------
+(use-package savehist
+  :config (progn
+            (savehist-mode t)
+            (setq savehist-additional-variables '(extended-command-history kill-ring))))
+                                        ; history-length 1000
+                                        ; history-delete-duplicates
+
+;; -------------------------------------------------------------------
+;; show the currently enabled mode
+;; -------------------------------------------------------------------
+(defun get-mode()
+  (interactive)
+  (message "%s" major-mode)
+)
+
+(global-set-key [f12] 'get-mode)
+
+;; -------------------------------------------------------------------
+;; Helm project
+;; -------------------------------------------------------------------
+(use-package helm
+  :defer t
+  :ensure t
+  :config (progn
+            (when (executable-find "curl")
+              (setq helm-google-suggest-use-curl-p t))
+
+            (setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
+                  helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
+                  helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
+                  helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
+                  helm-ff-file-name-history-use-recentf t
+                  helm-echo-input-in-header-line t)
+
+            (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
+            (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
+            (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
+            )
+  :bind (
+         ("M-x" . helm-M-x)
+         ("C-x C-f" . helm-find-files)
+         )
+  )
+
+(use-package helm-ag
+  :defer t
+  :ensure t)
+
+;; ;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
+;; ;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
+;; ;; cannot change `helm-command-prefix-key' once `helm-config' is loaded.
+;; (global-set-key (kbd "C-c h") 'helm-command-prefix)
+;; (global-unset-key (kbd "C-x c"))
+
+;; (use-package helm-gtags
+;;   :defer t
+;;   :ensure t
+;;   :init (progn
+;;          (setq helm-gtags-suggested-key-mapping t
+;;                helm-gtags-path-style 'relative
+;;                helm-gtags-ignore-case t
+;;                helm-gtags-auto-update t
+;;                )
+;;          )
+;;   :config (progn
+;;            (bind-key "M-." 'helm-gtags-dwim helm-gtags-mode-map)
+;;            ;;; Enable helm-gtags-mode
+;;            (add-hook 'c-mode-hook 'helm-gtags-mode)
+;;            (add-hook 'c++-mode-hook 'helm-gtags-mode)
+;;            (add-hook 'asm-mode-hook 'helm-gtags-mode)
+;;            )
+;;   )
+
+;; -------------------------------------------------------------------
+;; ivy mode
+;; -------------------------------------------------------------------
+(use-package counsel
+  :ensure t
+  :diminish (list ivy-mode counsel-mode)
+  :config
+  (setq ivy-use-virtual-buffers t
+        ivy-count-format "(%d / %d) "
+        ivy-height 25
+        counsel-find-file-ignore-regexp (concat
+                                         ;; File names beginning with # or .
+                                         "\\(?:\\`[#.]\\)"
+                                         ;; File names ending with # or ~
+                                         "\\|\\(?:\\`.+?[#~]\\'\\)")
+        ;; ivy-re-builders-alist '((t . ivy--regex-fuzzy))
+        )
+  (ivy-mode t)
+  (counsel-mode t)
+  :bind (
+         ("C-s" . swiper)
+         ("C-c C-r" . ivy-resume)
+         ("C-." . counsel-imenu)
+         ("C-c c" . counsel-org-capture)
+         ))
+
+;; Some additional hydras for ivy
+(use-package ivy-hydra
+  :ensure t)
+
+
+;; Needed for ivy occur edit mode
+(use-package wgrep
+  :ensure t)
+
+;; -------------------------------------------------------------------
+;; projectile mode
+;; -------------------------------------------------------------------
+
+(use-package projectile
+  :defer t
+  :ensure t
+  :init (progn
+          (setq projectile-file-exists-remote-cache-expire nil)
+          (setq projectile-mode-line '(:eval (format " Projectile[%s]" (projectile-project-name))))
+          (setq projectile-globally-ignored-directories
+                (quote
+                 (".idea" ".eunit" ".git" ".hg" ".svn" ".fslckout" ".bzr" "_darcs" ".tox" "build" "target")))
+          (setq projectile-require-project-root nil)
+          ;; (setq projectile-indexing-method 'alien)
+          ;; (setq projectile-enable-caching nil)
+          (setq projectile-completion-system 'default)
+          (setq projectile-svn-command "find . -type f -not -iwholename '*.svn/*' -print0")
+          )
+  :config (progn
+            (projectile-mode 1)
+            (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+            )
+  )
+
+(use-package helm-projectile
+  :defer t
+  :ensure t
+  :init (progn
+          (setq projectile-completion-system 'helm)
+          (helm-projectile-on)
+          )
+  )
+
+;; -------------------------------------------------------------------
+;; neotree
+;; -------------------------------------------------------------------
+(use-package neotree
+  :init (progn
+         (global-set-key [f8] 'neotree-toggle)
+         )
+  :config (progn
+           (setq neo-smart-open t)
+           (setq neo-autorefresh t)
+           (setq neo-window-fixed-size nil)
+          )
+  :ensure t
+  )
+
+;; Set the neo-window-width to the current width of the
+;; neotree window, to trick neotree into resetting the
+;; width back to the actual window width.
+;; Fixes: https://github.com/jaypei/emacs-neotree/issues/262
+(eval-after-load "neotree"
+  '(add-to-list 'window-size-change-functions
+                (lambda (frame)
+                  (let ((neo-window (neo-global--get-window)))
+                    (unless (null neo-window)
+                      (setq neo-window-width (window-width neo-window)))))))
+
+;; -------------------------------------------------------------------
+;; highlight symbol and replace
+;; -------------------------------------------------------------------
+;; (use-package hl-anything
+;;   :ensure t)
+
+(use-package highlight-symbol
+  :defer t
+  :ensure t
+  :bind* (
+         ("C-<f3>" . highlight-symbol)
+         ("<f3>" . highlight-symbol-next)
+         ("S-<f3>" . highlight-symbol-prev)
+         ("M-<f3>" . highlight-symbol-query-replace)
+         )
+  )
+
+;; ===================================================================
+;; Adjusting different modes
+;; ===================================================================
+;; -------------------------------------------------------------------
+;; C++
+;; -------------------------------------------------------------------
+(use-package cmake-mode
+  :mode (("\\.cmake$" . cmake-mode)
+         ("CMakeLists.txt" . cmake-mode))
+  :ensure t
+  :init (progn
+          (add-to-list 'auto-mode-alist '("\\.cmake$" . cmake-mode))
+          (add-to-list 'auto-mode-alist '("CMakeLists.txt" . cmake-mode))
+          ))
+
+(use-package ag
+  :ensure t)
+
+(use-package flycheck-clang-tidy
+  :ensure t
+  :after flycheck
+  :config (progn
+            (setq flycheck-clang-tidy-executable "/usr/bin/clang-tidy-athena-1")
+            )
+  :hook
+  (flycheck-mode . flycheck-clang-tidy-setup)
+  )
+
+(use-package c++-mode
+  :mode "\\.cpp\\'"
+  :init (progn
+          (add-hook 'c++-mode-hook (lambda ()
+                                     (subword-mode t))))  ; CamelCase are two words
+  )
+
+(add-hook 'c-mode-hook (lambda ()
+                         (subword-mode t))) ; CamelCase are two words
+
+(setq c-basic-offset 2)
+
+(c-add-style "my-cc-style"
+             '("bsd" (c-offsets-alist . (
+                                         (innamespace . 0)
+                                         (namespace-open . 0)
+                                         (namespace-close . 0)
+                                         (cpp-macro . 0) ; indent macros like the surrounding code
+                                         ))))
+(setq c-default-style "my-cc-style")
+
+(use-package rtags
+  ;; :demand
+  :config (progn
+            (setq rtags-display-result-backend 'ivy
+                  rtags-autostart-diagnostics t
+                  rtags-completions-enabled t)
+            (rtags-enable-standard-keybindings)
+            (bind-key "M-." 'rtags-location-stack-back c-mode-base-map)) ; https://github.com/Andersbakken/rtags/issues/600
+  )
+
+(use-package ivy-rtags
+  :ensure t)
+
+;; Find definition based on regexp
+(use-package dumb-jump
+  :ensure t)
+
+;; Proxy for different find-defintion engines
+(use-package smart-jump
+  :ensure t
+  :config (progn
+            (smart-jump-register :modes '(c-mode c++-mode)
+                                 :jump-fn 'rtags-find-symbol-at-point
+                                 :pop-fn 'rtags-location-stack-back
+                                 :refs-fn 'rtags-find-all-references-at-point
+                                 :should-jump (lambda ()
+                                                (and
+                                                 (fboundp 'rtags-executable-find)
+                                                 (rtags-executable-find "rc")
+                                                 (rtags-is-indexed)))
+                                 :heuristic 'point
+                                 :async 500
+                                 :order 1)
+            (smart-jump-setup-default-registers)))
+
+;; -------------------------------------------------------------------
+;; CRAN R
+;; -------------------------------------------------------------------
+(use-package ess
+  :defer t
+  :ensure t
+  :init (progn
+          (setq ess-use-eldoc nil)
+          ;; ESS will not print the evaluated commands, also speeds up the evaluation
+          (setq ess-eval-visibly nil)
+          ;; if you don't want to be prompted each time you start an interactive R session
+          (setq ess-ask-for-ess-directory nil)
+          )
+  )
+
+ ;;; ESS
+(add-hook 'ess-mode-hook
+          (lambda ()
+            (ess-set-style 'C++ 'quiet)
+            ;; Because
+            ;;                                 DEF GNU BSD K&R  C++
+            ;; ess-indent-level                  2   2   8   5  4
+            ;; ess-continued-statement-offset    2   2   8   5  4
+            ;; ess-brace-offset                  0   0  -8  -5 -4
+            ;; ess-arg-function-offset           2   4   0   0  0
+            ;; ess-expression-offset             4   2   8   5  4
+            ;; ess-else-offset                   0   0   0   0  0
+            ;; ess-close-brace-offset            0   0   0   0  0
+            (add-hook 'local-write-file-hooks
+                      (lambda ()
+                        (ess-nuke-trailing-whitespace)))))
+;; (setq ess-nuke-trailing-whitespace-p 'ask)
+;; or even
+(setq ess-nuke-trailing-whitespace-p t)
+
+(setq tab-always-indent t)
+
+;; -------------------------------------------------------------------
+;; AUCTeX
+;; -------------------------------------------------------------------
+(use-package auctex
+  :defer t
+  :ensure t
+  :init (progn
+         (add-hook 'LaTeX-mode-hook 'TeX-fold-mode)
+         (add-hook 'LaTeX-mode-hook 'outline-minor-mode)
+         ))
+
+(use-package reftex
+  :defer t
+  :ensure t
+  :init (progn
+          (setq reftex-enable-partial-scans t)
+          (setq reftex-use-multiple-selection-buffers t)
+          (setq reftex-plug-into-AUCTeX t)
+          (setq reftex-save-parse-info t)
+          (setq reftex-use-external-file-finders t)
+          (setq reftex-external-file-finders
+               '(("tex" . "kpsewhich -format=.tex %f")
+                 ("bib" . "kpsewhich -format=.bib %f")))
+          (setq TeX-auto-save t)
+          (setq TeX-auto-parse t)
+
+          (add-hook 'LaTeX-mode-hook 'turn-on-reftex)   ; with AUCTeX LaTeX mode
+          (add-hook 'latex-mode-hook 'turn-on-reftex)   ; with Emacs latex mode
+          (add-hook 'LaTeX-mode-hook 'reftex-mode)      ; with Emacs latex mode
+          ;; (add-hook 'LaTeX-mode-hook 'auto-fill-mode)
+          (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+          (add-hook 'LaTeX-mode-hook 'TeX-PDF-mode)     ; turn on pdf mode
+
+          (setq LaTeX-command "latex -synctex=1")
+
+          (setq reftex-default-bibliography (quote ("/home/franzefn/Promotion/Literatur/bibliothek/jabref/library.bib")))
+          )
+  :config (progn
+            ;; Set index on document
+            (add-hook 'reftex-load-hook 'imenu-add-menubar-index)
+            (add-hook 'reftex-mode-hook 'imenu-add-menubar-index)
+            )
+  )
+
+;; emacs RefTeX
+;; (setq reftex-ref-macro-prompt nil) ; skips picking the reference style
+
+(eval-after-load 'reftex-vars
+  '(progn
+     ;; (also some other reftex-related customizations)
+     (setq reftex-cite-format
+           '((?\C-m . "\\cite[]{%l}")
+             (?a . "\\citeauthor[]{%l}") ;; Franzelin
+             (?f . "\\footcite[][]{%l}") ;; \footnote{[FR05]}
+             (?t . "\\textcite[]{%l}")   ;; Franzelin [FR05] (without link)
+             (?o . "\\citet[]{%l}")      ;; Franzelin [FR05] (with link)
+             (?p . "\\parencite[]{%l}")  ;; [Franzelin, 2015] (without link)
+             (?o . "\\citep[]{%l}")      ;; [Franzelin, 2015] (with link)
+             (?n . "\\nocite{%l}")))
+     )
+  )
+
+(eval-after-load
+    "latex"
+  '(TeX-add-style-hook
+    "cleveref"
+    (lambda ()
+      (if (boundp 'reftex-ref-style-alist)
+          (add-to-list
+           'reftex-ref-style-alist
+           '("Cleveref" "cleveref"
+             (("\\cref" ?c) ("\\Cref" ?C) ("\\cpageref" ?d) ("\\Cpageref" ?D)))))
+      (reftex-ref-style-activate "Cleveref")
+      (TeX-add-symbols
+       '("cref" TeX-arg-ref)
+       '("Cref" TeX-arg-ref)
+       '("cpageref" TeX-arg-ref)
+       '("Cpageref" TeX-arg-ref)))))
+
+;; Do not ask to save before compile
+(setq compilation-ask-about-save nil)
+
+;; Always scroll the compilation output buffer until the first error appears
+(setq compilation-scroll-output 'firsterror)
+
+;; -------------------------------------------------------------------
+;; add make command to standard latex commands
+;; -------------------------------------------------------------------
+;; add make command to tex file
+(add-hook 'LaTeX-mode-hook
+   (lambda ()
+     (add-to-list 'TeX-command-list
+                  '("Make" "make" TeX-run-TeX nil t :help "Runs make") t)
+     (add-to-list 'TeX-command-list
+                  '("Scons" "scons" TeX-run-TeX nil t :help "Runs scons") t)
+     (add-to-list 'TeX-command-list
+                  '("latexmk" "latexmk -pdf" TeX-run-TeX nil t :help "Runs latexmk") t)))
+;; -------------------------------------------------------------------
+;; add new environment types to auctex
+;; http://www.gnu.org/software/auctex/manual/auctex/Adding-Environments.html
+;; -------------------------------------------------------------------
+
+
+;; -------------------------------------------------------------------
+;; Forward and inverse search with okular
+;; -------------------------------------------------------------------
+(require 'okular-search)
+
+(setq TeX-view-program-list '(("Okular" "okular --unique %o")))
+(setq TeX-view-program-selection '((output-pdf "Okular") (output-dvi "Okular")))
+
+;; Inverse search
+;; http://inthearmchair.wordpress.com/2010/09/02/latex-inverse-pdf-search-with-emacs/
+;; (setq TeX-source-specials-mode 1)         ;; Inverse search
+
+(setq TeX-auto-global "~/.emacs.d/auctex-auto-generated-info/")
+(setq TeX-auto-local  "~/.emacs.d/auctex-auto-generated-info/")
+
+;; forward search
+(add-hook 'LaTeX-mode-hook (lambda () (local-set-key "\C-c\C-a"
+                                                     'okular-jump-to-line)))
+(add-hook 'tex-mode-hook (lambda () (local-set-key "\C-c\C-a"
+                                                   'okular-jump-to-line)))
+
+;; -------------------------------------------------------------------
+;; include language tool
+;; -------------------------------------------------------------------
+(use-package langtool
+  :defer t
+  :ensure t
+  :init (progn
+          (setq langtool-language-tool-jar "/lhome/franzef/opt/languageTool/LanguageTool-4.8/languagetool-commandline.jar")
+          )
+  :bind (
+         ("C-x 4 w" . langtool-check-buffer)
+         ("C-x 4 W" . langtool-check-done)
+         ("C-x 4 n" . langtool-goto-next-error)
+         ("C-x 4 p" . langtool-goto-previous-error)
+         ("C-x 4 4" . langtool-show-message-at-point)
+         )
+  )
+
+;; -------------------------------------------------------------------
+;; On the fly spell checker using ispell
+;; -------------------------------------------------------------------
+
+(defun fd-switch-dictionary()
+  (interactive)
+  (let* ((dic ispell-current-dictionary)
+         (change (if (string= dic "de_DE") "en_US" "de_DE")))
+    (ispell-change-dictionary change)
+    (message "Aspell dictionary switched from %s to %s" dic change))
+  (let* ((dic ispell-current-dictionary)
+         (change (if (string= dic "de_DE") "de-DE" "en-US")))
+    (setq langtool-default-language change)
+    (message "LanguageTool dictionary switched to %s" change)
+    ))
+
+(use-package ispell
+  :defer t
+  :ensure t
+  :init (progn
+          (setq ispell-dictionary "en_US")
+          (setq ispell-local-dictionary "en_US")
+          (setq ispell-default-dictionary "en_US")
+          (setq flyspell-default-dictionary "en_US")
+
+          (setq ispell-program-name "/usr/bin/aspell")
+          (setq ispell-list-command "list")
+          (setq ispell-extra-args '("--dont-tex-check-comments"))
+          (setq ispell-current-dictionary "en_US")
+          )
+  :bind (
+         ("<f4>" . fd-switch-dictionary)
+         )
+  )
+
+;; alist leeren und für aspell /de_DE.UTF-8 richtig einstellen:
+(setq ispell-local-dictionary-alist nil)
+(add-to-list 'ispell-local-dictionary-alist
+	     '("de_DE"
+ 	       "[[:alpha:]]" "[^[:alpha:]]"
+	       "[']" t
+	       ("-C" "-d" "de_DE")
+ 	        "~latin1" iso-8859-1)
+ 	     )
+
+;; flyspell mode
+(put 'LaTeX-mode 'flyspell-mode-predicate 'auctex-mode-flyspell-verify)
+(defun auctex-mode-flyspell-verify ()
+  "Function used for `flyspell-generic-check-word-predicate' in auctex mode."
+  (save-excursion
+    (forward-word -2)
+    (not (looking-at "bibliographystyle{"))))
+
+(add-hook 'LaTeX-mode-hook
+  (lambda () (setq flyspell-generic-check-word-predicate
+    'auctex-mode-flyspell-verify)))
+
+(autoload 'flyspell-mode "flyspell"
+  "On-the-fly spelling checking" t)
+(autoload 'global-flyspell-mode "flyspell"
+  "On-the-fly spelling" t)
+(add-hook 'html-mode-hook 'flyspell-mode)
+(add-hook 'htm-mode-hook 'flyspell-mode)
+(add-hook 'text-mode-hook 'flyspell-mode)
+
+;; -------------------------------------------------------------------
+;; Prolog
+;; -------------------------------------------------------------------
+(add-to-list 'auto-mode-alist '("\\.pl$" . prolog-mode))
+
+;; -------------------------------------------------------------------
+;; Haskell
+;; -------------------------------------------------------------------
+(use-package haskell-mode
+  :defer t
+  :ensure t
+  :init (progn
+          (setq haskell-program-name "ghci -XGADTs -XExistentialQuantification -XDeriveDataTypeable -XTypeFamilies")
+          )
+  :config (progn
+             (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
+             (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+            ))
+
+;; -------------------------------------------------------------------
+;; C++ integration with scons
+;; -------------------------------------------------------------------
+
+;; Interpret SConstruct file as python source file
+(add-to-list 'auto-mode-alist '("SConstruct" . python-mode))
+(add-to-list 'auto-mode-alist '("SConscript" . python-mode))
+
+;; switch between header and source
+(global-set-key [(control tab)] 'ff-find-other-file)
+
+;; -------------------------------------------------------------------
+;; Doxymacs integration
+;; -------------------------------------------------------------------
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/local-lisp/doxymacs"))
+(require 'doxymacs)
+(require 'xml-parse)
+
+(defun doxymacs-font-lock ()
+  (interactive)
+  (font-lock-add-keywords nil doxymacs-doxygen-keywords))
+;; (add-hook 'c-mode-common-hook'doxymacs-mode)
+;; (defun my-doxymacs-font-lock-hook ()
+;;   (if (or (eq major-mode 'c-mode) (eq major-mode 'c++-mode))
+;;       (doxymacs-font-lock)))
+;; (add-hook 'font-lock-mode-hook 'my-doxymacs-font-lock-hook)
+
+;; -------------------------------------------------------------------
+;; Octave integration
+;; -------------------------------------------------------------------
+(add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
+
+;; -------------------------------------------------------------------
+;; Python integration
+;; -------------------------------------------------------------------
+;; Enable autopep8
+(use-package py-autopep8
+  :ensure t)
+
+(defun my-elpy-mode-hook ()
+   "Change elpy mode hook."
+   (eldoc-mode 0)
+)
+
+(use-package elpy
+  :ensure t
+  :init (add-hook 'python-mode-hook #'elpy-enable)
+  :config (progn
+            ;; Enable Flycheck
+            (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+            (add-hook 'elpy-mode-hook 'flycheck-mode)
+            ;; Enable autopep
+            (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+            ;; Disable eldoc due to error in melpa package
+            (add-hook 'elpy-mode-hook 'my-elpy-mode-hook)
+            (add-hook 'before-save-hook 'delete-trailing-whitespace)
+            ;; ;; format code before save
+            ;; (add-hook 'elpy-mode-hook (lambda ()
+            ;;                             (add-hook 'before-save-hook
+            ;;                                       'elpy-format-code nil t)))
+            )
+  :bind* (("M-<left>" . windmove-left)
+          ("M-<right>" . windmove-right)
+          ("M-<up>" . windmove-up)
+          ("M-<down>" . windmove-down))
+  )
+
+;; Doxymacs with python
+(require 'doxymacs-python)
+(add-hook 'python-mode-hook 'doxymacs-mode)
+(add-hook 'python-mode-hook 'doxymacs-python)
+
+;; -------------------------------------------------------------------
+;; code style checker
+;; -------------------------------------------------------------------
+(use-package flycheck
+  :ensure t
+  :diminish flycheck-mode
+  :config (progn
+            (global-flycheck-mode)
+            ))
+
+(use-package blacken
+  :ensure t)
+
+(use-package clang-format
+  :ensure t
+  :config (progn
+            (setq clang-format-executable "/usr/bin/clang-format-athena-1")
+            (add-hook 'before-save-hook
+                      (lambda ()
+                        (when (member major-mode '(c-mode c++-mode glsl-mode))
+                          (progn
+                            (when (locate-dominating-file "." ".clang-format")
+                              (clang-format-buffer))
+                            ;; Return nil, to continue saving.
+                            nil))))
+            ))
+;; -------------------------------------------------------------------
+;; Debugger
+;; -------------------------------------------------------------------
+(defun annotate-pdb ()
+  (interactive)
+  (highlight-lines-matching-regexp "import ipdb")
+  (highlight-lines-matching-regexp "ipdb.set_trace()"))
+
+(add-hook 'python-mode-hook 'annotate-pdb)
+
+;; delete output buffer on buffer execution
+(setq py-shell-switch-buffers-on-execute nil)
+
+;; Default browser
+(setq browse-url-browser-function 'w3m-browse-url) ;; w3m
+
+;; -------------------------------------------------------------------
+;; Cython-Mode
+;; -------------------------------------------------------------------
+;; compile command taking several compilation modes into account
+;; (defun cython-compile()
+;;   (interactive)
+;;   (compile "python setup.py build_ext --inplace")
+;; )
+
+;; (use-package cython-mode
+;;   :defer t
+;;   :ensure t
+;;   :init (progn
+;;           (add-to-list 'auto-mode-alist '("\\.pyx$" . cython-mode))
+;;           )
+;;   :bind* ("C-c C-c" . cython-compile)
+;;   )
+
+;; -------------------------------------------------------------------
+;; Shell
+;; -------------------------------------------------------------------
+(require 'flymake-shellcheck)
+(add-hook 'sh-mode-hook 'flymake-shellcheck-load)
+
+;; -------------------------------------------------------------------
+;; Swig-Mode
+;; -------------------------------------------------------------------
+(require 'swig-mode)
+
+(defun swig-switch-compile-command-auto ()
+  (if (file-exists-p "setup.py")
+      (setq compile-command "python setup.py install --install-lib=.")
+    (setq compile-command "make -k"))
+  (message compile-command))
+
+;; compile command taking several compilation modes into account
+(defun swig-compile()
+  (interactive)
+  (swig-switch-compile-command-auto)
+  (compile compile-command)
+)
+
+;; Set Shortcut to compile command
+;; (add-hook 'swig-mode-hook (lambda () (local-set-key "\C-c\C-c" 'swig-compile)))
+
+;; Deactivate autpair
+;; (add-hook 'swig-mode-hook (lambda () (setq autopair-dont-activate t)))
+
+(add-to-list 'auto-mode-alist '("\\.i$" . swig-mode))
+
+;; -------------------------------------------------------------------
+;; Eshell-Prompt
+;; -------------------------------------------------------------------
+(use-package exec-path-from-shell
+  :defer t
+  :ensure t
+  :init (progn
+          (exec-path-from-shell-initialize)
+          (setq eshell-aliases-file "~/.emacs.d/local-lisp/eshell/alias")
+          (setq eshell-history-size 1024)
+          (setq eshell-prompt-regexp "^[^#$]*[#$] ")
+
+          (load "em-hist")           ; So the history vars are defined
+          (if (boundp 'eshell-save-history-on-exit)
+             (setq eshell-save-history-on-exit t)) ; Don't ask, just save
+          (if (boundp 'eshell-ask-to-save-history)
+              (setq eshell-ask-to-save-history 'always)) ; For older(?) version
+          )
+  )
+
+
+(defun eshell/ef (fname-regexp &rest dir) (ef fname-regexp default-directory))
+;;; ---- path manipulation
+
+(defun pwd-repl-home (pwd)
+  (interactive)
+  (let* ((home (expand-file-name (getenv "HOME")))
+   (home-len (length home)))
+    (if (and
+   (>= (length pwd) home-len)
+   (equal home (substring pwd 0 home-len)))
+  (concat "~" (substring pwd home-len))
+      pwd)))
+
+(defun curr-dir-git-branch-string (pwd)
+  "Returns current git branch as a string, or the empty string if
+       PWD is not in a git repo (or the git command is not found)."
+  (interactive)
+  (when (and (eshell-search-path "git")
+             (locate-dominating-file pwd ".git"))
+    (let ((git-output (shell-command-to-string (concat "cd " pwd " && git branch | grep '\\*' | sed -e 's/^\\* //'"))))
+      (propertize (concat "["
+              (if (> (length git-output) 0)
+                  (substring git-output 0 -1)
+                "(no branch)")
+              "]") 'face `(:foreground "green"))
+      )))
+
+(setq eshell-prompt-function
+      (lambda ()
+        (concat
+         (propertize ((lambda (p-lst)
+            (if (> (length p-lst) 3)
+                (concat
+                 (mapconcat (lambda (elm) (if (zerop (length elm)) ""
+                                            (substring elm 0 1)))
+                            (butlast p-lst 3)
+                            "/")
+                 "/"
+                 (mapconcat (lambda (elm) elm)
+                            (last p-lst 3)
+                            "/"))
+              (mapconcat (lambda (elm) elm)
+                         p-lst
+                         "/")))
+          (split-string (pwd-repl-home (eshell/pwd)) "/")) 'face `(:foreground "yellow"))
+         (or (curr-dir-git-branch-string (eshell/pwd)))
+         (propertize "# " 'face 'default))))
+
+(setq eshell-highlight-prompt nil)
+
+;; -------------------------------------------------------------------
+;; Git - magit
+;; -------------------------------------------------------------------
+(use-package magit
+  :ensure t
+  :config (progn
+            (setq magit-diff-refine-hunk 'all) ; Show word based diff
+  ))
+
+(use-package git-timemachine
+  :ensure t)
+
+;; -------------------------------------------------------------------
+;; scala
+;; -------------------------------------------------------------------
+(use-package scala-mode
+  :ensure t)
+
+(use-package ensime
+  :ensure t)
+
+;; -------------------------------------------------------------------
+;; protobuf mode
+;; -------------------------------------------------------------------
+(use-package protobuf-mode
+  :ensure t)
+
+;; -------------------------------------------------------------------
+;; yaml mode
+;; -------------------------------------------------------------------
+(use-package yaml-mode
+  :ensure t
+  :config (progn
+            (define-key yaml-mode-map "\C-m" 'newline-and-indent)
+            ))
+
+;; -------------------------------------------------------------------
+;; dockerfile mode
+;; -------------------------------------------------------------------
+(use-package dockerfile-mode
+  :mode (("Dockerfile\\'" . dockerfile-mode))
+  :ensure t
+  :init (progn
+          (put 'dockerfile-image-name 'safe-local-variable #'stringp)
+          )
+  )
+
+;; ;; -------------------------------------------------------------------
+;; (custom-set-variables
+;;  ;; custom-set-variables was added by Custom.
+;;  ;; If you edit it by hand, you could mess it up, so be careful.
+;;  ;; Your init file should contain only one such instance.
+;;  ;; If there is more than one, they won't work right.
+;;  '(package-selected-packages
+;;    (quote
+;;     (tide typescript-mode sphinx-doc markdown-mode wgrep ivy-hydra counsel smart-jump tangotango-theme pretty-lambdada magit langtool highlight-symbol helm-projectile helm-gtags helm-ag helm-R haskell-mode flycheck fill-column-indicator exec-path-from-shell cython-mode autopair auto-complete auctex anaconda-mode))))
+;; (custom-set-faces
+;;  ;; custom-set-faces was added by Custom.
+;;  ;; If you edit it by hand, you could mess it up, so be careful.
+;;  ;; Your init file should contain only one such instance.
+;;  ;; If there is more than one, they won't work right.
+;;  )
+
+;; -------------------------------------------------------------------
+;; markdown mode
+;; -------------------------------------------------------------------
+(use-package markdown-mode
+  :ensure t)
+
+;; -------------------------------------------------------------------
+;; sphinx and rst mode
+;; -------------------------------------------------------------------
+(use-package sphinx-doc
+  :ensure t)
+
+(use-package poly-rst
+  :mode (
+         ("\\.txt$" . poly-rst-mode)
+         ("\\.rst$" . poly-rst-mode)
+         ("\\.rest$" . poly-rst-mode)
+         )
+  )
+
+;; -------------------------------------------------------------------
+;; Typescript
+;; -------------------------------------------------------------------
+(use-package typescript-mode
+  :mode (
+         ("\\.ts$" . typescript-mode)
+         ("\\.tsx$" . typescript-mode)
+         )
+  :ensure t
+  :config (progn
+            (flycheck-mode +1)
+            (company-mode +1)
+            )
+  )
+
+(use-package tide
+  :ensure t)
+
+(defun setup-tide-mode ()
+  (interactive)
+  (tide-setup)
+  (flycheck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  ;; company is an optional dependency. You have to
+  ;; install it separately via package-install
+  ;; `M-x package-install [ret] company`
+  (company-mode +1))
+
+;; aligns annotation to the right hand side
+(setq company-tooltip-align-annotations t)
+
+;; formats the buffer before saving
+(add-hook 'before-save-hook 'tide-format-before-save)
+;; (add-hook 'typescript-mode-hook #'setup-tide-mode)
+
+;; -------------------------------------------------------------------
+;; Org + Plantuml mode
+;; -------------------------------------------------------------------
+(use-package org
+  :mode (("\\.org$" . org-mode))
+  :ensure t
+  :config
+  (progn
+    ;; config stuff
+    (setq org-plantuml-jar-path (expand-file-name "/lhome/franzef/opt/plantuml/plantuml.jar"))
+    (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
+    (org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t)))
+    ))
+
+(use-package flycheck-plantuml
+  :ensure t
+  )
+
+(add-to-list 'auto-mode-alist '("\\.puml$" . plantuml-mode))
+(add-to-list 'auto-mode-alist '("\\.iuml$" . plantuml-mode))
+(add-to-list 'auto-mode-alist '("\\.uml$" . plantuml-mode))
+
+;; -------------------------------------------------------------------
+;; Groovy mode for Jenkins
+;; -------------------------------------------------------------------
+(use-package groovy-mode
+  :mode (("\\.groovy$" . groovy-mode))
+  :ensure t)
+
+(use-package groovy-imports
+  :ensure t)
+
+;; -------------------------------------------------------------------
+;; Show number of lines in the left side of the buffer
+;; -------------------------------------------------------------------
+(require 'linum+)
+(add-hook 'python-mode-hook 'linum-mode)
+(add-hook 'ess-mode-hook 'linum-mode)
+(add-hook 'c-mode-hook 'linum-mode)
+(add-hook 'c++-mode-hook 'linum-mode)
+(add-hook 'octave-mode-hook 'linum-mode)
+(add-hook 'sphinx-doc-mode-hook 'linum-mode)
+(add-hook 'markdown-mode-hook 'linum-mode)
+(add-hook 'poly-rst-mode-hook 'linum-mode)
+(add-hook 'cmake-mode-hook 'linum-mode)
+(add-hook 'elpy-mode-hook 'linum-mode)
+
+;; -------------------------------------------------------------------
+;; Other stuff
+;; -------------------------------------------------------------------
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (winner-mode dockerfile-mode groovy-imports groovy-mode flycheck-plantuml plantuml-mode org-mode poly-rst rst-mode yaml-mode whole-line-or-region wgrep volatile-highlights use-package tide tangotango-theme sphinx-doc smart-jump python-mode py-autopep8 protobuf-mode neotree markdown-mode magit langtool ivy-rtags ivy-hydra highlight-symbol helm-projectile helm-gtags helm-ag helm-R haskell-mode git-timemachine flycheck-rtags fill-column-indicator exec-path-from-shell ensime elpy dired-narrow diminish cython-mode crux counsel cmake-mode clang-format blacken beacon autopair auto-complete auctex anaconda-mode ag))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+;;; .emacs ends here
