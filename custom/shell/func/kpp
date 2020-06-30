@@ -1,0 +1,4 @@
+kpp() {
+      kubectl patch pvc hdfs -p '{"metadata":{"finalizers":null}}'
+      kubectl patch pvc nfs -p '{"metadata":{"finalizers":null}}'
+}

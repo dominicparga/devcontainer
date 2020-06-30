@@ -1,0 +1,3 @@
+kca() {
+ kubectl config use-context kubernetes-dol-master@abstatt
+}

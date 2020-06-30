@@ -1,0 +1,3 @@
+kdpf() {
+       kubectl --namespace development-franzef delete pods -l app=adcloud --grace-period=0 --force
+}

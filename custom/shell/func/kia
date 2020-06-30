@@ -1,0 +1,3 @@
+kia() {
+    helm upgrade --install --debug adcloud $HOME/workspace/recompute-flow/deployments/helm/adcloud/ -f ${HOME}/workspace/recompute-flow/deployments/helm/adcloud/configs/locations/abstatt.yaml -f ${HOME}/workspace/recompute-flow/deployments/helm/adcloud/configs/profiles/3-minimal-feature-set-sol.yaml -n development-franzef --kube-context kubernetes-dol-master@abstatt --set images.airflow.tag="171" --set images.adrunUI.tag="115" > /tmp/helm.yaml
+}

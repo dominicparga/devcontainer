@@ -1,0 +1,6 @@
+drop_proxies() {
+  unset HTTP_PROXY
+  unset HTTPS_PROXY
+  unset HTTP_PROXY
+  unset https_proxy
+}

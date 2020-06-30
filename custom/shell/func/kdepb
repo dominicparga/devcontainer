@@ -1,0 +1,3 @@
+kdepb() {
+ ${RECOMPUTE_FLOW_HOME}/deployments/scripts/deploy.sh --context kubernetes-admin@broom --namespace development-franzef -l broom -p 4-full-feature-set -d adcloud -- --set profile.flags.celery=false
+}

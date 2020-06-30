@@ -1,0 +1,3 @@
+kdepacd() {
+ ${CLUSTER_DEPLOYMENTS_HOME}/deployment/scripts/deploy.sh -c kubernetes-dol-master@abstatt -l abstatt -p full-feature-set -- --set profile.flags.celery=true
+}

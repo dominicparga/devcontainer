@@ -1,0 +1,3 @@
+kdepa() {
+  ${RECOMPUTE_FLOW_HOME}/deployments/scripts/deploy.sh --context kubernetes-dol-master@abstatt --namespace development-franzef -l abstatt -p 4-full-feature-set -d adcloud -- --set profile.flags.celery=true
+}

@@ -1,0 +1,3 @@
+kdp () {
+ kubectl -n development-franzef get pods | grep adcompute | awk '{print $1}' | xargs kubectl -n development-franzef delete pods
+}

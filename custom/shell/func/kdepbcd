@@ -1,0 +1,3 @@
+kdepbcd() {
+ ${CLUSTER_DEPLOYMENTS_HOME}/deployment/scripts/deploy.sh -c kubernetes-admin@broom -l broom -p full-feature-set -- --set profile.flags.celery=false
+}

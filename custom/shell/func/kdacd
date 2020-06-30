@@ -1,0 +1,3 @@
+kdacd() {
+ helm delete cluster-deployment --kube-context kubernetes-dol-master@abstatt --namespace development-franzef
+}

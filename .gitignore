@@ -91,7 +91,12 @@ $RECYCLE.BIN/
 #------------------------------------------------------------------------------#
 # custom
 
-/custom/
 build/
 
 .vscode/
+
+emacs/.emacs.d/elpa
+emacs/.emacs.d/history
+emacs/.emacs.d/projectile-bookmarks.eld
+emacs/.emacs.d/recentf
+emacs/.emacs.d/transient

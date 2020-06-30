@@ -1,0 +1,28 @@
+[include]
+    path = "~/.gitconfig.general"
+[http "https://athena.daimler.com"]
+	sslCert = "/lhome/franzef/.local/share/certificates/cert-dn.crt"
+	sslKey = "/lhome/franzef/.local/share/certificates/cert-dn.key"
+	sslCAInfo = "/lhome/franzef/.local/share/certificates/Athena_QuoVadisRootCA2G3.crt"
+#        proxy = http://localhost:3128
+# [http]
+# 	proxy = http://localhost:3128
+# 	sslCert = https://athena.daimler.com
+# [https]
+# 	proxy = https://localhost:3128
+#         sslverify = false
+[credential]
+	helper = "cache --timeout=3600"  # cache credentials for 60 minutes
+[user]
+	name = Fabian Franzelin
+	email = bosch.franzelin@extaccount.com
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+[diff]
+    tool = meld
+[difftool "visual"]
+    cmd = ${VISUAL} --wait --diff $LOCAL $REMOTE
+
