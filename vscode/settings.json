@@ -5,10 +5,14 @@
     "window.titleBarStyle": "custom",
     "window.zoomLevel": 1,
     "workbench.editor.showTabs": true,
-    "workbench.sideBar.location": "left",
+    "workbench.sideBar.location": "right",
     "workbench.statusBar.visible": true,
     "workbench.iconTheme": "material-icon-theme",
     "workbench.colorTheme": "Dracula", // Nord
+    "workbench.activityBar.visible": true,
+    "window.menuBarVisibility": "compact",
+    "breadcrumbs.enabled": true,
+    "editor.renderControlCharacters": false,
     // settings-ui
     "workbench.settings.editor": "json",
     "workbench.settings.useSplitJSON": true,
@@ -17,6 +21,7 @@
     "terminal.integrated.scrollback": 100000,
     //------------------------------------------------------------------------//
     // editor settings
+    "explorer.sortOrder": "filesFirst",
     "files.exclude": {
         "**/.git": true,
         "**/.svn": true,
@@ -42,6 +47,7 @@
     // whitespaces
     "editor.renderWhitespace": "none",
     "files.trimTrailingWhitespace": false, // some files need false!
+    "diffEditor.ignoreTrimWhitespace": false,
     // tabs
     "editor.insertSpaces": true,
     "editor.tabSize": 4,
@@ -88,8 +94,15 @@
     ],
     "bracket-pair-colorizer-2.showBracketsInGutter": true,
     "bracket-pair-colorizer-2.showBracketsInRuler": false,
-    "bracket-pair-colorizer-2.showVerticalScopeLine": false,
+    "bracket-pair-colorizer-2.showVerticalScopeLine": true,
     "bracket-pair-colorizer-2.showHorizontalScopeLine": false,
+    "bracket-pair-colorizer-2.scopeLineRelativePosition": true,
+    "bracket-pair-colorizer-2.scopeLineCSS": [
+        "borderStyle : solid",
+        "borderWidth : 1px",
+        "borderColor : {color}",
+        "opacity     : 1.00"
+    ],
     //------------------------------------------------------------------------//
     // privacy
     "telemetry.enableTelemetry": false,
@@ -103,7 +116,9 @@
         ".latexmkrc": "perl",
         "config": "properties",
         "config.general": "properties",
-        "*.fmi": "properties" // github.com/dominicparga/osmgraphing
+        "*.fmi": "properties", // github.com/dominicparga/osmgraphing
+        "*.route-pairs": "properties", // github.com/dominicparga/osmgraphing
+        "*.mdx": "markdown"
         // "*.thor": "ruby",
         // "*.jsx": "javascript",
     },
@@ -141,6 +156,7 @@
     "[latex]": {
         "editor.wordWrap": "on"
     },
+    "latex-workshop.latex.autoBuild.run": "never",
     "latex-workshop.view.pdf.viewer": "tab",
     "latex-workshop.hover.preview.scale": 1,
     "latex-workshop.latex.external.build.command": "latexmk",
@@ -180,8 +196,11 @@
     // python
     "[python]": {
         "editor.rulers": [ 72, 79 ],
-        "editor.trimAutoWhitespace": true
+        "editor.trimAutoWhitespace": true,
+        "editor.formatOnSave": true
     },
+    "python.formatting.provider": "autopep8",
+    "python.languageServer": "Microsoft",
     "python.pythonPath": "${env:PYTHON_INTERPRETER_PATH}",
     "python.autoComplete.addBrackets": true,
     "python.linting.enabled": true,
@@ -199,9 +218,10 @@
     //------------------------------------------------------------------------//
     // rust
     "[rust]": {
-        "editor.wordWrap": "on",
         "editor.rulers": [ 100 ],
-        "editor.trimAutoWhitespace": true
+        "editor.trimAutoWhitespace": true,
+        "editor.defaultFormatter": "matklad.rust-analyzer",
+        "editor.formatOnSave": true
     },
     "rust-analyzer.inlayHints.chainingHints": false,
     "rust-analyzer.inlayHints.parameterHints": false,
@@ -592,7 +612,5 @@
         "WARN:",
         "ERROR:",
         "ERR:"
-    ],
-    //------------------------------------------------------------------------//
-    // occasionally added stuff
+    ]
 }
