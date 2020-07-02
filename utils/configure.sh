@@ -75,6 +75,8 @@ mkdir -p -v "${__CUSTOM_DIR}/shell/ssh/"
 # custom/vscode
 mkdir -p -v "${__CUSTOM_DIR}/vscode/"
 echo -e "${__COLOR_SUCC}SUCCESS: custom-folders created${__COLOR_RESET}"
+# custom/R
+mkdir -p -v "${__CUSTOM_DIR}/R/"
 
 #------------------------------------------------------------------------------#
 # setup custom/git
@@ -213,3 +215,18 @@ echo -e "${__COLOR_INFO}INFO: ${__VSCODE_HOME}/keybindings.json@ -> ${DOTFILES}/
 ln -i -v -s "${__DOTFILES_VSCODE_DIR}/keybindings.json" "${__DOTFILES_CUSTOM_VSCODE_DIR}/keybindings.json"
 ln -i -v -s "${__DOTFILES_CUSTOM_VSCODE_DIR}/keybindings.json" "${__VSCODE_HOME}/keybindings.json"
 echo -e "${__COLOR_SUCC}SUCCESS: vscode-setup configured${__COLOR_RESET}"
+
+#------------------------------------------------------------------------------#
+# setup custom/R
+
+echo -e "${__COLOR_INFO}INFO: Copying and linking R-files..${__COLOR_RESET}"
+# copy dotfiles/R/profile.R into custom
+echo -e "${__COLOR_INFO}INFO: ${HOME}/.Rprofile@ -> ${DOTFILES}/custom/R/profile.R -> ${DOTFILES}/R/profile.R${__COLOR_RESET}"
+cp -i -P "${DOTFILES}/R/profile.R" "${__CUSTOM_DIR}/R/profile.R"
+ln -i -v -s "${DOTFILES}/R/profile.R" "${__CUSTOM_DIR}/R/profile.R"
+ln -i -v -s "${__CUSTOM_DIR}/R/profile.R" "${HOME}/.Rprofile"
+# link to environ.sh
+echo -e "${__COLOR_INFO}INFO: ${HOME}/.Renviron@ -> ${DOTFILES}/custom/R/environ.sh@ -> ${DOTFILES}/R/environ.sh${__COLOR_RESET}"
+ln -i -v -s "${DOTFILES}/R/environ.sh" "${__CUSTOM_DIR}/R/environ.sh"
+ln -i -v -s "${__CUSTOM_DIR}/R/environ.sh" "${HOME}/.Renviron"
+echo -e "${__COLOR_SUCC}SUCCESS: R-files configured${__COLOR_RESET}"

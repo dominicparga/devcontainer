@@ -13,6 +13,7 @@ code --force --install-extension laurenttreguier.vscode-simple-icons
 code --force --install-extension monokai.theme-monokai-pro-vscode
 code --force --install-extension pkief.material-icon-theme
 code --force --install-extension vscode-icons-team.vscode-icons
+code --force --install-extension alexesprit.vscode-unfancy-file-icons
 
 # editor utils
 code --force --install-extension coenraads.bracket-pair-colorizer-2
@@ -44,9 +45,19 @@ code --force --install-extension timonwong.shellcheck
 # code --force --install-extension rust-lang.rust
 code --force --install-extension matklad.rust-analyzer # still in alpha
 
+# javascript/markdown
+code --force --install-extension esbenp.prettier-vscode
+code --force --install-extension dbaeumer.vscode-eslint
+
 # python
 code --force --install-extension kevinrose.vsc-python-indent
 code --force --install-extension ms-python.python
+
+# R
+code --force --install-extension ikuyadeu.r
+code --force --install-extension reditorsupport.r-lsp
+# after setting-up R, e.g. .Rprofile and .Renviron, try:
+# Rscript -e 'install.packages("languageserver")'
 
 # LaTeX
 code --force --install-extension james-yu.latex-workshop
