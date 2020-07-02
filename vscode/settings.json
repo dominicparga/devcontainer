@@ -183,7 +183,6 @@
         "editor.rulers": [ 72, 79 ],
         "editor.trimAutoWhitespace": true
     },
-    "python.pythonPath": "${env:PYTHON_INTERPRETER_PATH}",
     "python.autoComplete.addBrackets": true,
     "python.linting.enabled": true,
     "python.linting.pylintEnabled": true,
@@ -626,4 +625,7 @@
         "roudi"
     ],
     "C_Cpp.updateChannel": "Insiders",
+    "python.languageServer": "Microsoft",
+    "python.defaultInterpreterPath": "${env:PYTHON_INTERPRETER_PATH}",
+    "terminal.integrated.shell.linux": "/bin/zsh",
 }
