@@ -1,28 +1,35 @@
 [include]
     path = "~/.gitconfig.general"
 [http "https://athena.daimler.com"]
-	sslCert = "/lhome/franzef/.local/share/certificates/cert-dn.crt"
-	sslKey = "/lhome/franzef/.local/share/certificates/cert-dn.key"
-	sslCAInfo = "/lhome/franzef/.local/share/certificates/Athena_QuoVadisRootCA2G3.crt"
-#        proxy = http://localhost:3128
-# [http]
-# 	proxy = http://localhost:3128
-# 	sslCert = https://athena.daimler.com
-# [https]
-# 	proxy = https://localhost:3128
-#         sslverify = false
-[credential]
-	helper = "cache --timeout=3600"  # cache credentials for 60 minutes
+    sslCert = /lhome/franzef/.local/share/certificates/cert-dap.crt
+    sslKey = /lhome/franzef/.local/share/certificates/cert-dap.key
+    sslCaInfo = /etc/ssl/certs/ca-certificates.crt
+    sslVerify = false
+    proxy = http://localhost:3128
+[core]
+    autocrlf = input
+    editor = vim
 [user]
-	name = Fabian Franzelin
-	email = bosch.franzelin@extaccount.com
-[filter "lfs"]
-	process = git-lfs filter-process
-	required = true
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-[diff]
+    name = Fabian Franzelin
+    email = fabian.franzelin@de.bosch.com
+[credential]
+    helper = "cache --timeout=3600"  # cache credentials for 60 minutes
+[credential "https://athena.daimler.com"]
+    username = franzef
+[credential "https://gsep.daimler.com"]
+    username = franzef
+[credential "https://scm-manager.rd.corpintra.net"]
+    username = franzef
+[credential "https://github.com"]
+    username = fabianfranzelin
+[merge]
     tool = meld
+[diff]
+    tool = visual
 [difftool "visual"]
     cmd = ${VISUAL} --wait --diff $LOCAL $REMOTE
-
+[filter "lfs"]
+    process = git-lfs filter-process
+    required = true
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f

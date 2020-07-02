@@ -23,7 +23,8 @@
         "**/.hg": true,
         "**/CVS": true,
         "**/.DS_Store": true,
-        "**/.history": true
+        "**/.history": true,
+        "**/.pyc": true
     },
     "explorer.confirmDragAndDrop": false,
     "extensions.ignoreRecommendations": false,
@@ -74,6 +75,9 @@
     // - shows original char under block-cursor
     "editor.fontLigatures": true,
     "editor.fontSize": 14,
+    "editor.formatOnPaste": true,
+    "editor.formatOnType": true,
+    "editor.useTabStops": false,
     //------------------------------------------------------------------------//
     // brackets
     "editor.matchBrackets": "never",
@@ -602,13 +606,25 @@
         "SConstruct": "python"
     },
     //------------------------------------------------------------------------//
+    // Git
+    "git.autofetch": true,
+    "git.enableSmartCommit": true,
+    "git.confirmSync": false,
+    "gitlens.views.fileHistory.enabled": true,
+    "gitlens.views.lineHistory.enabled": true,
+    "gitlens.historyExplorer.enabled": true,
+    "gitlens.advanced.messages": {
+        "suppressLineUncommittedWarning": true,
+        "suppressShowKeyBindingsNotice": true
+    },
+    //------------------------------------------------------------------------//
     // occasionally added stuff
     "search.exclude": {
         "**/node_modules": true,
         "**/bower_components": true,
         "**/.history": true
     },
-    "git.autofetch": true,
+    "python.testing.pytestEnabled": true,
     "python.autoComplete.extraPaths": [
         "${env:ATHENA_ROOT}/devel/lib",
         "${env:ATHENA_ROOT}/install/lib",
@@ -617,6 +633,7 @@
         "${env:ATHENA_ROOT}/src/tools/dol/executer"
     ],
     "cpplint.cpplintPath": "/lhome/franzef/.local/bin/cpplint",
+    "cSpell.language": "en",
     "cSpell.userWords": [
         "atedol",
         "chrono",
@@ -628,4 +645,6 @@
     "python.languageServer": "Microsoft",
     "python.defaultInterpreterPath": "${env:PYTHON_INTERPRETER_PATH}",
     "terminal.integrated.shell.linux": "/bin/zsh",
+    "diffEditor.ignoreTrimWhitespace": false,
+    "cmake.configureOnOpen": false,
 }
