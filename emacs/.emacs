@@ -883,22 +883,6 @@
 (global-set-key [(control tab)] 'ff-find-other-file)
 
 ;; -------------------------------------------------------------------
-;; Doxymacs integration
-;; -------------------------------------------------------------------
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/local-lisp/doxymacs"))
-(require 'doxymacs)
-(require 'xml-parse)
-
-(defun doxymacs-font-lock ()
-  (interactive)
-  (font-lock-add-keywords nil doxymacs-doxygen-keywords))
-;; (add-hook 'c-mode-common-hook'doxymacs-mode)
-;; (defun my-doxymacs-font-lock-hook ()
-;;   (if (or (eq major-mode 'c-mode) (eq major-mode 'c++-mode))
-;;       (doxymacs-font-lock)))
-;; (add-hook 'font-lock-mode-hook 'my-doxymacs-font-lock-hook)
-
-;; -------------------------------------------------------------------
 ;; Octave integration
 ;; -------------------------------------------------------------------
 (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
@@ -945,10 +929,32 @@
 ;; Enable python mode per default for python files
 (add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
 
-;; Doxymacs with python
-(require 'doxymacs-python)
-(add-hook 'python-mode-hook 'doxymacs-mode)
-(add-hook 'python-mode-hook 'doxymacs-python)
+;; pdb debugger
+(defun annotate-pdb ()
+  "Colors the background if pdb is active."
+  (interactive)
+  (highlight-lines-matching-regexp "import ipdb")
+  (highlight-lines-matching-regexp "ipdb.set_trace()"))
+
+(add-hook 'python-mode-hook 'annotate-pdb)
+
+;; delete output buffer on buffer execution
+(setq py-shell-switch-buffers-on-execute nil)
+
+
+;; -------------------------------------------------------------------
+;; Sphinx documentation
+;; -------------------------------------------------------------------
+;; docu https://github.com/naiquevin/sphinx-doc.el
+(use-package sphinx-doc
+  :ensure t
+  :config (progn
+            (sphinx-doc-mode t)
+            )
+  )
+
+(add-hook 'python-mode-hook (lambda ()
+                              (sphinx-doc-mode t)))
 
 ;; -------------------------------------------------------------------
 ;; code style checker
@@ -976,21 +982,6 @@
                             ;; Return nil, to continue saving.
                             nil))))
             ))
-;; -------------------------------------------------------------------
-;; Debugger
-;; -------------------------------------------------------------------
-(defun annotate-pdb ()
-  (interactive)
-  (highlight-lines-matching-regexp "import ipdb")
-  (highlight-lines-matching-regexp "ipdb.set_trace()"))
-
-(add-hook 'python-mode-hook 'annotate-pdb)
-
-;; delete output buffer on buffer execution
-(setq py-shell-switch-buffers-on-execute nil)
-
-;; Default browser
-(setq browse-url-browser-function 'w3m-browse-url) ;; w3m
 
 ;; -------------------------------------------------------------------
 ;; Shell
@@ -1159,11 +1150,8 @@
   :ensure t)
 
 ;; -------------------------------------------------------------------
-;; sphinx and rst mode
+;; RST mode
 ;; -------------------------------------------------------------------
-(use-package sphinx-doc
-  :ensure t)
-
 (use-package poly-rst
   :ensure t
   :mode (
@@ -1255,6 +1243,7 @@
 (add-hook 'poly-rst-mode-hook 'linum-mode)
 (add-hook 'cmake-mode-hook 'linum-mode)
 (add-hook 'elpy-mode-hook 'linum-mode)
+(add-hook 'typescript-mode 'linum-mode)
 
 ;; -------------------------------------------------------------------
 ;; Other stuff
