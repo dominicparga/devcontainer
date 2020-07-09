@@ -23,7 +23,9 @@ export DOTFILES="/lhome/franzef/workspace/dotfiles/."
 # personal
 
 # use emacs keybindings
-bindkey -e
+if [[ -n "${ZSH_NAME}" ]]; then
+    bindkey -e
+fi
 
 alias la='ls -altrh'
 alias cnt='ls -F |grep -v / | wc -l'
