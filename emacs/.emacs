@@ -364,16 +364,6 @@
                                         ; history-delete-duplicates
 
 ;; -------------------------------------------------------------------
-;; show the currently enabled mode
-;; -------------------------------------------------------------------
-(defun get-mode()
-  (interactive)
-  (message "%s" major-mode)
-)
-
-(global-set-key [f12] 'get-mode)
-
-;; -------------------------------------------------------------------
 ;; Helm project
 ;; -------------------------------------------------------------------
 (use-package helm
@@ -448,12 +438,12 @@
         )
   (ivy-mode t)
   (counsel-mode t)
-  :bind (
-         ("C-s" . swiper)
-         ("C-c C-r" . ivy-resume)
-         ("C-." . counsel-imenu)
-         ("C-c c" . counsel-org-capture)
-         ))
+  :bind* (
+          ("C-s" . swiper)
+          ("C-c C-r" . ivy-resume)
+          ("C-." . counsel-imenu)
+          ("C-c c" . counsel-org-capture)
+          ))
 
 ;; Some additional hydras for ivy
 (use-package ivy-hydra
@@ -550,11 +540,7 @@
 (use-package cmake-mode
   :mode (("\\.cmake$" . cmake-mode)
          ("CMakeLists.txt" . cmake-mode))
-  :ensure t
-  :init (progn
-          (add-to-list 'auto-mode-alist '("\\.cmake$" . cmake-mode))
-          (add-to-list 'auto-mode-alist '("CMakeLists.txt" . cmake-mode))
-          ))
+  :ensure t)
 
 (use-package ag
   :ensure t)
@@ -570,7 +556,8 @@
   )
 
 (use-package c++-mode
-  :mode "\\.cpp\\'"
+  :mode (("\\.cpp\\'" . c++-mode)
+         ("\\.hpp\\'" . c++-mode))
   :init (progn
           (add-hook 'c++-mode-hook (lambda ()
                                      (subword-mode t))))  ; CamelCase are two words
@@ -793,7 +780,7 @@
   :defer t
   :ensure t
   :init (progn
-          (setq langtool-language-tool-jar "/lhome/franzef/opt/languageTool/LanguageTool-5.0/languagetool-commandline.jar")
+          (setq langtool-language-tool-jar (expand-file-name "~/opt/languageTool/LanguageTool-5.0/languagetool-commandline.jar"))
           )
   :bind (
          ("C-x 4 w" . langtool-check-buffer)
@@ -1030,7 +1017,7 @@
 )
 
 ;; Deactivate autpair
-;; (add-hook 'swig-mode-hook (lambda () (setq autopair-dont-activate t)))
+(add-hook 'swig-mode-hook (lambda () (setq autopair-dont-activate t)))
 
 (add-to-list 'auto-mode-alist '("\\.i$" . swig-mode))
 
@@ -1180,7 +1167,6 @@
 (use-package poly-rst
   :ensure t
   :mode (
-         ("\\.txt$" . poly-rst-mode)
          ("\\.rst$" . poly-rst-mode)
          ("\\.rest$" . poly-rst-mode)
          )
