@@ -102,3 +102,5 @@ emacs/.emacs.d/projectile-bookmarks.eld
 emacs/.emacs.d/recentf
 emacs/.emacs.d/transient
 emacs/.emacs.d/ac-comphist.dat
+emacs/.emacs.d/elpy
+emacs/.emacs.d/url

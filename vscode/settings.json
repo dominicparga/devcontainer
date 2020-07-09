@@ -27,9 +27,10 @@
         "**/.pyc": true
     },
     "explorer.confirmDragAndDrop": false,
+    "explorer.confirmDelete": false,
     "extensions.ignoreRecommendations": false,
     "editor.cursorSmoothCaretAnimation": true,
-    "editor.lineNumbers": "relative",
+    // "editor.lineNumbers": "relative",
     "editor.rulers": [
         80,
         100,

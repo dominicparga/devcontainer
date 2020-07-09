@@ -21,6 +21,10 @@ export DOTFILES="/lhome/franzef/workspace/dotfiles/."
 
 # ----------------------------------------------------
 # personal
+
+# use emacs keybindings
+bindkey -e
+
 alias la='ls -altrh'
 alias cnt='ls -F |grep -v / | wc -l'
 

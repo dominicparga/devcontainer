@@ -241,20 +241,40 @@
 ;; pasted into it in the first place.  (setq yank-pop-change-selection
 ;; t) ; makes rotating the kill ring change the X11 clipboard.
 
-;; ;; -------------------------------------------------------------------
-;; ;; Auto Completion
-;; ;; -------------------------------------------------------------------
-;; (use-package auto-complete
-;;   :defer t
-;;   :ensure t)
+;; -------------------------------------------------------------------
+;; Copy filename of buffer into clipboard
+;; -------------------------------------------------------------------
 
-;; ;; dirty fix for having AC everywhere
-;; (define-globalized-minor-mode real-global-auto-complete-mode
-;;   auto-complete-mode (lambda ()
-;;                        (if (not (minibufferp (current-buffer)))
-;;                          (auto-complete-mode 1))
-;;                        ))
-;; (real-global-auto-complete-mode t)
+(defun my-put-file-name-on-clipboard ()
+  "Put the current file name on the clipboard."
+  (interactive)
+  (let ((filename (if (equal major-mode 'dired-mode)
+                      default-directory
+                    (buffer-file-name))))
+    (when filename
+      (with-temp-buffer
+        (insert filename)
+        (clipboard-kill-region (point-min) (point-max)))
+      (message filename))))
+
+(global-set-key [f12] 'my-put-file-name-on-clipboard)
+
+;; -------------------------------------------------------------------
+;; Auto Completion
+;; -------------------------------------------------------------------
+(use-package auto-complete
+  :defer t
+  :ensure t)
+
+;; dirty fix for having AC everywhere
+(define-globalized-minor-mode real-global-auto-complete-mode
+  auto-complete-mode (lambda ()
+                       (if (not (minibufferp (current-buffer)))
+                         (auto-complete-mode 1))
+                       ))
+
+(real-global-auto-complete-mode t)
+(ac-flyspell-workaround)
 
 ;; -------------------------------------------------------------------
 ;; Fill Column Indicator
@@ -387,6 +407,7 @@
   :bind (
          ("M-x" . helm-M-x)
          ("C-x C-f" . helm-find-files)
+         ("C-x b" . helm-buffers-list)
          )
   )
 
@@ -394,37 +415,12 @@
   :defer t
   :ensure t)
 
-;; ;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
-;; ;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
-;; ;; cannot change `helm-command-prefix-key' once `helm-config' is loaded.
-;; (global-set-key (kbd "C-c h") 'helm-command-prefix)
-;; (global-unset-key (kbd "C-x c"))
-
-;; (use-package helm-gtags
-;;   :defer t
-;;   :ensure t
-;;   :init (progn
-;;          (setq helm-gtags-suggested-key-mapping t
-;;                helm-gtags-path-style 'relative
-;;                helm-gtags-ignore-case t
-;;                helm-gtags-auto-update t
-;;                )
-;;          )
-;;   :config (progn
-;;            (bind-key "M-." 'helm-gtags-dwim helm-gtags-mode-map)
-;;            ;;; Enable helm-gtags-mode
-;;            (add-hook 'c-mode-hook 'helm-gtags-mode)
-;;            (add-hook 'c++-mode-hook 'helm-gtags-mode)
-;;            (add-hook 'asm-mode-hook 'helm-gtags-mode)
-;;            )
-;;   )
 
 ;; -------------------------------------------------------------------
 ;; ivy mode
 ;; -------------------------------------------------------------------
 (use-package counsel
   :ensure t
-  :diminish (list ivy-mode counsel-mode)
   :config
   (setq ivy-use-virtual-buffers t
         ivy-count-format "(%d / %d) "
@@ -941,6 +937,10 @@
           ("M-<up>" . windmove-up)
           ("M-<down>" . windmove-down))
   )
+
+(add-hook 'elpy-mode-hook
+          (lambda ()
+            (add-hook 'before-save-hook 'delete-trailing-whitespace nil t)))
 
 ;; Enable python mode per default for python files
 (add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
