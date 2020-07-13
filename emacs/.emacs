@@ -266,15 +266,15 @@
   :defer t
   :ensure t)
 
-;; dirty fix for having AC everywhere
-(define-globalized-minor-mode real-global-auto-complete-mode
-  auto-complete-mode (lambda ()
-                       (if (not (minibufferp (current-buffer)))
-                         (auto-complete-mode 1))
-                       ))
+;; ;; dirty fix for having AC everywhere
+;; (define-globalized-minor-mode real-global-auto-complete-mode
+;;   auto-complete-mode (lambda ()
+;;                        (if (not (minibufferp (current-buffer)))
+;;                          (auto-complete-mode 1))
+;;                        ))
 
-(real-global-auto-complete-mode t)
-(ac-flyspell-workaround)
+;; (real-global-auto-complete-mode t)
+;; (ac-flyspell-workaround)
 
 ;; -------------------------------------------------------------------
 ;; Fill Column Indicator
@@ -530,6 +530,22 @@
 ;; ===================================================================
 ;; Adjusting different modes
 ;; ===================================================================
+;; -------------------------------------------------------------------
+;; Ansi term for zsh in emacs buffer
+;; -------------------------------------------------------------------
+(use-package multi-term
+  :ensure t
+  :config (progn
+            (setq multi-term-program "/bin/zsh")
+            (setq explicit-shell-file-name "/bin/zsh")
+            )
+  )
+
+(use-package helm-mt
+  :after multi-term
+  :ensure t
+)
+
 ;; -------------------------------------------------------------------
 ;; C++
 ;; -------------------------------------------------------------------
@@ -953,6 +969,7 @@
             )
   )
 
+;; Use C-C M-d to include doc string in python
 (add-hook 'python-mode-hook (lambda ()
                               (sphinx-doc-mode t)))
 
@@ -1215,9 +1232,21 @@
   :ensure t
   )
 
-(add-to-list 'auto-mode-alist '("\\.puml$" . plantuml-mode))
-(add-to-list 'auto-mode-alist '("\\.iuml$" . plantuml-mode))
-(add-to-list 'auto-mode-alist '("\\.uml$" . plantuml-mode))
+(use-package plantuml-mode
+  :mode (("\\.puml" . plantuml-mode)
+         ("\\.iuml" . plantuml-mode)
+         ("\\.uml" . plantuml-mode))
+  :ensure t
+  :config (progn
+            ;; Sample jar configuration
+            (setq plantuml-jar-path (expand-file-name "~/opt/plantuml/plantuml.jar"))
+            (setq plantuml-default-exec-mode 'jar)
+            ;; Open in same window
+            (add-to-list 'display-buffer-alist
+                         '("*PLANTUML Preview*" display-buffer-same-window)
+                         )
+            )
+  )
 
 ;; -------------------------------------------------------------------
 ;; Groovy mode for Jenkins
@@ -1256,7 +1285,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (winner-mode dockerfile-mode groovy-imports groovy-mode flycheck-plantuml plantuml-mode org-mode poly-rst rst-mode yaml-mode whole-line-or-region wgrep volatile-highlights use-package tide tangotango-theme sphinx-doc smart-jump python-mode py-autopep8 protobuf-mode neotree markdown-mode magit langtool ivy-rtags ivy-hydra highlight-symbol helm-projectile helm-gtags helm-ag helm-R haskell-mode git-timemachine flycheck-rtags fill-column-indicator exec-path-from-shell ensime elpy dired-narrow diminish cython-mode crux counsel cmake-mode clang-format blacken beacon autopair auto-complete auctex anaconda-mode ag))))
+    (scala-mode ess flycheck-clang-tidy helm-mt multi-term winner-mode dockerfile-mode groovy-imports groovy-mode flycheck-plantuml plantuml-mode org-mode poly-rst rst-mode yaml-mode whole-line-or-region wgrep volatile-highlights use-package tide tangotango-theme sphinx-doc smart-jump python-mode py-autopep8 protobuf-mode neotree markdown-mode magit langtool ivy-rtags ivy-hydra highlight-symbol helm-projectile helm-gtags helm-ag helm-R haskell-mode git-timemachine flycheck-rtags fill-column-indicator exec-path-from-shell ensime elpy dired-narrow diminish cython-mode crux counsel cmake-mode clang-format blacken beacon autopair auto-complete auctex anaconda-mode ag))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
