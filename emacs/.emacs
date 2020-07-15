@@ -18,7 +18,8 @@
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 ;; (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 ;; (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/local-lisp"))
+(defvar local-load-path (expand-file-name "~/.emacs.d/local-lisp"))
+(add-to-list 'load-path local-load-path)
 
 ;; Initialise packages
 (package-initialize)
@@ -107,8 +108,6 @@
 ;; make text mode the default major mode and start auto-fill mode
 ;; auto auto-magically
 (setq major-mode 'text-mode)
-;; (add-hook 'text-mode-hook 'turn-on-auto-fill)
-;; (add-hook 'latex-mode-hook 'turn-on-auto-fill)
 
 ;; remove toolbar
 (tool-bar-mode -1)
@@ -767,23 +766,26 @@
 ;; -------------------------------------------------------------------
 ;; Forward and inverse search with okular
 ;; -------------------------------------------------------------------
-(require 'okular-search)
+(use-package okular-search
+  :load-path local-load-path
+  :init (progn
+          (setq TeX-view-program-list '(("Okular" "okular --unique %o")))
+          (setq TeX-view-program-selection '((output-pdf "Okular") (output-dvi "Okular")))
 
-(setq TeX-view-program-list '(("Okular" "okular --unique %o")))
-(setq TeX-view-program-selection '((output-pdf "Okular") (output-dvi "Okular")))
+          ;; Inverse search
+          ;; http://inthearmchair.wordpress.com/2010/09/02/latex-inverse-pdf-search-with-emacs/
+          ;; (setq TeX-source-specials-mode 1)         ;; Inverse search
 
-;; Inverse search
-;; http://inthearmchair.wordpress.com/2010/09/02/latex-inverse-pdf-search-with-emacs/
-;; (setq TeX-source-specials-mode 1)         ;; Inverse search
+          (setq TeX-auto-global "~/.emacs.d/auctex-auto-generated-info/")
+          (setq TeX-auto-local  "~/.emacs.d/auctex-auto-generated-info/")
 
-(setq TeX-auto-global "~/.emacs.d/auctex-auto-generated-info/")
-(setq TeX-auto-local  "~/.emacs.d/auctex-auto-generated-info/")
-
-;; forward search
-(add-hook 'LaTeX-mode-hook (lambda () (local-set-key "\C-c\C-a"
-                                                     'okular-jump-to-line)))
-(add-hook 'tex-mode-hook (lambda () (local-set-key "\C-c\C-a"
-                                                   'okular-jump-to-line)))
+          ;; forward search
+          (add-hook 'LaTeX-mode-hook (lambda () (local-set-key "\C-c\C-a"
+                                                               'okular-jump-to-line)))
+          (add-hook 'tex-mode-hook (lambda () (local-set-key "\C-c\C-a"
+                                                             'okular-jump-to-line)))
+          )
+  )
 
 ;; -------------------------------------------------------------------
 ;; include language tool
@@ -1003,14 +1005,21 @@
 ;; -------------------------------------------------------------------
 ;; Shell
 ;; -------------------------------------------------------------------
-(require 'flymake-shellcheck)
-(add-hook 'sh-mode-hook 'flymake-shellcheck-load)
+(use-package flymake-shell
+  :ensure t
+  :commands flymake-shell-load
+  :hook ((sh-set-shell . flymake-shell-load))
+  )
+
+(use-package flymake-shellcheck
+  :ensure t
+  :commands flymake-shellcheck-load
+  :hook ((sh-mode . flymake-shellcheck-load))
+  )
 
 ;; -------------------------------------------------------------------
 ;; Swig-Mode
 ;; -------------------------------------------------------------------
-(require 'swig-mode)
-
 (defun swig-switch-compile-command-auto ()
   (if (file-exists-p "setup.py")
       (setq compile-command "python setup.py install --install-lib=.")
@@ -1024,10 +1033,15 @@
   (compile compile-command)
 )
 
-;; Deactivate autpair
-(add-hook 'swig-mode-hook (lambda () (setq autopair-dont-activate t)))
-
-(add-to-list 'auto-mode-alist '("\\.i$" . swig-mode))
+(use-package swig-mode
+  :load-path local-load-path
+  :mode (("\\.i$" . swig-mode))
+  :mode ()
+  :init (progn
+          ;; Deactivate autpair
+          (add-hook 'swig-mode-hook (lambda () (setq autopair-dont-activate t)))
+          )
+)
 
 ;; -------------------------------------------------------------------
 ;; Eshell-Prompt
@@ -1243,8 +1257,11 @@
             (setq plantuml-default-exec-mode 'jar)
             ;; Open in same window
             (add-to-list 'display-buffer-alist
-                         '("*PLANTUML Preview*" display-buffer-same-window)
-                         )
+                         '(progn
+                            (get-buffer-create "*PLANTUML Preview*")
+                            '((display-buffer-below-selected display-buffer-at-bottom)
+                              (inhibit-same-window . t)
+                              (window-height . fit-window-to-buffer))))
             )
   )
 
@@ -1261,18 +1278,22 @@
 ;; -------------------------------------------------------------------
 ;; Show number of lines in the left side of the buffer
 ;; -------------------------------------------------------------------
-(require 'linum+)
-(add-hook 'python-mode-hook 'linum-mode)
-(add-hook 'ess-mode-hook 'linum-mode)
-(add-hook 'c-mode-hook 'linum-mode)
-(add-hook 'c++-mode-hook 'linum-mode)
-(add-hook 'octave-mode-hook 'linum-mode)
-(add-hook 'sphinx-doc-mode-hook 'linum-mode)
-(add-hook 'markdown-mode-hook 'linum-mode)
-(add-hook 'poly-rst-mode-hook 'linum-mode)
-(add-hook 'cmake-mode-hook 'linum-mode)
-(add-hook 'elpy-mode-hook 'linum-mode)
-(add-hook 'typescript-mode 'linum-mode)
+(use-package linum+
+  :load-path local-load-path
+  :hook ((python-mode . linum-mode)
+         (ess-mode . linum-mode)
+         (c-mode . linum-mode)
+         (c++-mode . linum-mode)
+         (octave-mode . linum-mode)
+         (sphinx-doc-mode . linum-mode)
+         (markdown-mode . linum-mode)
+         (poly-rst-mode . linum-mode)
+         (cmake-mode . linum-mode)
+         (elpy-mode . linum-mode)
+         (typescript-mode . linum-mode)
+         (plantuml-mode . linum-mode)
+         )
+  )
 
 ;; -------------------------------------------------------------------
 ;; Other stuff
