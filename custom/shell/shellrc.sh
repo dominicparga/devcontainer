@@ -30,11 +30,11 @@ fi
 alias la='ls -altrh'
 alias cnt='ls -F |grep -v / | wc -l'
 
-function fi () {
+grep_find() {
   find . -type f -exec grep -i "$1" {} +
 }
 
-function untar () {
+untar() {
   tar -xvzf $1
 }
 
@@ -88,6 +88,7 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$KERBEROS_HOME/lib:$LIBHDFS3_ROOT/lib
 # athena -> with athena_dol
 export ATHENA_ROOT=$HOME/workspace/athena_sil
 export WORKSPACE=$ATHENA_ROOT
+export HOST_ARTIFACTS_CACHE=$HOME/artifacts
 # export DOL_HOST="http://172.17.0.2:5000"
 
 # required by lidar
@@ -123,13 +124,13 @@ export HADOOP_USER_NAME=airflow
 
 export ADSTATS_HOST="http://s624duadwebapps.us624.corpintra.net:8080/"
 
-function token {
+token() {
     kubectl -n kube-system describe secret admin-user-token-d57m4 |\
     awk '/token:/ {print $2;}' |\
     xclip -selection c
 }
 
-function token_sv {
+token_sv() {
     kubectl -n kube-system describe secret $(kubectl -n kube-system get secret --context dol_master@sunnyvale | grep admin-user | awk '{print $1}') --context dol_master@sunnyvale |\
     awk '/token:/ {print $2;}' |\
     xclip -selection c
