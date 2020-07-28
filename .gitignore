@@ -104,3 +104,5 @@ emacs/.emacs.d/transient
 emacs/.emacs.d/ac-comphist.dat
 emacs/.emacs.d/elpy
 emacs/.emacs.d/url
+emacs/.emacs.d/meghanada
+emacs/.emacs.d/projectile*

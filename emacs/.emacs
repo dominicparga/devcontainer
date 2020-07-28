@@ -1292,7 +1292,32 @@
          (elpy-mode . linum-mode)
          (typescript-mode . linum-mode)
          (plantuml-mode . linum-mode)
+         (java-mode . linum-mode)
+         (sh-mode . linum-mode)
          )
+  )
+
+;; -------------------------------------------------------------------
+;; Java mode
+;; -------------------------------------------------------------------
+(use-package meghanada
+  :ensure t
+  :hook ((java-mode .
+                    (lambda ()
+                      ;; meghanada-mode on
+                      (meghanada-mode t)
+                      (flycheck-mode +1)
+                      (setq c-basic-offset 2)
+                      ;; use code format
+                      (add-hook 'before-save-hook 'meghanada-code-beautify-before-save)))
+         )
+  :config (cond
+           ((eq system-type 'windows-nt)
+            (setq meghanada-java-path (expand-file-name "bin/java.exe" (getenv "JAVA_HOME")))
+            (setq meghanada-maven-path "mvn.cmd"))
+           (t
+            (setq meghanada-java-path "java")
+            (setq meghanada-maven-path "mvn")))
   )
 
 ;; -------------------------------------------------------------------
