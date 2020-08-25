@@ -97,7 +97,7 @@
 (global-set-key (quote [S-next]) (quote scroll-other-window))
 
 ;; Color theme
-(use-package tangotango-theme
+(use-package material-theme
   :ensure t
   )
 
@@ -908,10 +908,6 @@
 ;; -------------------------------------------------------------------
 ;; Python integration
 ;; -------------------------------------------------------------------
-;; Enable autopep8
-(use-package py-autopep8
-  :ensure t)
-
 (defun my-elpy-mode-hook ()
    "Change elpy mode hook."
    (eldoc-mode 0)
@@ -944,6 +940,16 @@
           (lambda ()
             (add-hook 'before-save-hook 'delete-trailing-whitespace nil t)))
 
+;; Enable autopep8
+(use-package py-autopep8
+  :ensure t
+  :after elpy
+  :hook ((python-mode . py-autopep8-enable-on-save))
+  :config (progn
+           (setq py-autopep8-options '("--select=W504 --max-line-length=120")))
+  )
+
+
 ;; Enable python mode per default for python files
 (add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
 
@@ -971,7 +977,7 @@
             )
   )
 
-;; Use C-C M-d to include doc string in python
+;; Use C-c M-d to include doc string in python
 (add-hook 'python-mode-hook (lambda ()
                               (sphinx-doc-mode t)))
 

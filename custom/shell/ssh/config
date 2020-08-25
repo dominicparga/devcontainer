@@ -85,6 +85,8 @@ Host ws
      IdentityFile /lhome/franzef/.ssh/id_rsa
      ForwardX11 yes
      Port 42022
+     RequestTTY yes
+     RemoteCommand zsh
 
 Host lp
      Hostname CMTCLE7U103.rd.corpintra.net

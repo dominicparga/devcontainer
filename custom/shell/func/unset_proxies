@@ -1,4 +1,4 @@
-drop_proxies() {
+unset_proxies() {
   unset HTTP_PROXY
   unset HTTPS_PROXY
   unset HTTP_PROXY

@@ -85,8 +85,11 @@ export KERBEROS_HOME=$HOME/opt/krb5-1.16
 export LIBHDFS3_ROOT=$HOME/opt/attic-c-hdfs-client-apache-rpc-9
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$KERBEROS_HOME/lib:$LIBHDFS3_ROOT/lib
 
+# athena certificates path
+export CERT_PATH=$HOME/.local/share/certificates
+
 # athena -> with athena_dol
-export ATHENA_ROOT=$HOME/workspace/athena_sil
+export ATHENA_ROOT=$HOME/workspace/athena_cv1
 export WORKSPACE=$ATHENA_ROOT
 export HOST_ARTIFACTS_CACHE=$HOME/artifacts
 # export DOL_HOST="http://172.17.0.2:5000"
@@ -137,6 +140,12 @@ token_sv() {
 }
 
 
+# Recompute flow
+export PYTHONPATH=$PYTHONPATH:$RECOMPUTE_FLOW_HOME/airflow-home/dags
+
+# Postgres debug port
+export POSTGRES_PORT=2345
+
 #------------------------------------------------------------------------------#
 # Kubernetes setup
 
@@ -165,9 +174,6 @@ export PYTHONPATH=$PYTHONPATH:$SGPP_HOME/lib
 export RECAPP_RELEASE_DIR=/opt/recapp/0.7.1/ubuntu1804
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$RECAPP_RELEASE_DIR/lib
 export PYTHONPATH=$PYTHONPATH:$RECAPP_RELEASE_DIR/lib/python2.7/dist-packages:$RECAPP_RELEASE_DIR/lib:$RECAPP_RELEASE_DIR/bin/bytesoup_inspector
-
-# Postgres debug port
-export POSTGRES_PORT=2345
 
 # Virtual environments for python
 export WORKON_HOME=$HOME/.virtualenvs
