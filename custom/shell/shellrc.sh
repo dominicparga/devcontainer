@@ -11,7 +11,7 @@ esac
 #------------------------------------------------------------------------------#
 # setup
 
-export DOTFILES="/lhome/franzef/workspace/dotfiles/."
+export DOTFILES="$HOME/workspace/dotfiles/."
 
 . "${DOTFILES}/shell/shellrc.sh"
 
