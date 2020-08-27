@@ -116,4 +116,3 @@ Host abstatt
      Hostname 53.115.240.97
      IdentityFile /lhome/franzef/.ssh/id_rsa
      Port 22
-     LocalForward 9000 53.115.248.6:22
