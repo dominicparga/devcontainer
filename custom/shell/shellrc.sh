@@ -171,7 +171,7 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$SGPP_HOME/lib/sgpp
 export PYTHONPATH=$PYTHONPATH:$SGPP_HOME/lib
 
 # Player 2.0
-export RECAPP_RELEASE_DIR=/opt/recapp/0.7.1/ubuntu1804
+export RECAPP_RELEASE_DIR=/opt/recapp/0.11.1jtv4/ubuntu1804
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$RECAPP_RELEASE_DIR/lib
 export PYTHONPATH=$PYTHONPATH:$RECAPP_RELEASE_DIR/lib/python2.7/dist-packages:$RECAPP_RELEASE_DIR/lib:$RECAPP_RELEASE_DIR/bin/bytesoup_inspector
 

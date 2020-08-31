@@ -189,10 +189,11 @@
   :config
   (volatile-highlights-mode t))
 
-(global-set-key (kbd "M-<left>")  'windmove-left)
-(global-set-key (kbd "M-<right>") 'windmove-right)
-(global-set-key (kbd "M-<up>")    'windmove-up)
-(global-set-key (kbd "M-<down>")  'windmove-down)
+;; convenient setting to move between open buffers
+(global-set-key (kbd "C-x <left>")  'windmove-left)
+(global-set-key (kbd "C-x <right>") 'windmove-right)
+(global-set-key (kbd "C-x <up>")    'windmove-up)
+(global-set-key (kbd "C-x <down>")  'windmove-down)
 
 ;; winner mode for for redo/undo window configurations
 (winner-mode 1)
@@ -930,10 +931,6 @@
             ;;                             (add-hook 'before-save-hook
             ;;                                       'elpy-format-code nil t)))
             )
-  :bind* (("M-<left>" . windmove-left)
-          ("M-<right>" . windmove-right)
-          ("M-<up>" . windmove-up)
-          ("M-<down>" . windmove-down))
   )
 
 (add-hook 'elpy-mode-hook
@@ -1191,6 +1188,9 @@
 ;; -------------------------------------------------------------------
 (use-package poly-rst
   :ensure t
+  :init (progn
+          (set-default 'truncate-lines t)
+          )
   :mode (
          ("\\.rst$" . poly-rst-mode)
          ("\\.rest$" . poly-rst-mode)
