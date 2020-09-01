@@ -125,3 +125,7 @@ Host abstatt_remote
      LocalForward 10000 cluster-prod.athena.corpintra.net:6443
      LocalForward 10001 registry-prod.athena.corpintra.net:443
      LocalForward 10002 k8s-dashboard.apps.athena.corpintra.net:443
+
+Host ali
+     Hostname c624duadsf00031.us264.corpintra.net
+     Port 22
