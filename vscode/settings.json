@@ -648,4 +648,5 @@
     "terminal.integrated.shell.linux": "/bin/zsh",
     "diffEditor.ignoreTrimWhitespace": false,
     "cmake.configureOnOpen": false,
+    "editor.formatOnSaveMode": "modifications",
 }

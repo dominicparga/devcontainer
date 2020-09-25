@@ -115,7 +115,7 @@ export YARN_CONF_DIR="$HADOOP_HOME/etc/hadoop"
 
 export SLUGIFY_USES_TEXT_UNIDECODE=yes
 
-export KUBERNETES_CONTEXT=kubernetes-admin@broom
+export KUBERNETES_CONTEXT=kubernetes-dol-master@abstatt
 export KUBERNETES_CONTEXT_SUNNYVALE=dol_master@sunnyvale
 export KUBERNETES_NAMESPACE=development-$USER
 export KUBERNETES_NAMESPACE_SUNNYVALE=sunnyvale-mock
@@ -171,7 +171,7 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$SGPP_HOME/lib/sgpp
 export PYTHONPATH=$PYTHONPATH:$SGPP_HOME/lib
 
 # Player 2.0
-export RECAPP_RELEASE_DIR=/opt/recapp/0.11.1jtv4/ubuntu1804
+export RECAPP_RELEASE_DIR=/opt/recapp/0.11.0/ubuntu1804
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$RECAPP_RELEASE_DIR/lib
 export PYTHONPATH=$PYTHONPATH:$RECAPP_RELEASE_DIR/lib/python2.7/dist-packages:$RECAPP_RELEASE_DIR/lib:$RECAPP_RELEASE_DIR/bin/bytesoup_inspector
 
@@ -192,18 +192,18 @@ complete -o default -F _pip_completion pip
 # pip bash completion end
 
 
-# # >>> conda initialize >>>
-# # !! Contents within this block are managed by 'conda init' !!
-# __conda_setup="$('/lhome/franzef/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-# if [ $? -eq 0 ]; then
-#     eval "$__conda_setup"
-# else
-#     if [ -f "/lhome/franzef/anaconda3/etc/profile.d/conda.sh" ]; then
-#         . "/lhome/franzef/anaconda3/etc/profile.d/conda.sh"
-#     else
-#         export PATH="/lhome/franzef/anaconda3/bin:$PATH"
-#     fi
-# fi
-# unset __conda_setup
-# conda deactivate
-# # <<< conda initialize <<<
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/lhome/franzef/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/lhome/franzef/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/lhome/franzef/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/lhome/franzef/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+conda deactivate
+# <<< conda initialize <<<
