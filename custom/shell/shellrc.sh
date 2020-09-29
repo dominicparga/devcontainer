@@ -89,7 +89,7 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$KERBEROS_HOME/lib:$LIBHDFS3_ROOT/lib
 export CERT_PATH=$HOME/.local/share/certificates
 
 # athena -> with athena_dol
-export ATHENA_ROOT=$HOME/workspace/athena_cv1
+export ATHENA_ROOT=$HOME/workspace/athena
 export WORKSPACE=$ATHENA_ROOT
 export HOST_ARTIFACTS_CACHE=$HOME/artifacts
 # export DOL_HOST="http://172.17.0.2:5000"
@@ -98,10 +98,10 @@ export HOST_ARTIFACTS_CACHE=$HOME/artifacts
 export C2C_CAR_ID=v222-5218 # lisa hks22
 export C2C_HW_VERSION=3.1
 
-# # export cuda paths
-# export CUDA_ROOT=/usr/local/cuda
-# export CUDA_INC_DIR=$CUDA_ROOT/include
-# source /etc/profile.d/cuda-10-0.sh
+# export cuda paths
+export CUDA_ROOT=/usr/local/cuda
+export CUDA_INC_DIR=$CUDA_ROOT/include
+source /etc/profile.d/cuda-10-0.sh
 
 # Airflow
 export CLUSTER_DEPLOYMENTS_HOME="$HOME/workspace/cluster-deployments"
