@@ -537,6 +537,18 @@
 ;; -------------------------------------------------------------------
 ;; Ansi term for zsh in emacs buffer
 ;; -------------------------------------------------------------------
+(defun oleh-term-exec-hook ()
+  "Delete the buffer once the terminal session is terminated."
+  (let* ((buff (current-buffer))
+         (proc (get-buffer-process buff)))
+    (set-process-sentinel
+     proc
+     `(lambda (process event)
+        (if (string= event "finished\n")
+            (kill-buffer ,buff))))))
+
+(add-hook 'term-exec-hook 'oleh-term-exec-hook)
+
 (use-package multi-term
   :ensure t
   :config (progn
@@ -544,6 +556,9 @@
             (setq explicit-shell-file-name "/bin/zsh")
             )
   )
+
+(eval-after-load "term"
+  '(define-key term-raw-map (kbd "C-y") 'term-paste))
 
 (use-package helm-mt
   :after multi-term
