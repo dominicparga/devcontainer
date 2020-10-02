@@ -58,7 +58,7 @@ fi
 
 # nodejs and npm
 if ( is_machine 'linux'); then
-    _npm_version='v11.10.0'
+    _npm_version='v13.12.0'
     _npm_distro='linux-x64'
     export PATH="/usr/local/lib/nodejs/node-${_npm_version}-${_npm_distro}/bin:${PATH}"
 fi
@@ -116,11 +116,11 @@ alias ..='cd ..'
 alias .3='cd ../../..'
 alias ...='cd ../..'
 alias .4='cd ../../../..'
-alias ....='cd ../../../..'
+alias ....='cd ../../..'
 alias .5='cd ../../../../..'
-alias .....='cd ../../../../..'
+alias .....='cd ../../../..'
 alias .6='cd ../../../../../..'
-alias ......='cd ../../../../../..'
+alias ......='cd ../../../../..'
 
 alias cddot="cd ${DOTFILES}"
 

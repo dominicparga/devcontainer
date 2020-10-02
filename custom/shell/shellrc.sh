@@ -156,12 +156,6 @@ fi
 export EXPORTER_BASE_OUTPATH=/tmp/lidar
 export VEHICLE_IDENTIFIER=WDD2221621Z003456
 
-# npm
-NPM_VERSION='v13.12.0'
-NPM_DISTRO='linux-x64'
-export PATH="/usr/local/lib/nodejs/node-${NPM_VERSION}-${NPM_DISTRO}/bin:${PATH}"
-
-
 # SGpp
 export SGPP_HOME=$HOME/workspace/SGpp_ff
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$SGPP_HOME/lib/sgpp
