@@ -912,7 +912,7 @@
   :defer t
   :ensure t
   :init (progn
-          (setq langtool-language-tool-jar (expand-file-name "~/opt/languageTool/LanguageTool-5.0/languagetool-commandline.jar"))
+          (setq langtool-language-tool-jar (expand-file-name "~/opt/languageTool/LanguageTool-5.1/languagetool-commandline.jar"))
           )
   :bind (
          ("C-x 4 w" . langtool-check-buffer)
