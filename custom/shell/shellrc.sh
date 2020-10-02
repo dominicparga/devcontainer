@@ -71,11 +71,8 @@ elif [[ -n "${BASH}" ]]; then
 fi
 
 #------------------------------------------------------------------------------#
-# setup spark, hadoop, mesos and gradle
-export SPARK_HOME=$HOME/opt/spark-2.4.0-bin-hadoop2.7
+# setup hadoop, and gradle
 export HADOOP_HOME=$HOME/opt/hadoop-3.1.0
-export MESOS_HOME=$HOME/opt/mesos/mesos-1.5.0
-
 export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre
 
 export PATH=$SPARK_HOME/bin:$HADOOP_HOME/bin:$HOME/opt/gradle/gradle-4.7/bin:$PATH
