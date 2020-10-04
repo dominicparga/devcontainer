@@ -591,24 +591,72 @@
   )
 
 (use-package c++-mode
-  :mode (("\\.cpp\\'" . c++-mode)
-         ("\\.hpp\\'" . c++-mode))
+  :mode (("\\.cpp$'" . c++-mode)
+         ("\\.hpp$'" . c++-mode))
+  :after company
   :init (progn
           (add-hook 'c++-mode-hook (lambda ()
                                      (subword-mode t))))  ; CamelCase are two words
+  :bind* (("TAB" . company-complete))
+  )
+
+(use-package ggtags
+  :ensure t
+  :hook ((c-mode . ggtags-mode)
+         (c++-mode . ggtags-mode)
+         (java-mode . ggtags-mode)
+         (asm-mode . ggtags-mode))
+  :bind* (("C-c g s" . ggtags-find-other-symbol)
+          ("C-c g h" . ggtags-view-tag-history)
+          ("C-c g r" . ggtags-find-reference)
+          ("C-c g f" . ggtags-find-file)
+          ("C-c g c" . ggtags-create-tags)
+          ("C-c g u" . ggtags-update-tags)
+          ("M-." . pop-tag-mark))
+  )
+
+
+;; Make sure that gtags is installed via "sudo apt-get install global"
+;; Create GTAGS database in your project by running gtags at your
+;; project root directory
+(use-package helm-gtags
+  :ensure t
+  :init (setq
+           helm-gtags-ignore-case t
+           helm-gtags-auto-update t
+           helm-gtags-use-input-at-cursor t
+           helm-gtags-pulse-at-cursor t
+           helm-gtags-prefix-key "\C-c g"
+           helm-gtags-suggested-key-mapping t
+           )
+  :hook ((eshell-mode . helm-gtags)
+         (c-mode . helm-gtags)
+         (c++-mode . helm-gtags)
+         (asm-mode . helm-gtags))
+  :bind* (("C-c g a" . helm-gtags-tags-in-this-function)
+          ("C-j" . helm-gtags-select)
+          ("M-." . helm-gtags-dwim)
+          ("M-," . helm-gtags-pop-stack)
+          ("C-c <" . helm-gtags-previous-history)
+          ("C-c >" . helm-gtags-next-history))
   )
 
 (use-package company
   :ensure t
   :config (progn
             (setq company-idle-delay 0)
+
+            ;; enable clang with company
+            (setq company-backends (delete 'company-semantic company-backends))
             )
   :bind* (
           ("M-/" . company-complete-common-or-cycle)
           )
-  :hook ((java-mode . global-company-mode)
-         (c++-mode . global-company-mode))
+  :hook ((after-init . global-company-mode))
   )
+
+(use-package cedet
+  :ensure t)
 
 ;; (use-package irony
 ;;   :ensure t
@@ -1523,7 +1571,10 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (python-black meghanada scala-mode ess flycheck-clang-tidy helm-mt multi-term winner-mode dockerfile-mode groovy-imports groovy-mode flycheck-plantuml plantuml-mode org-mode poly-rst rst-mode yaml-mode whole-line-or-region wgrep volatile-highlights use-package tide tangotango-theme sphinx-doc smart-jump python-mode py-autopep8 protobuf-mode neotree markdown-mode magit langtool ivy-rtags ivy-hydra highlight-symbol helm-projectile helm-gtags helm-ag helm-R haskell-mode git-timemachine flycheck-rtags fill-column-indicator exec-path-from-shell ensime elpy dired-narrow diminish cython-mode crux counsel cmake-mode clang-format blacken beacon autopair auto-complete auctex anaconda-mode ag))))
+    (python-black meghanada scala-mode ess flycheck-clang-tidy helm-mt multi-term winner-mode dockerfile-mode groovy-imports groovy-mode flycheck-plantuml plantuml-mode org-mode poly-rst rst-mode yaml-mode whole-line-or-region wgrep volatile-highlights use-package tide tangotango-theme sphinx-doc smart-jump python-mode py-autopep8 protobuf-mode neotree markdown-mode magit langtool ivy-rtags ivy-hydra highlight-symbol helm-projectile helm-gtags helm-ag helm-R haskell-mode git-timemachine flycheck-rtags fill-column-indicator exec-path-from-shell ensime elpy dired-narrow diminish cython-mode crux counsel cmake-mode clang-format blacken beacon autopair auto-complete auctex anaconda-mode ag)))
+ '(safe-local-variable-values
+   (quote
+    ((company-clang-arguments "-I/home/franzef/workspace/SGpp_ff/base/src/sggp_base.hpp" "-I/home/franzef/workspace/SGpp_ff/quadrature/src/sgpp_quadrature.hpp")))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
