@@ -598,16 +598,17 @@
                                      (subword-mode t))))  ; CamelCase are two words
   )
 
-;; (use-package company
-;;   :ensure t
-;;   :config (progn
-;;             (setq company-idle-delay 0)
-;;             )
-;;   :bind* (
-;;           ("M-/" . company-complete-common-or-cycle)
-;;           )
-;;   :hook (after-init-hook . global-company-mode)
-;;   )
+(use-package company
+  :ensure t
+  :config (progn
+            (setq company-idle-delay 0)
+            )
+  :bind* (
+          ("M-/" . company-complete-common-or-cycle)
+          )
+  :hook ((java-mode . global-company-mode)
+         (c++-mode . global-company-mode))
+  )
 
 ;; (use-package irony
 ;;   :ensure t
@@ -1288,6 +1289,8 @@
 ;; -------------------------------------------------------------------
 (use-package yaml-mode
   :ensure t
+  :mode (("\\.yml$" . yaml-mode)
+         ("\\.yaml$" . yaml-mode))
   :config (progn
             (define-key yaml-mode-map "\C-m" 'newline-and-indent)
             ))
@@ -1468,6 +1471,9 @@
 ;; -------------------------------------------------------------------
 ;; Java mode
 ;; -------------------------------------------------------------------
+(use-package java-snippets
+  :ensure t)
+
 (use-package meghanada
   :ensure t
   :hook ((java-mode .
