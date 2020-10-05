@@ -580,15 +580,15 @@
          ("CMakeLists.txt" . cmake-mode))
   :ensure t)
 
-(use-package flycheck-clang-tidy
-  :ensure t
-  :after flycheck
-  :config (progn
-            (setq flycheck-clang-tidy-executable "/usr/bin/clang-tidy-athena-1")
-            )
-  :hook
-  (flycheck-mode . flycheck-clang-tidy-setup)
-  )
+;; (use-package flycheck-clang-tidy
+;;   :ensure t
+;;   :after flycheck
+;;   :config (progn
+;;             (setq flycheck-clang-tidy-executable "/usr/bin/clang-tidy-athena-1")
+;;             )
+;;   :hook
+;;   (flycheck-mode . flycheck-clang-tidy-setup)
+;;   )
 
 (use-package c++-mode
   :mode (("\\.cpp$'" . c++-mode)

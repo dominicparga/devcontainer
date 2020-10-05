@@ -1,0 +1,3 @@
+kex() {
+       kubectl --namespace development-franzef exec -it "${1}" -- /bin/bash
+}
