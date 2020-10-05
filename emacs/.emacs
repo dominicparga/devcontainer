@@ -597,7 +597,6 @@
   :init (progn
           (add-hook 'c++-mode-hook (lambda ()
                                      (subword-mode t))))  ; CamelCase are two words
-  :bind* (("TAB" . company-complete))
   )
 
 (use-package ggtags
@@ -641,19 +640,19 @@
           ("C-c >" . helm-gtags-next-history))
   )
 
-(use-package company
-  :ensure t
-  :config (progn
-            (setq company-idle-delay 0)
+;; (use-package company
+;;   :ensure t
+;;   :config (progn
+;;             (setq company-idle-delay 0)
 
-            ;; enable clang with company
-            (setq company-backends (delete 'company-semantic company-backends))
-            )
-  :bind* (
-          ("M-/" . company-complete-common-or-cycle)
-          )
-  :hook ((after-init . global-company-mode))
-  )
+;;             ;; enable clang with company
+;;             (setq company-backends (delete 'company-semantic company-backends))
+;;             )
+;;   :bind* (
+;;           ("M-/" . company-complete-common-or-cycle)
+;;           )
+;;   :hook ((after-init . global-company-mode))
+;;   )
 
 (use-package cedet
   :ensure t)

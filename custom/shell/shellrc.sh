@@ -169,7 +169,9 @@ export PYTHONPATH=$PYTHONPATH:$RECAPP_RELEASE_DIR/lib/python2.7/dist-packages:$R
 # Virtual environments for python
 export WORKON_HOME=$HOME/.virtualenvs
 export PIP_VIRTUALENV_BASE=$WORKON_HOME
-# Make sure that the debian package virtualenvwrapper is installed for the following to work
+# Make sure that the debian package virtualenvwrapper is installed for
+# the following to work. If errors occur, install it via "pip3 install
+# virtualenvwrapper"
 source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
 
 # pip bash completion start
