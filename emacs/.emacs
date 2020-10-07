@@ -198,6 +198,9 @@
 ;; winner mode for for redo/undo window configurations
 (winner-mode 1)
 
+;; set zsh as default shell name
+(setq shell-file-name "/bin/zsh")
+
 ;; -------------------------------------------------------------------
 ;; Copy & Paste
 ;; -------------------------------------------------------------------
@@ -1111,6 +1114,7 @@
             ;;                             (add-hook 'before-save-hook
             ;;                                       'elpy-format-code nil t)))
             (setq elpy-rpc-timeout 10)
+            (setq elpy-rpc-virtualenv-path 'current)
             )
   )
 
