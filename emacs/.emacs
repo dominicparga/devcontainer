@@ -1151,7 +1151,14 @@
   :ensure t
   :after python
   :hook ((elpy-mode . python-black-on-save-mode))
-)
+  )
+
+(use-package conda
+  :ensure t
+  :config (progn
+            (setq conda-anaconda-home (expand-file-name "~/anaconda3/"))
+            (setq conda-env-home-directory (expand-file-name "~/anaconda3"))
+            ))
 
 ;; -------------------------------------------------------------------
 ;; Sphinx documentation
@@ -1568,12 +1575,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-enabled-themes '(material))
  '(package-selected-packages
-   (quote
-    (python-black meghanada scala-mode ess flycheck-clang-tidy helm-mt multi-term winner-mode dockerfile-mode groovy-imports groovy-mode flycheck-plantuml plantuml-mode org-mode poly-rst rst-mode yaml-mode whole-line-or-region wgrep volatile-highlights use-package tide tangotango-theme sphinx-doc smart-jump python-mode py-autopep8 protobuf-mode neotree markdown-mode magit langtool ivy-rtags ivy-hydra highlight-symbol helm-projectile helm-gtags helm-ag helm-R haskell-mode git-timemachine flycheck-rtags fill-column-indicator exec-path-from-shell ensime elpy dired-narrow diminish cython-mode crux counsel cmake-mode clang-format blacken beacon autopair auto-complete auctex anaconda-mode ag)))
- '(safe-local-variable-values
-   (quote
-    ((company-clang-arguments "-I/home/franzef/workspace/SGpp_ff/base/src/sggp_base.hpp" "-I/home/franzef/workspace/SGpp_ff/quadrature/src/sgpp_quadrature.hpp")))))
+   '(material-theme python-black meghanada scala-mode ess flycheck-clang-tidy helm-mt multi-term winner-mode dockerfile-mode groovy-imports groovy-mode flycheck-plantuml plantuml-mode org-mode poly-rst rst-mode yaml-mode whole-line-or-region wgrep volatile-highlights use-package tide tangotango-theme sphinx-doc smart-jump python-mode py-autopep8 protobuf-mode neotree markdown-mode magit langtool ivy-rtags ivy-hydra highlight-symbol helm-projectile helm-gtags helm-ag helm-R haskell-mode git-timemachine flycheck-rtags fill-column-indicator exec-path-from-shell ensime elpy dired-narrow diminish cython-mode crux counsel cmake-mode clang-format blacken beacon autopair auto-complete auctex anaconda-mode ag)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
