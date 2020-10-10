@@ -389,36 +389,7 @@
 ;; -------------------------------------------------------------------
 ;; Helm project
 ;; -------------------------------------------------------------------
-(use-package helm
-  :defer t
-  :ensure t
-  :config (progn
-            (when (executable-find "curl")
-              (setq helm-google-suggest-use-curl-p t))
-
-            (setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
-                  helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
-                  helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
-                  helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
-                  helm-ff-file-name-history-use-recentf t
-                  helm-echo-input-in-header-line t)
-
-            (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
-            (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
-            (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
-            )
-  :bind (
-         ("M-x" . helm-M-x)
-         ("C-x C-f" . helm-find-files)
-         ("C-x b" . helm-buffers-list)
-         ("C-c p s a" . helm-projectile-ack)
-        )
-  )
-
-(use-package helm-ag
-  :defer t
-  :ensure t)
-
+(require 'setup-helm)
 
 ;; -------------------------------------------------------------------
 ;; ivy mode
@@ -480,15 +451,6 @@
             (projectile-mode 1)
             (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
             )
-  )
-
-(use-package helm-projectile
-  :defer t
-  :ensure t
-  :init (progn
-          (setq projectile-completion-system 'helm)
-          (helm-projectile-on)
-          )
   )
 
 ;; -------------------------------------------------------------------
@@ -563,11 +525,6 @@
 (eval-after-load "term"
   '(define-key term-raw-map (kbd "C-y") 'term-paste))
 
-(use-package helm-mt
-  :after multi-term
-  :ensure t
-)
-
 ;; -------------------------------------------------------------------
 ;; C++
 ;; -------------------------------------------------------------------
@@ -596,7 +553,6 @@
 (use-package c++-mode
   :mode (("\\.cpp$'" . c++-mode)
          ("\\.hpp$'" . c++-mode))
-  :after company
   :init (progn
           (add-hook 'c++-mode-hook (lambda ()
                                      (subword-mode t))))  ; CamelCase are two words
@@ -608,54 +564,27 @@
          (c++-mode . ggtags-mode)
          (java-mode . ggtags-mode)
          (asm-mode . ggtags-mode))
-  :bind (("C-c g s" . ggtags-find-other-symbol)
-         ("C-c g h" . ggtags-view-tag-history)
-         ("C-c g r" . ggtags-find-reference)
-         ("C-c g f" . ggtags-find-file)
-         ("C-c g c" . ggtags-create-tags)
-         ("C-c g u" . ggtags-update-tags))
-         ;; ("M-." . pop-tag-mark)
+  :init (progn
+          (setq-local imenu-create-index-function #'ggtags-build-imenu-index)
+          )
+  :bind (:map c++-mode-map
+              ("C-c g s" . ggtags-find-other-symbol)
+              ("C-c g h" . ggtags-view-tag-history)
+              ("C-c g r" . ggtags-find-reference)
+              ("C-c g f" . ggtags-find-file)
+              ("C-c g c" . ggtags-create-tags)
+              ("C-c g u" . ggtags-update-tags)
+              ("M-." . pop-tag-mark))
   )
 
 
-;; Make sure that gtags is installed via "sudo apt-get install global"
-;; Create GTAGS database in your project by running gtags at your
-;; project root directory
-(use-package helm-gtags
+(use-package company
   :ensure t
-  :init (setq
-           helm-gtags-ignore-case t
-           helm-gtags-auto-update t
-           helm-gtags-use-input-at-cursor t
-           helm-gtags-pulse-at-cursor t
-           helm-gtags-prefix-key "\C-c g"
-           helm-gtags-suggested-key-mapping t
-           )
-  :hook ((eshell-mode . helm-gtags)
-         (c-mode . helm-gtags)
-         (c++-mode . helm-gtags)
-         (asm-mode . helm-gtags))
-  :bind* (("C-c g a" . helm-gtags-tags-in-this-function)
-          ("C-j" . helm-gtags-select)
-          ;; ("M-." . helm-gtags-dwim)
-          ;; ("M-," . helm-gtags-pop-stack)
-          ("C-c <" . helm-gtags-previous-history)
-          ("C-c >" . helm-gtags-next-history))
+  :hook ((c++-mode . global-company-mode))
+  :bind (:map c++-mode-map
+              ("TAB" . company-complete)
+              )
   )
-
-;; (use-package company
-;;   :ensure t
-;;   :config (progn
-;;             (setq company-idle-delay 0)
-
-;;             ;; enable clang with company
-;;             (setq company-backends (delete 'company-semantic company-backends))
-;;             )
-;;   :bind* (
-;;           ("M-/" . company-complete-common-or-cycle)
-;;           )
-;;   :hook ((after-init . global-company-mode))
-;;   )
 
 (use-package cedet
   :ensure t)
@@ -1195,7 +1124,7 @@
 (use-package clang-format
   :ensure t
   :config (progn
-            (setq clang-format-executable "/usr/bin/clang-format-athena-1")
+            (setq clang-format-executable "/usr/bin/clang-format")
             (add-hook 'before-save-hook
                       (lambda ()
                         (when (member major-mode '(c-mode c++-mode glsl-mode))
@@ -1363,22 +1292,6 @@
           (put 'dockerfile-image-name 'safe-local-variable #'stringp)
           )
   )
-
-;; ;; -------------------------------------------------------------------
-;; (custom-set-variables
-;;  ;; custom-set-variables was added by Custom.
-;;  ;; If you edit it by hand, you could mess it up, so be careful.
-;;  ;; Your init file should contain only one such instance.
-;;  ;; If there is more than one, they won't work right.
-;;  '(package-selected-packages
-;;    (quote
-;;     (tide typescript-mode sphinx-doc markdown-mode wgrep ivy-hydra counsel smart-jump tangotango-theme pretty-lambdada magit langtool highlight-symbol helm-projectile helm-gtags helm-ag helm-R haskell-mode flycheck fill-column-indicator exec-path-from-shell cython-mode autopair auto-complete auctex anaconda-mode))))
-;; (custom-set-faces
-;;  ;; custom-set-faces was added by Custom.
-;;  ;; If you edit it by hand, you could mess it up, so be careful.
-;;  ;; Your init file should contain only one such instance.
-;;  ;; If there is more than one, they won't work right.
-;;  )
 
 ;; -------------------------------------------------------------------
 ;; markdown mode
@@ -1581,9 +1494,10 @@
  ;; If there is more than one, they won't work right.
  '(custom-enabled-themes '(material))
  '(package-selected-packages
-   '(python-black meghanada scala-mode ess flycheck-clang-tidy helm-mt multi-term winner-mode dockerfile-mode groovy-imports groovy-mode flycheck-plantuml plantuml-mode org-mode poly-rst rst-mode yaml-mode whole-line-or-region wgrep volatile-highlights use-package tide tangotango-theme sphinx-doc smart-jump python-mode py-autopep8 protobuf-mode neotree markdown-mode magit langtool ivy-rtags ivy-hydra highlight-symbol helm-projectile helm-gtags helm-ag helm-R haskell-mode git-timemachine flycheck-rtags fill-column-indicator exec-path-from-shell ensime elpy dired-narrow diminish cython-mode crux counsel cmake-mode clang-format blacken beacon autopair auto-complete auctex anaconda-mode ag))
+   '(python-black meghanada scala-mode ess flycheck-clang-tidy helm-mt multi-term winner-mode dockerfile-mode groovy-imports groovy-mode flycheck-plantuml plantuml-mode org-mode poly-rst rst-mode yaml-mode whole-line-or-region wgrep volatile-highlights use-package tide tangotango-theme sphinx-doc smart-jump python-mode py-autopep8 protobuf-mode neotree markdown-mode magit langtool ivy-rtags ivy-hydra highlight-symbol helm-projectile helm-ag helm-R haskell-mode git-timemachine flycheck-rtags fill-column-indicator exec-path-from-shell ensime elpy dired-narrow diminish cython-mode crux counsel cmake-mode clang-format blacken beacon autopair auto-complete auctex anaconda-mode ag))
  '(safe-local-variable-values
-   '((company-clang-arguments "-I/home/franzef/workspace/SGpp_ff/base/src/sggp_base.hpp" "-I/home/franzef/workspace/SGpp_ff/quadrature/src/sgpp_quadrature.hpp"))))
+   '((company-clang-arguments "-I/home/franzef/workspace/SGpp_ff/base/src/sggp_base.hpp" "-I/home/franzef/workspace/SGpp_ff/quadrature/src/sgpp_quadrature.hpp")
+     (company-clang-arguments "-I/home/franzef/workspace/SGpp_ff/base/src/" "-I/home/franzef/workspace/SGpp_ff/quadrature/src"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
