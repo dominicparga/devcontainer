@@ -581,160 +581,36 @@
 (use-package company
   :ensure t
   :hook ((c++-mode . global-company-mode))
+  :config (progn
+         (setq company-backends
+               (delete 'company-semantic company-backends))
+         )
   :bind (:map c++-mode-map
               ("TAB" . company-complete)
               )
   )
 
+(use-package company-c-headers
+  :ensure t
+  :after company
+  :config (progn
+            (add-to-list 'company-backends 'company-c-headers)
+            (add-to-list 'company-c-headers-path-system "/usr/include/c++/9/")
+            )
+  )
+
 (use-package cedet
   :ensure t)
 
-;; (use-package irony
-;;   :ensure t
-;;   :config
-;;   (progn
-;;     ;; If irony server was never installed, install it.
-;;     (unless (irony--find-server-executable) (call-interactively #'irony-install-server))
+(require 'cc-mode)
+(require 'semantic)
 
-;;     (add-hook 'c++-mode-hook 'irony-mode)
-;;     (add-hook 'c-mode-hook 'irony-mode)
+(global-semanticdb-minor-mode 1)
+(global-semantic-idle-scheduler-mode 1)
 
-;;     ;; Use compilation database first, clang_complete as fallback.
-;;     (setq-default irony-cdb-compilation-databases '(irony-cdb-libclang
-;;                                                     irony-cdb-clang-complete))
+(semantic-mode 1)
 
-;;     (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-;;     ))
-
-;; ;; I use irony with company to get code completion.
-;; (use-package company-irony
-;;   :ensure t
-;;   :requires company irony
-;;   :config
-;;   (progn
-;;     (eval-after-load 'company '(add-to-list 'company-backends 'company-irony))))
-
-;; ;; I use irony with flycheck to get real-time syntax checking.
-;; (use-package flycheck-irony
-;;   :ensure t
-;;   :requires flycheck irony
-;;   :config
-;;   (progn
-;;     (eval-after-load 'flycheck '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))))
-
-;; ;; Eldoc shows argument list of the function you are currently writing in the echo area.
-;; (use-package irony-eldoc
-;;   :ensure t
-;;   :requires eldoc irony
-;;   :config
-;;   (progn
-;;     (add-hook 'irony-mode-hook #'irony-eldoc)))
-
-
-;; (use-package ag
-;;   :ensure t)
-
-
-;; (use-package c++-mode
-;;   :mode (("\\.cpp\\'" . c++-mode)
-;;          ("\\.hpp\\'" . c++-mode))
-;;   :init (progn
-;;           (add-hook 'c++-mode-hook (lambda ()
-;;                                      (subword-mode t))))  ; CamelCase are two words
-;;   )
-
-;; (add-hook 'c-mode-hook (lambda ()
-;;                          (subword-mode t))) ; CamelCase are two words
-
-;; (setq c-basic-offset 2)
-
-;; (c-add-style "my-cc-style"
-;;              '("bsd" (c-offsets-alist . (
-;;                                          (innamespace . 0)
-;;                                          (namespace-open . 0)
-;;                                          (namespace-close . 0)
-;;                                          (cpp-macro . 0) ; indent macros like the surrounding code
-;;                                          ))))
-;; (setq c-default-style "my-cc-style")
-
-;; ;; Find definition based on regexp
-;; (use-package dumb-jump
-;;   :ensure t)
-
-;; ;; Proxy for different find-defintion engines
-;; (use-package smart-jump
-;;   :ensure t
-;;   :config (progn
-;;             (smart-jump-register :modes '(c-mode c++-mode)
-;;                                  :jump-fn 'rtags-find-symbol-at-point
-;;                                  :pop-fn 'rtags-location-stack-back
-;;                                  :refs-fn 'rtags-find-all-references-at-point
-;;                                  :should-jump (lambda ()
-;;                                                 (and
-;;                                                  (fboundp 'rtags-executable-find)
-;;                                                  (rtags-executable-find "rc")
-;;                                                  (rtags-is-indexed)))
-;;                                  :heuristic 'point
-;;                                  :async 500
-;;                                  :order 1)
-;;             (smart-jump-setup-default-registers)))
-
-;; (use-package rtags
-;;   :ensure t
-;;   :config
-;;   (progn
-;;     (unless (rtags-executable-find "rc") (error "Binary rc is not installed!"))
-;;     (unless (rtags-executable-find "rdm") (error "Binary rdm is not installed!"))
-
-;;     (define-key c-mode-base-map (kbd "M-.") 'rtags-find-symbol-at-point)
-;;     (define-key c-mode-base-map (kbd "M-,") 'rtags-find-references-at-point)
-;;     (define-key c-mode-base-map (kbd "M-?") 'rtags-display-summary)
-;;     (rtags-enable-standard-keybindings)
-
-;;     (setq rtags-use-helm t)
-
-;;     ;; Shutdown rdm when leaving emacs.
-;;     (add-hook 'kill-emacs-hook 'rtags-quit-rdm)
-;;     ))
-
-;; ;; TODO: Has no coloring! How can I get coloring?
-;; (use-package helm-rtags
-;;   :ensure t
-;;   :requires helm rtags
-;;   :config
-;;   (progn
-;;     (setq rtags-display-result-backend 'helm)
-;;     ))
-
-;; ;; Use rtags for auto-completion.
-;; (use-package company-rtags
-;;   :ensure t
-;;   :requires company rtags
-;;   :config
-;;   (progn
-;;     (setq rtags-autostart-diagnostics t)
-;;     (rtags-diagnostics)
-;;     (setq rtags-completions-enabled t)
-;;     (push 'company-rtags company-backends)
-;;     ))
-
-;; ;; Live code checking.
-;; (use-package flycheck-rtags
-;;   :ensure t
-;;   :requires flycheck rtags
-;;   :config
-;;   (progn
-;;     ;; ensure that we use only rtags checking
-;;     ;; https://github.com/Andersbakken/rtags#optional-1
-;;     (defun setup-flycheck-rtags ()
-;;       (flycheck-select-checker 'rtags)
-;;       (setq-local flycheck-highlighting-mode nil) ;; RTags creates more accurate overlays.
-;;       (setq-local flycheck-check-syntax-automatically nil)
-;;       (rtags-set-periodic-reparse-timeout 2.0)  ;; Run flycheck 2 seconds after being idle.
-;;       )
-;;     (add-hook 'c-mode-hook #'setup-flycheck-rtags)
-;;     (add-hook 'c++-mode-hook #'setup-flycheck-rtags)
-;;     ))
+(semantic-add-system-include "/usr/include/boost" 'c++-mode)
 
 ;; -------------------------------------------------------------------
 ;; CRAN R
@@ -1496,7 +1372,8 @@
  '(package-selected-packages
    '(python-black meghanada scala-mode ess flycheck-clang-tidy helm-mt multi-term winner-mode dockerfile-mode groovy-imports groovy-mode flycheck-plantuml plantuml-mode org-mode poly-rst rst-mode yaml-mode whole-line-or-region wgrep volatile-highlights use-package tide tangotango-theme sphinx-doc smart-jump python-mode py-autopep8 protobuf-mode neotree markdown-mode magit langtool ivy-rtags ivy-hydra highlight-symbol helm-projectile helm-ag helm-R haskell-mode git-timemachine flycheck-rtags fill-column-indicator exec-path-from-shell ensime elpy dired-narrow diminish cython-mode crux counsel cmake-mode clang-format blacken beacon autopair auto-complete auctex anaconda-mode ag))
  '(safe-local-variable-values
-   '((company-clang-arguments "-I/home/franzef/workspace/SGpp_ff/base/src/sggp_base.hpp" "-I/home/franzef/workspace/SGpp_ff/quadrature/src/sgpp_quadrature.hpp")
+   '((company-clang-arguments "-I/home/franzef/workspace/SGpp_ff/base/src" "-I/home/franzef/workspace/SGpp_ff/quadrature/src")
+     (company-clang-arguments "-I/home/franzef/workspace/SGpp_ff/base/src/sggp_base.hpp" "-I/home/franzef/workspace/SGpp_ff/quadrature/src/sgpp_quadrature.hpp")
      (company-clang-arguments "-I/home/franzef/workspace/SGpp_ff/base/src/" "-I/home/franzef/workspace/SGpp_ff/quadrature/src"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
