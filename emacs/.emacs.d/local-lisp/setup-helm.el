@@ -139,10 +139,14 @@
     (helm-mode 1)
 
     (use-package helm-projectile
-      :init
-      (helm-projectile-on)
-      (setq projectile-completion-system 'helm)
-      (setq projectile-indexing-method 'alien))))
+      :init (progn
+              (helm-projectile-on)
+              (setq projectile-completion-system 'helm)
+              (setq projectile-indexing-method 'alien))
+      :bind (
+             ("C-c p s a" . helm-projectile-ack)
+             )
+      )))
 
     (use-package helm-mt
       :after multi-term
