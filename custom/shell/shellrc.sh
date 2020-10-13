@@ -25,6 +25,9 @@ export DOTFILES="$HOME/workspace/dotfiles/."
 # use emacs keybindings
 if [[ -n "${ZSH_NAME}" ]]; then
     bindkey -e
+
+    autoload -U bashcompinit
+    bashcompinit
 fi
 
 alias la='ls -altrh'
@@ -200,3 +203,9 @@ fi
 unset __conda_setup
 conda deactivate
 # <<< conda initialize <<<
+
+# Created by `userpath` on 2020-10-09 10:40:30
+export PATH="$PATH:/lhome/franzef/.local/bin"
+
+# Autocompletion for pipx
+eval "$(register-python-argcomplete pipx)"
