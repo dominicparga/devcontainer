@@ -1356,6 +1356,7 @@
          (sh-mode . linum-mode)
          (js-mode . linum-mode)
          (json-mode . linum-mode)
+         (rst-mode . linum-mode)
          )
   )
 
