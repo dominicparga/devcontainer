@@ -46,7 +46,7 @@ export SVN_EDITOR=vim
 export GIT_EDITOR=vim
 
 # expand path to include local bin directory
-PATH=/usr/local/cmake/3.15.3/bin:$HOME/opt/bin:$PATH
+PATH=/usr/local/cmake/3.15.3/bin:$HOME/opt/bin:$HOME/.local/bin:$PATH
 
 # moving files to trash from command line
 alias "trash"="gvfs-trash"
