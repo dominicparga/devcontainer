@@ -4,6 +4,7 @@
 
 ;;; Code:
 (use-package helm
+  :ensure t
   :init
   (progn
     (require 'helm-config)
@@ -115,6 +116,7 @@
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     ;; Locate the helm-swoop folder to your path
     (use-package helm-swoop
+      :ensure t
       :bind (("C-c h o" . helm-swoop)
              ("C-c s" . helm-multi-swoop-all))
       :config
@@ -138,6 +140,11 @@
 
     (helm-mode 1)
 
+    (defun helm-projectile-ack-with-current-dir ()
+      "Calls Helm projectile-ack inside the directory of the current buffer."
+      (interactive)
+      (helm-projectile-ack (file-name-directory buffer-file-name)))
+
     (use-package helm-projectile
       :init (progn
               (helm-projectile-on)
@@ -145,6 +152,7 @@
               (setq projectile-indexing-method 'alien))
       :bind (
              ("C-c p s a" . helm-projectile-ack)
+             ("C-c p s d" . helm-projectile-ack-with-current-dir)
              )
       )))
 
