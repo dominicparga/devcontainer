@@ -90,6 +90,7 @@ ln -i -v -s "${__CUSTOM_DIR}/git/config" "${HOME}/.gitconfig"
 echo -e "${__COLOR_INFO}INFO: ${HOME}/.gitconfig.general@ -> ${DOTFILES}/custom/git/config.general@ -> ${DOTFILES}/git/config.general${__COLOR_RESET}"
 ln -i -v -s "${DOTFILES}/git/config.general" "${__CUSTOM_DIR}/git/config.general"
 ln -i -v -s "${__CUSTOM_DIR}/git/config.general" "${HOME}/.gitconfig.general"
+ln -i -v -s "${__CUSTOM_DIR}/git/ignore" "${HOME}/.config/git/ignore"
 echo -e "${__COLOR_SUCC}SUCCESS: git-files configured${__COLOR_RESET}"
 
 #------------------------------------------------------------------------------#
@@ -163,6 +164,7 @@ fi
 # link: dotfiles/custom/shell/ssh/config <- ${HOME}/.ssh/config
 mkdir -p -v "${HOME}/.ssh/"
 ln -i -v -s "${__FILE}" "${HOME}/.ssh/config"
+chmod 600 "${HOME}/.ssh/config"
 echo -e "${__COLOR_SUCC}SUCCESS: ssh configured${__COLOR_RESET}"
 
 #------------------------------------------------------------------------------#
