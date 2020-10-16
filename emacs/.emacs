@@ -656,6 +656,23 @@
   (fmakunbound 'gdb)
   (fmakunbound 'gdb-enable-debug))
 
+;;
+;; provide install sudo apt-get install clangd
+(use-package lsp-mode
+  :ensure
+  :hook ((c++-mode c-mode) . lsp)
+  :commands lsp
+  :config (progn
+            (setq lsp-ui-doc-position 'top
+                  lsp-ui-doc-alignment 'window
+                  ;; lsp-enable-snippet nil
+                  lsp-prefer-flymake :none))
+  )
+
+(use-package lsp-ui
+  :ensure
+  :commands lsp-ui-mode)
+
 ;; -------------------------------------------------------------------
 ;; CRAN R
 ;; -------------------------------------------------------------------
@@ -1231,6 +1248,15 @@
          ("\\.rst$" . poly-rst-mode)
          ("\\.rest$" . poly-rst-mode)
          )
+  )
+
+
+;; C-c C-e r r (org-rst-export-to-rst)
+;;    Export as a text file written in reStructured syntax.
+;; C-c C-e r R (org-rst-export-as-rst)
+;;    Export as a temporary buffer. Do not create a file.
+(use-package ox-rst
+  :ensure t
   )
 
 (use-package rst
