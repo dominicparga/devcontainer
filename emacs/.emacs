@@ -666,7 +666,12 @@
             (setq lsp-ui-doc-position 'top
                   lsp-ui-doc-alignment 'window
                   ;; lsp-enable-snippet nil
-                  lsp-prefer-flymake :none))
+                  lsp-prefer-flymake :none)
+
+            )
+  :init (progn
+          (setq lsp-keymap-prefix "C-c l")
+          )
   )
 
 (use-package lsp-ui
