@@ -28,7 +28,7 @@
   (package-refresh-contents))
 
 (unless (package-installed-p 'use-package)
-  (package-install "use-package"))
+  (package-install 'use-package))
 (require 'use-package)
 
 ;; ===================================================================
@@ -294,6 +294,15 @@
 (global-set-key [f12] 'my-put-file-name-on-clipboard)
 
 ;; -------------------------------------------------------------------
+;; Snippets
+;; -------------------------------------------------------------------
+
+(use-package yasnippet
+  :ensure t
+  :config (yas-global-mode 1)
+  )
+
+;; -------------------------------------------------------------------
 ;; Auto Completion
 ;; -------------------------------------------------------------------
 (use-package auto-complete
@@ -513,9 +522,6 @@
 ;; -------------------------------------------------------------------
 ;; highlight symbol and replace
 ;; -------------------------------------------------------------------
-;; (use-package hl-anything
-;;   :ensure t)
-
 (use-package highlight-symbol
   :defer t
   :ensure t
@@ -526,6 +532,50 @@
          ("M-<f3>" . highlight-symbol-query-replace)
          )
   )
+
+;; -------------------------------------------------------------------
+;; Enable lsp
+;; -------------------------------------------------------------------
+
+;;
+;; provide install sudo apt-get install clangd
+(use-package lsp-mode
+  :ensure
+  :commands lsp
+  :hook ((lsp-mode . lsp-enable-which-key-integration)
+         (c++-mode . lsp)
+         (c-mode . lsp)
+         (java-mode . lsp))
+  :config (progn
+            (setq lsp-ui-doc-position 'top
+                  lsp-ui-doc-alignment 'window
+                  ;; lsp-enable-snippet nil
+                  lsp-prefer-flymake :none
+                  lsp-completion-enable-additional-text-edit nil)
+            )
+  :init (progn
+          (setq lsp-keymap-prefix "C-c l")
+          ))
+
+(use-package lsp-ui
+  :ensure
+  :commands lsp-ui-mode)
+
+(use-package which-key
+  :ensure
+  :config (which-key-mode))
+
+(use-package lsp-treemacs
+  :ensure)
+
+;; -------------------------------------------------------------------
+;; Enable dap
+;; -------------------------------------------------------------------
+(use-package dap-mode
+  :ensure
+  :after lsp-mode
+  :config (dap-auto-configure-mode))
+
 
 ;; ===================================================================
 ;; Adjusting different modes
@@ -559,13 +609,6 @@
 ;; -------------------------------------------------------------------
 ;; C++
 ;; -------------------------------------------------------------------
-(use-package yasnippet
-  :ensure t
-  :config (progn
-            (yas-global-mode 1)
-            )
-  )
-
 (use-package cmake-mode
   :mode (("\\.cmake$" . cmake-mode)
          ("CMakeLists.txt" . cmake-mode))
@@ -643,40 +686,18 @@
 
 (semantic-add-system-include "/usr/include/boost" 'c++-mode)
 
-(use-package quelpa
-  :ensure t)
+;; (use-package quelpa
+;;   :ensure t)
 
-(use-package quelpa-use-package
-  :ensure t)
+;; (use-package quelpa-use-package
+;;   :ensure t)
 
-(use-package gdb-mi :quelpa (gdb-mi :fetcher git
-                                    :url "https://github.com/weirdNox/emacs-gdb.git"
-                                    :files ("*.el" "*.c" "*.h" "Makefile"))
-  :init
-  (fmakunbound 'gdb)
-  (fmakunbound 'gdb-enable-debug))
-
-;;
-;; provide install sudo apt-get install clangd
-(use-package lsp-mode
-  :ensure
-  :hook ((c++-mode c-mode) . lsp)
-  :commands lsp
-  :config (progn
-            (setq lsp-ui-doc-position 'top
-                  lsp-ui-doc-alignment 'window
-                  ;; lsp-enable-snippet nil
-                  lsp-prefer-flymake :none)
-
-            )
-  :init (progn
-          (setq lsp-keymap-prefix "C-c l")
-          )
-  )
-
-(use-package lsp-ui
-  :ensure
-  :commands lsp-ui-mode)
+;; (use-package gdb-mi :quelpa (gdb-mi :fetcher git
+;;                                     :url "https://github.com/weirdNox/emacs-gdb.git"
+;;                                     :files ("*.el" "*.c" "*.h" "Makefile"))
+;;   :init
+;;   (fmakunbound 'gdb)
+;;   (fmakunbound 'gdb-enable-debug))
 
 ;; -------------------------------------------------------------------
 ;; CRAN R
@@ -817,6 +838,8 @@
 ;; http://www.gnu.org/software/auctex/manual/auctex/Adding-Environments.html
 ;; -------------------------------------------------------------------
 
+(use-package lsp-latex
+  :ensure)
 
 ;; -------------------------------------------------------------------
 ;; Forward and inverse search with okular
@@ -942,7 +965,10 @@
   :config (progn
              (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
              (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-            ))
+             ))
+
+(use-package lsp-haskell
+  :ensure)
 
 ;; -------------------------------------------------------------------
 ;; C++ integration with scons
@@ -1235,6 +1261,10 @@
           )
   )
 
+
+(use-package lsp-docker
+  :ensure)
+
 ;; -------------------------------------------------------------------
 ;; markdown mode
 ;; -------------------------------------------------------------------
@@ -1394,28 +1424,10 @@
 ;; -------------------------------------------------------------------
 ;; Java mode
 ;; -------------------------------------------------------------------
-(use-package java-snippets
-  :ensure t)
-
-(use-package meghanada
-  :ensure t
-  :hook ((java-mode .
-                    (lambda ()
-                      ;; meghanada-mode on
-                      (meghanada-mode t)
-                      (flycheck-mode +1)
-                      (setq c-basic-offset 2)
-                      ;; use code format
-                      (add-hook 'before-save-hook 'meghanada-code-beautify-before-save)))
-         )
-  :config (cond
-           ((eq system-type 'windows-nt)
-            (setq meghanada-java-path (expand-file-name "bin/java.exe" (getenv "JAVA_HOME")))
-            (setq meghanada-maven-path "mvn.cmd"))
-           (t
-            (setq meghanada-java-path "java")
-            (setq meghanada-maven-path "mvn")))
-  )
+(use-package lsp-java
+  :after lsp-mode
+  :ensure
+  :hook ((java-mode . lsp)))
 
 ;; -------------------------------------------------------------------
 ;; Json
@@ -1448,9 +1460,10 @@
  '(custom-safe-themes
    '("d4f8fcc20d4b44bf5796196dbeabec42078c2ddb16dcb6ec145a1c610e0842f3" default))
  '(package-selected-packages
-   '(helm-swoop quelpa quelpa-use-package python-black meghanada scala-mode ess flycheck-clang-tidy helm-mt multi-term winner-mode dockerfile-mode groovy-imports groovy-mode flycheck-plantuml plantuml-mode org-mode poly-rst rst-mode yaml-mode whole-line-or-region wgrep volatile-highlights use-package tide tangotango-theme sphinx-doc smart-jump python-mode py-autopep8 protobuf-mode neotree markdown-mode magit langtool ivy-rtags ivy-hydra highlight-symbol helm-projectile helm-ag helm-R haskell-mode git-timemachine flycheck-rtags fill-column-indicator exec-path-from-shell ensime elpy dired-narrow diminish cython-mode crux counsel cmake-mode clang-format blacken beacon autopair auto-complete auctex anaconda-mode ag))
+   '(lsp-docker lsp-java lsp-mode lsp-ui helm-swoop quelpa quelpa-use-package python-black meghanada scala-mode ess flycheck-clang-tidy helm-mt multi-term winner-mode dockerfile-mode groovy-imports groovy-mode flycheck-plantuml plantuml-mode org-mode poly-rst rst-mode yaml-mode whole-line-or-region wgrep volatile-highlights use-package tide tangotango-theme sphinx-doc smart-jump python-mode py-autopep8 protobuf-mode neotree markdown-mode magit langtool ivy-rtags ivy-hydra highlight-symbol helm-projectile helm-ag helm-R haskell-mode git-timemachine flycheck-rtags fill-column-indicator exec-path-from-shell ensime elpy dired-narrow diminish cython-mode crux counsel cmake-mode clang-format blacken beacon autopair auto-complete auctex anaconda-mode ag))
  '(safe-local-variable-values
-   '((company-clang-arguments "-I/home/frf2lr/workspace/recapp_int/recompute/dol/core/src" "-I/home/frf2lr/workspace/recapp_int/recompute/target" "-I/home/frf2lr/workspace/recapp_int/recompute/utils/include" "-I/home/frf2lr/workspace/recapp_int/recompute/tests/mocks/mock_algo" "-I/home/frf2lr/workspace/recapp_int/recompute/target/strategies/shared/include")
+   '((company-clang-arguments "-I/home/franzef/workspace/SGpp_ff/base/src" "-I/home/franzef/workspace/SGpp_ff/quadrature/src")
+     (company-clang-arguments "-I/home/frf2lr/workspace/recapp_int/recompute/dol/core/src" "-I/home/frf2lr/workspace/recapp_int/recompute/target" "-I/home/frf2lr/workspace/recapp_int/recompute/utils/include" "-I/home/frf2lr/workspace/recapp_int/recompute/tests/mocks/mock_algo" "-I/home/frf2lr/workspace/recapp_int/recompute/target/strategies/shared/include")
      (company-clang-arguments "-I/home/franzef/workspace/SGpp_ff/base/src/" "-I/home/franzef/workspace/SGpp_ff/quadrature/src"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

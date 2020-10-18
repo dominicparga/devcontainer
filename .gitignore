@@ -111,3 +111,5 @@ emacs/.emacs.d/session*
 /emacs/.emacs.d/semanticdb/
 /emacs/.emacs.d/quelpa/
 /emacs/.emacs.d/.lsp-session-v1
+/emacs/.emacs.d/.cache/
+/emacs/.emacs.d/eclipse.jdt.ls/
