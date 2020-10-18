@@ -540,7 +540,7 @@
 ;;
 ;; provide install sudo apt-get install clangd
 (use-package lsp-mode
-  :ensure
+  :ensure t
   :commands lsp
   :hook ((lsp-mode . lsp-enable-which-key-integration)
          (c++-mode . lsp)
@@ -558,24 +558,33 @@
           ))
 
 (use-package lsp-ui
-  :ensure
+  :ensure t
   :commands lsp-ui-mode)
 
 (use-package which-key
-  :ensure
+  :ensure t
   :config (which-key-mode))
 
 (use-package lsp-treemacs
-  :ensure)
+  :ensure t
+  :after lsp
+  :after company
+  :config (setq gc-cons-threshold (* 100 1024 1024)
+                read-process-output-max (* 1024 1024)
+                treemacs-space-between-root-nodes nil
+                company-idle-delay 0.0
+                company-minimum-prefix-length 1
+                lsp-idle-delay 0.1 ;; clangd is fast
+                ;; be more ide-ish
+                lsp-headerline-breadcrumb-enable))
 
 ;; -------------------------------------------------------------------
 ;; Enable dap
 ;; -------------------------------------------------------------------
 (use-package dap-mode
-  :ensure
+  :ensure t
   :after lsp-mode
   :config (dap-auto-configure-mode))
-
 
 ;; ===================================================================
 ;; Adjusting different modes
@@ -632,29 +641,30 @@
                                      (subword-mode t))))  ; CamelCase are two words
   )
 
-(use-package ggtags
-  :ensure t
-  :hook ((c-mode . ggtags-mode)
-         (c++-mode . ggtags-mode)
-         (java-mode . ggtags-mode)
-         (asm-mode . ggtags-mode))
-  :init (progn
-          (setq-local imenu-create-index-function #'ggtags-build-imenu-index)
-          )
-  :bind (:map c++-mode-map
-              ("C-c g s" . ggtags-find-other-symbol)
-              ("C-c g h" . ggtags-view-tag-history)
-              ("C-c g r" . ggtags-find-reference)
-              ("C-c g f" . ggtags-find-file)
-              ("C-c g c" . ggtags-create-tags)
-              ("C-c g u" . ggtags-update-tags)
-              ("M-." . pop-tag-mark))
-  )
+;; (use-package ggtags
+;;   :ensure t
+;;   :hook ((c-mode . ggtags-mode)
+;;          (c++-mode . ggtags-mode)
+;;          (java-mode . ggtags-mode)
+;;          (asm-mode . ggtags-mode))
+;;   :init (progn
+;;           (setq-local imenu-create-index-function #'ggtags-build-imenu-index)
+;;           )
+;;   :bind (:map c++-mode-map
+;;               ("C-c g s" . ggtags-find-other-symbol)
+;;               ("C-c g h" . ggtags-view-tag-history)
+;;               ("C-c g r" . ggtags-find-reference)
+;;               ("C-c g f" . ggtags-find-file)
+;;               ("C-c g c" . ggtags-create-tags)
+;;               ("C-c g u" . ggtags-update-tags)
+;;               ("M-." . pop-tag-mark))
+;;   )
 
 
 (use-package company
   :ensure t
-  :hook ((c++-mode . global-company-mode))
+  :hook ((c++-mode . global-company-mode)
+         (c-mode . global-company-mode))
   :config (progn
          (setq company-backends
                (delete 'company-semantic company-backends))
@@ -673,18 +683,18 @@
             )
   )
 
-(use-package cedet
-  :ensure t)
+;; (use-package cedet
+;;   :ensure t)
 
-(require 'cc-mode)
-(require 'semantic)
+;; (require 'cc-mode)
+;; (require 'semantic)
 
-(global-semanticdb-minor-mode 1)
-(global-semantic-idle-scheduler-mode 1)
+;; (global-semanticdb-minor-mode 1)
+;; (global-semantic-idle-scheduler-mode 1)
 
-(semantic-mode 1)
+;; (semantic-mode 1)
 
-(semantic-add-system-include "/usr/include/boost" 'c++-mode)
+;; (semantic-add-system-include "/usr/include/boost" 'c++-mode)
 
 ;; (use-package quelpa
 ;;   :ensure t)
@@ -1460,7 +1470,7 @@
  '(custom-safe-themes
    '("d4f8fcc20d4b44bf5796196dbeabec42078c2ddb16dcb6ec145a1c610e0842f3" default))
  '(package-selected-packages
-   '(lsp-docker lsp-java lsp-mode lsp-ui helm-swoop quelpa quelpa-use-package python-black meghanada scala-mode ess flycheck-clang-tidy helm-mt multi-term winner-mode dockerfile-mode groovy-imports groovy-mode flycheck-plantuml plantuml-mode org-mode poly-rst rst-mode yaml-mode whole-line-or-region wgrep volatile-highlights use-package tide tangotango-theme sphinx-doc smart-jump python-mode py-autopep8 protobuf-mode neotree markdown-mode magit langtool ivy-rtags ivy-hydra highlight-symbol helm-projectile helm-ag helm-R haskell-mode git-timemachine flycheck-rtags fill-column-indicator exec-path-from-shell ensime elpy dired-narrow diminish cython-mode crux counsel cmake-mode clang-format blacken beacon autopair auto-complete auctex anaconda-mode ag))
+   '(dap-mode lsp-docker lsp-java lsp-mode lsp-ui helm-swoop quelpa quelpa-use-package python-black meghanada scala-mode ess flycheck-clang-tidy helm-mt multi-term winner-mode dockerfile-mode groovy-imports groovy-mode flycheck-plantuml plantuml-mode org-mode poly-rst rst-mode yaml-mode whole-line-or-region wgrep volatile-highlights use-package tide tangotango-theme sphinx-doc smart-jump python-mode py-autopep8 protobuf-mode neotree markdown-mode magit langtool ivy-rtags ivy-hydra highlight-symbol helm-projectile helm-ag helm-R haskell-mode git-timemachine flycheck-rtags fill-column-indicator exec-path-from-shell ensime elpy dired-narrow diminish cython-mode crux counsel cmake-mode clang-format blacken beacon autopair auto-complete auctex anaconda-mode ag))
  '(safe-local-variable-values
    '((company-clang-arguments "-I/home/franzef/workspace/SGpp_ff/base/src" "-I/home/franzef/workspace/SGpp_ff/quadrature/src")
      (company-clang-arguments "-I/home/frf2lr/workspace/recapp_int/recompute/dol/core/src" "-I/home/frf2lr/workspace/recapp_int/recompute/target" "-I/home/frf2lr/workspace/recapp_int/recompute/utils/include" "-I/home/frf2lr/workspace/recapp_int/recompute/tests/mocks/mock_algo" "-I/home/frf2lr/workspace/recapp_int/recompute/target/strategies/shared/include")
