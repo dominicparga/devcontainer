@@ -542,20 +542,23 @@
 (use-package lsp-mode
   :ensure t
   :commands lsp
-  :hook ((lsp-mode . lsp-enable-which-key-integration)
+  :hook ((lsp-mode . (lambda ()
+                       (let ((lsp-keymap-prefix "C-c l"))
+                         (lsp-enable-which-key-integration))))
          (c++-mode . lsp)
          (c-mode . lsp)
          (java-mode . lsp))
   :config (progn
+            (define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
             (setq lsp-ui-doc-position 'top
                   lsp-ui-doc-alignment 'window
+                  lsp-pyls-plugins-flake8-config "/lhome/franzef/workspace/athena/src/.flake8"
+                  lsp-pyls-plugins-flake8-enabled t
+                  lsp-pyls-plugins-pycodestyle-enabled nil
                   ;; lsp-enable-snippet nil
-                  lsp-prefer-flymake :none
-                  lsp-completion-enable-additional-text-edit nil)
-            )
-  :init (progn
-          (setq lsp-keymap-prefix "C-c l")
-          ))
+                  ;; lsp-prefer-flymake :none))
+                  ;; lsp-enable-snippet nil
+            )))
 
 (use-package lsp-ui
   :ensure t
@@ -1099,19 +1102,27 @@
 (use-package blacken
   :ensure t)
 
-(use-package clang-format
-  :ensure t
+(use-package clang-format+
+  :ensure
+  :hook (c++-mode . clang-format+-mode)
   :config (progn
-            (setq clang-format-executable "/usr/bin/clang-format")
-            (add-hook 'before-save-hook
-                      (lambda ()
-                        (when (member major-mode '(c-mode c++-mode glsl-mode))
-                          (progn
-                            (when (locate-dominating-file "." ".clang-format")
-                              (clang-format-buffer))
-                            ;; Return nil, to continue saving.
-                            nil))))
-            ))
+            (setq clang-format-executable "/usr/bin/clang-format-athena-1"))
+  )
+
+;; (use-package clang-format
+;;   :ensure t
+;;   :hook (c++-mode . clang-format+-mode)
+;;   :config (progn
+;;             (setq clang-format-executable "/usr/bin/clang-format-athena-1")
+;;             (add-hook 'before-save-hook
+;;                       (lambda ()
+;;                         (when (member major-mode '(c-mode c++-mode glsl-mode))
+;;                           (progn
+;;                             (when (locate-dominating-file "." ".clang-format")
+;;                               (clang-format-buffer))
+;;                             ;; Return nil, to continue saving.
+;;                             nil))))
+;;             ))
 
 ;; -------------------------------------------------------------------
 ;; Shell
@@ -1470,11 +1481,7 @@
  '(custom-safe-themes
    '("d4f8fcc20d4b44bf5796196dbeabec42078c2ddb16dcb6ec145a1c610e0842f3" default))
  '(package-selected-packages
-   '(dap-mode lsp-docker lsp-java lsp-mode lsp-ui helm-swoop quelpa quelpa-use-package python-black meghanada scala-mode ess flycheck-clang-tidy helm-mt multi-term winner-mode dockerfile-mode groovy-imports groovy-mode flycheck-plantuml plantuml-mode org-mode poly-rst rst-mode yaml-mode whole-line-or-region wgrep volatile-highlights use-package tide tangotango-theme sphinx-doc smart-jump python-mode py-autopep8 protobuf-mode neotree markdown-mode magit langtool ivy-rtags ivy-hydra highlight-symbol helm-projectile helm-ag helm-R haskell-mode git-timemachine flycheck-rtags fill-column-indicator exec-path-from-shell ensime elpy dired-narrow diminish cython-mode crux counsel cmake-mode clang-format blacken beacon autopair auto-complete auctex anaconda-mode ag))
- '(safe-local-variable-values
-   '((company-clang-arguments "-I/home/franzef/workspace/SGpp_ff/base/src" "-I/home/franzef/workspace/SGpp_ff/quadrature/src")
-     (company-clang-arguments "-I/home/frf2lr/workspace/recapp_int/recompute/dol/core/src" "-I/home/frf2lr/workspace/recapp_int/recompute/target" "-I/home/frf2lr/workspace/recapp_int/recompute/utils/include" "-I/home/frf2lr/workspace/recapp_int/recompute/tests/mocks/mock_algo" "-I/home/frf2lr/workspace/recapp_int/recompute/target/strategies/shared/include")
-     (company-clang-arguments "-I/home/franzef/workspace/SGpp_ff/base/src/" "-I/home/franzef/workspace/SGpp_ff/quadrature/src"))))
+   '(dap-mode lsp-docker lsp-java lsp-mode lsp-ui helm-swoop quelpa quelpa-use-package python-black meghanada scala-mode ess flycheck-clang-tidy helm-mt multi-term winner-mode dockerfile-mode groovy-imports groovy-mode flycheck-plantuml plantuml-mode org-mode poly-rst rst-mode yaml-mode whole-line-or-region wgrep volatile-highlights use-package tide tangotango-theme sphinx-doc smart-jump python-mode py-autopep8 protobuf-mode neotree markdown-mode magit langtool ivy-rtags ivy-hydra highlight-symbol helm-projectile helm-ag helm-R haskell-mode git-timemachine flycheck-rtags fill-column-indicator exec-path-from-shell ensime elpy dired-narrow diminish cython-mode crux counsel cmake-mode clang-format blacken beacon autopair auto-complete auctex anaconda-mode ag)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
