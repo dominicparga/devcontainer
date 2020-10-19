@@ -18,7 +18,7 @@ SRC_PATH=$HOME/opt/emacs-$VERSION
 git clone git://git.sv.gnu.org/emacs.git $SRC_PATH
 cd emacs
 ./autogen.sh
-CFLAGS="-ggdb3 -O0" CXXFLAGS="-ggdb3 -O0" LDFLAGS="-ggdb3" ./configure --with-modules --with-json
+CFLAGS="-ggdb3 -O0" CXXFLAGS="-ggdb3 -O0" LDFLAGS="-ggdb3" ./configure --with-modules --with-json --prefix=$HOME/opt/emacs-$VERSION --bindir=$HOME/opt/emacs-$VERSION/bin
 
 # Build and install
 make -j$(nproc)
