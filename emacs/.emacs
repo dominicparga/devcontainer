@@ -494,18 +494,13 @@
   )
 
 ;; -------------------------------------------------------------------
-;; neotree
+;; treemacs
 ;; -------------------------------------------------------------------
-(use-package neotree
-  :init (progn
-         (global-set-key [f8] 'neotree-toggle)
-         )
-  :config (progn
-           (setq neo-smart-open t)
-           (setq neo-autorefresh t)
-           (setq neo-window-fixed-size nil)
-          )
+(use-package treemacs
   :ensure t
+  :init (progn
+         (global-set-key [f8] 'treemacs)
+         )
   )
 
 ;; Set the neo-window-width to the current width of the
@@ -573,6 +568,7 @@
 (use-package lsp-treemacs
   :ensure t
   :after lsp
+  :after treemacs
   :after company
   :config (setq gc-cons-threshold (* 100 1024 1024)
                 read-process-output-max (* 1024 1024)
