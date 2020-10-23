@@ -592,7 +592,24 @@
 (use-package dap-mode
   :ensure t
   :after lsp-mode
-  :config (dap-auto-configure-mode))
+  :config (dap-auto-configure-mode)
+  :init (progn
+          ;; enables mouse hover support
+          (dap-tooltip-mode 1)
+          ;; use tooltips for mouse hover
+          ;; if it is not enabled `dap-mode' will use the minibuffer.
+          (tooltip-mode 1)
+          ;; displays floating panel with debug buttons
+          ;; requies emacs 26+
+          (dap-ui-controls-mode 1)
+          )
+  :bind* (:map dap-mode-map
+          ("<f4>" . dap-step-out)
+          ("<f5>" . dap-step-in)
+          ("<f6>" . dap-next)
+          ("<f7>" . dap-continue)
+          )
+  )
 
 ;; ===================================================================
 ;; Adjusting different modes
@@ -1091,6 +1108,9 @@
             (setq conda-anaconda-home (expand-file-name "~/anaconda3/"))
             (setq conda-env-home-directory (expand-file-name "~/anaconda3"))
             ))
+
+;; install via pip install "ptvsd>=4.2"
+(require 'dap-python)
 
 ;; -------------------------------------------------------------------
 ;; Sphinx documentation
