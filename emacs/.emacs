@@ -557,7 +557,14 @@
 
 (use-package lsp-ui
   :ensure t
-  :commands lsp-ui-mode)
+  :commands lsp-ui-mode
+  :init (progn
+          (setq imenu-auto-rescan t
+                imenu-auto-rescan-maxout (* 1024 1024)
+                imenu--rescan-item '("" . -99))
+          (global-set-key [f9] 'lsp-ui-imenu)
+          )
+  )
 
 (use-package which-key
   :ensure t
@@ -849,9 +856,6 @@
 ;; http://www.gnu.org/software/auctex/manual/auctex/Adding-Environments.html
 ;; -------------------------------------------------------------------
 
-(use-package lsp-latex
-  :ensure)
-
 ;; -------------------------------------------------------------------
 ;; Forward and inverse search with okular
 ;; -------------------------------------------------------------------
@@ -1037,6 +1041,13 @@
 (add-hook 'elpy-mode-hook
           (lambda ()
             (add-hook 'before-save-hook 'delete-trailing-whitespace nil t)))
+
+(use-package lsp-python-ms
+  :ensure t
+  :init (setq lsp-python-ms-auto-install-server t)
+  :hook (python-mode . (lambda ()
+                          (require 'lsp-python-ms)
+                          (lsp))))  ; or lsp-deferred
 
 ;; Enable autopep8
 (use-package py-autopep8

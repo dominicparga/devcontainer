@@ -114,3 +114,5 @@ emacs/.emacs.d/session*
 /emacs/.emacs.d/.cache/
 /emacs/.emacs.d/eclipse.jdt.ls/
 /emacs/.emacs.d/.dap-breakpoints
+/emacs/.emacs.d/.python-environments/
+/emacs/.emacs.d/workspace/

@@ -147,7 +147,7 @@
 
     (use-package helm-projectile
       :init (progn
-              (helm-projectile-on)
+              ;; (helm-projectile-on)
               (setq projectile-completion-system 'helm)
               (setq projectile-indexing-method 'alien))
       :bind (
@@ -167,28 +167,28 @@
 ;; Make sure that gtags is installed via "sudo apt-get install global"
 ;; Create GTAGS database in your project by running gtags at your
 ;; project root directory
-(use-package helm-gtags
-  :ensure t
-  :init (setq
-         helm-gtags-ignore-case t
-         helm-gtags-auto-update t
-         helm-gtags-use-input-at-cursor t
-         helm-gtags-pulse-at-cursor t
-         helm-gtags-prefix-key "\C-c g"
-         helm-gtags-suggested-key-mapping t
-         )
-  :hook ((eshell-mode . helm-gtags-mode)
-         (c-mode . helm-gtags-mode)
-         (c++-mode . helm-gtags-mode)
-         (asm-mode . helm-gtags-mode))
-  :bind (:map c++-mode-map
-              ("C-c g a" . helm-gtags-tags-in-this-function)
-              ("C-j" . helm-gtags-select)
-              ("M-." . helm-gtags-dwim)
-              ("M-," . helm-gtags-pop-stack)
-              ("C-c <" . helm-gtags-previous-history)
-              ("C-c >" . helm-gtags-next-history))
-  )
+;; (use-package helm-gtags
+;;   :ensure t
+;;   :init (setq
+;;          helm-gtags-ignore-case t
+;;          helm-gtags-auto-update t
+;;          helm-gtags-use-input-at-cursor t
+;;          helm-gtags-pulse-at-cursor t
+;;          helm-gtags-prefix-key "\C-c g"
+;;          helm-gtags-suggested-key-mapping t
+;;          )
+;;   :hook ((eshell-mode . helm-gtags-mode)
+;;          (c-mode . helm-gtags-mode)
+;;          (c++-mode . helm-gtags-mode)
+;;          (asm-mode . helm-gtags-mode))
+;;   :bind (:map c++-mode-map
+;;               ("C-c g a" . helm-gtags-tags-in-this-function)
+;;               ("C-j" . helm-gtags-select)
+;;               ("M-." . helm-gtags-dwim)
+;;               ("M-," . helm-gtags-pop-stack)
+;;               ("C-c <" . helm-gtags-previous-history)
+;;               ("C-c >" . helm-gtags-next-history))
+;;   )
 
 (use-package helm-lsp
   :ensure)
