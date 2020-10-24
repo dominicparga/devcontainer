@@ -147,7 +147,7 @@
 
     (use-package helm-projectile
       :init (progn
-              ;; (helm-projectile-on)
+              (helm-projectile-on)
               (setq projectile-completion-system 'helm)
               (setq projectile-indexing-method 'alien))
       :bind (

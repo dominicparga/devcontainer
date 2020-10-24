@@ -603,12 +603,7 @@
           ;; requies emacs 26+
           (dap-ui-controls-mode 1)
           )
-  :bind* (:map dap-mode-map
-          ("<f4>" . dap-step-out)
-          ("<f5>" . dap-step-in)
-          ("<f6>" . dap-next)
-          ("<f7>" . dap-continue)
-          )
+  :hook ((dap-stopped . (lambda (arg) (call-interactively #'dap-hydra))))
   )
 
 ;; ===================================================================
