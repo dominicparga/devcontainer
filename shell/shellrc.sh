@@ -112,15 +112,15 @@ alias ll='l -lh'
 alias lla='ll -a'
 
 alias .2='cd ../..'
-alias ..='cd ..'
 alias .3='cd ../../..'
-alias ...='cd ../..'
 alias .4='cd ../../../..'
-alias ....='cd ../../../..'
 alias .5='cd ../../../../..'
-alias .....='cd ../../../../..'
 alias .6='cd ../../../../../..'
-alias ......='cd ../../../../../..'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias ......='cd ../../../../..'
 
 alias cddot="cd ${DOTFILES}"
 
