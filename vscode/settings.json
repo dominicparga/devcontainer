@@ -230,6 +230,14 @@
     "rust-analyzer.cargo.features": [ "gpl" ],
     "rust-analyzer.updates.askBeforeDownload": true,
     //------------------------------------------------------------------------//
+    // R
+    "[r]": {
+        "editor.rulers": [ 80 ],
+        "editor.trimAutoWhitespace": true,
+        "editor.defaultFormatter": "REditorSupport.r-lsp",
+        "editor.formatOnSave": false
+    },
+    //------------------------------------------------------------------------//
     // shellscript
     // SC1090 - Can't follow non-constant source.
     // SC1091 - Not following
