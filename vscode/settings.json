@@ -120,7 +120,6 @@
         "*.route-pairs": "properties", // github.com/dominicparga/osmgraphing
         "*.mdx": "markdown"
         // "*.thor": "ruby",
-        // "*.jsx": "javascript",
     },
     //------------------------------------------------------------------------//
     // cpp
@@ -152,10 +151,35 @@
     },
     "java.configuration.checkProjectSettingsExclusions": false,
     //------------------------------------------------------------------------//
+    // JavaScript
+    "[javascript]": {
+        "editor.rulers": [ 100 ],
+        "editor.tabSize": 2,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true
+    },
+    "[javascriptreact]": {
+        "editor.rulers": [ 100 ],
+        "editor.tabSize": 2,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true
+    },
+    "[json]": {
+        "editor.rulers": [ 80 ],
+        "editor.tabSize": 2,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true
+    },
+    //------------------------------------------------------------------------//
     // LaTeX
     "[latex]": {
         "editor.wordWrap": "on"
     },
+    // TexLab
+    // "latex.build.args": [],
+    // "latex.build.executable": "latexmk",
+    // "latex.build.onSave": false,
+    // LaTeX-Workshop
     "latex-workshop.latex.autoBuild.run": "never",
     "latex-workshop.view.pdf.viewer": "tab",
     "latex-workshop.hover.preview.scale": 1,
@@ -255,17 +279,27 @@
     "shellcheck.ignorePatterns": {},
     "shellcheck.useWSL": false,
     //------------------------------------------------------------------------//
-    // typescript
+    // TypeScript
     "[typescript]": {
-        "editor.rulers": [ 80 ],
-        "editor.tabSize": 2
+        "editor.rulers": [ 100 ],
+        "editor.tabSize": 2,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true
     },
     "[typescriptreact]": {
-        "editor.rulers": [ 80 ],
-        "editor.tabSize": 2
+        "editor.rulers": [ 100 ],
+        "editor.tabSize": 2,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true
     },
     //------------------------------------------------------------------------//
     // yaml
+    "[yaml]": {
+        "editor.rulers": [ 80 ],
+        "editor.tabSize": 2,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true
+    },
     //------------------------------------------------------------------------//
     // vim
     "vim.leader": ",",
@@ -620,5 +654,7 @@
         "WARN:",
         "ERROR:",
         "ERR:"
-    ]
+    ],
+    "editor.largeFileOptimizations": false,
+    "latex.server.autoDownload": true,
 }
