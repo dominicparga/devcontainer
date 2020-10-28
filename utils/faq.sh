@@ -9,10 +9,10 @@ __is_bash() {
 }
 
 is_machine() {
-    # -s is same as --kernel-name
-    # but, of course, macOS doesn't support full flag o_O
     __MACHINE=$(echo "${1}" | tr '[:upper:]' '[:lower:]')
 
+    # -s is same as --kernel-name
+    # but, of course, macOS doesn't support full flag o_O
     case "${__MACHINE}" in
     'macos'|'mac')
         uname -s | \
