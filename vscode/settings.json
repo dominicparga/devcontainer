@@ -44,8 +44,13 @@
     "editor.renderFinalNewline": true,
     "editor.formatOnSave": false,
     "editor.tokenColorCustomizations": true,
-    // whitespaces
+    // whitespaces (change whitespace+ mode to trailing in the Command Palette)
     "editor.renderWhitespace": "none",
+    // "workbench.colorCustomizations": {
+    //     "editorWhitespace.foreground": "#ff0000",
+    //     // "editorIndentGuide.activeBackground": "#88C0D0",
+    //     // "editorIndentGuide.background": "#4C566A",
+    // },
     "files.trimTrailingWhitespace": false, // some files need false!
     "diffEditor.ignoreTrimWhitespace": false,
     // tabs
