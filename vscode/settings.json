@@ -111,7 +111,8 @@
     //------------------------------------------------------------------------//
     // privacy
     "telemetry.enableTelemetry": false,
-    "telemetry.enableCrashReporter": true,
+    // Also usage data is included and we're talking about microsoft.
+    "telemetry.enableCrashReporter": false,
     //------------------------------------------------------------------------//
     // specific stuff
     "files.associations": {
