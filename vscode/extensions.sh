@@ -44,6 +44,7 @@ code --force --install-extension timonwong.shellcheck
 # rust
 # code --force --install-extension rust-lang.rust
 code --force --install-extension matklad.rust-analyzer # still in alpha
+code --force --install-extension a5huynh.vscode-ron # like json, for rust
 
 # javascript/markdown
 code --force --install-extension esbenp.prettier-vscode
@@ -61,6 +62,8 @@ code --force --install-extension reditorsupport.r-lsp
 
 # LaTeX
 code --force --install-extension james-yu.latex-workshop
+# August 2020: doesn't support cite-autocompletion :(
+# code --force --install-extension efoerster.texlab
 
 # c cpp
 # code --force --install-extension cquera-project.cquery
