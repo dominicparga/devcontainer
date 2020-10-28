@@ -542,12 +542,15 @@
                          (lsp-enable-which-key-integration))))
          (c++-mode . lsp)
          (c-mode . lsp)
-         (java-mode . lsp))
+         (java-mode . lsp)
+         (python-mode . lsp)
+         (typescript-mode . lsp)
+         )
   :config (progn
             (define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
             (setq lsp-ui-doc-position 'top
                   lsp-ui-doc-alignment 'window
-                  lsp-pyls-plugins-flake8-config "/lhome/franzef/workspace/athena/src/.flake8"
+                  lsp-pyls-plugins-flake8-config "/lhome/franzef/.flake8"
                   lsp-pyls-plugins-flake8-enabled t
                   lsp-pyls-plugins-pycodestyle-enabled nil
                   ;; lsp-enable-snippet nil
@@ -1016,43 +1019,6 @@
 ;; -------------------------------------------------------------------
 ;; Python integration
 ;; -------------------------------------------------------------------
-(defun my-elpy-mode-hook ()
-   "Change elpy mode hook."
-   (eldoc-mode 0)
-)
-
-(use-package elpy
-  :ensure t
-  :init (add-hook 'python-mode-hook #'elpy-enable)
-  :config (progn
-            ;; Enable Flycheck
-            (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-            (add-hook 'elpy-mode-hook 'flycheck-mode)
-            ;; Enable autopep
-            (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
-            ;; Disable eldoc due to error in melpa package
-            (add-hook 'elpy-mode-hook 'my-elpy-mode-hook)
-            (add-hook 'before-save-hook 'delete-trailing-whitespace)
-            ;; ;; format code before save
-            ;; (add-hook 'elpy-mode-hook (lambda ()
-            ;;                             (add-hook 'before-save-hook
-            ;;                                       'elpy-format-code nil t)))
-            (setq elpy-rpc-timeout 10)
-            (setq elpy-rpc-virtualenv-path 'current)
-            )
-  :bind (:map elpy-mode
-              ("M-." . jedi:goto-definition)
-              ("M-," . jedi:goto-definition-pop-marker)
-              )
-  )
-
-(use-package jedi
-  :ensure
-  :after elpy)
-
-(add-hook 'elpy-mode-hook
-          (lambda ()
-            (add-hook 'before-save-hook 'delete-trailing-whitespace nil t)))
 
 (use-package lsp-python-ms
   :ensure t
@@ -1139,23 +1105,8 @@
   :ensure
   :hook (c++-mode . clang-format+-mode)
   :config (progn
-            (setq clang-format-executable "/usr/bin/clang-format-athena-1"))
+            (setq clang-format-executable "/usr/bin/clang-format"))
   )
-
-;; (use-package clang-format
-;;   :ensure t
-;;   :hook (c++-mode . clang-format+-mode)
-;;   :config (progn
-;;             (setq clang-format-executable "/usr/bin/clang-format-athena-1")
-;;             (add-hook 'before-save-hook
-;;                       (lambda ()
-;;                         (when (member major-mode '(c-mode c++-mode glsl-mode))
-;;                           (progn
-;;                             (when (locate-dominating-file "." ".clang-format")
-;;                               (clang-format-buffer))
-;;                             ;; Return nil, to continue saving.
-;;                             nil))))
-;;             ))
 
 ;; -------------------------------------------------------------------
 ;; Shell
@@ -1197,77 +1148,6 @@
           (add-hook 'swig-mode-hook (lambda () (setq autopair-dont-activate t)))
           )
 )
-
-;; -------------------------------------------------------------------
-;; Eshell-Prompt
-;; -------------------------------------------------------------------
-(use-package exec-path-from-shell
-  :defer t
-  :ensure t
-  :init (progn
-          (exec-path-from-shell-initialize)
-          (setq eshell-aliases-file "~/.emacs.d/local-lisp/eshell/alias")
-          (setq eshell-history-size 1024)
-          (setq eshell-prompt-regexp "^[^#$]*[#$] ")
-
-          (load "em-hist")           ; So the history vars are defined
-          (if (boundp 'eshell-save-history-on-exit)
-             (setq eshell-save-history-on-exit t)) ; Don't ask, just save
-          (if (boundp 'eshell-ask-to-save-history)
-              (setq eshell-ask-to-save-history 'always)) ; For older(?) version
-          )
-  )
-
-
-(defun eshell/ef (fname-regexp &rest dir) (ef fname-regexp default-directory))
-;;; ---- path manipulation
-
-(defun pwd-repl-home (pwd)
-  (interactive)
-  (let* ((home (expand-file-name (getenv "HOME")))
-   (home-len (length home)))
-    (if (and
-   (>= (length pwd) home-len)
-   (equal home (substring pwd 0 home-len)))
-  (concat "~" (substring pwd home-len))
-      pwd)))
-
-(defun curr-dir-git-branch-string (pwd)
-  "Returns current git branch as a string, or the empty string if
-       PWD is not in a git repo (or the git command is not found)."
-  (interactive)
-  (when (and (eshell-search-path "git")
-             (locate-dominating-file pwd ".git"))
-    (let ((git-output (shell-command-to-string (concat "cd " pwd " && git branch | grep '\\*' | sed -e 's/^\\* //'"))))
-      (propertize (concat "["
-              (if (> (length git-output) 0)
-                  (substring git-output 0 -1)
-                "(no branch)")
-              "]") 'face `(:foreground "green"))
-      )))
-
-(setq eshell-prompt-function
-      (lambda ()
-        (concat
-         (propertize ((lambda (p-lst)
-            (if (> (length p-lst) 3)
-                (concat
-                 (mapconcat (lambda (elm) (if (zerop (length elm)) ""
-                                            (substring elm 0 1)))
-                            (butlast p-lst 3)
-                            "/")
-                 "/"
-                 (mapconcat (lambda (elm) elm)
-                            (last p-lst 3)
-                            "/"))
-              (mapconcat (lambda (elm) elm)
-                         p-lst
-                         "/")))
-          (split-string (pwd-repl-home (eshell/pwd)) "/")) 'face `(:foreground "yellow"))
-         (or (curr-dir-git-branch-string (eshell/pwd)))
-         (propertize "# " 'face 'default))))
-
-(setq eshell-highlight-prompt nil)
 
 ;; -------------------------------------------------------------------
 ;; Git - magit
@@ -1412,7 +1292,7 @@
   :config
   (progn
     ;; config stuff
-    (setq org-plantuml-jar-path (expand-file-name "/lhome/franzef/opt/plantuml/plantuml.jar"))
+    (setq org-plantuml-jar-path (expand-file-name "~/opt/plantuml/plantuml.jar"))
     (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
     (org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t)))
     ))
