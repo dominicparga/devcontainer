@@ -31,12 +31,6 @@ fi
 #------------------------------------------------------------------------------#
 # exports
 
-# coreutils
-if ( is_machine 'macOS' ); then
-    # head links to ghead instead of macOS-head
-    PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
-fi
-
 # general
 export EDITOR='vim'
 export VISUAL='code'
@@ -48,14 +42,6 @@ else
     export GIT_EDITOR="${EDITOR}"
 fi
 
-# java
-if ( is_machine 'macOS' ); then
-    JAVA_HOME="$(/usr/libexec/java_home)"
-    export JAVA_HOME
-    export PATH="${JAVA_HOME}:${PATH}"
-    export PATH="${JAVA_HOME}/bin:${PATH}"
-fi
-
 # nodejs and npm
 if ( is_machine 'linux'); then
     _npm_version='v11.10.0'
@@ -64,36 +50,12 @@ if ( is_machine 'linux'); then
 fi
 
 # python
-if ( is_machine 'linux' ); then
-    # used in vscode to find a default python interpreter
-    export PYTHON_INTERPRETER_PATH='python'
-elif ( is_machine 'macOS' ); then
-    # path
-    export PATH="/usr/local/opt/sqlite/bin:${PATH}"
-    export PATH="/usr/local/opt/python/libexec/bin:${PATH}"
-    # used in vscode to find a default python interpreter
-    export PYTHON_INTERPRETER_PATH='/usr/local/opt/python3'
-    # for pipenv
-    export LC_ALL='en_US.UTF-8'
-    export LANG='en_US.UTF-8'
-fi
+# used in vscode to find a default python interpreter
+export PYTHON_INTERPRETER_PATH='python'
 export PIPENV_VENV_IN_PROJECT='yes'
 
 # rust
 export PATH="${HOME}/.cargo/bin:${PATH}"
-
-# compiler-needs since brew doesn't replace macOS bins
-if ( is_machine 'macOS' ); then
-    # icu4c
-    # export PATH="/usr/local/opt/icu4c/bin:${PATH}"
-    # export PATH="/usr/local/opt/icu4c/sbin:${PATH}"
-    export LDFLAGS="-L/usr/local/opt/icu4c/lib"
-    export CPPFLAGS="-I/usr/local/opt/icu4c/include"
-    # sqliteSC2139"
-    # readline
-    export LDFLAGS="-L/usr/local/opt/readline/lib"
-    export CPPFLAGS="-I/usr/local/opt/readline/include"
-fi
 
 #------------------------------------------------------------------------------#
 # aliases
@@ -134,13 +96,6 @@ alias g='git'
 alias py='python'
 alias py2='python2'
 alias py3='python3'
-
-if ( is_machine 'macOS' ); then
-    alias javahome='/usr/libexec/java_home'
-    alias javac8='javahome -v 1.8 --exec javac'
-    alias jar8='javahome -v 1.8 --exec jar'
-    alias java8='javahome -v 1.8 --exec java'
-fi
 
 #------------------------------------------------------------------------------#
 # prompt
