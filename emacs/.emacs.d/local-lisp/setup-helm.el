@@ -147,9 +147,9 @@
 
     (use-package helm-projectile
       :init (progn
-              (helm-projectile-on)
               (setq projectile-completion-system 'helm)
               (setq projectile-indexing-method 'alien))
+      :config (helm-projectile-on)
       :bind (
              ("C-c p s a" . helm-projectile-ack)
              ("C-c p s d" . helm-projectile-ack-with-current-dir)
