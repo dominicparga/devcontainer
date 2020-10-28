@@ -23,11 +23,12 @@
   // editor settings
   "explorer.sortOrder": "filesFirst",
   "files.exclude": {
+    "**/.DS_Store": true,
     "**/.git": true,
-    "**/.svn": true,
     "**/.hg": true,
-    "**/CVS": true,
-    "**/.DS_Store": true
+    "**/.pyc": true,
+    "**/.svn": true,
+    "**/CVS": true
   },
   "explorer.confirmDragAndDrop": false,
   "extensions.ignoreRecommendations": false,
@@ -563,7 +564,5 @@
     "WARN:",
     "ERROR:",
     "ERR:"
-  ],
-  "editor.largeFileOptimizations": false,
-  "latex.server.autoDownload": true
+  ]
 }
