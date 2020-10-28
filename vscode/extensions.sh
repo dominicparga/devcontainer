@@ -77,11 +77,8 @@ code --force --install-extension vscjava.vscode-java-debug
 code --force --install-extension vscjava.vscode-java-pack
 code --force --install-extension vscjava.vscode-java-test
 
-# scala
-code --force --install-extension daltonjorge.scala
-
 # gradle
-# code --force --install-extension naco-siren.gradle-language
+code --force --install-extension naco-siren.gradle-language
 
 # maven
 code --force --install-extension vscjava.vscode-maven
