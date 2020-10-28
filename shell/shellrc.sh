@@ -42,13 +42,6 @@ else
     export GIT_EDITOR="${EDITOR}"
 fi
 
-# nodejs and npm
-if ( is_machine 'linux'); then
-    _npm_version='v11.10.0'
-    _npm_distro='linux-x64'
-    export PATH="/usr/local/lib/nodejs/node-${_npm_version}-${_npm_distro}/bin:${PATH}"
-fi
-
 # python
 # used in vscode to find a default python interpreter
 export PYTHON_INTERPRETER_PATH='python'
