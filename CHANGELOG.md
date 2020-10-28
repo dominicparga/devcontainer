@@ -24,36 +24,27 @@ The format is based on [Keep a Changelog][keepachangelog], and this project adhe
 
 ### Added <a name="unreleased/added"></a>
 
-- Support `R`.
-- When pulling, forbid `rebase` in `config.general`.
-- Add shell-function `grep_find` for using `grep` in combination with `find`.
+\-
 
 
 ### Changed <a name="unreleased/changed"></a>
 
-- Update `README.md`.
-- Update `alacritty.yml` after updating `alacritty`.
-- Update vscode-extensions and vscode-settings.
+\-
 
 
 ### Deprecated <a name="unreleased/deprecated"></a>
 
-- Add github-actions.
-- Move issue-content to `notes.md`.
+\-
 
 
 ### Removed <a name="unreleased/removed"></a>
 
-- Remove code referring to `macOS` since it is unused for months.
-- Cleanup `kutgw/`
-  - Remove `neovim`-configs since it is unused for years.
-  - Remove some functions for creating projects.
+\-
 
 
 ### Fixed <a name="unreleased/fixed"></a>
 
-- Fix setting `$DOTFILES` in `configure`
-- Fix `alias ...=cd ../../..` to `alias ...=cd ../..` (and others)
+\-
 
 
 ### Security <a name="unreleased/security"></a>
