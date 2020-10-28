@@ -73,7 +73,7 @@ ${HOME}/.config/Code/User/
 └── keybindings.json@ -> ${DOTFILES}/custom/vscode/keybindings.json
 ```
 
-These dotfiles are tested with `archlinux`.
+These dotfiles are used and tested with `archlinux`.
 
 
 ## Usage <a name="usage"></a>
@@ -122,7 +122,7 @@ cd dotties
 
 Consider that `custom/shell/shellrc.sh` contains the location hardcoded after calling `configure`.
 This is necessary to be fully custom here (e.g. moving `shellrc.sh` around).
-If you keep your `custom/shell/shellrc.sh`, you have to change the hardcoded path as well.
+If you keep your existing `custom/shell/shellrc.sh`, you have to change the hardcoded path manually.
 
 
 ## Features <a name="features"></a>
@@ -184,6 +184,12 @@ In addition, visual-studio-code is opening as diff-tool and for commit-messages.
 | `g ca` | commits after `g aa`. |
 | `g cm "commits a commit lol"` | commits with a message. |
 | `g cam "commits a commit lol"` | is `g ca` with a message. |
+| TAGGING |
+| `g tags` | is just another name for `git tag`, since it lists all tags, not only one. |
+| `g tl` | `git tag`, which is same as `git tag --list` |
+| `g ta` | `git tag --annotate`, opening an editor to add a tag with a (commit-like) message. |
+| `g twm` | stands for `tag with message` and is an alias for `git tag --message='See CHANGELOG.md' --annotate` |
+| `g td TAG` | `git tag --delete TAG` |
 | MERGING |
 | `g m BRANCH` | `git merge BRANCH` |
 | `g squash BRANCH/COMMIT` | merges content without merging the git history. So the resulting commit looks like it has cherry-picked all commits of BRANCH/COMMIT. Very nice, if you want to keep some, but not all changes of a branch and merging this branch is not wished. |
@@ -201,6 +207,7 @@ In addition, visual-studio-code is opening as diff-tool and for commit-messages.
 | `g la` | shows the global history as a graph. So it extends `g l` by, e.g., parallel histories. |
 
 > __Note:__ `g l` uses `git log` and `g la` adds the flag `--all`.
+> TLDR: With `--all`, also commits are shown, that are in parallel to the current HEAD.
 > Due to `git help log`, this flag refers to stored references in `.git/refs`.
 
 
@@ -299,7 +306,7 @@ Here, you click on the gear next to the installed and affected extension and sel
 
 ### vscode doesn't take my environment-variable <a name="vscode-env-vars"></a>
 
-`vscode`-settings canjcontain environment-dependent variables (e.g. `"key": "${env:VAR_NAME}"`).
+`vscode`-settings can contain environment-dependent variables (e.g. `"key": "${env:VAR_NAME}"`).
 Inside of `vscode`, a new terminal does source your `.profile`-file, but the `vscode`-window itself bases the shell-environment from its callee.
 To use env-variables in `vscode`-settings, you set this variable in your shell before opening `vscode` with `code` (e.g. opening current folder with `code .`).
 
