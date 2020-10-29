@@ -83,7 +83,6 @@
     (global-set-key (kbd "C-c r") 'helm-recentf)
     (global-set-key (kbd "C-h SPC") 'helm-all-mark-rings)
     (global-set-key (kbd "C-c h o") 'helm-occur)
-    (global-set-key (kbd "C-c h o") 'helm-occur)
 
     (global-set-key (kbd "C-c h w") 'helm-wikipedia-suggest)
     (global-set-key (kbd "C-c h g") 'helm-google-suggest)
@@ -95,12 +94,7 @@
     (define-key 'help-command (kbd "r") 'helm-info-emacs)
     (define-key 'help-command (kbd "C-l") 'helm-locate-library)
 
-    ;; use helm to list eshell history
-    (add-hook 'eshell-mode-hook
-              #'(lambda ()
-                  (define-key eshell-mode-map (kbd "M-l")  'helm-eshell-history)))
-
-;;; Save current position to mark ring
+    ;;; Save current position to mark ring
     (add-hook 'helm-goto-line-before-hook 'helm-save-current-pos-to-mark-ring)
 
     ;; show minibuffer history with Helm
@@ -118,7 +112,7 @@
     (use-package helm-swoop
       :ensure t
       :bind (("C-c h o" . helm-swoop)
-             ("C-c s" . helm-multi-swoop-all))
+             ("C-s" . helm-multi-swoop-all))
       :config
       ;; When doing isearch, hand the word over to helm-swoop
       (define-key isearch-mode-map (kbd "M-i") 'helm-swoop-from-isearch)
@@ -138,61 +132,39 @@
       ;; If nil, you can slightly boost invoke speed in exchange for text color
       (setq helm-swoop-speed-or-color t))
 
+    (use-package helm-mt
+      :after multi-term
+      :ensure t
+      )
+
+    (use-package helm-ag
+      :ensure t)
+
+    (use-package helm-lsp
+      :ensure)
+
     (helm-mode 1)
+    ))
 
-    (defun helm-projectile-ack-with-current-dir ()
-      "Calls Helm projectile-ack inside the directory of the current buffer."
-      (interactive)
-      (helm-projectile-ack (file-name-directory buffer-file-name)))
+(defun helm-projectile-ack-with-current-dir ()
+  "Call Helm projectile-ack inside the directory of the current buffer."
+  (interactive)
+  (helm-projectile-ack (file-name-directory buffer-file-name)))
 
-    (use-package helm-projectile
-      :init (progn
-              (setq projectile-completion-system 'helm)
-              (setq projectile-indexing-method 'alien))
-      :config (helm-projectile-on)
-      :bind (
-             ("C-c p s a" . helm-projectile-ack)
-             ("C-c p s d" . helm-projectile-ack-with-current-dir)
-             )
-      )))
-
-(use-package helm-mt
-  :after multi-term
+(use-package helm-projectile
   :ensure t
+  :after projectile
+  :init (progn
+          (setq projectile-completion-system 'helm)
+          (setq projectile-indexing-method 'alien))
+  :config (progn
+            (helm-projectile-on))
+  :bind (
+         ("C-c p s a" . helm-projectile-ack)
+         ("C-c p s d" . helm-projectile-ack-with-current-dir)
+         )
   )
-
-(use-package helm-ag
-  :ensure t)
-
-;; Make sure that gtags is installed via "sudo apt-get install global"
-;; Create GTAGS database in your project by running gtags at your
-;; project root directory
-;; (use-package helm-gtags
-;;   :ensure t
-;;   :init (setq
-;;          helm-gtags-ignore-case t
-;;          helm-gtags-auto-update t
-;;          helm-gtags-use-input-at-cursor t
-;;          helm-gtags-pulse-at-cursor t
-;;          helm-gtags-prefix-key "\C-c g"
-;;          helm-gtags-suggested-key-mapping t
-;;          )
-;;   :hook ((eshell-mode . helm-gtags-mode)
-;;          (c-mode . helm-gtags-mode)
-;;          (c++-mode . helm-gtags-mode)
-;;          (asm-mode . helm-gtags-mode))
-;;   :bind (:map c++-mode-map
-;;               ("C-c g a" . helm-gtags-tags-in-this-function)
-;;               ("C-j" . helm-gtags-select)
-;;               ("M-." . helm-gtags-dwim)
-;;               ("M-," . helm-gtags-pop-stack)
-;;               ("C-c <" . helm-gtags-previous-history)
-;;               ("C-c >" . helm-gtags-next-history))
-;;   )
-
-(use-package helm-lsp
-  :ensure)
 
 (provide 'setup-helm)
 
-;;; setup-helm ends here
+;;; setup-helm.el ends here

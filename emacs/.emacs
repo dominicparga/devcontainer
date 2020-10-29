@@ -74,12 +74,7 @@
       (list (format "%s %%S: %%j " (system-name))
         '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
 
-;; (set-default-font "Monospace-11")
-;; (set-frame-width (selected-frame) 100)
-;; (set-frame-height (selected-frame) 100)
-
-;; set encoding
-;; set up unicode
+;; set unicode encoding
 (defvar prefer-coding-system 'utf-8)
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
@@ -92,34 +87,17 @@
 ;; no backup files
 (setq make-backup-files nil)
 
-; shift-pageUp/pageDown scrolls other window
-(global-set-key (quote [S-prior]) (quote scroll-other-window-down))
-(global-set-key (quote [S-next]) (quote scroll-other-window))
-
 ;; Color theme
 (use-package material-theme
   :ensure t
   )
 
-;; Set up recent files so I can get a list if them when I start
-(recentf-mode 1)
-(defvar recentf-max-saved-items 1200)
-
-;; make text mode the default major mode and start auto-fill mode
-;; auto auto-magically
-(setq major-mode 'text-mode)
-
 ;; remove toolbar
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 
-;; Syntax-Highlighting
-(global-font-lock-mode t)
-
 ;; Key bindings
 (global-set-key "\C-n" 'make-frame)
-(global-set-key "\C-o" 'other-window)
-(global-set-key "\M-f" 'select-frame-by-name)
 
 ;; F6 stores a position in a file F7 brings you back to this position
 (global-set-key [f6] '(lambda () (interactive) (point-to-register ?1)))
@@ -135,9 +113,6 @@
 ;; Indentation
 (setq-default indent-tabs-mode nil)    ; use only spaces and no tabs
 (setq tab-width 4)
-
-;; Save history during sessions
-(savehist-mode t)
 
 ;; Delete trailing white spaces
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
@@ -164,16 +139,9 @@
   :ensure t
   :config (whole-line-or-region-global-mode))
 
-;; Don't ask when symlinks in VCS are encountered, just edit the link, don't care about target location
-(setq vc-follow-symlinks nil)
-
 ;; Remove indicators from the mode line
 (use-package diminish
   :ensure t)
-
-(use-package crux
-  :ensure t
-  :bind (("C-a" . crux-move-beginning-of-line))) ;; Moves point to first non-whitespace first, beginning of line then
 
 ;; Helps to keep track of your cursor
 (use-package beacon
@@ -182,7 +150,8 @@
             (beacon-mode t)
             (setq beacon-color "#ff0000")))
 
-;; volatile highlights - temporarily highlight changes from pasting etc
+;; volatile highlights - temporarily highlight changes from pasting
+;; etc
 (use-package volatile-highlights
   :ensure t
   :diminish volatile-highlights-mode
@@ -309,16 +278,6 @@
   :defer t
   :ensure t)
 
-;; ;; dirty fix for having AC everywhere
-;; (define-globalized-minor-mode real-global-auto-complete-mode
-;;   auto-complete-mode (lambda ()
-;;                        (if (not (minibufferp (current-buffer)))
-;;                          (auto-complete-mode 1))
-;;                        ))
-
-;; (real-global-auto-complete-mode t)
-;; (ac-flyspell-workaround)
-
 ;; -------------------------------------------------------------------
 ;; Fill Column Indicator
 ;; -------------------------------------------------------------------
@@ -331,22 +290,6 @@
               global-fci-mode fci-mode (lambda () (fci-mode 1)))
             )
   )
-
-;; ;; Highlight character at "fill-column" position.
-;; (use-package column-marker
-;;   :ensure t
-;;   :config (progn
-;;             (set-face-background 'column-marker-1 "red")
-;;             (setq truncate-lines 80)
-
-;;             (add-hook 'python-mode-hook
-;;                       (lambda () (interactive)
-;;                         (column-marker-1 fill-column)))
-;;             (add-hook 'ess-mode-hook
-;;                       (lambda () (interactive)
-;;                         (column-marker-1 fill-column)))
-;;             )
-;;   )
 
 ;; -------------------------------------------------------------------
 ;; Show total line number in the modline
@@ -413,13 +356,24 @@
   )
 
 ;; Highlight parens
-(show-paren-mode)
-(setq show-paren-style 'mixed)	;; The entire expression
+(use-package paren
+  :config (progn
+            (setq show-paren-style 'mixed)	;; The entire expression
+            (setq blink-matching-paren t)
+            )
+  :init (progn
+          (show-paren-mode)
+          (set-face-background 'show-paren-match (face-background 'default))
+          (set-face-foreground 'show-paren-match "#def")
+          (set-face-attribute 'show-paren-match nil :weight 'extra-bold))
+  )
+
 
 ;; -------------------------------------------------------------------
 ;; Save history during sessions
 ;; -------------------------------------------------------------------
 (use-package savehist
+  :ensure t
   :config (progn
             (savehist-mode t)
             (setq savehist-additional-variables '(extended-command-history kill-ring))))
@@ -429,52 +383,19 @@
 ;; -------------------------------------------------------------------
 ;; Helm project
 ;; -------------------------------------------------------------------
-(require 'setup-helm)
+(use-package setup-helm
+  :load-path local-load-path
+  )
 
 ;; -------------------------------------------------------------------
-;; ivy mode
+;; Projectile mode
 ;; -------------------------------------------------------------------
-(use-package counsel
-  :ensure t
-  :config
-  (setq ivy-use-virtual-buffers t
-        ivy-count-format "(%d / %d) "
-        ivy-height 25
-        counsel-find-file-ignore-regexp (concat
-                                         ;; File names beginning with # or .
-                                         "\\(?:\\`[#.]\\)"
-                                         ;; File names ending with # or ~
-                                         "\\|\\(?:\\`.+?[#~]\\'\\)")
-        ;; ivy-re-builders-alist '((t . ivy--regex-fuzzy))
-        )
-  (ivy-mode t)
-  (counsel-mode t)
-  :bind* (
-          ("C-s" . swiper)
-          ("C-c C-r" . ivy-resume)
-          ("C-." . counsel-imenu)
-          ("C-c c" . counsel-org-capture)
-          ))
-
-;; Some additional hydras for ivy
-(use-package ivy-hydra
-  :ensure t)
-
-
-;; Needed for ivy occur edit mode
-(use-package wgrep
-  :ensure t)
-
-;; -------------------------------------------------------------------
-;; projectile mode
-;; -------------------------------------------------------------------
-
 (use-package projectile
   :defer t
   :ensure t
   :init (progn
           (setq projectile-file-exists-remote-cache-expire nil)
-          (setq projectile-mode-line '(:eval (format " Projectile[%s]" (projectile-project-name))))
+          (setq projectile-mode-line '(:eval (format " [%s]" (projectile-project-name))))
           (setq projectile-globally-ignored-directories
                 (quote
                  (".idea" ".eunit" ".git" ".hg" ".svn"
@@ -494,27 +415,6 @@
   )
 
 ;; -------------------------------------------------------------------
-;; treemacs
-;; -------------------------------------------------------------------
-(use-package treemacs
-  :ensure t
-  :init (progn
-         (global-set-key [f8] 'treemacs)
-         )
-  )
-
-;; Set the neo-window-width to the current width of the
-;; neotree window, to trick neotree into resetting the
-;; width back to the actual window width.
-;; Fixes: https://github.com/jaypei/emacs-neotree/issues/262
-(eval-after-load "neotree"
-  '(add-to-list 'window-size-change-functions
-                (lambda (frame)
-                  (let ((neo-window (neo-global--get-window)))
-                    (unless (null neo-window)
-                      (setq neo-window-width (window-width neo-window)))))))
-
-;; -------------------------------------------------------------------
 ;; highlight symbol and replace
 ;; -------------------------------------------------------------------
 (use-package highlight-symbol
@@ -529,7 +429,7 @@
   )
 
 ;; -------------------------------------------------------------------
-;; Enable lsp
+;; Enable lsp and treemacs
 ;; -------------------------------------------------------------------
 
 ;;
@@ -575,6 +475,13 @@
          (c-mode . which-key-mode)
          ))
 
+(use-package treemacs
+  :ensure t
+  :init (progn
+         (global-set-key [f8] 'treemacs)
+         )
+  )
+
 (use-package lsp-treemacs
   :ensure t
   :after lsp
@@ -610,7 +517,7 @@
   )
 
 ;; ===================================================================
-;; Adjusting different modes
+;; Adjusting modes for programming
 ;; ===================================================================
 ;; -------------------------------------------------------------------
 ;; Ansi term for zsh in emacs buffer
@@ -646,16 +553,6 @@
          ("CMakeLists.txt" . cmake-mode))
   :ensure t)
 
-;; (use-package flycheck-clang-tidy
-;;   :ensure t
-;;   :after flycheck
-;;   :config (progn
-;;             (setq flycheck-clang-tidy-executable "/usr/bin/clang-tidy-athena-1")
-;;             )
-;;   :hook
-;;   (flycheck-mode . flycheck-clang-tidy-setup)
-;;   )
-
 (use-package c++-mode
   :mode (("\\.cpp$'" . c++-mode)
          ("\\.hpp$'" . c++-mode))
@@ -664,25 +561,8 @@
                                      (subword-mode t))))  ; CamelCase are two words
   )
 
-;; (use-package ggtags
-;;   :ensure t
-;;   :hook ((c-mode . ggtags-mode)
-;;          (c++-mode . ggtags-mode)
-;;          (java-mode . ggtags-mode)
-;;          (asm-mode . ggtags-mode))
-;;   :init (progn
-;;           (setq-local imenu-create-index-function #'ggtags-build-imenu-index)
-;;           )
-;;   :bind (:map c++-mode-map
-;;               ("C-c g s" . ggtags-find-other-symbol)
-;;               ("C-c g h" . ggtags-view-tag-history)
-;;               ("C-c g r" . ggtags-find-reference)
-;;               ("C-c g f" . ggtags-find-file)
-;;               ("C-c g c" . ggtags-create-tags)
-;;               ("C-c g u" . ggtags-update-tags)
-;;               ("M-." . pop-tag-mark))
-;;   )
-
+;; switch between header and source
+(global-set-key [(control tab)] 'ff-find-other-file)
 
 (use-package company
   :ensure t
@@ -693,7 +573,7 @@
                (delete 'company-semantic company-backends))
          )
   :bind (:map c++-mode-map
-              ("TAB" . company-complete)
+              ("<tab>" . company-complete)
               )
   )
 
@@ -706,31 +586,16 @@
             )
   )
 
-;; (use-package cedet
-;;   :ensure t)
+(use-package clang-format+
+  :ensure
+  :hook (c++-mode . clang-format+-mode)
+  :config (progn
+            (setq clang-format-executable "/usr/bin/clang-format"))
+  )
 
-;; (require 'cc-mode)
-;; (require 'semantic)
-
-;; (global-semanticdb-minor-mode 1)
-;; (global-semantic-idle-scheduler-mode 1)
-
-;; (semantic-mode 1)
-
-;; (semantic-add-system-include "/usr/include/boost" 'c++-mode)
-
-;; (use-package quelpa
-;;   :ensure t)
-
-;; (use-package quelpa-use-package
-;;   :ensure t)
-
-;; (use-package gdb-mi :quelpa (gdb-mi :fetcher git
-;;                                     :url "https://github.com/weirdNox/emacs-gdb.git"
-;;                                     :files ("*.el" "*.c" "*.h" "Makefile"))
-;;   :init
-;;   (fmakunbound 'gdb)
-;;   (fmakunbound 'gdb-enable-debug))
+;; Interpret SConstruct file as python source file
+(add-to-list 'auto-mode-alist '("SConstruct" . python-mode))
+(add-to-list 'auto-mode-alist '("SConscript" . python-mode))
 
 ;; -------------------------------------------------------------------
 ;; CRAN R
@@ -795,22 +660,20 @@
           (setq TeX-auto-save t)
           (setq TeX-auto-parse t)
 
-          (add-hook 'LaTeX-mode-hook 'turn-on-reftex)   ; with AUCTeX LaTeX mode
-          (add-hook 'latex-mode-hook 'turn-on-reftex)   ; with Emacs latex mode
-          (add-hook 'LaTeX-mode-hook 'reftex-mode)      ; with Emacs latex mode
-          ;; (add-hook 'LaTeX-mode-hook 'auto-fill-mode)
-          (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
-          (add-hook 'LaTeX-mode-hook 'TeX-PDF-mode)     ; turn on pdf mode
-
-          (setq LaTeX-command "latex -synctex=1")
-
-          (setq reftex-default-bibliography (quote ("/home/franzefn/Promotion/Literatur/bibliothek/jabref/library.bib")))
+          (setq LaTeX-command "latex -synctex=1") ;; enable synctex
           )
   :config (progn
             ;; Set index on document
             (add-hook 'reftex-load-hook 'imenu-add-menubar-index)
             (add-hook 'reftex-mode-hook 'imenu-add-menubar-index)
             )
+  :hook (
+         (LaTeX-mode . turn-on-reftex)
+         (latex-mode . turn-on-reftex)
+         (LaTeX-mode . reftex-mode)
+         (LaTeX-mode . LaTeX-math-mode)
+         (LaTeX-mode . TeX-PDF-mode)
+         )
   )
 
 ;; emacs RefTeX
@@ -851,12 +714,10 @@
 ;; Do not ask to save before compile
 (setq compilation-ask-about-save nil)
 
-;; Always scroll the compilation output buffer until the first error appears
+;; Always scroll the compilation output buffer until the first error
+;; appears
 (setq compilation-scroll-output 'firsterror)
 
-;; -------------------------------------------------------------------
-;; add make command to standard latex commands
-;; -------------------------------------------------------------------
 ;; add make command to tex file
 (add-hook 'LaTeX-mode-hook
    (lambda ()
@@ -918,6 +779,7 @@
 ;; -------------------------------------------------------------------
 
 (defun fd-switch-dictionary()
+  "Switch dictionary from American English to German an vice versa."
   (interactive)
   (let* ((dic ispell-current-dictionary)
          (change (if (string= dic "de_DE") "en_US" "de_DE")))
@@ -979,11 +841,6 @@
 (add-hook 'text-mode-hook 'flyspell-mode)
 
 ;; -------------------------------------------------------------------
-;; Prolog
-;; -------------------------------------------------------------------
-(add-to-list 'auto-mode-alist '("\\.pl$" . prolog-mode))
-
-;; -------------------------------------------------------------------
 ;; Haskell
 ;; -------------------------------------------------------------------
 (use-package haskell-mode
@@ -1001,23 +858,7 @@
   :ensure)
 
 ;; -------------------------------------------------------------------
-;; C++ integration with scons
-;; -------------------------------------------------------------------
-
-;; Interpret SConstruct file as python source file
-(add-to-list 'auto-mode-alist '("SConstruct" . python-mode))
-(add-to-list 'auto-mode-alist '("SConscript" . python-mode))
-
-;; switch between header and source
-(global-set-key [(control tab)] 'ff-find-other-file)
-
-;; -------------------------------------------------------------------
-;; Octave integration
-;; -------------------------------------------------------------------
-(add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
-
-;; -------------------------------------------------------------------
-;; Python integration
+;; Python
 ;; -------------------------------------------------------------------
 
 (use-package lsp-python-ms
@@ -1054,13 +895,13 @@
 (setq py-shell-switch-buffers-on-execute nil)
 
 ;; install black and black-macchiato with pip3 install --user -U
-;; black-macchiato black if black is not available as executable,
-;; provide a dummy one that runs black in library mode
+;; black-macchiato black if black is not available as executable in
+;; ~/.local/bin, provide a dummy one that runs black in library mode
 ;; python3 -m black "${@}"
 (use-package python-black
   :ensure t
   :after python
-  :hook ((elpy-mode . python-black-on-save-mode))
+  :hook ((python-mode . python-black-on-save-mode))
   )
 
 (use-package conda
@@ -1096,17 +937,11 @@
   :diminish flycheck-mode
   :config (progn
             (global-flycheck-mode)
-            ))
+            )
+)
 
 (use-package blacken
   :ensure t)
-
-(use-package clang-format+
-  :ensure
-  :hook (c++-mode . clang-format+-mode)
-  :config (progn
-            (setq clang-format-executable "/usr/bin/clang-format"))
-  )
 
 ;; -------------------------------------------------------------------
 ;; Shell
@@ -1298,6 +1133,7 @@
     ))
 
 (use-package flycheck-plantuml
+  :after flycheck
   :ensure t
   )
 
