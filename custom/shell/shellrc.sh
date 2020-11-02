@@ -46,7 +46,7 @@ export SVN_EDITOR=vim
 export GIT_EDITOR=vim
 
 # expand path to include local bin directory
-PATH=/usr/local/cmake/3.15.3/bin:$HOME/opt/bin:$HOME/.local/bin:$PATH
+PATH=/usr/local/cmake/3.15.5/bin:$HOME/opt/bin:$HOME/.local/bin:$PATH
 
 # moving files to trash from command line
 alias "trash"="gvfs-trash"
@@ -68,7 +68,7 @@ if [[ -n "${ZSH_NAME}" ]]; then
     fi
 elif [[ -n "${BASH}" ]]; then
     # melodic is only for Ubuntu 18.04
-    if [[ -f /opt/ros/melodic/setup.zsh ]]; then
+    if [[ -f /opt/ros/melodic/setup.bash ]]; then
         . /opt/ros/melodic/setup.bash
     fi
 fi
@@ -95,8 +95,8 @@ export HOST_ARTIFACTS_CACHE=$HOME/artifacts
 # export DOL_HOST="http://172.17.0.2:5000"
 
 # required by lidar
-export C2C_CAR_ID=v222-5218 # lisa hks22
-export C2C_HW_VERSION=3.1
+export C2C_CAR_ID=lisa # lisa hks22
+# export C2C_HW_VERSION=3.1
 
 # export cuda paths
 export CUDA_ROOT=/usr/local/cuda

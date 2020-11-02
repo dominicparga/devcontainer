@@ -916,7 +916,7 @@
 
 ;; supports virtual environments. To be set with pyvenv-workon
 (use-package pyvenv
-  :ensur t)
+  :ensure t)
 
 ;; -------------------------------------------------------------------
 ;; Sphinx documentation
