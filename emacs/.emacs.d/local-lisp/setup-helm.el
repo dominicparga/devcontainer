@@ -112,10 +112,12 @@
     (use-package helm-swoop
       :ensure t
       :bind (("C-c h o" . helm-swoop)
-             ("C-s" . helm-multi-swoop-all))
+             ("C-s" . helm-swoop-from-isearch)
+             ("C-c s" . helm-multi-swoop-all)
+             )
       :config
       ;; When doing isearch, hand the word over to helm-swoop
-      (define-key isearch-mode-map (kbd "M-i") 'helm-swoop-from-isearch)
+      (define-key isearch-mode-map (kbd "M-i") 'helm-multi-swoop-all)
 
       ;; From helm-swoop to helm-multi-swoop-all
       (define-key helm-swoop-map (kbd "M-i") 'helm-multi-swoop-all-from-helm-swoop)
