@@ -111,8 +111,7 @@
     ;; Locate the helm-swoop folder to your path
     (use-package helm-swoop
       :ensure t
-      :bind (("C-c h o" . helm-swoop)
-             ("C-s" . helm-swoop-from-isearch)
+      :bind (("C-s" . helm-swoop)
              ("C-c s" . helm-multi-swoop-all)
              )
       :config
@@ -132,7 +131,14 @@
       (setq helm-swoop-split-direction 'split-window-vertically)
 
       ;; If nil, you can slightly boost invoke speed in exchange for text color
-      (setq helm-swoop-speed-or-color t))
+      (setq helm-swoop-speed-or-color t)
+
+      ;; Always use the previous search for helm. Remember
+      ;; C-<backspace> will delete entire line
+      (setq helm-swoop-pre-input-function
+            (lambda () (if (boundp 'helm-swoop-pattern)
+                           helm-swoop-pattern "")))
+      )
 
     (use-package helm-mt
       :after multi-term
