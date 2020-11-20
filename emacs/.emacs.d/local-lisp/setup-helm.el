@@ -133,6 +133,13 @@
       ;; If nil, you can slightly boost invoke speed in exchange for text color
       (setq helm-swoop-speed-or-color t)
 
+      ;; Optional face for line numbers
+      ;; Face name is `helm-swoop-line-number-face`
+      (setq helm-swoop-use-line-number-face t)
+
+      ;; If you prefer fuzzy matching
+      (setq helm-swoop-use-fuzzy-match t)
+
       ;; Always use the previous search for helm. Remember
       ;; C-<backspace> will delete entire line
       (setq helm-swoop-pre-input-function
