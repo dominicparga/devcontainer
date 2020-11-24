@@ -111,8 +111,8 @@
     ;; Locate the helm-swoop folder to your path
     (use-package helm-swoop
       :ensure t
-      :bind (("C-s" . helm-swoop)
-             ("C-c s" . helm-multi-swoop-all)
+      :bind (("C-s" . helm-swoop-without-pre-input)
+             ("C-c s" . helm-swoop)
              )
       :config
       ;; When doing isearch, hand the word over to helm-swoop
