@@ -559,7 +559,7 @@
   :ensure
   :hook (c++-mode . clang-format+-mode)
   :config (progn
-            (setq clang-format-executable "/usr/bin/clang-format"))
+            (setq clang-format-executable "/usr/bin/clang-format-athena-1"))
   )
 
 ;; Interpret SConstruct file as python source file
