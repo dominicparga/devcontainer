@@ -143,7 +143,7 @@ if ( is_machine 'macOS' ); then
 fi
 
 # Kubernetes
-alias k='kubectl --namespace=development-franzef'
+alias k='kubectl --namespace=development-${USER}'
 
 # Docker
 alias dor='docker run -it -e "DEBIAN_FRONTEND=noninteractive" -e "TERM=xterm-color" -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --shm-size="16g" --entrypoint "/bin/bash"'
