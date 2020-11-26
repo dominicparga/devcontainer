@@ -40,7 +40,7 @@
     "editor.cursorStyle": "line",
     "editor.renderLineHighlight": "none",
     "editor.renderFinalNewline": true,
-    "editor.formatOnSave": false,
+    "editor.formatOnSave": true,
     "editor.tokenColorCustomizations": true,
     // whitespaces
     "editor.renderWhitespace": "none",
@@ -643,7 +643,7 @@
         "roudi"
     ],
     "C_Cpp.updateChannel": "Insiders",
-    "python.languageServer": "Microsoft",
+    "python.languageServer": "Pylance",
     "python.defaultInterpreterPath": "${env:PYTHON_INTERPRETER_PATH}",
     "terminal.integrated.shell.linux": "/bin/zsh",
     "diffEditor.ignoreTrimWhitespace": false,
@@ -658,4 +658,17 @@
         "**/.metals": true,
         "**/.ammonite": true
     },
+    "java.project.importHint": false,
+    "liveshare.featureSet": "insiders",
+    "clangd.path": "/lhome/franzef/.config/Code/User/globalStorage/llvm-vs-code-extensions.vscode-clangd/install/11.0.0/clangd_11.0.0/bin/clangd",
+    "python.analysis.extraPaths": [
+        "${env:ATHENA_ROOT}/devel/lib",
+        "${env:ATHENA_ROOT}/install/lib",
+        "${env:ATHENA_ROOT}/install/lib/python2.7/dist-packages",
+        "${env:ATHENA_ROOT}/install/lib/python3/dist-packages",
+        "${env:ATHENA_ROOT}/src/tools/dol/executer"
+    ],
+    "python.analysis.completeFunctionParens": true,
+    "python.formatting.provider": "black",
+    "liveshare.allowInvites": "all",
 }
