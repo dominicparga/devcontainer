@@ -134,3 +134,4 @@ Host hdc
      Hostname hdc.de.bosch.com
      Port 22
      IdentityFile /home/frf2lr/.ssh/id_rsa
+     LocalForward 6443 localhost:6443
