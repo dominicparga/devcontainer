@@ -1,3 +1,3 @@
 kdscd() {
- helm delete cluster-deployment --kube-context dol_master@sunnyvale --namespace development-franzef
+ helm delete cluster-deployment --kube-context dol_master@sunnyvale --namespace development-${USER}
 }

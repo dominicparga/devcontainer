@@ -89,8 +89,8 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$KERBEROS_HOME/lib:$LIBHDFS3_ROOT/lib
 export CERT_PATH=$HOME/.local/share/certificates
 
 # athena -> with athena_dol
-export ATHENA_ROOT=$HOME/workspace/athena
-export WORKSPACE=$ATHENA_ROOT
+export ATHENA_ROOT=$HOME/workspace/athena_sil
+# export WORKSPACE=$ATHENA_ROOT
 export HOST_ARTIFACTS_CACHE=$HOME/artifacts
 # export DOL_HOST="http://172.17.0.2:5000"
 
@@ -98,10 +98,10 @@ export HOST_ARTIFACTS_CACHE=$HOME/artifacts
 export C2C_CAR_ID=lisa # lisa hks22
 # export C2C_HW_VERSION=3.1
 
-# export cuda paths
-export CUDA_ROOT=/usr/local/cuda
-export CUDA_INC_DIR=$CUDA_ROOT/include
-source /etc/profile.d/cuda-10-0.sh
+# # export cuda paths
+# export CUDA_ROOT=/usr/local/cuda
+# export CUDA_INC_DIR=$CUDA_ROOT/include
+# source /etc/profile.d/cuda-10-0.sh
 
 # Airflow
 export CLUSTER_DEPLOYMENTS_HOME="$HOME/workspace/cluster-deployments"
@@ -149,15 +149,21 @@ export POSTGRES_PORT=2345
 #------------------------------------------------------------------------------#
 # Kubernetes setup
 
-if [[ -n "${ZSH_NAME}" ]]; then
-    source <(kubectl completion zsh)
-elif [[ -n "${BASH}" ]]; then
-    source <(kubectl completion bash)
-fi
+# if [[ -n "${ZSH_NAME}" ]]; then
+#     source <(kubectl completion zsh)
+# elif [[ -n "${BASH}" ]]; then
+#     source <(kubectl completion bash)
+# fi
 
 # Lidar semantic labelingcod
 export EXPORTER_BASE_OUTPATH=/tmp/lidar
 export VEHICLE_IDENTIFIER=WDD2221621Z003456
+
+# npm
+NPM_VERSION='v15.0.1'
+NPM_DISTRO='linux-x64'
+export PATH="/usr/local/lib/nodejs/node-${NPM_VERSION}-${NPM_DISTRO}/bin:${PATH}"
+
 
 # SGpp
 export SGPP_HOME=$HOME/workspace/SGpp_ff
@@ -165,7 +171,12 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$SGPP_HOME/lib/sgpp
 export PYTHONPATH=$PYTHONPATH:$SGPP_HOME/lib
 
 # Player 2.0
-export RECAPP_RELEASE_DIR=/opt/recapp/0.11a.0jtv1/ubuntu1804
+export RECAPP_INT_HOME=$HOME/workspace/recapp_int
+export RECAPP_HOME=$RECAPP_INT_HOME/recompute
+export RECAPP_INT_RELEASE_DIR=$RECAPP_INT_HOME/install
+export RECAPP_RELEASE_DIR=$RECAPP_INT_HOME/install/recapp
+
+export PATH=$PATH:$RECAPP_RELEASE_DIR/bin:$RECAPP_RELEASE_DIR/bin/dol
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$RECAPP_RELEASE_DIR/lib
 export PYTHONPATH=$PYTHONPATH:$RECAPP_RELEASE_DIR/lib/python2.7/dist-packages:$RECAPP_RELEASE_DIR/lib:$RECAPP_RELEASE_DIR/bin/bytesoup_inspector
 
@@ -188,24 +199,18 @@ complete -o default -F _pip_completion pip
 # pip bash completion end
 
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/lhome/franzef/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/lhome/franzef/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/lhome/franzef/anaconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/lhome/franzef/anaconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-conda deactivate
-# <<< conda initialize <<<
-
-# Created by `userpath` on 2020-10-09 10:40:30
-export PATH="$PATH:/lhome/franzef/.local/bin"
-
-# Autocompletion for pipx
-eval "$(register-python-argcomplete pipx)"
+# # >>> conda initialize >>>
+# # !! Contents within this block are managed by 'conda init' !!
+# __conda_setup="$('/lhome/franzef/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+# if [ $? -eq 0 ]; then
+#     eval "$__conda_setup"
+# else
+#     if [ -f "/lhome/franzef/anaconda3/etc/profile.d/conda.sh" ]; then
+#         . "/lhome/franzef/anaconda3/etc/profile.d/conda.sh"
+#     else
+#         export PATH="/lhome/franzef/anaconda3/bin:$PATH"
+#     fi
+# fi
+# unset __conda_setup
+# conda deactivate
+# # <<< conda initialize <<<

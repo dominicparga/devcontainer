@@ -129,3 +129,8 @@ Host abstatt_remote
 Host ali
      Hostname c624duadsf00031.us264.corpintra.net
      Port 22
+
+Host hdc
+     Hostname hdc.de.bosch.com
+     Port 22
+     IdentityFile /home/frf2lr/.ssh/id_rsa

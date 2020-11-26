@@ -1,16 +1,10 @@
 [include]
     path = "~/.gitconfig.general"
-[http "https://athena.daimler.com"]
-    sslCert = /lhome/franzef/.local/share/certificates/cert-dap.crt
-    sslKey = /lhome/franzef/.local/share/certificates/cert-dap.key
-    sslCaInfo = /etc/ssl/certs/ca-certificates.crt
-    sslVerify = false
-    proxy = http://localhost:3128
 [core]
     autocrlf = input
     editor = vim
 [user]
-    name = Fabian Franzelin
+    name = Fabian Franzelin (CC/AD-ESB4)
     email = fabian.franzelin@de.bosch.com
 [credential]
     helper = "cache --timeout=3600"  # cache credentials for 60 minutes

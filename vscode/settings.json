@@ -649,6 +649,8 @@
     "diffEditor.ignoreTrimWhitespace": false,
     "cmake.configureOnOpen": false,
     "editor.formatOnSaveMode": "modifications",
+    "python.dataScience.alwaysTrustNotebooks": true,
+    "python.dataScience.askForKernelRestart": false,
     "jupyter.alwaysTrustNotebooks": true,
     "jupyter.askForKernelRestart": false,
     "files.watcherExclude": {
