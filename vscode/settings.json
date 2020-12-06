@@ -5,10 +5,10 @@
   "window.titleBarStyle": "custom",
   "window.zoomLevel": 1,
   "workbench.editor.showTabs": true,
-  "workbench.sideBar.location": "right",
+  "workbench.sideBar.location": "left",
   "workbench.statusBar.visible": true,
   "workbench.iconTheme": "material-icon-theme",
-  "workbench.colorTheme": "Dracula", // Nord
+  "workbench.colorTheme": "Nord", // "Dracula",
   "workbench.activityBar.visible": true,
   "window.menuBarVisibility": "compact",
   "breadcrumbs.enabled": true,
@@ -47,7 +47,8 @@
   //     "editorWhitespace.foreground": "#ff0000",
   //     // "editorIndentGuide.activeBackground": "#88C0D0",
   //     // "editorIndentGuide.background": "#4C566A",
-  // },
+  // }a
+
   "files.trimTrailingWhitespace": false, // some files need false!
   "diffEditor.ignoreTrimWhitespace": false,
   // tabs
@@ -150,8 +151,11 @@
   //------------------------------------------------------------------------//
   // java
   "[java]": {
-    "editor.rulers": [100]
+    "editor.rulers": [100],
+    "editor.defaultFormatter": "redhat.java",
+    "editor.formatOnSave": true
   },
+  "java.format.settings.url": "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml",
   "java.configuration.checkProjectSettingsExclusions": false,
   //------------------------------------------------------------------------//
   // JavaScript
@@ -233,7 +237,8 @@
     "editor.formatOnSave": true
   },
   "python.formatting.provider": "autopep8",
-  "python.languageServer": "Microsoft",
+  "python.languageServer": "Pylance",
+  "python.analysis.completeFunctionParens": true,
   "python.pythonPath": "${env:PYTHON_INTERPRETER_PATH}",
   "python.autoComplete.addBrackets": true,
   "python.linting.enabled": true,
@@ -281,6 +286,9 @@
   "shellcheck.ignorePatterns": {},
   "shellcheck.useWSL": false,
   //------------------------------------------------------------------------//
+  // SQL
+  "vscode-mysql.enableTelemetry": false,
+  //------------------------------------------------------------------------//
   // TypeScript
   "[typescript]": {
     "editor.rulers": [100],
@@ -314,10 +322,6 @@
   "vim.smartcase": true,
   // easymotion
   "vim.easymotion": true,
-  "vim.easymotionMarkerFontFamily": "Cascadia Code, Menlo, Courier, monospace",
-  "vim.easymotionMarkerFontSize": "16",
-  "vim.easymotionMarkerWidthPerChar": 10,
-  "vim.easymotionMarkerHeight": 22,
   // keybindings
   "vim.changeWordIncludesWhitespace": true,
   "vim.visualModeKeyBindingsNonRecursive": [
@@ -526,43 +530,5 @@
       "before": ["<leader>", "t", "9"],
       "commands": ["workbench.action.openEditorAtIndex9"]
     }
-  ],
-  //------------------------------------------------------------------------//
-  // kutgw
-  // cquery
-  "cquery.launch.command": "cquery",
-  // TODOs
-  "todohighlight.defaultStyle": {
-    "color": "#5E71A4",
-    "backgroundColor": "#282A36",
-    "overviewRulerColor": "#000000",
-    "border": "1px solid #5E71A4",
-    "borderRadius": "2px",
-    "isWholeLine": false
-  },
-  "todohighlight.keywords": [
-    {
-      "text": "TODO:",
-      "color": "#5E71A4",
-      "backgroundColor": "#282A36",
-      "overviewRulerColor": "#000000",
-      "border": "1px solid #5E71A4",
-      "borderRadius": "2px",
-      "isWholeLine": false
-    },
-    {
-      "text": "FIXME:",
-      "color": "#5E71A4",
-      "backgroundColor": "#282A36",
-      "overviewRulerColor": "#000000",
-      "border": "1px solid #5E71A4",
-      "borderRadius": "2px",
-      "isWholeLine": false
-    },
-    "HINT:",
-    "INFO:",
-    "WARN:",
-    "ERROR:",
-    "ERR:"
   ]
 }
