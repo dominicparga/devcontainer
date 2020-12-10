@@ -9,8 +9,8 @@
     prune = true
 [alias]
     # general
-    h = "help"
-    s = "status"
+    h    = "help"
+    s    = "status"
     hash = "rev-parse --verify HEAD"
 
     # efficient staging
@@ -25,13 +25,15 @@
     ca  = !"git add -A && git status && git commit"
     cm  = "commit -m"
     cam = !"git add -A && git status && git commit -m"
+    f   = "fetch"
+    fa  = "fetch --all"
 
     # tagging
     tags = "tag"
-    tl = "tag" # same as "tag --list"
-    ta = "tag --annotate"
-    twm = "tag --message='See CHANGELOG.md' --annotate"
-    td = "tag --delete"
+    tl   = "tag" # same as "tag --list"
+    ta   = "tag --annotate"
+    twm  = "tag --message='See CHANGELOG.md' --annotate"
+    td   = "tag --delete"
 
     # merging
     m       = "merge"
@@ -39,13 +41,13 @@
     squeeze = "merge --squash"
 
     # branching
-    co      = "checkout"
-    cob     = "checkout -b"
+    co  = "checkout"
+    cob = "checkout -b"
     # list branches sorted by last modified
-    b  = "branch"
+    b   = "branch"
     ba  = "branch --list -a"
     bv  = "branch --list -v"
-    bav  = "branch --list -av"
+    bav = "branch --list -av"
 
     # show last n commits where n is given as parameter (default is 1)
     last = !"last() { git log -${1:-1} HEAD; }; last"
