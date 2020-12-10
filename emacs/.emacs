@@ -55,6 +55,10 @@
 
 (server-start)
 
+;; Enable ahead-of-time compliation when installing packages
+;; https://www.emacswiki.org/emacs/GccEmacs
+(setq package-native-compile t)
+
 ;; Support Wheel Mouse Scrolling
 (mouse-wheel-mode t)
 
@@ -409,23 +413,33 @@
   :hook ((lsp-mode . (lambda ()
                        (let ((lsp-keymap-prefix "C-c l"))
                          (lsp-enable-which-key-integration))))
-         (c++-mode . lsp)
-         (c-mode . lsp)
-         (java-mode . lsp)
-         (python-mode . lsp)
-         (typescript-mode . lsp)
+         (c++-mode . lsp-deferred)
+         (c-mode . lsp-deferred)
+         (java-mode . lsp-deferred)
+         (python-mode . lsp-deferred)
+         (typescript-mode . lsp-deferred)
          )
   :config (progn
             (define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
             (setq lsp-ui-doc-position 'top
                   lsp-ui-doc-alignment 'window
-                  lsp-pyls-plugins-flake8-config "/lhome/franzef/.flake8"
+                  ;; if set to true can cause a performance hit
+                  lsp-log-io nil
+                  lsp-pyls-plugins-flake8-config (expand-file-name "~/.flake8")
                   lsp-pyls-plugins-flake8-enabled t
                   lsp-pyls-plugins-pycodestyle-enabled nil
                   ;; lsp-enable-snippet nil
                   ;; lsp-prefer-flymake :none))
                   ;; lsp-enable-snippet nil
+                  ;; Ignore files and folders when watchin
+                  ;; lsp-file-watch-ignored ("[/\\\\]\\.pyc$" "[/\\\\]_build")
             )))
+
+;; increase threshold for lsp to run smoothly
+;; https://emacs-lsp.github.io/lsp-mode/page/performance/
+(setq gc-cons-threshold 100000000)
+(setq read-process-output-max (* 1024 1024)) ;; 1mb
+(setq lsp-completion-provider :capf)
 
 (use-package lsp-ui
   :ensure t
@@ -456,6 +470,7 @@
   :after lsp
   :after treemacs
   :after company
+  :commands lsp-treemacs-errors-list
   :config (setq gc-cons-threshold (* 100 1024 1024)
                 read-process-output-max (* 1024 1024)
                 treemacs-space-between-root-nodes nil
@@ -538,13 +553,19 @@
   :hook ((c++-mode . global-company-mode)
          (c-mode . global-company-mode))
   :config (progn
-         (setq company-backends
-               (delete 'company-semantic company-backends))
-         )
+            (setq company-backends
+                  (delete 'company-semantic company-backends))
+            (setq company-minimum-prefix-length 1
+                  company-idle-delay 0.0) ;; default is 0.2
+            )
   :bind (:map c++-mode-map
               ("<tab>" . company-complete)
               )
   )
+
+(with-eval-after-load 'lsp-mode
+  ;; :global/:workspace/:file
+  (setq lsp-modeline-diagnostics-scope :workspace))
 
 (use-package company-c-headers
   :ensure t

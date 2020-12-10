@@ -116,3 +116,4 @@ emacs/.emacs.d/session*
 /emacs/.emacs.d/.dap-breakpoints
 /emacs/.emacs.d/.python-environments/
 /emacs/.emacs.d/workspace/
+/emacs/.emacs.d/eln-cache/

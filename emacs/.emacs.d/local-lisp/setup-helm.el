@@ -156,6 +156,7 @@
       :ensure t)
 
     (use-package helm-lsp
+      :commands helm-lsp-workspace-symbol
       :ensure)
 
     (helm-mode 1)
