@@ -1,6 +1,7 @@
 ;;; .emacs --- this file starts here
 
 ;;; Commentary:
+;; inspired by https://github.com/daviwil/dotfiles/blob/master/Emacs.org
 
 ;;; Code:
 
