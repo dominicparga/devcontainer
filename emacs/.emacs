@@ -15,9 +15,12 @@
 ;; Package Management
 (require 'package)
 (setq package-enable-at-startup nil)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-;; (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
-;; (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                         ;; ("melpa-stable" . "https://stable.melpa.org/packages/")
+                         ("org" . "https://orgmode.org/elpa/")
+                         ("elpa" . "https://elpa.gnu.org/packages/")))
+
 (defvar local-load-path (expand-file-name "~/.emacs.d/local-lisp"))
 (add-to-list 'load-path local-load-path)
 
@@ -35,12 +38,44 @@
 ;; Basic Settings
 ;; ===================================================================
 
+(server-start)
+
+;; library for defining prefixed keybindings
+;; https://github.com/noctuid/general.el
+(use-package general
+  :ensure t
+  :config
+  (general-evil-setup t)
+
+  (general-create-definer dw/leader-key-def
+    :keymaps '(normal insert visual emacs)
+    :prefix "SPC"
+    :global-prefix "C-SPC")
+
+  (general-create-definer dw/ctrl-c-keys
+    :prefix "C-c"))
+
+;; The default is 800 kilobytes.  Measured in bytes.
+(setq gc-cons-threshold (* 50 1000 1000))
+
+;; Profile emacs startup
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (message "*** Emacs loaded in %s with %d garbage collections."
+                     (format "%.2f seconds"
+                             (float-time
+                              (time-subtract after-init-time before-init-time)))
+                     gcs-done)))
+
 ;disable backup
 (setq backup-inhibited t)
 (setq make-backup-files nil)
 
 ;disable auto save
 (setq auto-save-default nil)
+
+;; dont warn for following symlinked files
+(setq vc-follow-symlinks t)
 
 ;; disable scrollbar
 (scroll-bar-mode -1)
@@ -52,8 +87,6 @@
 (global-auto-revert-mode 1)
 
 (defalias 'yes-or-no-p 'y-or-n-p)
-
-(server-start)
 
 ;; Enable ahead-of-time compliation when installing packages
 ;; https://www.emacswiki.org/emacs/GccEmacs
@@ -96,6 +129,8 @@
   :ensure t
   )
 
+(load-theme 'material t)
+
 ;; remove toolbar
 (tool-bar-mode -1)
 (menu-bar-mode -1)
@@ -116,7 +151,7 @@
 
 ;; Indentation
 (setq-default indent-tabs-mode nil)    ; use only spaces and no tabs
-(setq tab-width 4)
+(setq-default tab-width 4)
 
 ;; Delete trailing white spaces
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
@@ -174,11 +209,64 @@
 ;; set zsh as default shell name
 (setq shell-file-name "/bin/zsh")
 
+;; enable emojis in buffers
+(use-package emojify
+  :hook (erc-mode . emojify-mode)
+  :commands emojify-mode)
+
+;; Set default connection mode to SSH
+(setq tramp-default-method "ssh")
+
+(use-package evil-nerd-commenter
+  :ensure t
+  :bind ("M-;" . evilnc-comment-or-uncomment-lines))
+
+;; -------------------------------------------------------------------
+;; Credential management
+;; -------------------------------------------------------------------
+
+(use-package ivy-pass
+  :ensure t
+  :commands ivy-pass
+  :config
+  (setq password-store-password-length 12))
+
+(use-package auth-source-pass
+  :ensure t
+  :config
+  (auth-source-pass-enable))
+
+;; -------------------------------------------------------------------
+;; Open files externally
+;; -------------------------------------------------------------------
+(use-package openwith
+  :ensure t
+  :config
+  (setq openwith-associations
+    (list
+      (list (openwith-make-extension-regexp
+             '("mpg" "mpeg" "mp3" "mp4"
+               "avi" "wmv" "wav" "mov" "flv"
+               "ogm" "ogg" "mkv"))
+             "mpv"
+             '(file))
+      (list (openwith-make-extension-regexp
+             '("xbm" "pbm" "pgm" "ppm" "pnm"
+               "png" "gif" "bmp" "tif" "jpeg")) ;; Removed jpg because Telega was
+                                                ;; causing feh to be opened...
+             "feh"
+             '(file))
+      (list (openwith-make-extension-regexp
+             '("pdf"))
+             "zathura"
+             '(file))))
+  (openwith-mode 1))
+
 ;; -------------------------------------------------------------------
 ;; Copy & Paste
 ;; -------------------------------------------------------------------
 
-;; (transient-mark-mode 1) ; Now on by default: makes the region act
+;; ;; (transient-mark-mode 1) ; Now on by default: makes the region act
 ;; quite like the text "highlight" in many apps.  (setq
 ;; shift-select-mode t) ; Now on by default: allows shifted
 ;; cursor-keys to control the region.
@@ -220,7 +308,6 @@
 ;; -------------------------------------------------------------------
 ;; Copy filename of buffer into clipboard
 ;; -------------------------------------------------------------------
-
 (defun my-put-file-name-on-clipboard ()
   "Put the current file name on the clipboard."
   (interactive)
@@ -265,31 +352,48 @@
   )
 
 ;; -------------------------------------------------------------------
-;; Show total line number in the modline
+;; Beautify modline
 ;; -------------------------------------------------------------------
-(defvar my-mode-line-buffer-line-count nil)
-(make-variable-buffer-local 'my-mode-line-buffer-line-count)
+(use-package diminish
+  :ensure t)
 
-(setq-default mode-line-format
-              '("  " mode-line-modified
-                (list 'line-number-mode "  ")
-                (:eval (when line-number-mode
-                         (let ((str "L%l"))
-                           (when (and (not (buffer-modified-p)) my-mode-line-buffer-line-count)
-                             (setq str (concat str "/" my-mode-line-buffer-line-count)))
-                           str)))
-                "  %p"
-                (list 'column-number-mode "  C%c")
-                "  " mode-line-buffer-identification
-                "  " mode-line-modes))
+(use-package smart-mode-line
+  :ensure t
+  :config
+  (setq sml/no-confirm-load-theme t)
+  (sml/setup)
+  (sml/apply-theme 'respectful)  ; Respect the theme colors
+  (setq sml/mode-width 'right
+      sml/name-width 60)
 
-(defun my-mode-line-count-lines ()
-  (setq my-mode-line-buffer-line-count (int-to-string (count-lines (point-min) (point-max)))))
+  (setq-default mode-line-format
+  `("%e"
+      mode-line-front-space
+      evil-mode-line-tag
+      mode-line-mule-info
+      mode-line-client
+      mode-line-modified
+      mode-line-remote
+      mode-line-frame-identification
+      mode-line-buffer-identification
+      sml/pos-id-separator
+      (vc-mode vc-mode)
+      " "
+      ;mode-line-position
+      sml/pre-modes-separator
+      mode-line-modes
+      " "
+      mode-line-misc-info))
 
-(add-hook 'find-file-hook 'my-mode-line-count-lines)
-(add-hook 'after-save-hook 'my-mode-line-count-lines)
-(add-hook 'after-revert-hook 'my-mode-line-count-lines)
-(add-hook 'dired-after-readin-hook 'my-mode-line-count-lines)
+  (setq rm-excluded-modes
+    (mapconcat
+      'identity
+      ; These names must start with a space!
+      '(" GitGutter" " MRev" " company"
+      " Helm" " Undo-Tree" " Projectile.*" " Z" " Ind"
+      " Org-Agenda.*" " ElDoc" " SP/s" " cider.*")
+      "\\|")))
+
 
 ;; -------------------------------------------------------------------
 ;; Insert Pairs of Matching Elements
@@ -335,7 +439,7 @@
             (setq blink-matching-paren t)
             )
   :init (progn
-          (show-paren-mode)
+          (show-paren-mode 1)
           (set-face-background 'show-paren-match (face-background 'default))
           (set-face-foreground 'show-paren-match "#def")
           (set-face-attribute 'show-paren-match nil :weight 'extra-bold))
@@ -354,11 +458,15 @@
                                         ; history-delete-duplicates
 
 ;; -------------------------------------------------------------------
-;; Helm project
+;; Helm/Ivy project
 ;; -------------------------------------------------------------------
-(use-package setup-helm
-  :load-path local-load-path
-  )
+;; (use-package setup-helm
+;;   :load-path local-load-path
+;;   )
+
+(use-package setup-ivy
+ :load-path local-load-path
+ )
 
 ;; -------------------------------------------------------------------
 ;; Projectile mode
@@ -386,6 +494,12 @@
             (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
             )
   )
+
+(use-package vterm
+  :commands vterm
+  :config
+  (setq vterm-max-scrollback 10000))
+
 
 ;; -------------------------------------------------------------------
 ;; highlight symbol and replace
@@ -503,6 +617,14 @@
 ;; ===================================================================
 ;; Adjusting modes for programming
 ;; ===================================================================
+;; -------------------------------------------------------------------
+;; Eshell
+;; -------------------------------------------------------------------
+(use-package setup-eshell
+  :load-path local-load-path
+  )
+
+
 ;; -------------------------------------------------------------------
 ;; Ansi term for zsh in emacs buffer
 ;; -------------------------------------------------------------------
@@ -983,12 +1105,37 @@
 ;; -------------------------------------------------------------------
 (use-package magit
   :ensure t
+  :commands (magit-status magit-get-current-branch)
+  :custom
+  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
   :config (progn
             (setq magit-diff-refine-hunk 'all) ; Show word based diff
-  ))
+            ))
+
+;; ;; Add a super-convenient global binding for magit-status since
+;; ;; I use it 8 million times a day
+;; (global-set-key (kbd "C-M-;") 'magit-status)
+
+;; (dw/leader-key-def
+;;   "g"   '(:ignore t :which-key "git")
+;;   "gs"  'magit-status
+;;   "gd"  'magit-diff-unstaged
+;;   "gc"  'magit-branch-or-checkout
+;;   "gl"   '(:ignore t :which-key "log")
+;;   "glc" 'magit-log-current
+;;   "glf" 'magit-log-buffer-file
+;;   "gb"  'magit-branch
+;;   "gP"  'magit-push-current
+;;   "gp"  'magit-pull-branch
+;;   "gf"  'magit-fetch
+;;   "gF"  'magit-fetch-all
+;;   "gr"  'magit-rebase)
 
 (use-package git-timemachine
   :ensure t)
+
+(use-package magit-todos
+  :defer t)
 
 ;; -------------------------------------------------------------------
 ;; scala
@@ -1070,6 +1217,7 @@
 ;; Typescript
 ;; -------------------------------------------------------------------
 (use-package typescript-mode
+  :after dap-node
   :mode (
          ("\\.ts$" . typescript-mode)
          ("\\.tsx$" . typescript-mode)
@@ -1078,6 +1226,7 @@
   :config (progn
             (flycheck-mode +1)
             (company-mode +1)
+            (dap-node-setup) ;; automatically installs Node debug adapter if needed
             )
   )
 
@@ -1220,11 +1369,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes '(material))
  '(custom-safe-themes
    '("d4f8fcc20d4b44bf5796196dbeabec42078c2ddb16dcb6ec145a1c610e0842f3" default))
  '(package-selected-packages
-   '(pyvenv jedi dap-mode lsp-docker lsp-java lsp-mode lsp-ui helm-swoop quelpa quelpa-use-package python-black meghanada scala-mode ess flycheck-clang-tidy helm-mt multi-term winner-mode dockerfile-mode groovy-imports groovy-mode flycheck-plantuml plantuml-mode org-mode poly-rst rst-mode yaml-mode whole-line-or-region wgrep volatile-highlights use-package tide tangotango-theme sphinx-doc smart-jump python-mode py-autopep8 protobuf-mode neotree markdown-mode magit langtool ivy-rtags ivy-hydra highlight-symbol helm-projectile helm-ag helm-R haskell-mode git-timemachine flycheck-rtags fill-column-indicator exec-path-from-shell ensime elpy dired-narrow diminish cython-mode crux counsel cmake-mode clang-format blacken beacon autopair auto-complete auctex anaconda-mode ag)))
+   '(xterm-color evil-collection ivy-posframe smex ivy-rich eshell-z general openwith ivy-pass evil-nerd-commenter smart-mode-line dap-node pyvenv jedi dap-mode lsp-docker lsp-java lsp-mode lsp-ui helm-swoop quelpa quelpa-use-package python-black meghanada scala-mode ess flycheck-clang-tidy helm-mt multi-term winner-mode dockerfile-mode groovy-imports groovy-mode flycheck-plantuml plantuml-mode org-mode poly-rst rst-mode yaml-mode whole-line-or-region wgrep volatile-highlights use-package tide tangotango-theme sphinx-doc smart-jump python-mode py-autopep8 protobuf-mode neotree markdown-mode magit langtool ivy-rtags ivy-hydra highlight-symbol helm-projectile helm-ag helm-R haskell-mode git-timemachine flycheck-rtags fill-column-indicator exec-path-from-shell ensime elpy dired-narrow diminish cython-mode crux counsel cmake-mode clang-format blacken beacon autopair auto-complete auctex anaconda-mode ag)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

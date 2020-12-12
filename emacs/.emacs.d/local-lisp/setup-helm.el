@@ -184,3 +184,6 @@
 (provide 'setup-helm)
 
 ;;; setup-helm.el ends here
+(provide 'setup-helm)
+
+;;; setup-helm.el ends here

@@ -117,3 +117,6 @@ emacs/.emacs.d/session*
 /emacs/.emacs.d/.python-environments/
 /emacs/.emacs.d/workspace/
 /emacs/.emacs.d/eln-cache/
+/emacs/.emacs.d/.extension/
+/emacs/.emacs.d/eshell/
+/emacs/.emacs.d/smex-items
