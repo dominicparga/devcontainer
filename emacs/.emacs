@@ -475,6 +475,7 @@
 (use-package projectile
   :defer t
   :ensure t
+  :after counsel
   :init (progn
           (setq projectile-file-exists-remote-cache-expire nil)
           (setq projectile-mode-line '(:eval (format " [%s]" (projectile-project-name))))
@@ -494,6 +495,9 @@
             (projectile-mode 1)
             (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
             )
+  :bind (
+         ("C-c p s a" . counsel-ack)
+         )
   )
 
 (use-package vterm
