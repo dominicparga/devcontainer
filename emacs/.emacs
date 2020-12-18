@@ -495,10 +495,14 @@
             (projectile-mode 1)
             (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
             )
-  :bind (
-         ("C-c p s a" . counsel-ack)
-         )
+  :bind* (
+          ("C-c p s a" . counsel-ack)
+          ("C-c p s g" . counsel-git-grep)
+          ("C-c p s r" . rgrep)
+          )
   )
+
+
 
 (use-package vterm
   :commands vterm
