@@ -6,6 +6,7 @@ Maybe, it is concept for later documentation, or just keep-up-the-good-work (`ku
 
 ## Ideas
 
+- Move aliases out of `shellrc` because they are independent -> more flexibility
 - For __prompt__: function for changing prompt
 - For `python`: Add somewhere: `pip install $(pip list --outdated | awk '{ print $1 }') --upgrade`
 - Add vscode (vim-)keybindings to `README.md`
