@@ -5,13 +5,15 @@
 [core]
     autocrlf = input
     safecrlf = true
-[remote "origin"]
+[fetch]
     prune = true
 [alias]
     # general
-    h    = "help"
-    s    = "status"
-    hash = "rev-parse --verify HEAD"
+    h     = "help"
+    s     = "status"
+    hash  = "rev-parse --verify HEAD"
+    sub   = "submodule"
+    subup = "submodule update --recursive"
 
     # efficient staging
     unstage = "restore --staged" # "reset HEAD --"
