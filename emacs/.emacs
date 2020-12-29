@@ -212,8 +212,8 @@
 
 ;; enable emojis in buffers
 (use-package emojify
-  :hook (erc-mode . emojify-mode)
-  :commands emojify-mode)
+  :ensure t
+  :hook (after-init . global-emojify-mode))
 
 ;; Set default connection mode to SSH
 (setq tramp-default-method "ssh")
@@ -1381,7 +1381,7 @@
  '(custom-safe-themes
    '("d4f8fcc20d4b44bf5796196dbeabec42078c2ddb16dcb6ec145a1c610e0842f3" default))
  '(package-selected-packages
-   '(xterm-color evil-collection ivy-posframe smex ivy-rich eshell-z general openwith ivy-pass evil-nerd-commenter smart-mode-line dap-node pyvenv jedi dap-mode lsp-docker lsp-java lsp-mode lsp-ui helm-swoop quelpa quelpa-use-package python-black meghanada scala-mode ess flycheck-clang-tidy helm-mt multi-term winner-mode dockerfile-mode groovy-imports groovy-mode flycheck-plantuml plantuml-mode org-mode poly-rst rst-mode yaml-mode whole-line-or-region wgrep volatile-highlights use-package tide tangotango-theme sphinx-doc smart-jump python-mode py-autopep8 protobuf-mode neotree markdown-mode magit langtool ivy-rtags ivy-hydra highlight-symbol helm-projectile helm-ag helm-R haskell-mode git-timemachine flycheck-rtags fill-column-indicator exec-path-from-shell ensime elpy dired-narrow diminish cython-mode crux counsel cmake-mode clang-format blacken beacon autopair auto-complete auctex anaconda-mode ag)))
+   '(emojify xterm-color evil-collection ivy-posframe smex ivy-rich eshell-z general openwith ivy-pass evil-nerd-commenter smart-mode-line dap-node pyvenv jedi dap-mode lsp-docker lsp-java lsp-mode lsp-ui helm-swoop quelpa quelpa-use-package python-black meghanada scala-mode ess flycheck-clang-tidy helm-mt multi-term winner-mode dockerfile-mode groovy-imports groovy-mode flycheck-plantuml plantuml-mode org-mode poly-rst rst-mode yaml-mode whole-line-or-region wgrep volatile-highlights use-package tide tangotango-theme sphinx-doc smart-jump python-mode py-autopep8 protobuf-mode neotree markdown-mode magit langtool ivy-rtags ivy-hydra highlight-symbol helm-projectile helm-ag helm-R haskell-mode git-timemachine flycheck-rtags fill-column-indicator exec-path-from-shell ensime elpy dired-narrow diminish cython-mode crux counsel cmake-mode clang-format blacken beacon autopair auto-complete auctex anaconda-mode ag)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

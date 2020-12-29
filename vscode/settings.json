@@ -649,8 +649,6 @@
     "diffEditor.ignoreTrimWhitespace": false,
     "cmake.configureOnOpen": false,
     "editor.formatOnSaveMode": "modifications",
-    "python.dataScience.alwaysTrustNotebooks": true,
-    "python.dataScience.askForKernelRestart": false,
     "jupyter.alwaysTrustNotebooks": true,
     "jupyter.askForKernelRestart": false,
     "files.watcherExclude": {
@@ -671,4 +669,7 @@
     "python.analysis.completeFunctionParens": true,
     "python.formatting.provider": "black",
     "liveshare.allowInvites": "all",
+    "[jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
 }
