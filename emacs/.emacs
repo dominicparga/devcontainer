@@ -135,6 +135,10 @@
 
 (load-theme 'material t)
 
+;; show logs of executed commands
+(use-package command-log-mode
+  :ensure t)
+
 ;; remove toolbar
 (tool-bar-mode -1)
 (menu-bar-mode -1)
@@ -580,7 +584,10 @@
 
 (use-package which-key
   :ensure t
-  :config (which-key-mode 1))
+  :diminish which-key-mode
+  :init (which-key-mode 1)
+  :config
+  (setq which-key-idle-delay 0.5))
 
 (use-package treemacs
   :ensure t
@@ -1329,29 +1336,19 @@
 ;; -------------------------------------------------------------------
 ;; Show number of lines in the left side of the buffer
 ;; -------------------------------------------------------------------
-(use-package linum+
-  :load-path local-load-path
-  :hook ((python-mode . linum-mode)
-         (ess-mode . linum-mode)
-         (c-mode . linum-mode)
-         (c++-mode . linum-mode)
-         (octave-mode . linum-mode)
-         (sphinx-doc-mode . linum-mode)
-         (markdown-mode . linum-mode)
-         (poly-rst-mode . linum-mode)
-         (cmake-mode . linum-mode)
-         (elpy-mode . linum-mode)
-         (typescript-mode . linum-mode)
-         (plantuml-mode . linum-mode)
-         (java-mode . linum-mode)
-         (sh-mode . linum-mode)
-         (js-mode . linum-mode)
-         (json-mode . linum-mode)
-         (rst-mode . linum-mode)
-         (lisp-mode . linum-mode)
-         (emacs-lisp-mode . linum-mode)
-         )
-  )
+(column-number-mode 1)
+(global-display-line-numbers-mode 1)
+
+(dolist (mode '(org-mode-hook
+                term-mode-hook
+                multi-term-mode-hook
+                eshell-mode-hook))
+  (add-hook mode (lambda () (display-line-numbers-mode 0))))
+
+;; enable rainbow delimiters for all programming-modes (prog-mode)
+(use-package rainbow-delimiters
+  :ensure t
+  :hook (prog-mode . rainbow-delimiters-mode))
 
 ;; -------------------------------------------------------------------
 ;; Java mode
@@ -1391,7 +1388,7 @@
  '(custom-safe-themes
    '("d4f8fcc20d4b44bf5796196dbeabec42078c2ddb16dcb6ec145a1c610e0842f3" default))
  '(package-selected-packages
-   '(company-prescient ivy-prescient emojify xterm-color evil-collection ivy-posframe smex ivy-rich eshell-z general openwith ivy-pass evil-nerd-commenter smart-mode-line dap-node pyvenv jedi dap-mode lsp-docker lsp-java lsp-mode lsp-ui helm-swoop quelpa quelpa-use-package python-black meghanada scala-mode ess flycheck-clang-tidy helm-mt multi-term winner-mode dockerfile-mode groovy-imports groovy-mode flycheck-plantuml plantuml-mode org-mode poly-rst rst-mode yaml-mode whole-line-or-region wgrep volatile-highlights use-package tide tangotango-theme sphinx-doc smart-jump python-mode py-autopep8 protobuf-mode neotree markdown-mode magit langtool ivy-rtags ivy-hydra highlight-symbol helm-projectile helm-ag helm-R haskell-mode git-timemachine flycheck-rtags fill-column-indicator exec-path-from-shell ensime elpy dired-narrow diminish cython-mode crux counsel cmake-mode clang-format blacken beacon autopair auto-complete auctex anaconda-mode ag)))
+   '(rainbow-delimiters command-log-mode company-prescient ivy-prescient emojify xterm-color evil-collection ivy-posframe smex ivy-rich eshell-z general openwith ivy-pass evil-nerd-commenter smart-mode-line dap-node pyvenv jedi dap-mode lsp-docker lsp-java lsp-mode lsp-ui helm-swoop quelpa quelpa-use-package python-black meghanada scala-mode ess flycheck-clang-tidy helm-mt multi-term winner-mode dockerfile-mode groovy-imports groovy-mode flycheck-plantuml plantuml-mode org-mode poly-rst rst-mode yaml-mode whole-line-or-region wgrep volatile-highlights use-package tide tangotango-theme sphinx-doc smart-jump python-mode py-autopep8 protobuf-mode neotree markdown-mode magit langtool ivy-rtags ivy-hydra highlight-symbol helm-projectile helm-ag helm-R haskell-mode git-timemachine flycheck-rtags fill-column-indicator exec-path-from-shell ensime elpy dired-narrow diminish cython-mode crux counsel cmake-mode clang-format blacken beacon autopair auto-complete auctex anaconda-mode ag)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
