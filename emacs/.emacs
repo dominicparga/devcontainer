@@ -72,6 +72,9 @@
 (setq backup-inhibited t)
 (setq make-backup-files nil)
 
+;; make ESC quit prompts
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
 ;disable auto save
 (setq auto-save-default nil)
 
@@ -577,9 +580,7 @@
 
 (use-package which-key
   :ensure t
-  :hook ((c++-mode . which-key-mode)
-         (c-mode . which-key-mode)
-         ))
+  :config (which-key-mode 1))
 
 (use-package treemacs
   :ensure t
@@ -688,11 +689,18 @@
                   (delete 'company-semantic company-backends))
             (setq company-minimum-prefix-length 1
                   company-idle-delay 0.0) ;; default is 0.2
+            (global-company-mode 1)
             )
   :bind (:map c++-mode-map
               ("<tab>" . company-complete)
               )
   )
+
+(use-package company-prescient
+  :after company
+  :ensure t
+  :config
+  (company-prescient-mode 1))
 
 (with-eval-after-load 'lsp-mode
   ;; :global/:workspace/:file
@@ -708,7 +716,7 @@
   )
 
 (use-package clang-format+
-  :ensure
+  :ensure t
   :hook (c++-mode . clang-format+-mode)
   :config (progn
             (setq clang-format-executable "/usr/bin/clang-format-athena-1"))
@@ -1340,6 +1348,8 @@
          (js-mode . linum-mode)
          (json-mode . linum-mode)
          (rst-mode . linum-mode)
+         (lisp-mode . linum-mode)
+         (emacs-lisp-mode . linum-mode)
          )
   )
 
@@ -1381,7 +1391,7 @@
  '(custom-safe-themes
    '("d4f8fcc20d4b44bf5796196dbeabec42078c2ddb16dcb6ec145a1c610e0842f3" default))
  '(package-selected-packages
-   '(emojify xterm-color evil-collection ivy-posframe smex ivy-rich eshell-z general openwith ivy-pass evil-nerd-commenter smart-mode-line dap-node pyvenv jedi dap-mode lsp-docker lsp-java lsp-mode lsp-ui helm-swoop quelpa quelpa-use-package python-black meghanada scala-mode ess flycheck-clang-tidy helm-mt multi-term winner-mode dockerfile-mode groovy-imports groovy-mode flycheck-plantuml plantuml-mode org-mode poly-rst rst-mode yaml-mode whole-line-or-region wgrep volatile-highlights use-package tide tangotango-theme sphinx-doc smart-jump python-mode py-autopep8 protobuf-mode neotree markdown-mode magit langtool ivy-rtags ivy-hydra highlight-symbol helm-projectile helm-ag helm-R haskell-mode git-timemachine flycheck-rtags fill-column-indicator exec-path-from-shell ensime elpy dired-narrow diminish cython-mode crux counsel cmake-mode clang-format blacken beacon autopair auto-complete auctex anaconda-mode ag)))
+   '(company-prescient ivy-prescient emojify xterm-color evil-collection ivy-posframe smex ivy-rich eshell-z general openwith ivy-pass evil-nerd-commenter smart-mode-line dap-node pyvenv jedi dap-mode lsp-docker lsp-java lsp-mode lsp-ui helm-swoop quelpa quelpa-use-package python-black meghanada scala-mode ess flycheck-clang-tidy helm-mt multi-term winner-mode dockerfile-mode groovy-imports groovy-mode flycheck-plantuml plantuml-mode org-mode poly-rst rst-mode yaml-mode whole-line-or-region wgrep volatile-highlights use-package tide tangotango-theme sphinx-doc smart-jump python-mode py-autopep8 protobuf-mode neotree markdown-mode magit langtool ivy-rtags ivy-hydra highlight-symbol helm-projectile helm-ag helm-R haskell-mode git-timemachine flycheck-rtags fill-column-indicator exec-path-from-shell ensime elpy dired-narrow diminish cython-mode crux counsel cmake-mode clang-format blacken beacon autopair auto-complete auctex anaconda-mode ag)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

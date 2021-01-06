@@ -121,3 +121,4 @@ emacs/.emacs.d/session*
 /emacs/.emacs.d/eshell/
 /emacs/.emacs.d/smex-items
 /emacs/.emacs.d/emojis/
+/emacs/.emacs.d/var/

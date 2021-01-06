@@ -84,20 +84,27 @@
 (use-package ag
   :ensure t)
 
-(use-package ivy-posframe
-  :ensure t
-  :custom
-  (ivy-posframe-width      115)
-  (ivy-posframe-min-width  115)
-  (ivy-posframe-height     11)
-  (ivy-posframe-min-height 11)
-  :config
-  (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
-  (setq ivy-posframe-parameters '((parent-frame . nil)
-                                  (left-fringe . 8)
-                                  (right-fringe . 8)))
-  (ivy-posframe-mode 1))
+;; (use-package ivy-posframe
+;;   :ensure t
+;;   :custom
+;;   (ivy-posframe-width      115)
+;;   (ivy-posframe-min-width  115)
+;;   (ivy-posframe-height     11)
+;;   (ivy-posframe-min-height 11)
+;;   :config
+;;   (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
+;;   (setq ivy-posframe-parameters '((parent-frame . nil)
+;;                                   (left-fringe . 8)
+;;                                   (right-fringe . 8)))
+;;   (ivy-posframe-mode 1))
 
+(use-package ivy-prescient
+  :after counsel
+  :ensure t
+  :config
+  (ivy-prescient-mode 1)
+  (prescient-persist-mode 1)
+  )
 
 (dw/leader-key-def
   "r"   '(ivy-resume :which-key "ivy resume")
