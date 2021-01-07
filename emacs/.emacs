@@ -35,6 +35,37 @@
   (package-install 'use-package))
 (require 'use-package)
 
+;; ensure all packages to be installed
+(require 'use-package-ensure)
+(setq use-package-always-ensure t)
+
+;; auto update packages
+(use-package auto-package-update
+  :config
+  (setq auto-package-update-delete-old-versions t)
+  (setq auto-package-update-hide-results t)
+  (auto-package-update-maybe))
+
+(use-package exec-path-from-shell
+  :config
+  (when (memq window-system '(mac ns x))
+    (exec-path-from-shell-initialize))
+  (when (daemonp)
+    (exec-path-from-shell-initialize))
+  )
+
+;; add the possibility to define system dependencies in use-package
+;; declaration
+(use-package use-package-ensure-system-package)
+
+(use-package exec-path-from-shell
+  :config
+  (when (memq window-system '(mac ns x))
+    (exec-path-from-shell-initialize))
+  (when (daemonp)
+    (exec-path-from-shell-initialize))
+  )
+
 ;; ===================================================================
 ;; Basic Settings
 ;; ===================================================================
@@ -44,7 +75,6 @@
 ;; library for defining prefixed keybindings
 ;; https://github.com/noctuid/general.el
 (use-package general
-  :ensure t
   :config
   (general-evil-setup t)
 
@@ -129,15 +159,12 @@
 (setq make-backup-files nil)
 
 ;; Color theme
-(use-package material-theme
-  :ensure t
-  )
+(use-package material-theme)
 
 (load-theme 'material t)
 
 ;; show logs of executed commands
-(use-package command-log-mode
-  :ensure t)
+(use-package command-log-mode)
 
 ;; remove toolbar
 (tool-bar-mode -1)
@@ -166,6 +193,7 @@
 
 ;; It reverts when a dired buffer is reselected dired mode
 (use-package dired
+  :ensure nil
   :config (progn
             (setq dired-auto-revert-buffer t ; Auto update when buffer is revisited
                   dired-dwim-target t
@@ -178,21 +206,17 @@
 
 ;; Quick filter dired view
 (use-package dired-narrow
-  :ensure t
   :bind (:map dired-mode-map ("/" . dired-narrow)))
 
 ;; Let kill operate on the whole line when no region is selected
 (use-package whole-line-or-region
-  :ensure t
   :config (whole-line-or-region-global-mode))
 
 ;; Remove indicators from the mode line
-(use-package diminish
-  :ensure t)
+(use-package diminish)
 
 ;; Helps to keep track of your cursor
 (use-package beacon
-  :ensure t
   :config (progn
             (beacon-mode t)
             (setq beacon-color "#ff0000")))
@@ -200,7 +224,6 @@
 ;; volatile highlights - temporarily highlight changes from pasting
 ;; etc
 (use-package volatile-highlights
-  :ensure t
   :diminish volatile-highlights-mode
   :config
   (volatile-highlights-mode t))
@@ -219,14 +242,12 @@
 
 ;; enable emojis in buffers
 (use-package emojify
-  :ensure t
   :hook (after-init . global-emojify-mode))
 
 ;; Set default connection mode to SSH
 (setq tramp-default-method "ssh")
 
 (use-package evil-nerd-commenter
-  :ensure t
   :bind ("M-;" . evilnc-comment-or-uncomment-lines))
 
 ;; -------------------------------------------------------------------
@@ -234,13 +255,11 @@
 ;; -------------------------------------------------------------------
 
 (use-package ivy-pass
-  :ensure t
   :commands ivy-pass
   :config
   (setq password-store-password-length 12))
 
 (use-package auth-source-pass
-  :ensure t
   :config
   (auth-source-pass-enable))
 
@@ -248,7 +267,6 @@
 ;; Open files externally
 ;; -------------------------------------------------------------------
 (use-package openwith
-  :ensure t
   :config
   (setq openwith-associations
     (list
@@ -335,23 +353,18 @@
 ;; -------------------------------------------------------------------
 
 (use-package yasnippet
-  :ensure t
   :config (yas-global-mode 1)
   )
 
 ;; -------------------------------------------------------------------
 ;; Auto Completion
 ;; -------------------------------------------------------------------
-(use-package auto-complete
-  :defer t
-  :ensure t)
+(use-package auto-complete)
 
 ;; -------------------------------------------------------------------
 ;; Fill Column Indicator
 ;; -------------------------------------------------------------------
 (use-package fill-column-indicator
-  :defer t
-  :ensure t
   :init (progn
             (setq fci-rule-color "#f8f8f8") ;;#cccccc
             (define-globalized-minor-mode
@@ -362,11 +375,9 @@
 ;; -------------------------------------------------------------------
 ;; Beautify modline
 ;; -------------------------------------------------------------------
-(use-package diminish
-  :ensure t)
+(use-package diminish)
 
 (use-package smart-mode-line
-  :ensure t
   :config
   (setq sml/no-confirm-load-theme t)
   (sml/setup)
@@ -407,8 +418,6 @@
 ;; Insert Pairs of Matching Elements
 ;; -------------------------------------------------------------------
 (use-package autopair
-  :defer t
-  :ensure t
   :init (progn
           (autopair-global-mode t)
           )
@@ -458,7 +467,6 @@
 ;; Save history during sessions
 ;; -------------------------------------------------------------------
 (use-package savehist
-  :ensure t
   :config (progn
             (savehist-mode t)
             (setq savehist-additional-variables '(extended-command-history kill-ring))))
@@ -480,8 +488,6 @@
 ;; Projectile mode
 ;; -------------------------------------------------------------------
 (use-package projectile
-  :defer t
-  :ensure t
   :after counsel
   :init (progn
           (setq projectile-file-exists-remote-cache-expire nil)
@@ -509,8 +515,6 @@
           )
   )
 
-
-
 (use-package vterm
   :commands vterm
   :config
@@ -521,8 +525,6 @@
 ;; highlight symbol and replace
 ;; -------------------------------------------------------------------
 (use-package highlight-symbol
-  :defer t
-  :ensure t
   :bind* (
          ("C-<f3>" . highlight-symbol)
          ("<f3>" . highlight-symbol-next)
@@ -535,11 +537,10 @@
 ;; Enable lsp and treemacs
 ;; -------------------------------------------------------------------
 
-;;
-;; provide install sudo apt-get install clangd
 (use-package lsp-mode
-  :ensure t
   :commands lsp
+  :ensure-system-package
+  ((clangd . "apt install clangd"))
   :hook ((lsp-mode . (lambda ()
                        (let ((lsp-keymap-prefix "C-c l"))
                          (lsp-enable-which-key-integration))))
@@ -572,7 +573,6 @@
 (setq lsp-completion-provider :capf)
 
 (use-package lsp-ui
-  :ensure t
   :commands lsp-ui-mode
   :init (progn
           (setq imenu-auto-rescan t
@@ -583,21 +583,18 @@
   )
 
 (use-package which-key
-  :ensure t
   :diminish which-key-mode
   :init (which-key-mode 1)
   :config
   (setq which-key-idle-delay 0.5))
 
 (use-package treemacs
-  :ensure t
   :init (progn
          (global-set-key [f8] 'treemacs)
          )
   )
 
 (use-package lsp-treemacs
-  :ensure t
   :after lsp
   :after treemacs
   :after company
@@ -615,8 +612,8 @@
 ;; Enable dap
 ;; -------------------------------------------------------------------
 (use-package dap-mode
-  :ensure t
   :after lsp-mode
+  :ensure-system-package ("~/.local/lib/python3.8/site-packages/ptvsd" . "pip3 install 'ptvsd>=4.2'") ; for dap-python
   :config (dap-auto-configure-mode)
   :init (progn
           ;; enables mouse hover support
@@ -658,7 +655,7 @@
 (add-hook 'term-exec-hook 'oleh-term-exec-hook)
 
 (use-package multi-term
-  :ensure t
+  :ensure-system-package zsh
   :config (progn
             (setq multi-term-program "/bin/zsh")
             (setq explicit-shell-file-name "/bin/zsh")
@@ -673,39 +670,22 @@
 ;; -------------------------------------------------------------------
 (use-package cmake-mode
   :mode (("\\.cmake$" . cmake-mode)
-         ("CMakeLists.txt" . cmake-mode))
-  :ensure t)
-
-(use-package c++-mode
-  :mode (("\\.cpp$'" . c++-mode)
-         ("\\.hpp$'" . c++-mode))
-  :init (progn
-          (add-hook 'c++-mode-hook (lambda ()
-                                     (subword-mode t))))  ; CamelCase are two words
-  )
+         ("CMakeLists.txt" . cmake-mode)))
 
 ;; switch between header and source
 (global-set-key [(control tab)] 'ff-find-other-file)
 
 (use-package company
-  :ensure t
-  :hook ((c++-mode . global-company-mode)
-         (c-mode . global-company-mode))
-  :config (progn
-            (setq company-backends
-                  (delete 'company-semantic company-backends))
-            (setq company-minimum-prefix-length 1
-                  company-idle-delay 0.0) ;; default is 0.2
-            (global-company-mode 1)
-            )
-  :bind (:map c++-mode-map
-              ("<tab>" . company-complete)
-              )
+  :config
+  (setq company-backends
+        (delete 'company-semantic company-backends))
+  (setq company-minimum-prefix-length 1
+        company-idle-delay 0.0) ;; default is 0.2
+  (global-company-mode 1)
   )
 
 (use-package company-prescient
   :after company
-  :ensure t
   :config
   (company-prescient-mode 1))
 
@@ -714,7 +694,6 @@
   (setq lsp-modeline-diagnostics-scope :workspace))
 
 (use-package company-c-headers
-  :ensure t
   :after company
   :config (progn
             (add-to-list 'company-backends 'company-c-headers)
@@ -723,7 +702,6 @@
   )
 
 (use-package clang-format+
-  :ensure t
   :hook (c++-mode . clang-format+-mode)
   :config (progn
             (setq clang-format-executable "/usr/bin/clang-format-athena-1"))
@@ -737,8 +715,6 @@
 ;; CRAN R
 ;; -------------------------------------------------------------------
 (use-package ess
-  :defer t
-  :ensure t
   :init (progn
           (setq ess-use-eldoc nil)
           ;; ESS will not print the evaluated commands, also speeds up the evaluation
@@ -775,15 +751,15 @@
 ;; -------------------------------------------------------------------
 (use-package auctex
   :defer t
-  :ensure t
   :init (progn
          (add-hook 'LaTeX-mode-hook 'TeX-fold-mode)
          (add-hook 'LaTeX-mode-hook 'outline-minor-mode)
          ))
 
+(use-package company-auctex
+  :after company)
+
 (use-package reftex
-  :defer t
-  :ensure t
   :init (progn
           (setq reftex-enable-partial-scans t)
           (setq reftex-use-multiple-selection-buffers t)
@@ -873,6 +849,7 @@
 ;; -------------------------------------------------------------------
 (use-package okular-search
   :load-path local-load-path
+  :ensure-system-package okular
   :init (progn
           (setq TeX-view-program-list '(("Okular" "okular --unique %o")))
           (setq TeX-view-program-selection '((output-pdf "Okular") (output-dvi "Okular")))
@@ -896,8 +873,6 @@
 ;; include language tool
 ;; -------------------------------------------------------------------
 (use-package langtool
-  :defer t
-  :ensure t
   :init (progn
           (setq langtool-language-tool-jar (expand-file-name "~/opt/languageTool/LanguageTool-5.1/languagetool-commandline.jar"))
           )
@@ -928,8 +903,8 @@
     ))
 
 (use-package ispell
-  :defer t
-  :ensure t
+  :ensure-system-package
+  ((ispell . "apt install ispell iogerman ingerman ienglish-common iamerican-insane"))
   :init (progn
           (setq ispell-dictionary "en_US")
           (setq ispell-local-dictionary "en_US")
@@ -980,8 +955,6 @@
 ;; Haskell
 ;; -------------------------------------------------------------------
 (use-package haskell-mode
-  :defer t
-  :ensure t
   :init (progn
           (setq haskell-program-name "ghci -XGADTs -XExistentialQuantification -XDeriveDataTypeable -XTypeFamilies")
           )
@@ -990,15 +963,13 @@
              (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
              ))
 
-(use-package lsp-haskell
-  :ensure)
+(use-package lsp-haskell)
 
 ;; -------------------------------------------------------------------
 ;; Python
 ;; -------------------------------------------------------------------
 
 (use-package lsp-python-ms
-  :ensure t
   :init (setq lsp-python-ms-auto-install-server t)
   :hook (python-mode . (lambda ()
                           (require 'lsp-python-ms)
@@ -1006,8 +977,6 @@
 
 ;; Enable autopep8
 (use-package py-autopep8
-  :ensure t
-  :after elpy
   :hook ((python-mode . py-autopep8-enable-on-save))
   :config (progn
            (setq py-autopep8-options '("--select=W504 --max-line-length=120")))
@@ -1035,13 +1004,12 @@
 ;; ~/.local/bin, provide a dummy one that runs black in library mode
 ;; python3 -m black "${@}"
 (use-package python-black
-  :ensure t
   :after python
+  :ensure-system-package (black . "pip3 install --user -U black")
   :hook ((python-mode . python-black-on-save-mode))
   )
 
 (use-package conda
-  :ensure t
   :config (progn
             (setq conda-anaconda-home (expand-file-name "~/anaconda3/"))
             (setq conda-env-home-directory (expand-file-name "~/anaconda3"))
@@ -1051,15 +1019,13 @@
 (require 'dap-python)
 
 ;; supports virtual environments. To be set with pyvenv-workon
-(use-package pyvenv
-  :ensure t)
+(use-package pyvenv)
 
 ;; -------------------------------------------------------------------
 ;; Sphinx documentation
 ;; -------------------------------------------------------------------
 ;; docu https://github.com/naiquevin/sphinx-doc.el
 (use-package sphinx-doc
-  :ensure t
   :config (progn
             (sphinx-doc-mode t)
             )
@@ -1073,27 +1039,23 @@
 ;; code style checker
 ;; -------------------------------------------------------------------
 (use-package flycheck
-  :ensure t
   :diminish flycheck-mode
   :config (progn
             (global-flycheck-mode)
             )
 )
 
-(use-package blacken
-  :ensure t)
+(use-package blacken)
 
 ;; -------------------------------------------------------------------
 ;; Shell
 ;; -------------------------------------------------------------------
 (use-package flymake-shell
-  :ensure t
   :commands flymake-shell-load
   :hook ((sh-set-shell . flymake-shell-load))
   )
 
 (use-package flymake-shellcheck
-  :ensure t
   :commands flymake-shellcheck-load
   :hook ((sh-mode . flymake-shellcheck-load))
   )
@@ -1128,7 +1090,6 @@
 ;; Git - magit
 ;; -------------------------------------------------------------------
 (use-package magit
-  :ensure t
   :commands (magit-status magit-get-current-branch)
   :custom
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
@@ -1155,68 +1116,56 @@
 ;;   "gF"  'magit-fetch-all
 ;;   "gr"  'magit-rebase)
 
-(use-package git-timemachine
-  :ensure t)
+(use-package git-timemachine)
 
-(use-package magit-todos
-  :defer t)
+(use-package magit-todos)
 
 ;; -------------------------------------------------------------------
 ;; scala
 ;; -------------------------------------------------------------------
-(use-package scala-mode
-  :ensure t)
+(use-package scala-mode)
 
 ;; -------------------------------------------------------------------
 ;; protobuf mode
 ;; -------------------------------------------------------------------
-(use-package protobuf-mode
-  :ensure t)
+(use-package protobuf-mode)
 
 ;; -------------------------------------------------------------------
 ;; yaml mode
 ;; -------------------------------------------------------------------
 (use-package yaml-mode
-  :ensure t
   :mode (("\\.yml$" . yaml-mode)
          ("\\.yaml$" . yaml-mode))
-  :config (progn
-            (define-key yaml-mode-map "\C-m" 'newline-and-indent)
-            ))
+  :bind (:map yaml-mode-map ("C-m/" . newline-and-indent)))
 
 ;; -------------------------------------------------------------------
 ;; dockerfile mode
 ;; -------------------------------------------------------------------
 (use-package dockerfile-mode
   :mode (("Dockerfile\\'" . dockerfile-mode))
-  :ensure t
   :init (progn
           (put 'dockerfile-image-name 'safe-local-variable #'stringp)
           )
   )
 
-
-(use-package lsp-docker
-  :ensure)
+(use-package lsp-docker)
 
 ;; -------------------------------------------------------------------
 ;; markdown mode
 ;; -------------------------------------------------------------------
-(use-package markdown-mode
-  :ensure t)
+(use-package markdown-mode)
 
 ;; -------------------------------------------------------------------
 ;; RST mode
 ;; -------------------------------------------------------------------
 (use-package poly-rst
-  :ensure t
-  :init (progn
-          (set-default 'truncate-lines t)
-          )
   :mode (
          ("\\.rst$" . poly-rst-mode)
          ("\\.rest$" . poly-rst-mode)
          )
+  :init (progn
+          (set-default 'truncate-lines t)
+          )
   )
 
 
@@ -1224,12 +1173,9 @@
 ;;    Export as a text file written in reStructured syntax.
 ;; C-c C-e r R (org-rst-export-as-rst)
 ;;    Export as a temporary buffer. Do not create a file.
-(use-package ox-rst
-  :ensure t
-  )
+(use-package ox-rst)
 
 (use-package rst
-  :ensure t
   :mode (
          ("\\.txtt$" . rst-mode)
          ("\\.rst$" . rst-mode)
@@ -1246,16 +1192,14 @@
          ("\\.ts$" . typescript-mode)
          ("\\.tsx$" . typescript-mode)
          )
-  :ensure t
   :config (progn
-            (flycheck-mode +1)
-            (company-mode +1)
+            (flycheck-mode 1)
+            (company-mode 1)
             (dap-node-setup) ;; automatically installs Node debug adapter if needed
             )
   )
 
-(use-package tide
-  :ensure t)
+(use-package tide)
 
 (defun setup-tide-mode ()
   (interactive)
@@ -1277,7 +1221,6 @@
 ;; (add-hook 'typescript-mode-hook #'setup-tide-mode)
 
 (use-package json-snatcher
-  :ensure t
   :hook ((js-mode-hook . js-mode-bindings)
          (js2-mode-hook . js-mode-bindings))
   :bind (
@@ -1290,7 +1233,6 @@
 ;; -------------------------------------------------------------------
 (use-package org
   :mode (("\\.org$" . org-mode))
-  :ensure t
   :config
   (progn
     ;; config stuff
@@ -1301,14 +1243,12 @@
 
 (use-package flycheck-plantuml
   :after flycheck
-  :ensure t
   )
 
 (use-package plantuml-mode
   :mode (("\\.puml" . plantuml-mode)
          ("\\.iuml" . plantuml-mode)
          ("\\.uml" . plantuml-mode))
-  :ensure t
   :config (progn
             ;; Sample jar configuration
             (setq plantuml-jar-path (expand-file-name "~/opt/plantuml/plantuml.jar"))
@@ -1327,11 +1267,9 @@
 ;; Groovy mode for Jenkins
 ;; -------------------------------------------------------------------
 (use-package groovy-mode
-  :mode (("\\.groovy$" . groovy-mode))
-  :ensure t)
+  :mode (("\\.groovy$" . groovy-mode)))
 
-(use-package groovy-imports
-  :ensure t)
+(use-package groovy-imports)
 
 ;; -------------------------------------------------------------------
 ;; Show number of lines in the left side of the buffer
@@ -1347,7 +1285,6 @@
 
 ;; enable rainbow delimiters for all programming-modes (prog-mode)
 (use-package rainbow-delimiters
-  :ensure t
   :hook (prog-mode . rainbow-delimiters-mode))
 
 ;; -------------------------------------------------------------------
@@ -1355,21 +1292,18 @@
 ;; -------------------------------------------------------------------
 (use-package lsp-java
   :after lsp-mode
-  :ensure
   :hook ((java-mode . lsp)))
 
 ;; -------------------------------------------------------------------
 ;; Json
 ;; -------------------------------------------------------------------
 (use-package json-mode
-  :ensure t
   :mode (("\\.json$" . json-mode))
   )
 
 ;; make sure that you have jsonlint installed: sudo env "PATH=$PATH"
 ;; npm install jsonlint -g
 (use-package flymake-json
-  :ensure t
   :requires json-mode
   :requires flymake-easy flymake-haml
   :hook ((json-mode . flymake-json-load)
@@ -1388,7 +1322,7 @@
  '(custom-safe-themes
    '("d4f8fcc20d4b44bf5796196dbeabec42078c2ddb16dcb6ec145a1c610e0842f3" default))
  '(package-selected-packages
-   '(rainbow-delimiters command-log-mode company-prescient ivy-prescient emojify xterm-color evil-collection ivy-posframe smex ivy-rich eshell-z general openwith ivy-pass evil-nerd-commenter smart-mode-line dap-node pyvenv jedi dap-mode lsp-docker lsp-java lsp-mode lsp-ui helm-swoop quelpa quelpa-use-package python-black meghanada scala-mode ess flycheck-clang-tidy helm-mt multi-term winner-mode dockerfile-mode groovy-imports groovy-mode flycheck-plantuml plantuml-mode org-mode poly-rst rst-mode yaml-mode whole-line-or-region wgrep volatile-highlights use-package tide tangotango-theme sphinx-doc smart-jump python-mode py-autopep8 protobuf-mode neotree markdown-mode magit langtool ivy-rtags ivy-hydra highlight-symbol helm-projectile helm-ag helm-R haskell-mode git-timemachine flycheck-rtags fill-column-indicator exec-path-from-shell ensime elpy dired-narrow diminish cython-mode crux counsel cmake-mode clang-format blacken beacon autopair auto-complete auctex anaconda-mode ag)))
+   '(which-key yasnippet use-package-ensure-system-package rainbow-delimiters command-log-mode company-prescient ivy-prescient emojify xterm-color evil-collection ivy-posframe smex ivy-rich eshell-z general openwith ivy-pass evil-nerd-commenter smart-mode-line dap-node pyvenv jedi dap-mode lsp-docker lsp-java lsp-mode lsp-ui helm-swoop quelpa quelpa-use-package python-black meghanada scala-mode ess flycheck-clang-tidy helm-mt multi-term winner-mode dockerfile-mode groovy-imports groovy-mode flycheck-plantuml plantuml-mode org-mode poly-rst rst-mode yaml-mode whole-line-or-region wgrep volatile-highlights use-package tide tangotango-theme sphinx-doc smart-jump python-mode py-autopep8 protobuf-mode neotree markdown-mode magit langtool ivy-rtags ivy-hydra highlight-symbol helm-projectile helm-ag helm-R haskell-mode git-timemachine flycheck-rtags fill-column-indicator exec-path-from-shell ensime elpy dired-narrow diminish cython-mode crux counsel cmake-mode clang-format blacken beacon autopair auto-complete auctex anaconda-mode ag)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

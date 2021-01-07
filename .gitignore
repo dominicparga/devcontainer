@@ -122,3 +122,4 @@ emacs/.emacs.d/session*
 /emacs/.emacs.d/smex-items
 /emacs/.emacs.d/emojis/
 /emacs/.emacs.d/var/
+/emacs/.emacs.d/.last-package-update-day

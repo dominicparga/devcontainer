@@ -4,7 +4,6 @@
 
 ;;; Code:
 (use-package helm
-  :ensure t
   :init
   (progn
     (require 'helm-config)
@@ -110,7 +109,6 @@
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     ;; Locate the helm-swoop folder to your path
     (use-package helm-swoop
-      :ensure t
       :bind (("C-s" . helm-swoop-without-pre-input)
              ("C-c s" . helm-swoop)
              )
@@ -149,15 +147,13 @@
 
     (use-package helm-mt
       :after multi-term
-      :ensure t
       )
 
     (use-package helm-ag
-      :ensure t)
+      :ensure-system-package ag)
 
     (use-package helm-lsp
-      :commands helm-lsp-workspace-symbol
-      :ensure)
+      :commands helm-lsp-workspace-symbol)
 
     (helm-mode 1)
     ))
@@ -168,8 +164,8 @@
   (helm-projectile-ack (file-name-directory buffer-file-name)))
 
 (use-package helm-projectile
-  :ensure t
   :after projectile
+  :ensure-system-package ack
   :init (progn
           (setq projectile-completion-system 'helm)
           (setq projectile-indexing-method 'alien))

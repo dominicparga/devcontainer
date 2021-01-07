@@ -5,7 +5,6 @@
 ;;; Code:
 
 (use-package ivy
-  :ensure t
   :diminish
   :bind (("C-s" . swiper)
          ("C-c C-o" . ivy-occur)
@@ -41,11 +40,9 @@
   (setf (alist-get 'counsel-switch-buffer ivy-height-alist) 7))
 
 (use-package ivy-hydra
-  :ensure t
   :after hydra)
 
 (use-package ivy-rich
-  :ensure t
   :init
   (ivy-rich-mode 1)
   :config
@@ -53,7 +50,6 @@
   )
 
 (use-package counsel
-  :ensure t
   :bind (("M-x" . counsel-M-x)
          ("C-x b" . counsel-ibuffer)
          ("C-x C-f" . counsel-find-file)
@@ -67,25 +63,21 @@
   (setq ivy-initial-inputs-alist nil)) ;; Don't start searches with ^
 
 (use-package flx  ;; Improves sorting for fuzzy-matched results
-  :ensure t
   :init
   (setq ivy-flx-limit 10000))
 
 (use-package smex ;; Adds M-x recent command sorting for counsel-M-x
-  :ensure t
   :after counsel)
 
-(use-package wgrep
-  :ensure t)
+(use-package wgrep)
 
 (use-package ack
-  :ensure t)
+  :ensure-system-package ack)
 
 (use-package ag
-  :ensure t)
+  :ensure-system-package ag)
 
 ;; (use-package ivy-posframe
-;;   :ensure t
 ;;   :custom
 ;;   (ivy-posframe-width      115)
 ;;   (ivy-posframe-min-width  115)
@@ -100,7 +92,6 @@
 
 (use-package ivy-prescient
   :after counsel
-  :ensure t
   :config
   (ivy-prescient-mode 1)
   (prescient-persist-mode 1)
