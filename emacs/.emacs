@@ -578,7 +578,6 @@
           (setq imenu-auto-rescan t
                 imenu-auto-rescan-maxout (* 1024 1024)
                 imenu--rescan-item '("" . -99))
-          (global-set-key [f9] 'lsp-ui-imenu)
           )
   )
 
@@ -589,10 +588,21 @@
   (setq which-key-idle-delay 0.5))
 
 (use-package treemacs
-  :init (progn
-         (global-set-key [f8] 'treemacs)
-         )
-  )
+  :commands (treemacs
+             treemacs-follow-mode
+             treemacs-filewatch-mode
+             treemacs-fringe-indicator-mode)
+  :bind (("<f8>" . treemacs)
+         ("<f9>" . treemacs-select-window))
+  :init
+  (when window-system
+    (setq treemacs-width 27
+          treemacs-is-never-other-window t
+          treemacs-indentation 0
+          treemacs-space-between-root-nodes nil)
+    (treemacs-follow-mode t)
+    (treemacs-filewatch-mode t)
+    (treemacs-fringe-indicator-mode nil)))
 
 (use-package lsp-treemacs
   :after lsp
@@ -614,6 +624,7 @@
 (use-package dap-mode
   :after lsp-mode
   :ensure-system-package ("~/.local/lib/python3.8/site-packages/ptvsd" . "pip3 install 'ptvsd>=4.2'") ; for dap-python
+  :ensure-system-package ("~/.local/lib/python3.8/site-packages/pyls" . "pip3 install pyls") ; for dap-python
   :config (dap-auto-configure-mode)
   :init (progn
           ;; enables mouse hover support
@@ -1322,7 +1333,7 @@
  '(custom-safe-themes
    '("d4f8fcc20d4b44bf5796196dbeabec42078c2ddb16dcb6ec145a1c610e0842f3" default))
  '(package-selected-packages
-   '(which-key yasnippet use-package-ensure-system-package rainbow-delimiters command-log-mode company-prescient ivy-prescient emojify xterm-color evil-collection ivy-posframe smex ivy-rich eshell-z general openwith ivy-pass evil-nerd-commenter smart-mode-line dap-node pyvenv jedi dap-mode lsp-docker lsp-java lsp-mode lsp-ui helm-swoop quelpa quelpa-use-package python-black meghanada scala-mode ess flycheck-clang-tidy helm-mt multi-term winner-mode dockerfile-mode groovy-imports groovy-mode flycheck-plantuml plantuml-mode org-mode poly-rst rst-mode yaml-mode whole-line-or-region wgrep volatile-highlights use-package tide tangotango-theme sphinx-doc smart-jump python-mode py-autopep8 protobuf-mode neotree markdown-mode magit langtool ivy-rtags ivy-hydra highlight-symbol helm-projectile helm-ag helm-R haskell-mode git-timemachine flycheck-rtags fill-column-indicator exec-path-from-shell ensime elpy dired-narrow diminish cython-mode crux counsel cmake-mode clang-format blacken beacon autopair auto-complete auctex anaconda-mode ag)))
+   '(lsp-ivy which-key yasnippet use-package-ensure-system-package rainbow-delimiters command-log-mode company-prescient ivy-prescient emojify xterm-color evil-collection ivy-posframe smex ivy-rich eshell-z general openwith ivy-pass evil-nerd-commenter smart-mode-line dap-node pyvenv jedi dap-mode lsp-docker lsp-java lsp-mode lsp-ui helm-swoop quelpa quelpa-use-package python-black meghanada scala-mode ess flycheck-clang-tidy helm-mt multi-term winner-mode dockerfile-mode groovy-imports groovy-mode flycheck-plantuml plantuml-mode org-mode poly-rst rst-mode yaml-mode whole-line-or-region wgrep volatile-highlights use-package tide tangotango-theme sphinx-doc smart-jump python-mode py-autopep8 protobuf-mode neotree markdown-mode magit langtool ivy-rtags ivy-hydra highlight-symbol helm-projectile helm-ag helm-R haskell-mode git-timemachine flycheck-rtags fill-column-indicator exec-path-from-shell ensime elpy dired-narrow diminish cython-mode crux counsel cmake-mode clang-format blacken beacon autopair auto-complete auctex anaconda-mode ag)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

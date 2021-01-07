@@ -97,6 +97,10 @@
   (prescient-persist-mode 1)
   )
 
+(use-package lsp-ivy
+  :after ivy
+  :after lsp-mode)
+
 (dw/leader-key-def
   "r"   '(ivy-resume :which-key "ivy resume")
   "f"   '(:ignore t :which-key "files")
