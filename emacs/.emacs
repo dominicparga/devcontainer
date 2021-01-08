@@ -692,6 +692,7 @@
 ;; disable company mode for terminals
 (dolist (mode '(term-mode-hook
                 multi-term-mode-hook
+                ansi-term-mode-hook
                 eshell-mode-hook))
   (add-hook mode (lambda () (company-mode 0))))
 
@@ -714,8 +715,12 @@
 
 (use-package clang-format+
   :hook (c++-mode . clang-format+-mode)
-  :config (progn
-            (setq clang-format-executable "/usr/bin/clang-format-athena-1"))
+  :config
+  (let ((athena_clang "/usr/bin/clang-format-athena-1"))
+    (when (file-exists-p athena_clang)
+      (setq clang-format-executable athena_clang)
+      )
+    )
   )
 
 ;; Interpret SConstruct file as python source file
@@ -841,7 +846,7 @@
 ;; appears
 (setq compilation-scroll-output 'firsterror)
 
-;; add make command to tex file
+;; add make, scons and latexmk commands as tex build commands
 (add-hook 'LaTeX-mode-hook
    (lambda ()
      (add-to-list 'TeX-command-list
@@ -883,10 +888,31 @@
 ;; -------------------------------------------------------------------
 ;; include language tool
 ;; -------------------------------------------------------------------
+;; (let ((version "5.2"))
+;;   (let ((url (concat "https://languagetool.org/download/LanguageTool-" version ".zip"))
+;;         (path (expand-file-name "~/opt/languageTool"))
+;;         (jar (concat path "/LanguageTool-" version "/languagetool-commandline.jar")))
+;;     (when (not (file-exists-p jar))
+;;       ;; (
+;;       ;;  (make-directory path)
+;;       ;;  (url-copy-file url path)
+;;       ;;  )
+;;       )))
+
+(defun langtool-autoshow-detail-popup (overlays)
+  (when (require 'popup nil t)
+    ;; Do not interrupt current popup
+    (unless (or popup-instances
+                ;; suppress popup after type `C-g' .
+                (memq last-command '(keyboard-quit)))
+      (let ((msg (langtool-details-error-message overlays)))
+        (popup-tip msg)))))
+
+
 (use-package langtool
-  :init (progn
-          (setq langtool-language-tool-jar (expand-file-name "~/opt/languageTool/LanguageTool-5.1/languagetool-commandline.jar"))
-          )
+  :config
+  (setq langtool-autoshow-message-function 'langtool-autoshow-detail-popup)
+  (setq langtool-language-tool-jar (expand-file-name "~/opt/languageTool/LanguageTool-5.2/languagetool-commandline.jar"))
   :bind (
          ("C-x 4 w" . langtool-check-buffer)
          ("C-x 4 W" . langtool-check-done)
