@@ -188,15 +188,15 @@
 ;; It reverts when a dired buffer is reselected dired mode
 (use-package dired
   :ensure nil
-  :config (progn
-            (setq dired-auto-revert-buffer t ; Auto update when buffer is revisited
-                  dired-dwim-target t
-                  dired-recursive-deletes 'always
-                  dired-recursive-copies 'always
-                  delete-by-moving-to-trash t
-                  dired-listing-switches "-alh") ; human readable file sizes
-            (add-hook 'dired-mode-hook 'auto-revert-mode)
-            ))
+  :hook (dired-mode . auto-revert-mode)
+  :config
+  (setq dired-auto-revert-buffer t ; Auto update when buffer is revisited
+        dired-dwim-target t
+        dired-recursive-deletes 'always
+        dired-recursive-copies 'always
+        delete-by-moving-to-trash t
+        dired-listing-switches "-alh") ; human readable file sizes
+  )
 
 ;; Quick filter dired view
 (use-package dired-narrow
@@ -211,9 +211,9 @@
 
 ;; Helps to keep track of your cursor
 (use-package beacon
-  :config (progn
-            (beacon-mode t)
-            (setq beacon-color "#ff0000")))
+  :config
+  (beacon-mode t)
+  (setq beacon-color "#ff0000"))
 
 ;; volatile highlights - temporarily highlight changes from pasting
 ;; etc
@@ -359,11 +359,10 @@
 ;; Fill Column Indicator
 ;; -------------------------------------------------------------------
 (use-package fill-column-indicator
-  :init (progn
-            (setq fci-rule-color "#f8f8f8") ;;#cccccc
-            (define-globalized-minor-mode
-              global-fci-mode fci-mode (lambda () (fci-mode 1)))
-            )
+  :init
+  (setq fci-rule-color "#f8f8f8") ;;#cccccc
+  (define-globalized-minor-mode
+    global-fci-mode fci-mode (lambda () (fci-mode 1)))
   )
 
 ;; -------------------------------------------------------------------
@@ -412,60 +411,53 @@
 ;; Insert Pairs of Matching Elements
 ;; -------------------------------------------------------------------
 (use-package autopair
-  :init (progn
-          (autopair-global-mode t)
-          )
-  :config (progn
-            (add-hook 'lisp-mode-hook #'(lambda () (setq autopair-dont-activate t)))
+  :init
+  (autopair-global-mode t)
+  :config
+  (add-hook 'lisp-mode-hook #'(lambda () (setq autopair-dont-activate t)))
 
-            ;; Add single and triple quote to the autopair list
-            (add-hook 'python-mode-hook
-                      #'(lambda ()
-                          ;; (push '(?` . ?`)
-                          ;;       (getf autopair-dont-pair :never))
-                          (setq autopair-handle-action-fns
-                                (list #'autopair-default-handle-action
-                                      #'autopair-python-triple-quote-action))))
+  ;; Add single and triple quote to the autopair list
+  (add-hook 'python-mode-hook
+            #'(lambda ()
+                ;; (push '(?` . ?`)
+                ;;       (getf autopair-dont-pair :never))
+                (setq autopair-handle-action-fns
+                      (list #'autopair-default-handle-action
+                            #'autopair-python-triple-quote-action))))
 
-            ;; Some useful handler
-            (add-hook 'TeX-mode-hook
-                      #'(lambda ()
-                          (set (make-local-variable 'autopair-handle-action-fns)
-                               (list #'autopair-default-handle-action
-                                     #'autopair-latex-mode-paired-delimiter-action))))
+  ;; Some useful handler
+  (add-hook 'TeX-mode-hook
+            #'(lambda ()
+                (set (make-local-variable 'autopair-handle-action-fns)
+                     (list #'autopair-default-handle-action
+                           #'autopair-latex-mode-paired-delimiter-action))))
 
-            ;; Latex Math mode pairs
-            (add-hook 'TeX-mode-hook
-                      #'(lambda ()
-                          (modify-syntax-entry ?$ "\"")
-                          (autopair-mode)))
+  ;; Latex Math mode pairs
+  (add-hook 'TeX-mode-hook
+            #'(lambda ()
+                (modify-syntax-entry ?$ "\"")
+                (autopair-mode)))
 
-            )
   )
 
 ;; Highlight parens
 (use-package paren
-  :config (progn
-            (setq show-paren-style 'mixed)	;; The entire expression
-            (setq blink-matching-paren t)
-            )
-  :init (progn
-          (show-paren-mode 1)
-          (set-face-background 'show-paren-match (face-background 'default))
-          (set-face-foreground 'show-paren-match "#def")
-          (set-face-attribute 'show-paren-match nil :weight 'extra-bold))
-  )
-
+  :config
+  (setq show-paren-style 'mixed)	;; The entire expression
+  (setq blink-matching-paren t)
+  :init
+  (show-paren-mode 1)
+  (set-face-background 'show-paren-match (face-background 'default))
+  (set-face-foreground 'show-paren-match "#def")
+  (set-face-attribute 'show-paren-match nil :weight 'extra-bold))
 
 ;; -------------------------------------------------------------------
 ;; Save history during sessions
 ;; -------------------------------------------------------------------
 (use-package savehist
-  :config (progn
-            (savehist-mode t)
-            (setq savehist-additional-variables '(extended-command-history kill-ring))))
-                                        ; history-length 1000
-                                        ; history-delete-duplicates
+  :config
+  (savehist-mode t)
+  (setq savehist-additional-variables '(extended-command-history kill-ring)))
 
 ;; -------------------------------------------------------------------
 ;; Helm/Ivy project
@@ -483,25 +475,23 @@
 ;; -------------------------------------------------------------------
 (use-package projectile
   :after counsel
-  :init (progn
-          (setq projectile-file-exists-remote-cache-expire nil)
-          (setq projectile-mode-line '(:eval (format " [%s]" (projectile-project-name))))
-          (setq projectile-globally-ignored-directories
-                (quote
-                 (".idea" ".eunit" ".git" ".hg" ".svn"
-                  ".fslckout" ".bzr" "_darcs" ".tox"
-                  "build" "target" "_build" ".history"
-                  "tmp")))
-          (setq projectile-require-project-root nil)
-          ;; (setq projectile-indexing-method 'alien)
-          ;; (setq projectile-enable-caching nil)
-          (setq projectile-completion-system 'default)
-          (setq projectile-svn-command "find . -type f -not -iwholename '*.svn/*' -print0")
-          )
-  :config (progn
-            (projectile-mode 1)
-            (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-            )
+  :init
+  (setq projectile-file-exists-remote-cache-expire nil)
+  (setq projectile-mode-line '(:eval (format " [%s]" (projectile-project-name))))
+  (setq projectile-globally-ignored-directories
+        (quote
+         (".idea" ".eunit" ".git" ".hg" ".svn"
+          ".fslckout" ".bzr" "_darcs" ".tox"
+          "build" "target" "_build" ".history"
+          "tmp")))
+  (setq projectile-require-project-root nil)
+  ;; (setq projectile-indexing-method 'alien)
+  ;; (setq projectile-enable-caching nil)
+  (setq projectile-completion-system 'default)
+  (setq projectile-svn-command "find . -type f -not -iwholename '*.svn/*' -print0")
+  :config
+  (projectile-mode 1)
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   :bind* (
           ("C-c p s a" . counsel-ack)
           ("C-c p s g" . counsel-git-grep)
@@ -544,21 +534,21 @@
          (python-mode . lsp-deferred)
          (typescript-mode . lsp-deferred)
          )
-  :config (progn
-            (define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
-            (setq lsp-ui-doc-position 'top
-                  lsp-ui-doc-alignment 'window
-                  ;; if set to true can cause a performance hit
-                  lsp-log-io nil
-                  lsp-pyls-plugins-flake8-config (expand-file-name "~/.flake8")
-                  lsp-pyls-plugins-flake8-enabled t
-                  lsp-pyls-plugins-pycodestyle-enabled nil
-                  ;; lsp-enable-snippet nil
-                  ;; lsp-prefer-flymake :none))
-                  ;; lsp-enable-snippet nil
-                  ;; Ignore files and folders when watchin
-                  ;; lsp-file-watch-ignored ("[/\\\\]\\.pyc$" "[/\\\\]_build")
-            )))
+  :config
+  (define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
+  (setq lsp-ui-doc-position 'top
+        lsp-ui-doc-alignment 'window
+        ;; if set to true can cause a performance hit
+        lsp-log-io nil
+        lsp-pyls-plugins-flake8-config (expand-file-name "~/.flake8")
+        lsp-pyls-plugins-flake8-enabled t
+        lsp-pyls-plugins-pycodestyle-enabled nil
+        ;; lsp-enable-snippet nil
+        ;; lsp-prefer-flymake :none))
+        ;; lsp-enable-snippet nil
+        ;; Ignore files and folders when watchin
+        ;; lsp-file-watch-ignored ("[/\\\\]\\.pyc$" "[/\\\\]_build")
+        ))
 
 ;; increase threshold for lsp to run smoothly
 ;; https://emacs-lsp.github.io/lsp-mode/page/performance/
@@ -568,11 +558,10 @@
 
 (use-package lsp-ui
   :commands lsp-ui-mode
-  :init (progn
-          (setq imenu-auto-rescan t
-                imenu-auto-rescan-maxout (* 1024 1024)
-                imenu--rescan-item '("" . -99))
-          )
+  :init
+  (setq imenu-auto-rescan t
+        imenu-auto-rescan-maxout (* 1024 1024)
+        imenu--rescan-item '("" . -99))
   )
 
 (use-package which-key
@@ -620,16 +609,15 @@
   :ensure-system-package ("~/.local/lib/python3.8/site-packages/ptvsd" . "pip3 install 'ptvsd>=4.2'") ; for dap-python
   :ensure-system-package ("~/.local/lib/python3.8/site-packages/pyls" . "pip3 install pyls") ; for dap-python
   :config (dap-auto-configure-mode)
-  :init (progn
-          ;; enables mouse hover support
-          (dap-tooltip-mode 1)
-          ;; use tooltips for mouse hover
-          ;; if it is not enabled `dap-mode' will use the minibuffer.
-          (tooltip-mode 1)
-          ;; displays floating panel with debug buttons
-          ;; requies emacs 26+
-          (dap-ui-controls-mode 1)
-          )
+  :init
+  ;; enables mouse hover support
+  (dap-tooltip-mode 1)
+  ;; use tooltips for mouse hover
+  ;; if it is not enabled `dap-mode' will use the minibuffer.
+  (tooltip-mode 1)
+  ;; displays floating panel with debug buttons
+  ;; requies emacs 26+
+  (dap-ui-controls-mode 1)
   :hook ((dap-stopped . (lambda (arg) (call-interactively #'dap-hydra))))
   )
 
@@ -661,10 +649,9 @@
 
 (use-package multi-term
   :ensure-system-package zsh
-  :config (progn
-            (setq multi-term-program "/bin/zsh")
-            (setq explicit-shell-file-name "/bin/zsh")
-            )
+  :config
+  (setq multi-term-program "/bin/zsh")
+  (setq explicit-shell-file-name "/bin/zsh")
   )
 
 (eval-after-load "term"
@@ -707,10 +694,9 @@
 
 (use-package company-c-headers
   :after company
-  :config (progn
-            (add-to-list 'company-backends 'company-c-headers)
-            (add-to-list 'company-c-headers-path-system "/usr/include/c++/9/")
-            )
+  :config
+  (add-to-list 'company-backends 'company-c-headers)
+  (add-to-list 'company-c-headers-path-system "/usr/include/c++/9/")
   )
 
 (use-package clang-format+
@@ -731,13 +717,12 @@
 ;; CRAN R
 ;; -------------------------------------------------------------------
 (use-package ess
-  :init (progn
-          (setq ess-use-eldoc nil)
-          ;; ESS will not print the evaluated commands, also speeds up the evaluation
-          (setq ess-eval-visibly nil)
-          ;; if you don't want to be prompted each time you start an interactive R session
-          (setq ess-ask-for-ess-directory nil)
-          )
+  :init
+  (setq ess-use-eldoc nil)
+  ;; ESS will not print the evaluated commands, also speeds up the evaluation
+  (setq ess-eval-visibly nil)
+  ;; if you don't want to be prompted each time you start an interactive R session
+  (setq ess-ask-for-ess-directory nil)
   )
 
  ;;; ESS
@@ -767,35 +752,35 @@
 ;; -------------------------------------------------------------------
 (use-package auctex
   :defer t
-  :init (progn
-         (add-hook 'LaTeX-mode-hook 'TeX-fold-mode)
-         (add-hook 'LaTeX-mode-hook 'outline-minor-mode)
-         ))
+  :hook (
+         (LaTeX-mode . TeX-fold-mode)
+         (LaTeX-mode . outline-minor-mode)
+         )
+  )
 
 (use-package company-auctex
   :after company)
 
 (use-package reftex
-  :init (progn
-          (setq reftex-enable-partial-scans t)
-          (setq reftex-use-multiple-selection-buffers t)
-          (setq reftex-plug-into-AUCTeX t)
-          (setq reftex-save-parse-info t)
-          (setq reftex-use-external-file-finders t)
-          (setq reftex-external-file-finders
-               '(("tex" . "kpsewhich -format=.tex %f")
-                 ("bib" . "kpsewhich -format=.bib %f")))
-          (setq TeX-auto-save t)
-          (setq TeX-auto-parse t)
+  :init
+  (setq reftex-enable-partial-scans t)
+  (setq reftex-use-multiple-selection-buffers t)
+  (setq reftex-plug-into-AUCTeX t)
+  (setq reftex-save-parse-info t)
+  (setq reftex-use-external-file-finders t)
+  (setq reftex-external-file-finders
+        '(("tex" . "kpsewhich -format=.tex %f")
+          ("bib" . "kpsewhich -format=.bib %f")))
+  (setq TeX-auto-save t)
+  (setq TeX-auto-parse t)
 
-          (setq LaTeX-command "latex -synctex=1") ;; enable synctex
-          )
-  :config (progn
-            ;; Set index on document
-            (add-hook 'reftex-load-hook 'imenu-add-menubar-index)
-            (add-hook 'reftex-mode-hook 'imenu-add-menubar-index)
-            )
+  (setq LaTeX-command "latex -synctex=1") ;; enable synctex
+  :config
+  ;; Set index on document
+  (add-hook 'reftex-load-hook 'imenu-add-menubar-index)
+  (add-hook 'reftex-mode-hook 'imenu-add-menubar-index)
   :hook (
+         (reftex-mode . imenu-add-menubar-index)
          (LaTeX-mode . turn-on-reftex)
          (latex-mode . turn-on-reftex)
          (LaTeX-mode . reftex-mode)
@@ -866,23 +851,21 @@
 (use-package okular-search
   :load-path local-load-path
   :ensure-system-package okular
-  :init (progn
-          (setq TeX-view-program-list '(("Okular" "okular --unique %o")))
-          (setq TeX-view-program-selection '((output-pdf "Okular") (output-dvi "Okular")))
+  :bind (:map LaTeX-mode-map
+              ("C-c C-a" . okular-jump-to-line)
+              :map tex-mode-map
+              ("C-c C-a" . okular-jump-to-line)
+              )
+  :init
+  (setq TeX-view-program-list '(("Okular" "okular --unique %o")))
+  (setq TeX-view-program-selection '((output-pdf "Okular") (output-dvi "Okular")))
 
-          ;; Inverse search
-          ;; http://inthearmchair.wordpress.com/2010/09/02/latex-inverse-pdf-search-with-emacs/
-          ;; (setq TeX-source-specials-mode 1)         ;; Inverse search
+  ;; Inverse search
+  ;; http://inthearmchair.wordpress.com/2010/09/02/latex-inverse-pdf-search-with-emacs/
+  ;; (setq TeX-source-specials-mode 1)         ;; Inverse search
 
-          (setq TeX-auto-global "~/.emacs.d/auctex-auto-generated-info/")
-          (setq TeX-auto-local  "~/.emacs.d/auctex-auto-generated-info/")
-
-          ;; forward search
-          (add-hook 'LaTeX-mode-hook (lambda () (local-set-key "\C-c\C-a"
-                                                               'okular-jump-to-line)))
-          (add-hook 'tex-mode-hook (lambda () (local-set-key "\C-c\C-a"
-                                                             'okular-jump-to-line)))
-          )
+  (setq TeX-auto-global "~/.emacs.d/auctex-auto-generated-info/")
+  (setq TeX-auto-local  "~/.emacs.d/auctex-auto-generated-info/")
   )
 
 ;; -------------------------------------------------------------------
@@ -952,17 +935,16 @@ dependency of the langtool package."
 (use-package ispell
   :ensure-system-package
   ((ispell . "apt install ispell iogerman ingerman ienglish-common iamerican-insane"))
-  :init (progn
-          (setq ispell-dictionary "en_US")
-          (setq ispell-local-dictionary "en_US")
-          (setq ispell-default-dictionary "en_US")
-          (setq flyspell-default-dictionary "en_US")
+  :init
+  (setq ispell-dictionary "en_US")
+  (setq ispell-local-dictionary "en_US")
+  (setq ispell-default-dictionary "en_US")
+  (setq flyspell-default-dictionary "en_US")
 
-          (setq ispell-program-name "/usr/bin/aspell")
-          (setq ispell-list-command "list")
-          (setq ispell-extra-args '("--dont-tex-check-comments"))
-          (setq ispell-current-dictionary "en_US")
-          )
+  (setq ispell-program-name "/usr/bin/aspell")
+  (setq ispell-list-command "list")
+  (setq ispell-extra-args '("--dont-tex-check-comments"))
+  (setq ispell-current-dictionary "en_US")
   :bind (
          ("<f4>" . fd-switch-dictionary)
          )
@@ -999,20 +981,6 @@ dependency of the langtool package."
 (add-hook 'text-mode-hook 'flyspell-mode)
 
 ;; -------------------------------------------------------------------
-;; Haskell
-;; -------------------------------------------------------------------
-(use-package haskell-mode
-  :init (progn
-          (setq haskell-program-name "ghci -XGADTs -XExistentialQuantification -XDeriveDataTypeable -XTypeFamilies")
-          )
-  :config (progn
-             (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
-             (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-             ))
-
-(use-package lsp-haskell)
-
-;; -------------------------------------------------------------------
 ;; Python
 ;; -------------------------------------------------------------------
 
@@ -1025,10 +993,8 @@ dependency of the langtool package."
 ;; Enable autopep8
 (use-package py-autopep8
   :hook ((python-mode . py-autopep8-enable-on-save))
-  :config (progn
-           (setq py-autopep8-options '("--select=W504 --max-line-length=120")))
-  )
-
+  :config
+  (setq py-autopep8-options '("--select=W504 --max-line-length=120")))
 
 ;; Enable python mode per default for python files
 (add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
@@ -1057,10 +1023,10 @@ dependency of the langtool package."
   )
 
 (use-package conda
-  :config (progn
-            (setq conda-anaconda-home (expand-file-name "~/anaconda3/"))
-            (setq conda-env-home-directory (expand-file-name "~/anaconda3"))
-            ))
+  :config
+  (setq conda-anaconda-home (expand-file-name "~/anaconda3/"))
+  (setq conda-env-home-directory (expand-file-name "~/anaconda3"))
+)
 
 ;; install via pip install "ptvsd>=4.2"
 (require 'dap-python)
@@ -1072,24 +1038,20 @@ dependency of the langtool package."
 ;; Sphinx documentation
 ;; -------------------------------------------------------------------
 ;; docu https://github.com/naiquevin/sphinx-doc.el
-(use-package sphinx-doc
-  :config (progn
-            (sphinx-doc-mode t)
-            )
-  )
-
 ;; Use C-c M-d to include doc string in python
-(add-hook 'python-mode-hook (lambda ()
-                              (sphinx-doc-mode t)))
+(use-package sphinx-doc
+  :hook ((python-mode . sphinx-doc-mode))
+  :config
+  (sphinx-doc-mode t)
+  )
 
 ;; -------------------------------------------------------------------
 ;; code style checker
 ;; -------------------------------------------------------------------
 (use-package flycheck
   :diminish flycheck-mode
-  :config (progn
-            (global-flycheck-mode)
-            )
+  :config
+  (global-flycheck-mode)
 )
 
 (use-package blacken)
@@ -1126,11 +1088,9 @@ dependency of the langtool package."
 (use-package swig-mode
   :load-path local-load-path
   :mode (("\\.i$" . swig-mode))
-  :mode ()
-  :init (progn
-          ;; Deactivate autpair
-          (add-hook 'swig-mode-hook (lambda () (setq autopair-dont-activate t)))
-          )
+  :init
+  ;; Deactivate autpair
+  (add-hook 'swig-mode-hook (lambda () (setq autopair-dont-activate t)))
 )
 
 ;; -------------------------------------------------------------------
@@ -1140,13 +1100,9 @@ dependency of the langtool package."
   :commands (magit-status magit-get-current-branch)
   :custom
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
-  :config (progn
-            (setq magit-diff-refine-hunk 'all) ; Show word based diff
-            ))
-
-;; ;; Add a super-convenient global binding for magit-status since
-;; ;; I use it 8 million times a day
-;; (global-set-key (kbd "C-M-;") 'magit-status)
+  :config
+  (setq magit-diff-refine-hunk 'all) ; Show word based diff
+)
 
 ;; (dw/leader-key-def
 ;;   "g"   '(:ignore t :which-key "git")
@@ -1190,9 +1146,8 @@ dependency of the langtool package."
 ;; -------------------------------------------------------------------
 (use-package dockerfile-mode
   :mode (("Dockerfile\\'" . dockerfile-mode))
-  :init (progn
-          (put 'dockerfile-image-name 'safe-local-variable #'stringp)
-          )
+  :init
+  (put 'dockerfile-image-name 'safe-local-variable #'stringp)
   )
 
 (use-package lsp-docker)
@@ -1210,9 +1165,8 @@ dependency of the langtool package."
          ("\\.rst$" . poly-rst-mode)
          ("\\.rest$" . poly-rst-mode)
          )
-  :init (progn
-          (set-default 'truncate-lines t)
-          )
+  :init
+  (set-default 'truncate-lines t)
   )
 
 
@@ -1239,11 +1193,10 @@ dependency of the langtool package."
          ("\\.ts$" . typescript-mode)
          ("\\.tsx$" . typescript-mode)
          )
-  :config (progn
-            (flycheck-mode 1)
-            (company-mode 1)
-            (dap-node-setup) ;; automatically installs Node debug adapter if needed
-            )
+  :config
+  (flycheck-mode 1)
+  (company-mode 1)
+  (dap-node-setup) ;; automatically installs Node debug adapter if needed
   )
 
 (use-package tide)
@@ -1281,12 +1234,11 @@ dependency of the langtool package."
 (use-package org
   :mode (("\\.org$" . org-mode))
   :config
-  (progn
     ;; config stuff
     (setq org-plantuml-jar-path (expand-file-name "~/opt/plantuml/plantuml.jar"))
     (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
     (org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t)))
-    ))
+    )
 
 (use-package flycheck-plantuml
   :after flycheck
@@ -1296,18 +1248,17 @@ dependency of the langtool package."
   :mode (("\\.puml" . plantuml-mode)
          ("\\.iuml" . plantuml-mode)
          ("\\.uml" . plantuml-mode))
-  :config (progn
-            ;; Sample jar configuration
-            (setq plantuml-jar-path (expand-file-name "~/opt/plantuml/plantuml.jar"))
-            (setq plantuml-default-exec-mode 'jar)
-            ;; Open in same window
-            (add-to-list 'display-buffer-alist
-                         '(progn
-                            (get-buffer-create "*PLANTUML Preview*")
-                            '((display-buffer-below-selected display-buffer-at-bottom)
-                              (inhibit-same-window . t)
-                              (window-height . fit-window-to-buffer))))
-            )
+  :config
+  ;; Sample jar configuration
+  (setq plantuml-jar-path (expand-file-name "~/opt/plantuml/plantuml.jar"))
+  (setq plantuml-default-exec-mode 'jar)
+  ;; Open in same window
+  (add-to-list 'display-buffer-alist
+               '(progn
+                  (get-buffer-create "*PLANTUML Preview*")
+                  '((display-buffer-below-selected display-buffer-at-bottom)
+                    (inhibit-same-window . t)
+                    (window-height . fit-window-to-buffer))))
   )
 
 ;; -------------------------------------------------------------------
