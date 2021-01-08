@@ -888,16 +888,22 @@
 ;; -------------------------------------------------------------------
 ;; include language tool
 ;; -------------------------------------------------------------------
-;; (let ((version "5.2"))
-;;   (let ((url (concat "https://languagetool.org/download/LanguageTool-" version ".zip"))
-;;         (path (expand-file-name "~/opt/languageTool"))
-;;         (jar (concat path "/LanguageTool-" version "/languagetool-commandline.jar")))
-;;     (when (not (file-exists-p jar))
-;;       ;; (
-;;       ;;  (make-directory path)
-;;       ;;  (url-copy-file url path)
-;;       ;;  )
-;;       )))
+(defun install-language-tool (version)
+  (let* ((name (concat "LanguageTool-" version))
+         (url (concat "https://languagetool.org/download/" name ".zip"))
+         (path (expand-file-name "~/opt/languageTool"))
+         (target (concat "/tmp/" name ".zip"))
+         (jar (concat path "/" name "/languagetool-commandline.jar")))
+    (unless (file-directory-p path) (make-directory path))
+    (unless  (file-exists-p jar)
+      (unless (file-exists-p target)
+        (message (concat "[langtool] Downloading " name))
+        (url-copy-file url target))
+      (message (concat "[langtool] Decompress " name))
+      (call-process-shell-command (concat "unzip " target " -d " path) nil 0)
+      )
+    (if (file-exists-p jar) jar nil)
+    ))
 
 (defun langtool-autoshow-detail-popup (overlays)
   (when (require 'popup nil t)
@@ -910,9 +916,13 @@
 
 
 (use-package langtool
+  ;; :commands (install-language-tool langtool-version)
+  :init
+  (setq langtool-version "5.2")
+  (setq langtool-language-tool-jar (install-language-tool langtool-version))
   :config
   (setq langtool-autoshow-message-function 'langtool-autoshow-detail-popup)
-  (setq langtool-language-tool-jar (expand-file-name "~/opt/languageTool/LanguageTool-5.2/languagetool-commandline.jar"))
+  (setq langtool-language-tool-jar (install-language-tool langtool-version))
   :bind (
          ("C-x 4 w" . langtool-check-buffer)
          ("C-x 4 W" . langtool-check-done)
