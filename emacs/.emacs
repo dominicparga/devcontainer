@@ -889,6 +889,8 @@
 ;; include language tool
 ;; -------------------------------------------------------------------
 (defun install-language-tool (version)
+  "Downloads and installs the language tool. This is an external
+dependency of the langtool package."
   (let* ((name (concat "LanguageTool-" version))
          (url (concat "https://languagetool.org/download/" name ".zip"))
          (path (expand-file-name "~/opt/languageTool"))
@@ -914,9 +916,7 @@
       (let ((msg (langtool-details-error-message overlays)))
         (popup-tip msg)))))
 
-
 (use-package langtool
-  ;; :commands (install-language-tool langtool-version)
   :init
   (setq langtool-version "5.2")
   (setq langtool-language-tool-jar (install-language-tool langtool-version))
@@ -942,11 +942,11 @@
   (let* ((dic ispell-current-dictionary)
          (change (if (string= dic "de_DE") "en_US" "de_DE")))
     (ispell-change-dictionary change)
-    (message "Aspell dictionary switched from %s to %s" dic change))
+    (message "[ispell] Dictionary switched from %s to %s" dic change))
   (let* ((dic ispell-current-dictionary)
          (change (if (string= dic "de_DE") "de-DE" "en-US")))
     (setq langtool-default-language change)
-    (message "LanguageTool dictionary switched to %s" change)
+    (message "[langtool] Dictionary switched to %s" change)
     ))
 
 (use-package ispell
