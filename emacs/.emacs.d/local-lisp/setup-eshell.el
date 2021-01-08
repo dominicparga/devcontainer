@@ -58,8 +58,7 @@
      (propertize " " 'face `(:foreground "white")))))
 
 (defun dw/eshell-configure ()
-  (use-package xterm-color
-    :ensure t)
+  (use-package xterm-color)
 
   (push 'eshell-tramp eshell-modules-list)
   (push 'xterm-color-filter eshell-preoutput-filter-functions)
@@ -101,13 +100,11 @@
         eshell-prefer-lisp-functions nil))
 
 (use-package eshell
-  :ensure t
   :hook (eshell-first-time-mode . dw/eshell-configure)
   :init
   (setq eshell-directory-name "~/.emacs.d/eshell/"))
 
 (use-package eshell-z
-  :ensure t
   :hook ((eshell-mode . (lambda () (require 'eshell-z)))
          (eshell-z-change-dir .  (lambda () (eshell/pushd (eshell/pwd))))))
 
