@@ -22,7 +22,7 @@
                          ("org" . "https://orgmode.org/elpa/")
                          ("elpa" . "https://elpa.gnu.org/packages/")))
 
-(defvar local-load-path (expand-file-name "~/.emacs.d/local-lisp"))
+(defvar local-load-path (expand-file-name "~/.emacs.d/elisp-local"))
 (add-to-list 'load-path local-load-path)
 
 ;; Initialise packages
@@ -81,7 +81,7 @@
     :prefix "C-c"))
 
 ;; The default is 800 kilobytes.  Measured in bytes.
-(setq gc-cons-threshold (* 50 1000 1000))
+(setq gc-cons-threshold (* 100 1000 1000))
 
 ;; Profile emacs startup
 (add-hook 'emacs-startup-hook
@@ -579,9 +579,8 @@
          ("<f9>" . treemacs-select-window))
   :init
   (when window-system
-    (setq treemacs-width 27
-          treemacs-is-never-other-window t
-          treemacs-indentation 0
+    (setq treemacs-width 35
+          treemacs-indentation 1
           treemacs-space-between-root-nodes nil)
     (treemacs-follow-mode t)
     (treemacs-filewatch-mode t)
@@ -607,7 +606,6 @@
 (use-package dap-mode
   :after lsp-mode
   :ensure-system-package ("~/.local/lib/python3.8/site-packages/ptvsd" . "pip3 install 'ptvsd>=4.2'") ; for dap-python
-  :ensure-system-package ("~/.local/lib/python3.8/site-packages/pyls" . "pip3 install pyls") ; for dap-python
   :config (dap-auto-configure-mode)
   :init
   ;; enables mouse hover support

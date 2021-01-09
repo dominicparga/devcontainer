@@ -241,7 +241,8 @@ __DOTFILES_EMACS_DIR="${DOTFILES}/emacs"
 
 # set emacs links
 echo -e "${__COLOR_INFO}INFO: ${__EMACS_HOME}/.emacs@ -> ${__DOTFILES_EMACS_DIR}/emacs${__COLOR_RESET}"
-ln -i -v -s "${__DOTFILES_EMACS_DIR}/.emacs" "${__DOT_EMACS}"
+ln -i -v -s "${__DOTFILES_EMACS_DIR}/init.el" "${__DOT_EMACS}"
 echo -e "${__COLOR_INFO}INFO: ${__EMACS_HOME}/.emacs.d@ -> ${__DOTFILES_EMACS_DIR}${__COLOR_RESET}"
-ln -i -v -s "${__DOTFILES_EMACS_DIR}/.emacs.d" "${__DOT_EMACS_D}"
+mkdir -p "${__DOT_EMACS_D}"
+ln -i -v -s "${__DOTFILES_EMACS_DIR}/elisp-local" "${__DOT_EMACS_D}"
 echo -e "${__COLOR_SUCC}SUCCESS: emacs-setup configured${__COLOR_RESET}"
