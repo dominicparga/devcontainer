@@ -60,6 +60,10 @@
     (exec-path-from-shell-initialize))
   )
 
+(use-package helper
+ :load-path local-load-path
+ )
+
 ;; ===================================================================
 ;; Basic Settings
 ;; ===================================================================
@@ -869,19 +873,6 @@
 ;; -------------------------------------------------------------------
 ;; include language tool
 ;; -------------------------------------------------------------------
-(defun download-and-extract-zip-archive (url name extract-to expected-binary-file package-name)
-  "Downloads and installs zip archives."
-  (let* ((temporary-file (concat temporary-file-directory name ".zip")))
-    (unless (file-directory-p extract-to) (make-directory extract-to))
-    (unless  (file-exists-p expected-binary-file)
-      (unless (file-exists-p temporary-file)
-        (message (concat "[" package-name "] Downloading " name))
-        (url-copy-file url temporary-file))
-      (message (concat "[" package-name "] Decompress " name))
-      (call-process-shell-command (concat "unzip " temporary-file " -d " extract-to) nil 0)
-      )
-    ))
-
 (defun langtool-autoshow-detail-popup (overlays)
   (when (require 'popup nil t)
     ;; Do not interrupt current popup
