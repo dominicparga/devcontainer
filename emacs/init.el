@@ -1,4 +1,4 @@
-;;; .emacs --- this file starts here
+;;; init.el --- this file starts here
 
 ;;; Commentary:
 ;; inspired by https://github.com/daviwil/dotfiles/blob/master/Emacs.org
@@ -8,10 +8,9 @@
 ;; ==================================================================
 ;; Load Packages for different modes
 ;; ===================================================================
-
 (setq user-full-name "Fabian Franzelin")
 (setq user-mail-address "fabian.franzelin@de.bosch.com")
-(setq inhibit-startup-echo-area-message "franzef")
+(setq inhibit-startup-echo-area-message (getenv "USERNAME"))
 
 ;; Package Management
 (require 'package)
@@ -54,9 +53,7 @@
 ;; emacs
 (use-package exec-path-from-shell
   :config
-  (when (memq window-system '(mac ns x))
-    (exec-path-from-shell-initialize))
-  (when (daemonp)
+  (when (or (memq window-system '(mac ns x)) daemonp)
     (exec-path-from-shell-initialize))
   )
 
@@ -96,14 +93,14 @@
                               (time-subtract after-init-time before-init-time)))
                      gcs-done)))
 
-;disable backup
+;; disable backup
 (setq backup-inhibited t)
 (setq make-backup-files nil)
 
 ;; make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
-;disable auto save
+;; disable auto save
 (setq auto-save-default nil)
 
 ;; dont warn for following symlinked files
@@ -115,6 +112,12 @@
 ;; disable menu
 (menu-bar-mode nil)
 
+;; remove toolbar
+(tool-bar-mode -1)
+
+;; remove menu bar
+(menu-bar-mode -1)
+
 ;; enable revert from disk
 (global-auto-revert-mode 1)
 
@@ -124,7 +127,7 @@
 ;; https://www.emacswiki.org/emacs/GccEmacs
 (setq package-native-compile t)
 
-;; Support Wheel Mouse Scrolling
+;; Support wheel mouse scrolling
 (mouse-wheel-mode t)
 
 ;; Kill this buffer, instead of prompting for which one to kill
@@ -133,15 +136,14 @@
 ;; dir-local variables will be applied to remote files.
 (setq enable-remote-dir-locals t)
 
-; Turn on syntax colouring in all modes supporting it:
+; Turn on syntax colouring in all modes supporting it
 (global-font-lock-mode t)
 
-; I want the name of the file I'm editing to be displayed in the
-; title-bar.
-(setq frame-title-format "%b")
+;; I want the current user name, the emacs version and the name of the
+;; file I'm editing to be displayed in the title-bar.
 (setq frame-title-format
-      (list (format "%s %%S: %%j " (system-name))
-        '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
+      (list (getenv "USERNAME") "@Emacs " emacs-version ": "
+      '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
 
 ;; set unicode encoding
 (defvar prefer-coding-system 'utf-8)
@@ -158,15 +160,10 @@
 
 ;; Color theme
 (use-package material-theme)
-
 (load-theme 'material t)
 
 ;; show logs of executed commands
 (use-package command-log-mode)
-
-;; remove toolbar
-(tool-bar-mode -1)
-(menu-bar-mode -1)
 
 ;; Key bindings
 (global-set-key "\C-n" 'make-frame)
@@ -174,9 +171,6 @@
 ;; F6 stores a position in a file F7 brings you back to this position
 (global-set-key [f6] '(lambda () (interactive) (point-to-register ?1)))
 (global-set-key [f7] '(lambda () (interactive) (register-to-point ?1)))
-
-;; Show major mode
-(global-set-key "\C-h\C-m" '(lambda() (interactive) (message "%s" major-mode)))
 
 ;; higlight the marked region (C-SPC) and use commands (like
 ;; latex-environment) on current region.
@@ -345,14 +339,6 @@
       (message filename))))
 
 (global-set-key [f12] 'my-put-file-name-on-clipboard)
-
-;; -------------------------------------------------------------------
-;; Snippets
-;; -------------------------------------------------------------------
-
-(use-package yasnippet
-  :config (yas-global-mode 1)
-  )
 
 ;; -------------------------------------------------------------------
 ;; Auto Completion
@@ -524,7 +510,6 @@
 ;; -------------------------------------------------------------------
 ;; Enable lsp and treemacs
 ;; -------------------------------------------------------------------
-
 (use-package lsp-mode
   :commands lsp
   :ensure-system-package
@@ -556,7 +541,6 @@
 
 ;; increase threshold for lsp to run smoothly
 ;; https://emacs-lsp.github.io/lsp-mode/page/performance/
-(setq gc-cons-threshold 100000000)
 (setq read-process-output-max (* 1024 1024)) ;; 1mb
 (setq lsp-completion-provider :capf)
 
@@ -567,6 +551,10 @@
         imenu-auto-rescan-maxout (* 1024 1024)
         imenu--rescan-item '("" . -99))
   )
+
+(with-eval-after-load 'lsp-mode
+  ;; :global/:workspace/:file
+  (setq lsp-modeline-diagnostics-scope :workspace))
 
 (use-package which-key
   :diminish which-key-mode
@@ -579,8 +567,7 @@
              treemacs-follow-mode
              treemacs-filewatch-mode
              treemacs-fringe-indicator-mode)
-  :bind (("<f8>" . treemacs)
-         ("<f9>" . treemacs-select-window))
+  :bind (("<f8>" . treemacs))
   :init
   (when window-system
     (setq treemacs-width 35
@@ -623,16 +610,12 @@
   :hook ((dap-stopped . (lambda (arg) (call-interactively #'dap-hydra))))
   )
 
-;; ===================================================================
-;; Adjusting modes for programming
-;; ===================================================================
 ;; -------------------------------------------------------------------
 ;; Eshell
 ;; -------------------------------------------------------------------
 (use-package setup-eshell
   :load-path local-load-path
   )
-
 
 ;; -------------------------------------------------------------------
 ;; Ansi term for zsh in emacs buffer
@@ -660,15 +643,8 @@
   '(define-key term-raw-map (kbd "C-y") 'term-paste))
 
 ;; -------------------------------------------------------------------
-;; C++
+;; Company
 ;; -------------------------------------------------------------------
-(use-package cmake-mode
-  :mode (("\\.cmake$" . cmake-mode)
-         ("CMakeLists.txt" . cmake-mode)))
-
-;; switch between header and source
-(global-set-key [(control tab)] 'ff-find-other-file)
-
 (use-package company
   :config
   (setq company-backends
@@ -690,9 +666,34 @@
   :config
   (company-prescient-mode 1))
 
-(with-eval-after-load 'lsp-mode
-  ;; :global/:workspace/:file
-  (setq lsp-modeline-diagnostics-scope :workspace))
+;; -------------------------------------------------------------------
+;; Show number of lines in the left side of the buffer
+;; -------------------------------------------------------------------
+(column-number-mode 1)
+(global-display-line-numbers-mode 1)
+
+(dolist (mode '(org-mode-hook
+                term-mode-hook
+                multi-term-mode-hook
+                eshell-mode-hook))
+  (add-hook mode (lambda () (display-line-numbers-mode 0))))
+
+;; enable rainbow delimiters for all programming-modes (prog-mode)
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
+
+;; ===================================================================
+;; Adjusting modes for programming
+;; ===================================================================
+;; -------------------------------------------------------------------
+;; C++
+;; -------------------------------------------------------------------
+(use-package cmake-mode
+  :mode (("\\.cmake$" . cmake-mode)
+         ("CMakeLists.txt" . cmake-mode)))
+
+;; switch between header and source
+(global-set-key [(control tab)] 'ff-find-other-file)
 
 (use-package company-c-headers
   :after company
@@ -871,7 +872,7 @@
   )
 
 ;; -------------------------------------------------------------------
-;; include language tool
+;; Language tool
 ;; -------------------------------------------------------------------
 (defun langtool-autoshow-detail-popup (overlays)
   (when (require 'popup nil t)
@@ -909,7 +910,6 @@
 ;; -------------------------------------------------------------------
 ;; On the fly spell checker using ispell
 ;; -------------------------------------------------------------------
-
 (defun fd-switch-dictionary()
   "Switch dictionary from American English to German an vice versa."
   (interactive)
@@ -974,7 +974,6 @@
 ;; -------------------------------------------------------------------
 ;; Python
 ;; -------------------------------------------------------------------
-
 (use-package lsp-python-ms
   :init (setq lsp-python-ms-auto-install-server t)
   :hook (python-mode . (lambda ()
@@ -995,8 +994,9 @@
   "Colors the background if pdb is active."
   (interactive)
   (highlight-lines-matching-regexp "import ipdb")
+  (highlight-lines-matching-regexp "ipdb.set_trace()")
   (highlight-lines-matching-regexp "import pdb")
-  (highlight-lines-matching-regexp "ipdb.set_trace()"))
+  (highlight-lines-matching-regexp "pdb.set_trace()"))
 
 (add-hook 'python-mode-hook 'annotate-pdb)
 
@@ -1012,6 +1012,8 @@
   :ensure-system-package (black . "pip3 install --user -U black")
   :hook ((python-mode . python-black-on-save-mode))
   )
+
+(use-package blacken)
 
 (use-package conda
   :config
@@ -1044,8 +1046,6 @@
   :config
   (global-flycheck-mode)
 )
-
-(use-package blacken)
 
 ;; -------------------------------------------------------------------
 ;; Shell
@@ -1113,16 +1113,6 @@
 (use-package git-timemachine)
 
 (use-package magit-todos)
-
-;; -------------------------------------------------------------------
-;; scala
-;; -------------------------------------------------------------------
-(use-package scala-mode)
-
-;; -------------------------------------------------------------------
-;; protobuf mode
-;; -------------------------------------------------------------------
-(use-package protobuf-mode)
 
 ;; -------------------------------------------------------------------
 ;; yaml mode
@@ -1267,22 +1257,6 @@
   :mode (("\\.groovy$" . groovy-mode)))
 
 (use-package groovy-imports)
-
-;; -------------------------------------------------------------------
-;; Show number of lines in the left side of the buffer
-;; -------------------------------------------------------------------
-(column-number-mode 1)
-(global-display-line-numbers-mode 1)
-
-(dolist (mode '(org-mode-hook
-                term-mode-hook
-                multi-term-mode-hook
-                eshell-mode-hook))
-  (add-hook mode (lambda () (display-line-numbers-mode 0))))
-
-;; enable rainbow delimiters for all programming-modes (prog-mode)
-(use-package rainbow-delimiters
-  :hook (prog-mode . rainbow-delimiters-mode))
 
 ;; -------------------------------------------------------------------
 ;; Java mode

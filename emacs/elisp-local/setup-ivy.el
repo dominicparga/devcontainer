@@ -1,6 +1,6 @@
 ;;; package --- Set up Ivy, Counsel and Swiper
 ;;; Commentary:
-;;; Sets up helm for Emacs
+;;; Sets up ivy for Emacs
 
 ;;; Code:
 
