@@ -871,23 +871,17 @@
 ;; -------------------------------------------------------------------
 ;; include language tool
 ;; -------------------------------------------------------------------
-(defun install-language-tool (version)
-  "Downloads and installs the language tool. This is an external
-dependency of the langtool package."
-  (let* ((name (concat "LanguageTool-" version))
-         (url (concat "https://languagetool.org/download/" name ".zip"))
-         (path (expand-file-name "~/opt/languageTool"))
-         (target (concat "/tmp/" name ".zip"))
-         (jar (concat path "/" name "/languagetool-commandline.jar")))
-    (unless (file-directory-p path) (make-directory path))
-    (unless  (file-exists-p jar)
-      (unless (file-exists-p target)
-        (message (concat "[langtool] Downloading " name))
-        (url-copy-file url target))
-      (message (concat "[langtool] Decompress " name))
-      (call-process-shell-command (concat "unzip " target " -d " path) nil 0)
+(defun download-and-extract-zip-archive (url name extract-to expected-binary-file package-name)
+  "Downloads and installs zip archives."
+  (let* ((temporary-file (concat temporary-file-directory name ".zip")))
+    (unless (file-directory-p extract-to) (make-directory extract-to))
+    (unless  (file-exists-p expected-binary-file)
+      (unless (file-exists-p temporary-file)
+        (message (concat "[" package-name "] Downloading " name))
+        (url-copy-file url temporary-file))
+      (message (concat "[" package-name "] Decompress " name))
+      (call-process-shell-command (concat "unzip " temporary-file " -d " extract-to) nil 0)
       )
-    (if (file-exists-p jar) jar nil)
     ))
 
 (defun langtool-autoshow-detail-popup (overlays)
@@ -901,11 +895,19 @@ dependency of the langtool package."
 
 (use-package langtool
   :init
-  (setq langtool-version "5.2")
-  (setq langtool-language-tool-jar (install-language-tool langtool-version))
+  (setq langtool-version "5.2"
+        langtool-name (concat "LanguageTool-" langtool-version)
+        langtool-url (concat "https://languagetool.org/download/" langtool-name ".zip")
+        langtool-extract-to (expand-file-name "~/opt/languageTool")
+        langtool-expected-binary (concat langtool-extract-to "/" langtool-name "/languagetool-commandline.jar"))
+  (download-and-extract-zip-archive langtool-url
+                                    langtool-name
+                                    langtool-extract-to
+                                    langtool-expected-binary
+                                    "langtool")
   :config
   (setq langtool-autoshow-message-function 'langtool-autoshow-detail-popup)
-  (setq langtool-language-tool-jar (install-language-tool langtool-version))
+  (setq langtool-language-tool-jar langtool-expected-binary)
   :bind (
          ("C-x 4 w" . langtool-check-buffer)
          ("C-x 4 W" . langtool-check-done)
@@ -1207,17 +1209,13 @@ dependency of the langtool package."
   (flycheck-mode +1)
   (setq flycheck-check-syntax-automatically '(save mode-enabled))
   (eldoc-mode +1)
-  (tide-hl-identifier-mode +1)
-  ;; company is an optional dependency. You have to
-  ;; install it separately via package-install
-  ;; `M-x package-install [ret] company`
-  (company-mode +1))
+  (tide-hl-identifier-mode +1))
 
 ;; aligns annotation to the right hand side
 (setq company-tooltip-align-annotations t)
 
 ;; formats the buffer before saving
-(add-hook 'before-save-hook 'tide-format-before-save)
+;; (add-hook 'before-save-hook 'tide-format-before-save)
 ;; (add-hook 'typescript-mode-hook #'setup-tide-mode)
 
 (use-package json-snatcher
@@ -1231,26 +1229,24 @@ dependency of the langtool package."
 ;; -------------------------------------------------------------------
 ;; Org + Plantuml mode
 ;; -------------------------------------------------------------------
-(use-package org
-  :mode (("\\.org$" . org-mode))
-  :config
-    ;; config stuff
-    (setq org-plantuml-jar-path (expand-file-name "~/opt/plantuml/plantuml.jar"))
-    (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
-    (org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t)))
-    )
-
-(use-package flycheck-plantuml
-  :after flycheck
-  )
-
 (use-package plantuml-mode
   :mode (("\\.puml" . plantuml-mode)
          ("\\.iuml" . plantuml-mode)
          ("\\.uml" . plantuml-mode))
+  :init
+  (setq plantuml-version "1.2020.26"
+        plantuml-name (concat "plantuml-jar-asl-" plantuml-version)
+        plantuml-url (concat "https://sourceforge.net/projects/plantuml/files/" plantuml-version "/" plantuml-name ".zip/download")
+        plantuml-extract-to (expand-file-name "~/opt/plantuml")
+        plantuml-expected-binary (concat plantuml-extract-to "/plantuml.jar"))
+  (download-and-extract-zip-archive plantuml-url
+                                    plantuml-name
+                                    plantuml-extract-to
+                                    plantuml-expected-binary
+                                    "plantuml")
   :config
   ;; Sample jar configuration
-  (setq plantuml-jar-path (expand-file-name "~/opt/plantuml/plantuml.jar"))
+  (setq plantuml-jar-path plantuml-expected-binary)
   (setq plantuml-default-exec-mode 'jar)
   ;; Open in same window
   (add-to-list 'display-buffer-alist
@@ -1259,6 +1255,20 @@ dependency of the langtool package."
                   '((display-buffer-below-selected display-buffer-at-bottom)
                     (inhibit-same-window . t)
                     (window-height . fit-window-to-buffer))))
+  )
+
+(use-package org
+  :mode (("\\.org$" . org-mode))
+  :after plantuml-mode
+  :config
+    ;; config stuff
+    (setq org-plantuml-jar-path plantuml-jar-path)
+    (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
+    (org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t)))
+    )
+
+(use-package flycheck-plantuml
+  :after flycheck
   )
 
 ;; -------------------------------------------------------------------
