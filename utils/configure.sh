@@ -264,12 +264,6 @@ __EMACS_HOME="${HOME}"
 __DOT_EMACS="${HOME}/.emacs"
 __DOT_EMACS_D="${HOME}/.emacs.d"
 
-# check whether the configuration files already exist
-if [ -d "${__DOT_EMACS_D}" ]; then
-    echo -e "${__COLOR_ERR}ERROR: The ${__DOT_EMACS_D} folder does already exist. Back it up and rerun the configuration.${__COLOR_RESET}"
-    exit 1
-fi
-
 __DOTFILES_EMACS_DIR="${DOTFILES}/emacs"
 
 # set emacs links
