@@ -57,7 +57,7 @@
     (exec-path-from-shell-initialize))
   )
 
-(use-package helper
+(use-package helpers
  :load-path local-load-path
  )
 
@@ -175,6 +175,9 @@
 ;; higlight the marked region (C-SPC) and use commands (like
 ;; latex-environment) on current region.
 (transient-mark-mode t)
+
+;; enable cua mode to mark text vertically
+(cua-mode)
 
 ;; Indentation
 (setq-default indent-tabs-mode nil)    ; use only spaces and no tabs
@@ -512,8 +515,7 @@
 ;; -------------------------------------------------------------------
 (use-package lsp-mode
   :commands lsp
-  :ensure-system-package
-  ((clangd . "apt install clangd"))
+  :ensure-system-package (clangd . clangd)
   :hook ((lsp-mode . (lambda ()
                        (let ((lsp-keymap-prefix "C-c l"))
                          (lsp-enable-which-key-integration))))
@@ -681,6 +683,20 @@
 ;; enable rainbow delimiters for all programming-modes (prog-mode)
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
+
+;; -------------------------------------------------------------------
+;; Drag stuff around with M-up/down
+;; -------------------------------------------------------------------
+(use-package drag-stuff
+  :config
+  (drag-stuff-global-mode)
+  :bind (
+         ("M-<right>" . drag-stuff-right)
+         ("M-<left>" . drag-stuff-left)
+         ("M-<up>" . drag-stuff-up)
+         ("M-<down>" . drag-stuff-down)
+         )
+  )
 
 ;; ===================================================================
 ;; Adjusting modes for programming
@@ -1209,11 +1225,12 @@
 ;; Org + Plantuml mode
 ;; -------------------------------------------------------------------
 (use-package plantuml-mode
-  :ensure-system-package graphviz
+  :ensure-system-package (dot . graphviz)
   :mode (("\\.puml" . plantuml-mode)
          ("\\.iuml" . plantuml-mode)
          ("\\.uml" . plantuml-mode))
   :init
+  ;; Consider using (plantuml-download-jar) as alternative
   (setq plantuml-version "1.2020.26"
         plantuml-name (concat "plantuml-jar-asl-" plantuml-version)
         plantuml-url (concat "https://sourceforge.net/projects/plantuml/files/" plantuml-version "/" plantuml-name ".zip/download")
@@ -1235,7 +1252,14 @@
                   '((display-buffer-below-selected display-buffer-at-bottom)
                     (inhibit-same-window . t)
                     (window-height . fit-window-to-buffer))))
+  :bind (:map plantuml-mode-map
+              ("C-M-i" . plantuml-complete-symbol))
   )
+
+(use-package flycheck-plantuml
+  :after plantuml-mode
+  :after flycheck
+  :commands (flycheck-plantuml-setup))
 
 (use-package org
   :mode (("\\.org$" . org-mode))
@@ -1246,10 +1270,6 @@
     (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
     (org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t)))
     )
-
-(use-package flycheck-plantuml
-  :after flycheck
-  )
 
 ;; -------------------------------------------------------------------
 ;; Groovy mode for Jenkins
@@ -1294,7 +1314,7 @@
  '(custom-safe-themes
    '("d4f8fcc20d4b44bf5796196dbeabec42078c2ddb16dcb6ec145a1c610e0842f3" default))
  '(package-selected-packages
-   '(multi-eshell lsp-ivy which-key yasnippet use-package-ensure-system-package rainbow-delimiters command-log-mode company-prescient ivy-prescient emojify xterm-color evil-collection ivy-posframe smex ivy-rich eshell-z general openwith ivy-pass evil-nerd-commenter smart-mode-line dap-node pyvenv jedi dap-mode lsp-docker lsp-java lsp-mode lsp-ui helm-swoop quelpa quelpa-use-package python-black meghanada scala-mode ess flycheck-clang-tidy helm-mt multi-term winner-mode dockerfile-mode groovy-imports groovy-mode flycheck-plantuml plantuml-mode org-mode poly-rst rst-mode yaml-mode whole-line-or-region wgrep volatile-highlights use-package tide tangotango-theme sphinx-doc smart-jump python-mode py-autopep8 protobuf-mode neotree markdown-mode magit langtool ivy-rtags ivy-hydra highlight-symbol helm-projectile helm-ag helm-R haskell-mode git-timemachine flycheck-rtags fill-column-indicator exec-path-from-shell ensime elpy dired-narrow diminish cython-mode crux counsel cmake-mode clang-format blacken beacon autopair auto-complete auctex anaconda-mode ag)))
+   '(drag-stuff multi-eshell lsp-ivy which-key yasnippet use-package-ensure-system-package rainbow-delimiters command-log-mode company-prescient ivy-prescient emojify xterm-color evil-collection ivy-posframe smex ivy-rich eshell-z general openwith ivy-pass evil-nerd-commenter smart-mode-line dap-node pyvenv jedi dap-mode lsp-docker lsp-java lsp-mode lsp-ui helm-swoop quelpa quelpa-use-package python-black meghanada scala-mode ess flycheck-clang-tidy helm-mt multi-term winner-mode dockerfile-mode groovy-imports groovy-mode flycheck-plantuml plantuml-mode org-mode poly-rst rst-mode yaml-mode whole-line-or-region wgrep volatile-highlights use-package tide tangotango-theme sphinx-doc smart-jump python-mode py-autopep8 protobuf-mode neotree markdown-mode magit langtool ivy-rtags ivy-hydra highlight-symbol helm-projectile helm-ag helm-R haskell-mode git-timemachine flycheck-rtags fill-column-indicator exec-path-from-shell ensime elpy dired-narrow diminish cython-mode crux counsel cmake-mode clang-format blacken beacon autopair auto-complete auctex anaconda-mode ag)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

@@ -1,4 +1,4 @@
-;;; package --- Set up eshell
+;;; package --- Set up helper functions
 ;;; Commentary:
 ;;; Provides simple helper functions
 
@@ -17,6 +17,6 @@
       )
     ))
 
-(provide 'helper)
+(provide 'helpers)
 
-;;; helper.el ends here
+;;; helpers.el ends here
