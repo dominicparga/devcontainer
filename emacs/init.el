@@ -1209,6 +1209,7 @@
 ;; Org + Plantuml mode
 ;; -------------------------------------------------------------------
 (use-package plantuml-mode
+  :ensure-system-package graphviz
   :mode (("\\.puml" . plantuml-mode)
          ("\\.iuml" . plantuml-mode)
          ("\\.uml" . plantuml-mode))
@@ -1216,7 +1217,7 @@
   (setq plantuml-version "1.2020.26"
         plantuml-name (concat "plantuml-jar-asl-" plantuml-version)
         plantuml-url (concat "https://sourceforge.net/projects/plantuml/files/" plantuml-version "/" plantuml-name ".zip/download")
-        plantuml-extract-to (expand-file-name "~/opt/plantuml")
+        plantuml-extract-to (expand-file-name (concat "~/opt/plantuml/" plantuml-name))
         plantuml-expected-binary (concat plantuml-extract-to "/plantuml.jar"))
   (download-and-extract-zip-archive plantuml-url
                                     plantuml-name
