@@ -3,7 +3,7 @@
 #------------------------------------------------------------------------------#
 # description of cmdline-parser
 
-__USAGE="
+usage="
 USAGE
     ${0} [OPTION]...
 
@@ -24,7 +24,7 @@ set -e
 if [ -z "${DOTFILES}" ] || [ ! -d "${DOTFILES}" ]; then
     echo "ERROR: \${DOTFILES} is set incorrectly: ${DOTFILES}" >&2
     echo
-    echo "${__USAGE}"
+    echo "${usage}"
     exit 1
 fi
 
@@ -51,7 +51,7 @@ while [ "${#}" -gt 0 ]; do
     esac
 
     if [ -n "${__ERRCODE}" ]; then
-        echo -e "${__COLOR_INFO}${__USAGE}${__COLOR_RESET}"
+        echo -e "${__COLOR_INFO}${usage}${__COLOR_RESET}"
         exit ${__ERRCODE}
     fi
 done
@@ -74,9 +74,11 @@ mkdir -p -v "${__CUSTOM_DIR}/shell/func/"
 mkdir -p -v "${__CUSTOM_DIR}/shell/ssh/"
 # custom/vscode
 mkdir -p -v "${__CUSTOM_DIR}/vscode/"
-# custom/emacs
-mkdir -p -v "${__CUSTOM_DIR}/emacs/"
 echo -e "${__COLOR_SUCC}SUCCESS: custom-folders created${__COLOR_RESET}"
+# custom/termux
+mkdir -p -v "${__CUSTOM_DIR}/termux/"
+# custom/R
+mkdir -p -v "${__CUSTOM_DIR}/R/"
 
 #------------------------------------------------------------------------------#
 # setup custom/git
@@ -90,7 +92,6 @@ ln -i -v -s "${__CUSTOM_DIR}/git/config" "${HOME}/.gitconfig"
 echo -e "${__COLOR_INFO}INFO: ${HOME}/.gitconfig.general@ -> ${DOTFILES}/custom/git/config.general@ -> ${DOTFILES}/git/config.general${__COLOR_RESET}"
 ln -i -v -s "${DOTFILES}/git/config.general" "${__CUSTOM_DIR}/git/config.general"
 ln -i -v -s "${__CUSTOM_DIR}/git/config.general" "${HOME}/.gitconfig.general"
-ln -i -v -s "${__CUSTOM_DIR}/git/ignore" "${HOME}/.config/git/ignore"
 echo -e "${__COLOR_SUCC}SUCCESS: git-files configured${__COLOR_RESET}"
 
 #------------------------------------------------------------------------------#
@@ -203,21 +204,53 @@ do
     fi
 done
 # check if var is set, which means the directory exists
-if [ -z "${__VSCODE_HOME}" ]; then
-    echo -e "${__COLOR_ERR}ERROR: Could not find vscode-folder${__COLOR_RESET}"
-    exit 1
-fi
-__DOTFILES_VSCODE_DIR="${DOTFILES}/vscode"
-__DOTFILES_CUSTOM_VSCODE_DIR="${__CUSTOM_DIR}/vscode"
+if [ -n "${__VSCODE_HOME}" ]; then
+    __DOTFILES_VSCODE_DIR="${DOTFILES}/vscode"
+    __DOTFILES_CUSTOM_VSCODE_DIR="${__CUSTOM_DIR}/vscode"
 
-# set vscode-links
-echo -e "${__COLOR_INFO}INFO: ${__VSCODE_HOME}/settings.json@ -> ${DOTFILES}/custom/vscode/settings.json@ -> ${DOTFILES}/vscode/settings.json${__COLOR_RESET}"
-ln -i -v -s "${__DOTFILES_VSCODE_DIR}/settings.json" "${__DOTFILES_CUSTOM_VSCODE_DIR}/settings.json"
-ln -i -v -s "${__DOTFILES_CUSTOM_VSCODE_DIR}/settings.json" "${__VSCODE_HOME}/settings.json"
-echo -e "${__COLOR_INFO}INFO: ${__VSCODE_HOME}/keybindings.json@ -> ${DOTFILES}/custom/vscode/keybindings.json@ -> ${DOTFILES}/vscode/keybindings.json${__COLOR_RESET}"
-ln -i -v -s "${__DOTFILES_VSCODE_DIR}/keybindings.json" "${__DOTFILES_CUSTOM_VSCODE_DIR}/keybindings.json"
-ln -i -v -s "${__DOTFILES_CUSTOM_VSCODE_DIR}/keybindings.json" "${__VSCODE_HOME}/keybindings.json"
-echo -e "${__COLOR_SUCC}SUCCESS: vscode-setup configured${__COLOR_RESET}"
+    # set vscode-links
+    echo -e "${__COLOR_INFO}INFO: ${__VSCODE_HOME}/settings.json@ -> ${DOTFILES}/custom/vscode/settings.json@ -> ${DOTFILES}/vscode/settings.json${__COLOR_RESET}"
+    ln -i -v -s "${__DOTFILES_VSCODE_DIR}/settings.json" "${__DOTFILES_CUSTOM_VSCODE_DIR}/settings.json"
+    ln -i -v -s "${__DOTFILES_CUSTOM_VSCODE_DIR}/settings.json" "${__VSCODE_HOME}/settings.json"
+    echo -e "${__COLOR_INFO}INFO: ${__VSCODE_HOME}/keybindings.json@ -> ${DOTFILES}/custom/vscode/keybindings.json@ -> ${DOTFILES}/vscode/keybindings.json${__COLOR_RESET}"
+    ln -i -v -s "${__DOTFILES_VSCODE_DIR}/keybindings.json" "${__DOTFILES_CUSTOM_VSCODE_DIR}/keybindings.json"
+    ln -i -v -s "${__DOTFILES_CUSTOM_VSCODE_DIR}/keybindings.json" "${__VSCODE_HOME}/keybindings.json"
+    echo -e "${__COLOR_SUCC}SUCCESS: vscode-setup configured${__COLOR_RESET}"
+else
+    echo -e "${__COLOR_WARN}WARN: Could not find vscode-folder${__COLOR_RESET}"
+fi
+
+
+#------------------------------------------------------------------------------#
+# setup custom/termux
+
+if [ -n "${HOME}/.termux" ]; then
+    echo -e "${__COLOR_INFO}INFO: Copying and linking termux-files..${__COLOR_RESET}"
+    # copy dotfiles/termux.properties into custom
+    echo -e "${__COLOR_INFO}INFO: ${HOME}/.termux/termux.properties -> ${DOTFILES}/custom/termux/properties -> ${DOTFILES}/termux/properties${__COLOR_RESET}"
+    cp -i -P "${DOTFILES}/termux/properties" "${__CUSTOM_DIR}/termux/properties"
+    ln -i -v -s "${DOTFILES}/termux/properties" "${__CUSTOM_DIR}/termux/properties"
+    ln -i -v -s "${__CUSTOM_DIR}/termux/properties" "${HOME}/.termux/termux.properties"
+    echo -e "${__COLOR_SUCC}SUCCESS: termux-files configured${__COLOR_RESET}"
+else
+    echo -e "${__COLOR_WARN}WARN: Could not find .termux in home-directory${__COLOR_RESET}"
+fi
+
+
+#------------------------------------------------------------------------------#
+# setup custom/R
+
+echo -e "${__COLOR_INFO}INFO: Copying and linking R-files..${__COLOR_RESET}"
+# copy dotfiles/R/profile.R into custom
+echo -e "${__COLOR_INFO}INFO: ${HOME}/.Rprofile@ -> ${DOTFILES}/custom/R/profile.R -> ${DOTFILES}/R/profile.R${__COLOR_RESET}"
+cp -i -P "${DOTFILES}/R/profile.R" "${__CUSTOM_DIR}/R/profile.R"
+ln -i -v -s "${DOTFILES}/R/profile.R" "${__CUSTOM_DIR}/R/profile.R"
+ln -i -v -s "${__CUSTOM_DIR}/R/profile.R" "${HOME}/.Rprofile"
+# link to environ.sh
+echo -e "${__COLOR_INFO}INFO: ${HOME}/.Renviron@ -> ${DOTFILES}/custom/R/environ.sh@ -> ${DOTFILES}/R/environ.sh${__COLOR_RESET}"
+ln -i -v -s "${DOTFILES}/R/environ.sh" "${__CUSTOM_DIR}/R/environ.sh"
+ln -i -v -s "${__CUSTOM_DIR}/R/environ.sh" "${HOME}/.Renviron"
+echo -e "${__COLOR_SUCC}SUCCESS: R-files configured${__COLOR_RESET}"
 
 #------------------------------------------------------------------------------#
 # setup custom/emacs

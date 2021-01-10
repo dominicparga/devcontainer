@@ -22,14 +22,6 @@ for dir in "${dirs[@]}"; do
 done
 
 #------------------------------------------------------------------------------#
-# loading brew autocompletion
-
-if ( command -v brew 1>/dev/null 2>&1 ); then
-    # ATTENTION! has to be before 'autoload -Uz compinit'
-    FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
-fi
-
-#------------------------------------------------------------------------------#
 # autoloading others
 
 autoload -Uz compinit && compinit

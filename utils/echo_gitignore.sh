@@ -1,13 +1,17 @@
 #!/usr/bin/env sh
 
-echo '#------------------------------------------------------------------------------#'
-echo '# gitignore'
+## This file uses gitignore.io, which uses CRLF.
+## To replace them by LF, you can use dos2unix
+##
+## ./scripts/echo_gitignore.sh > .gitignore && dos2unix .gitignore
+
+echo '## -----------------------------------------------------------------------------'
+echo '## gitignore'
 curl -L -s 'https://www.gitignore.io/api/code,linux,macos,visualstudiocode,windows'
 echo ''
-echo '#------------------------------------------------------------------------------#'
+echo '## -----------------------------------------------------------------------------'
 echo '# custom'
 echo ''
 echo '/custom/'
-echo 'build/'
 echo ''
 echo '.vscode/'

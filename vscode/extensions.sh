@@ -1,11 +1,11 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 #------------------------------------------------------------------------------#
-# fill in custom extensions here
-# '--force' for updating
-# 'code --disable-extensions' would disable installed extensions
+## fill in custom extensions here
+## '--force' for updating
+## 'code --disable-extensions' would disable installed extensions
 
-# color and icon themes
+## color and icon themes
 code --force --install-extension arcticicestudio.nord-visual-studio-code
 code --force --install-extension be5invis.vscode-icontheme-nomo-dark
 code --force --install-extension dracula-theme.theme-dracula
@@ -13,61 +13,73 @@ code --force --install-extension laurenttreguier.vscode-simple-icons
 code --force --install-extension monokai.theme-monokai-pro-vscode
 code --force --install-extension pkief.material-icon-theme
 code --force --install-extension vscode-icons-team.vscode-icons
+code --force --install-extension alexesprit.vscode-unfancy-file-icons
 
-# editor utils
+## editor utils
 code --force --install-extension coenraads.bracket-pair-colorizer-2
 code --force --install-extension davidhouchin.whitespace-plus
-# code --force --install-extension minhthai.vscode-todo-parser
 code --force --install-extension pnp.polacode
-# code --force --install-extension slevesque.vscode-hexdump
 code --force --install-extension vscodevim.vim
-# code --force --install-extension wayou.vscode-todo-highlight
 
-# git
+## git
 code --force --install-extension donjayamanne.githistory
-# code --force --install-extension waderyan.gitblame
 
-# markdown
+## markdown
 code --force --install-extension davidanson.vscode-markdownlint
 
-# toml
+## toml
 code --force --install-extension bungcip.better-toml
-# csv
+## csv
 code --force --install-extension mechatroner.rainbow-csv
-# yaml
-# code --force --install-extension redhat.vscode-yaml
+## yaml
+#code --force --install-extension redhat.vscode-yaml
+## xml
+code --force --install-extension redhat.vscode-xml
+## postgresql
+#code --force --install-extension ckolkman.vscode-postgres
 
-# shell
+## shell
 code --force --install-extension timonwong.shellcheck
 
-# rust
-# code --force --install-extension rust-lang.rust
-code --force --install-extension matklad.rust-analyzer # still in alpha
+## rust
+## rust-lang.rust xor matklad.rust-analyzer
+#code --force --install-extension rust-lang.rust
+#code --force --install-extension matklad.rust-analyzer
+#code --force --install-extension a5huynh.vscode-ron # like json, for rust
 
-# python
-code --force --install-extension kevinrose.vsc-python-indent
-code --force --install-extension ms-python.python
+## javascript/markdown
+#code --force --install-extension esbenp.prettier-vscode
+#code --force --install-extension dbaeumer.vscode-eslint
 
-# LaTeX
-code --force --install-extension james-yu.latex-workshop
+## python
+#code --force --install-extension kevinrose.vsc-python-indent
+#code --force --install-extension ms-python.python
 
-# c cpp
-# code --force --install-extension cquera-project.cquery
-code --force --install-extension ms-vscode.cpptools
-# code --force --install-extension twxs.cmake
-# code --force --install-extension vector-of-bool.cmake-tools
+## R
+#code --force --install-extension ikuyadeu.r
+#code --force --install-extension reditorsupport.r-lsp
+## after setting-up R, e.g. .Rprofile and .Renviron, try:
+## Rscript -e 'install.packages("languageserver")'
 
-# java
-code --force --install-extension redhat.java
-code --force --install-extension vscjava.vscode-java-debug
-code --force --install-extension vscjava.vscode-java-pack
-code --force --install-extension vscjava.vscode-java-test
+## LaTeX
+#code --force --install-extension james-yu.latex-workshop
+## August 2020: doesn't support cite-autocompletion :(
+## code --force --install-extension efoerster.texlab
 
-# scala
-code --force --install-extension daltonjorge.scala
+## c cpp
+#code --force --install-extension cquera-project.cquery
+#code --force --install-extension ms-vscode.cpptools
+#code --force --install-extension twxs.cmake
+#code --force --install-extension vector-of-bool.cmake-tools
 
-# gradle
-# code --force --install-extension naco-siren.gradle-language
+## java
+#code --force --install-extension redhat.java
+#code --force --install-extension vscjava.vscode-java-debug
+#code --force --install-extension vscjava.vscode-java-pack
+#code --force --install-extension vscjava.vscode-java-test
 
-# maven
-code --force --install-extension vscjava.vscode-maven
+## gradle
+#code --force --install-extension naco-siren.gradle-language
+
+## maven
+#code --force --install-extension vscjava.vscode-maven
