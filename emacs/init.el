@@ -653,8 +653,12 @@
         (delete 'company-semantic company-backends))
   (setq company-minimum-prefix-length 1
         company-idle-delay 0.0) ;; default is 0.2
+  ;; aligns annotation to the right hand side
+  (setq company-tooltip-align-annotations t)
+  ;; enable company globally
   (global-company-mode 1)
   )
+
 
 ;; disable company mode for terminals
 (dolist (mode '(term-mode-hook
@@ -1184,20 +1188,6 @@
 ;; -------------------------------------------------------------------
 ;; Typescript
 ;; -------------------------------------------------------------------
-(use-package typescript-mode
-  :after dap-node
-  :mode (
-         ("\\.ts$" . typescript-mode)
-         ("\\.tsx$" . typescript-mode)
-         )
-  :config
-  (flycheck-mode 1)
-  (company-mode 1)
-  (dap-node-setup) ;; automatically installs Node debug adapter if needed
-  )
-
-(use-package tide)
-
 (defun setup-tide-mode ()
   (interactive)
   (tide-setup)
@@ -1206,12 +1196,23 @@
   (eldoc-mode +1)
   (tide-hl-identifier-mode +1))
 
-;; aligns annotation to the right hand side
-(setq company-tooltip-align-annotations t)
+(use-package tide)
 
-;; formats the buffer before saving
-;; (add-hook 'before-save-hook 'tide-format-before-save)
-;; (add-hook 'typescript-mode-hook #'setup-tide-mode)
+(use-package typescript-mode
+  :after dap-node tide
+  :mode (
+         ("\\.ts" . typescript-mode)
+         ("\\.tsx" . typescript-mode)
+         )
+  :config
+  (flycheck-mode 1)
+  (company-mode 1)
+  (dap-node-setup) ;; automatically installs Node debug adapter if needed
+  :hook (
+         (before-save-hook . tide-format-before-save)
+         (typescript-mode . setup-tide-mode)
+         )
+  )
 
 (use-package json-snatcher
   :hook ((js-mode-hook . js-mode-bindings)
@@ -1265,11 +1266,11 @@
   :mode (("\\.org$" . org-mode))
   :after plantuml-mode
   :config
-    ;; config stuff
-    (setq org-plantuml-jar-path plantuml-jar-path)
-    (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
-    (org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t)))
-    )
+  ;; config stuff
+  (setq org-plantuml-jar-path plantuml-jar-path)
+  (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
+  (org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t)))
+  )
 
 ;; -------------------------------------------------------------------
 ;; Groovy mode for Jenkins
@@ -1296,8 +1297,7 @@
 ;; make sure that you have jsonlint installed: sudo env "PATH=$PATH"
 ;; npm install jsonlint -g
 (use-package flymake-json
-  :requires json-mode
-  :requires flymake-easy flymake-haml
+  :requires json-mode flymake-easy flymake-haml
   :hook ((json-mode . flymake-json-load)
          (js-mode . flymake-json-maybe-load))
   )
