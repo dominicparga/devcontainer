@@ -76,7 +76,7 @@
   )
 
 (use-package ag
-  :ensure-system-package silversearcher-ag
+  :ensure-system-package (ag . silversearcher-ag)
   )
 
 ;; (use-package ivy-posframe
