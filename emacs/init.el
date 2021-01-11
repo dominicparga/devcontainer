@@ -470,7 +470,7 @@
   :after counsel
   :init
   (setq projectile-file-exists-remote-cache-expire nil)
-  (setq projectile-mode-line '(:eval (format " [%s]" (projectile-project-name))))
+  (setq projectile-mode-line nil)
   (setq projectile-globally-ignored-directories
         (quote
          (".idea" ".eunit" ".git" ".hg" ".svn"
@@ -944,8 +944,7 @@
     ))
 
 (use-package ispell
-  :ensure-system-package
-  ((ispell . "apt install ispell iogerman ingerman ienglish-common iamerican-insane"))
+  :ensure-system-package ("/usr/bin/ispell" . (ispell iogerman ingerman ienglish-common iamerican-insane))
   :init
   (setq ispell-dictionary "en_US")
   (setq ispell-local-dictionary "en_US")
