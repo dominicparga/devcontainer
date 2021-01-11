@@ -686,7 +686,7 @@
 
 ;; enable rainbow delimiters for all programming-modes (prog-mode)
 (use-package rainbow-delimiters
-  :hook (prog-mode . rainbow-delimiters-mode))
+  :hook (emacs-lisp-mode . rainbow-delimiters-mode))
 
 ;; -------------------------------------------------------------------
 ;; Drag stuff around with M-up/down
@@ -944,7 +944,9 @@
     ))
 
 (use-package ispell
-  :ensure-system-package ("/usr/bin/ispell" . (ispell iogerman ingerman ienglish-common iamerican-insane))
+  :ensure-system-package ("/usr/bin/ispell" . ispell)
+  :ensure-system-package ("/usr/lib/ispell/american-insane.hash" . iamerican-insane)
+  :ensure-system-package ("/usr/lib/ispell/ngerman.hash" . ingerman)
   :init
   (setq ispell-dictionary "en_US")
   (setq ispell-local-dictionary "en_US")
@@ -1200,8 +1202,8 @@
 (use-package typescript-mode
   :after dap-node tide
   :mode (
-         ("\\.ts" . typescript-mode)
-         ("\\.tsx" . typescript-mode)
+         ("\\.ts$" . typescript-mode)
+         ("\\.tsx$" . typescript-mode)
          )
   :config
   (flycheck-mode 1)
@@ -1212,6 +1214,10 @@
          (typescript-mode . setup-tide-mode)
          )
   )
+
+;; note, for some resion the mode directive does not work here, so I
+;; added the typescript mode explicitly to tsx files.
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-mode))
 
 (use-package json-snatcher
   :hook ((js-mode-hook . js-mode-bindings)

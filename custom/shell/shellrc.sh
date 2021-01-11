@@ -160,7 +160,7 @@ export EXPORTER_BASE_OUTPATH=/tmp/lidar
 export VEHICLE_IDENTIFIER=WDD2221621Z003456
 
 # npm
-NPM_VERSION='v15.0.1'
+NPM_VERSION='v14.15.4'
 NPM_DISTRO='linux-x64'
 export PATH="/usr/local/lib/nodejs/node-${NPM_VERSION}-${NPM_DISTRO}/bin:${PATH}"
 
