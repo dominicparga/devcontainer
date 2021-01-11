@@ -72,10 +72,12 @@
 (use-package wgrep)
 
 (use-package ack
-  :ensure-system-package ack)
+  :ensure-system-package ack
+  )
 
 (use-package ag
-  :ensure-system-package ag)
+  :ensure-system-package silversearcher-ag
+  )
 
 ;; (use-package ivy-posframe
 ;;   :custom

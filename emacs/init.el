@@ -10,7 +10,7 @@
 ;; ===================================================================
 (setq user-full-name "Fabian Franzelin")
 (setq user-mail-address "fabian.franzelin@de.bosch.com")
-(setq inhibit-startup-echo-area-message (getenv "USERNAME"))
+(setq inhibit-startup-echo-area-message (getenv "USER"))
 
 ;; Package Management
 (require 'package)
@@ -142,7 +142,7 @@
 ;; I want the current user name, the emacs version and the name of the
 ;; file I'm editing to be displayed in the title-bar.
 (setq frame-title-format
-      (list (getenv "USERNAME") "@Emacs " emacs-version ": "
+      (list (getenv "USER") "@Emacs " emacs-version ": "
       '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
 
 ;; set unicode encoding
@@ -515,7 +515,7 @@
 ;; -------------------------------------------------------------------
 (use-package lsp-mode
   :commands lsp
-  :ensure-system-package (clangd . clangd)
+  :ensure-system-package (clangd-10 . clangd)
   :hook ((lsp-mode . (lambda ()
                        (let ((lsp-keymap-prefix "C-c l"))
                          (lsp-enable-which-key-integration))))
@@ -598,7 +598,7 @@
 ;; -------------------------------------------------------------------
 (use-package dap-mode
   :after lsp-mode
-  :ensure-system-package ("~/.local/lib/python3.8/site-packages/ptvsd" . "pip3 install 'ptvsd>=4.2'") ; for dap-python
+  :ensure-system-package ("~/.local/lib/python3.6/site-packages/ptvsd" . "pip3 install 'ptvsd>=4.2'") ; for dap-python
   :config (dap-auto-configure-mode)
   :init
   ;; enables mouse hover support
