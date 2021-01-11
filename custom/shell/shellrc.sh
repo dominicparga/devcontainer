@@ -148,19 +148,21 @@ export POSTGRES_PORT=2345
 
 #------------------------------------------------------------------------------#
 # Kubernetes setup
-
-# if [[ -n "${ZSH_NAME}" ]]; then
-#     source <(kubectl completion zsh)
-# elif [[ -n "${BASH}" ]]; then
-#     source <(kubectl completion bash)
-# fi
+if command -v kubectl &> /dev/null
+then
+    if [[ -n "${ZSH_NAME}" ]]; then
+        source <(kubectl completion zsh)
+    elif [[ -n "${BASH}" ]]; then
+        source <(kubectl completion bash)
+    fi
+fi
 
 # Lidar semantic labelingcod
 export EXPORTER_BASE_OUTPATH=/tmp/lidar
 export VEHICLE_IDENTIFIER=WDD2221621Z003456
 
 # npm
-NPM_VERSION='v14.15.4'
+NPM_VERSION='v13.14.0'
 NPM_DISTRO='linux-x64'
 export PATH="/usr/local/lib/nodejs/node-${NPM_VERSION}-${NPM_DISTRO}/bin:${PATH}"
 
@@ -186,31 +188,34 @@ export PIP_VIRTUALENV_BASE=$WORKON_HOME
 # Make sure that the debian package virtualenvwrapper is installed for
 # the following to work. If errors occur, install it via "pip3 install
 # virtualenvwrapper"
-source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
+if [[ -f "/usr/share/virtualenvwrapper/virtualenvwrapper.sh" ]]; then
+    source "/usr/share/virtualenvwrapper/virtualenvwrapper.sh"
 
-# pip bash completion start
-_pip_completion()
-{
-    COMPREPLY=( $( COMP_WORDS="${COMP_WORDS[*]}" \
-                   COMP_CWORD=$COMP_CWORD \
-                   PIP_AUTO_COMPLETE=1 $1 ) )
-}
-complete -o default -F _pip_completion pip
-# pip bash completion end
+    # pip bash completion start
+    _pip_completion()
+    {
+        COMPREPLY=( $( COMP_WORDS="${COMP_WORDS[*]}" \
+                                 COMP_CWORD=$COMP_CWORD \
+                                 PIP_AUTO_COMPLETE=1 $1 ) )
+    }
+    complete -o default -F _pip_completion pip
+    # pip bash completion end
+fi
 
-
-# # >>> conda initialize >>>
-# # !! Contents within this block are managed by 'conda init' !!
-# __conda_setup="$('/lhome/franzef/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-# if [ $? -eq 0 ]; then
-#     eval "$__conda_setup"
-# else
-#     if [ -f "/lhome/franzef/anaconda3/etc/profile.d/conda.sh" ]; then
-#         . "/lhome/franzef/anaconda3/etc/profile.d/conda.sh"
-#     else
-#         export PATH="/lhome/franzef/anaconda3/bin:$PATH"
-#     fi
-# fi
-# unset __conda_setup
-# conda deactivate
-# # <<< conda initialize <<<
+# >>> conda initialize >>>
+if [[ -f "$HOME/anaconda3/bin/conda" ]]; then
+    # !! Contents within this block are managed by 'conda init' !!
+    __conda_setup="$('$HOME/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+    if [ $? -eq 0 ]; then
+        eval "$__conda_setup"
+    else
+        if [ -f "$HOME/anaconda3/etc/profile.d/conda.sh" ]; then
+            . "$HOME/anaconda3/etc/profile.d/conda.sh"
+        else
+            export PATH="$HOME/anaconda3/bin:$PATH"
+        fi
+    fi
+    unset __conda_setup
+    conda deactivate
+fi
+# <<< conda initialize <<<
