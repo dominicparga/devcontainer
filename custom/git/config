@@ -8,12 +8,21 @@
     email = fabian.franzelin@de.bosch.com
 [credential]
     helper = "cache --timeout=3600"  # cache credentials for 60 minutes
-[credential "https://athena.daimler.com"]
+[http "https://athena.*.corpintra.net"]
     username = franzef
-[credential "https://gsep.daimler.com"]
+    sslCert = ~/.local/share/certificates/cert-dap.crt
+    sslKey = ~/.local/share/certificates/cert-dap.key
+    sslCaInfo = /etc/ssl/certs/ca-certificates.crt
+[http "https://*.daimler.com"]
     username = franzef
+    sslCert = ~/.local/share/certificates/cert-dap.crt
+    sslKey = ~/.local/share/certificates/cert-dap.key
+    sslCaInfo = /etc/ssl/certs/ca-certificates.crt
 [credential "https://scm-manager.rd.corpintra.net"]
     username = franzef
+    sslCert = ~/.local/share/certificates/cert-dap.crt
+    sslKey = ~/.local/share/certificates/cert-dap.key
+    sslCaInfo = /etc/ssl/certs/ca-certificates.crt
 [credential "https://github.com"]
     username = fabianfranzelin
 [merge]
