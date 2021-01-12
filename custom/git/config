@@ -13,7 +13,6 @@
     sslCert = /lhome/franzef/.local/share/certificates/cert-dap.crt
     sslKey = /lhome/franzef/.local/share/certificates/cert-dap.key
     sslCaInfo = /etc/ssl/certs/ca-certificates.crt
-[http "https://*.daimler.com"]
 [http "https://athena.daimler.com"]
     username = franzef
     sslCert = /lhome/franzef/.local/share/certificates/cert-dap.crt
