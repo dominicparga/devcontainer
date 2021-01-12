@@ -717,6 +717,8 @@
 ;; switch between header and source
 (global-set-key [(control tab)] 'ff-find-other-file)
 
+(require 'dap-cpptools)
+
 (use-package company-c-headers
   :after company
   :config
