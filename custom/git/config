@@ -4,16 +4,17 @@
     autocrlf = input
     editor = vim
 [user]
-    name = Fabian Franzelin (CC/AD-ESB4)
+    name = Fabian Franzelin (XC-AD/ESB4)
     email = fabian.franzelin@de.bosch.com
 [credential]
-    helper = "cache --timeout=3600"  # cache credentials for 60 minutes
+    helper = "cache --timeout=43200"  # cache credentials for 12 hours
 [http "https://athena.*.corpintra.net"]
     username = franzef
     sslCert = /lhome/franzef/.local/share/certificates/cert-dap.crt
     sslKey = /lhome/franzef/.local/share/certificates/cert-dap.key
     sslCaInfo = /etc/ssl/certs/ca-certificates.crt
 [http "https://*.daimler.com"]
+[http "https://athena.daimler.com"]
     username = franzef
     sslCert = /lhome/franzef/.local/share/certificates/cert-dap.crt
     sslKey = /lhome/franzef/.local/share/certificates/cert-dap.key
