@@ -96,4 +96,4 @@ build/
 .vscode/
 
 ### Emacs ###
-emacs/init.d
+flycheck_*

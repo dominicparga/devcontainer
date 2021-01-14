@@ -41,8 +41,10 @@
 ;; auto update packages
 (use-package auto-package-update
   :config
-  (setq auto-package-update-delete-old-versions t)
-  (setq auto-package-update-hide-results t)
+  (setq auto-package-update-delete-old-versions t
+        auto-package-update-hide-results t
+        ;; update the packages every week
+        auto-package-update-interval 7)
   (auto-package-update-maybe))
 
 ;; add the possibility to define system dependencies in use-package
