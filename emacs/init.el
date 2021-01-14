@@ -53,7 +53,7 @@
 ;; emacs
 (use-package exec-path-from-shell
   :config
-  (when (or (memq window-system '(mac ns x)) daemonp)
+  (when (or (memq window-system '(mac ns x)))
     (exec-path-from-shell-initialize))
   )
 
@@ -683,7 +683,8 @@
 (dolist (mode '(org-mode-hook
                 term-mode-hook
                 multi-term-mode-hook
-                eshell-mode-hook))
+                eshell-mode-hook
+                treemacs-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 ;; enable rainbow delimiters for all programming-modes (prog-mode)
