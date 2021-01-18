@@ -237,10 +237,6 @@
 ;; set zsh as default shell name
 (setq shell-file-name "/bin/zsh")
 
-;; enable emojis in buffers
-(use-package emojify
-  :hook (after-init . global-emojify-mode))
-
 ;; Set default connection mode to SSH
 (setq tramp-default-method "ssh")
 
@@ -1038,7 +1034,8 @@
 (use-package python-black
   :after python
   :ensure-system-package (black . "pip3 install --user -U black")
-  :hook ((python-mode . python-black-on-save-mode))
+  :hook ((python-mode . python-black-on-save-mode)
+         (python-mode . blacken-mode))
   )
 
 (use-package blacken)
