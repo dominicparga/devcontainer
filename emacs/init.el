@@ -491,6 +491,7 @@
   )
 
 (use-package vterm
+  :ensure-system-package libtool-bin
   :commands vterm
   :config
   (setq vterm-max-scrollback 10000))
