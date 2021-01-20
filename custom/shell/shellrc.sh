@@ -54,9 +54,6 @@ PATH=/usr/local/cmake/3.18.4/bin:$PATH
 # moving files to trash from command line
 alias "trash"="gvfs-trash"
 
-# # create aliases for emacs eshell
-# alias | sed -E "s/^alias ([^=]+)='(.*)'$/alias \1 \2 \$*/g; s/'\\\''/'/g;" >~/.emacs.d/eshell/alias
-
 alias dfs="hdfs dfs"
 
 EMACS="emacsclient -c -a emacs %f"
@@ -224,3 +221,7 @@ if [[ -f "$HOME/anaconda3/bin/conda" ]]; then
     conda deactivate
 fi
 # <<< conda initialize <<<
+
+
+# make aliases available in eshell
+alias | sed 's/^alias //' | sed -E "s/^([^=]+)='(.+?)'$/\1=\2/" | sed "s/'\\\\''/'/g" | sed "s/'\\\\$/'/;" | sed -E 's/^([^=]+)=(.+)$/alias \1 \2/' > ~/.emacs.d/eshell/alias
