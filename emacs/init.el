@@ -532,15 +532,14 @@
         lsp-ui-doc-alignment 'window
         ;; if set to true can cause a performance hit
         lsp-log-io nil
-        lsp-pyls-plugins-flake8-config (expand-file-name "~/.flake8")
         lsp-pyls-plugins-flake8-enabled t
         lsp-pyls-plugins-pycodestyle-enabled nil
-        ;; lsp-enable-snippet nil
+        lsp-enable-snippet nil
         ;; lsp-prefer-flymake :none))
-        ;; lsp-enable-snippet nil
         ;; Ignore files and folders when watchin
         ;; lsp-file-watch-ignored ("[/\\\\]\\.pyc$" "[/\\\\]_build")
-        ))
+        )
+  )
 
 ;; increase threshold for lsp to run smoothly
 ;; https://emacs-lsp.github.io/lsp-mode/page/performance/
@@ -1052,6 +1051,11 @@
 
 ;; supports virtual environments. To be set with pyvenv-workon
 (use-package pyvenv)
+
+(use-package flycheck-pycheckers
+  :after flycheck
+  :config
+  (add-hook 'flycheck-mode-hook #'flycheck-pycheckers-setup))
 
 ;; -------------------------------------------------------------------
 ;; Sphinx documentation
