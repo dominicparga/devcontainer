@@ -285,7 +285,6 @@
 ;; Copy & Paste
 ;; -------------------------------------------------------------------
 
-;; ;; (transient-mark-mode 1) ; Now on by default: makes the region act
 ;; quite like the text "highlight" in many apps.  (setq
 ;; shift-select-mode t) ; Now on by default: allows shifted
 ;; cursor-keys to control the region.
@@ -1006,9 +1005,10 @@
 
 ;; Enable autopep8
 (use-package py-autopep8
+  :ensure-system-package (autopep8 . "pip3 install --user -U autopep8")
   :hook ((python-mode . py-autopep8-enable-on-save))
   :config
-  (setq py-autopep8-options '("--select=W504 --max-line-length=120")))
+  (setq py-autopep8-options '("--select=W504")))
 
 ;; Enable python mode per default for python files
 (add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
