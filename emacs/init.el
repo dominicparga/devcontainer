@@ -534,7 +534,7 @@
         lsp-pyls-plugins-flake8-enabled t
         lsp-pyls-plugins-pycodestyle-enabled nil
         lsp-enable-snippet nil
-        ;; lsp-prefer-flymake :none))
+        ;; lsp-prefer-flymake :none
         ;; Ignore files and folders when watchin
         ;; lsp-file-watch-ignored ("[/\\\\]\\.pyc$" "[/\\\\]_build")
         )
@@ -590,7 +590,8 @@
                 company-minimum-prefix-length 1
                 lsp-idle-delay 0.1 ;; clangd is fast
                 ;; be more ide-ish
-                lsp-headerline-breadcrumb-enable))
+                lsp-headerline-breadcrumb-enable)
+  )
 
 ;; -------------------------------------------------------------------
 ;; Enable dap
@@ -647,6 +648,8 @@
 ;; Company
 ;; -------------------------------------------------------------------
 (use-package company
+  :after lsp-mode
+  :hook (lsp-mode . company-mode)
   :config
   (setq company-backends
         (delete 'company-semantic company-backends))
@@ -656,6 +659,13 @@
   (setq company-tooltip-align-annotations t)
   ;; enable company globally
   (global-company-mode 1)
+  :custom
+  (company-minimum-prefix-length 1)
+  (company-idle-delay 0.0)
+  :bind (:map company-active-map
+              ("<tab>" . company-complete-selection)
+              :map lsp-mode-map
+              ("<tab>" . company-indent-or-complete-common))
   )
 
 
@@ -702,6 +712,11 @@
          )
   )
 
+;; -------------------------------------------------------------------
+;; Yasnippet
+;; -------------------------------------------------------------------
+(use-package yasnippet)
+
 ;; ===================================================================
 ;; Adjusting modes for programming
 ;; ===================================================================
@@ -733,10 +748,6 @@
       )
     )
   )
-
-;; Interpret SConstruct file as python source file
-(add-to-list 'auto-mode-alist '("SConstruct" . python-mode))
-(add-to-list 'auto-mode-alist '("SConscript" . python-mode))
 
 ;; -------------------------------------------------------------------
 ;; CRAN R
@@ -997,6 +1008,31 @@
 ;; -------------------------------------------------------------------
 ;; Python
 ;; -------------------------------------------------------------------
+;; pdb debugger
+(defun annotate-pdb ()
+  "Colors the background if pdb is active."
+  (interactive)
+  (highlight-lines-matching-regexp "import ipdb")
+  (highlight-lines-matching-regexp "ipdb.set_trace()")
+  (highlight-lines-matching-regexp "import pdb")
+  (highlight-lines-matching-regexp "pdb.set_trace()"))
+
+(use-package python-mode
+  :ensure nil
+  :mode (
+         ("\\.py$" . python-mode)
+         ("SConstruct" . python-mode)
+         ("SConscript" . python-mode)
+         )
+  :hook (python-mode . annotate-pdb)
+  :config
+  ;; delete output buffer on buffer execution
+  (setq py-shell-switch-buffers-on-execute nil
+        python-indent-offset 4)
+  :custom
+  (python-shell-interpreter "python3")
+  )
+
 (use-package lsp-python-ms
   :init (setq lsp-python-ms-auto-install-server t)
   :hook (python-mode . (lambda ()
@@ -1009,23 +1045,6 @@
   :hook ((python-mode . py-autopep8-enable-on-save))
   :config
   (setq py-autopep8-options '("--select=W504")))
-
-;; Enable python mode per default for python files
-(add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
-
-;; pdb debugger
-(defun annotate-pdb ()
-  "Colors the background if pdb is active."
-  (interactive)
-  (highlight-lines-matching-regexp "import ipdb")
-  (highlight-lines-matching-regexp "ipdb.set_trace()")
-  (highlight-lines-matching-regexp "import pdb")
-  (highlight-lines-matching-regexp "pdb.set_trace()"))
-
-(add-hook 'python-mode-hook 'annotate-pdb)
-
-;; delete output buffer on buffer execution
-(setq py-shell-switch-buffers-on-execute nil)
 
 ;; install black and black-macchiato with pip3 install --user -U
 ;; black-macchiato black if black is not available as executable in
@@ -1331,7 +1350,7 @@
  '(custom-safe-themes
    '("d4f8fcc20d4b44bf5796196dbeabec42078c2ddb16dcb6ec145a1c610e0842f3" default))
  '(package-selected-packages
-   '(flymake-yaml drag-stuff multi-eshell lsp-ivy which-key yasnippet use-package-ensure-system-package rainbow-delimiters command-log-mode company-prescient ivy-prescient emojify xterm-color evil-collection ivy-posframe smex ivy-rich eshell-z general openwith ivy-pass evil-nerd-commenter smart-mode-line dap-node pyvenv jedi dap-mode lsp-docker lsp-java lsp-mode lsp-ui helm-swoop quelpa quelpa-use-package python-black meghanada scala-mode ess flycheck-clang-tidy helm-mt multi-term winner-mode dockerfile-mode groovy-imports groovy-mode flycheck-plantuml plantuml-mode org-mode poly-rst rst-mode yaml-mode whole-line-or-region wgrep volatile-highlights use-package tide tangotango-theme sphinx-doc smart-jump python-mode py-autopep8 protobuf-mode neotree markdown-mode magit langtool ivy-rtags ivy-hydra highlight-symbol helm-projectile helm-ag helm-R haskell-mode git-timemachine flycheck-rtags fill-column-indicator exec-path-from-shell ensime elpy dired-narrow diminish cython-mode crux counsel cmake-mode clang-format blacken beacon autopair auto-complete auctex anaconda-mode ag))
+   '(flymake-yaml drag-stuff multi-eshell lsp-ivy which-key use-package-ensure-system-package rainbow-delimiters command-log-mode company-prescient ivy-prescient emojify xterm-color evil-collection ivy-posframe smex ivy-rich eshell-z general openwith ivy-pass evil-nerd-commenter smart-mode-line dap-node pyvenv jedi dap-mode lsp-docker lsp-java lsp-mode lsp-ui helm-swoop quelpa quelpa-use-package python-black meghanada scala-mode ess flycheck-clang-tidy helm-mt multi-term winner-mode dockerfile-mode groovy-imports groovy-mode flycheck-plantuml plantuml-mode org-mode poly-rst rst-mode yaml-mode whole-line-or-region wgrep volatile-highlights use-package tide tangotango-theme sphinx-doc smart-jump python-mode py-autopep8 protobuf-mode neotree markdown-mode magit langtool ivy-rtags ivy-hydra highlight-symbol helm-projectile helm-ag helm-R haskell-mode git-timemachine flycheck-rtags fill-column-indicator exec-path-from-shell ensime elpy dired-narrow diminish cython-mode crux counsel cmake-mode clang-format blacken beacon autopair auto-complete auctex anaconda-mode ag))
  '(safe-local-variable-values
    '((company-clang-arguments "-I/home/frf2lr/workspace/recapp_int/recompute/dol/core/src" "-I/home/frf2lr/workspace/recapp_int/recompute/target" "-I/home/frf2lr/workspace/recapp_int/recompute/utils/include" "-I/home/frf2lr/workspace/recapp_int/recompute/tests/mocks/mock_algo" "-I/home/frf2lr/workspace/recapp_int/recompute/target/strategies/shared/include"))))
 (custom-set-faces
