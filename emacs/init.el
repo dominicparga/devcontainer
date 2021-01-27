@@ -277,7 +277,7 @@
              '(file))
       (list (openwith-make-extension-regexp
              '("pdf"))
-             "zathura"
+             "okular"
              '(file))))
   (openwith-mode 1))
 
@@ -1260,8 +1260,9 @@
                                     "plantuml")
   :config
   ;; Sample jar configuration
-  (setq plantuml-jar-path plantuml-expected-binary)
-  (setq plantuml-default-exec-mode 'jar)
+  (setq plantuml-jar-path plantuml-expected-binary
+        plantuml-default-exec-mode 'jar
+        plantuml-indent-level 4)
   ;; Open in same window
   (add-to-list 'display-buffer-alist
                '(progn
