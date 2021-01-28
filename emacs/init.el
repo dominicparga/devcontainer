@@ -1042,7 +1042,7 @@
 ;; Enable autopep8
 (use-package py-autopep8
   :ensure-system-package (autopep8 . "pip3 install --user -U autopep8")
-  :hook ((python-mode . py-autopep8-enable-on-save))
+  ;; :hook ((python-mode . py-autopep8-enable-on-save)) ;; enables autoformat
   :config
   (setq py-autopep8-options '("--select=W504")))
 
@@ -1214,6 +1214,7 @@
          ("\\.rst$" . rst-mode)
          ("\\.rest$" . rst-mode)
          )
+  :hook ((rst-mode . pyvenv-mode)) ;; enable support of virtualenvironments
   )
 
 ;; -------------------------------------------------------------------
