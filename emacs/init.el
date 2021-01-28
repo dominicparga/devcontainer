@@ -95,6 +95,9 @@
                               (time-subtract after-init-time before-init-time)))
                      gcs-done)))
 
+;; enables local variables per default
+(setq enable-local-variables :safe)
+
 ;; disable backup
 (setq backup-inhibited t)
 (setq make-backup-files nil)
