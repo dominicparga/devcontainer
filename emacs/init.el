@@ -652,7 +652,7 @@
 (add-hook 'term-exec-hook 'oleh-term-exec-hook)
 
 (use-package multi-term
-  :ensure-system-package zsh
+  :ensure-system-package ("/bin/zsh" . zsh)
   :config
   (setq multi-term-program "/bin/zsh")
   (setq explicit-shell-file-name "/bin/zsh")
@@ -904,7 +904,7 @@
 ;; -------------------------------------------------------------------
 (use-package okular-search
   :load-path local-load-path
-  :ensure-system-package okular
+  :ensure-system-package (okular . okular)
   :bind (:map LaTeX-mode-map
               ("C-c C-a" . okular-jump-to-line)
               :map tex-mode-map
@@ -1123,7 +1123,7 @@
   )
 
 (use-package flymake-shellcheck
-  :ensure-system-package shellcheck
+  :ensure-system-package (shellcheck . shellcheck)
   :commands flymake-shellcheck-load
   :hook ((sh-mode . flymake-shellcheck-load))
   )

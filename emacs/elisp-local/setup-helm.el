@@ -165,7 +165,7 @@
 
 (use-package helm-projectile
   :after projectile
-  :ensure-system-package ack
+  :ensure-system-package (ack . ack)
   :init (progn
           (setq projectile-completion-system 'helm)
           (setq projectile-indexing-method 'alien))

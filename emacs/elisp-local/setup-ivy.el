@@ -71,7 +71,7 @@
 (use-package wgrep)
 
 (use-package ack
-  :ensure-system-package ack
+  :ensure-system-package (ack . ack)
   )
 
 (use-package ag
