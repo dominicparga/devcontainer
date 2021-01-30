@@ -1077,12 +1077,6 @@
 
 (use-package blacken)
 
-(use-package conda
-  :config
-  (setq conda-anaconda-home (expand-file-name "~/anaconda3/"))
-  (setq conda-env-home-directory (expand-file-name "~/anaconda3"))
-  )
-
 ;; install via pip install "ptvsd>=4.2"
 (require 'dap-python)
 
