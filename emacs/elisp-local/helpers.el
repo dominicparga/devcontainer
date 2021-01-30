@@ -4,7 +4,7 @@
 
 ;;; Code:
 
-(defun download-and-extract-zip-archive (url name extract-to expected-binary-file package-name)
+(defun ff-download-and-extract-zip-archive (url name extract-to expected-binary-file package-name)
   "Download and install zip archives."
   (let* ((temporary-file (concat temporary-file-directory name ".zip")))
     (unless (file-directory-p extract-to) (make-directory extract-to))
@@ -16,6 +16,14 @@
       (call-process-shell-command (concat "unzip " temporary-file " -d " extract-to) nil 0)
       )
     ))
+
+(defun ff-lsp-treemacs-symbols-toggle ()
+  "Toggle the lsp-treemacs-symbols buffer."
+  (interactive)
+  (if (get-buffer "*LSP Symbols List*")
+      (kill-buffer "*LSP Symbols List*")
+    (progn (lsp-treemacs-symbols)
+           (other-window -1))))
 
 (provide 'helpers)
 

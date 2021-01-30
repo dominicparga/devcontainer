@@ -60,8 +60,8 @@
   )
 
 (use-package helpers
- :load-path local-load-path
- )
+  :load-path local-load-path
+  )
 
 ;; ===================================================================
 ;; Basic Settings
@@ -141,14 +141,14 @@
 ;; dir-local variables will be applied to remote files.
 (setq enable-remote-dir-locals t)
 
-; Turn on syntax colouring in all modes supporting it
+                                        ; Turn on syntax colouring in all modes supporting it
 (global-font-lock-mode t)
 
 ;; I want the current user name, the emacs version and the name of the
 ;; file I'm editing to be displayed in the title-bar.
 (setq frame-title-format
       (list (getenv "USER") "@Emacs " emacs-version ": "
-      '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
+            '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
 
 ;; set unicode encoding
 (defvar prefer-coding-system 'utf-8)
@@ -265,23 +265,23 @@
 (use-package openwith
   :config
   (setq openwith-associations
-    (list
-      (list (openwith-make-extension-regexp
-             '("mpg" "mpeg" "mp3" "mp4"
-               "avi" "wmv" "wav" "mov" "flv"
-               "ogm" "ogg" "mkv"))
-             "mpv"
-             '(file))
-      (list (openwith-make-extension-regexp
-             '("xbm" "pbm" "pgm" "ppm" "pnm"
-               "png" "gif" "bmp" "tif" "jpeg")) ;; Removed jpg because Telega was
-                                                ;; causing feh to be opened...
-             "feh"
-             '(file))
-      (list (openwith-make-extension-regexp
-             '("pdf"))
-             "okular"
-             '(file))))
+        (list
+         (list (openwith-make-extension-regexp
+                '("mpg" "mpeg" "mp3" "mp4"
+                  "avi" "wmv" "wav" "mov" "flv"
+                  "ogm" "ogg" "mkv"))
+               "mpv"
+               '(file))
+         (list (openwith-make-extension-regexp
+                '("xbm" "pbm" "pgm" "ppm" "pnm"
+                  "png" "gif" "bmp" "tif" "jpeg")) ;; Removed jpg because Telega was
+               ;; causing feh to be opened...
+               "feh"
+               '(file))
+         (list (openwith-make-extension-regexp
+                '("pdf"))
+               "okular"
+               '(file))))
   (openwith-mode 1))
 
 ;; -------------------------------------------------------------------
@@ -292,11 +292,11 @@
 ;; shift-select-mode t) ; Now on by default: allows shifted
 ;; cursor-keys to control the region.
 (setq mouse-drag-copy-region nil) ;; stops selection with a mouse
-                                  ;; being immediately injected to the
-                                  ;; kill ring
+;; being immediately injected to the
+;; kill ring
 (setq select-enable-primary nil)  ;; stops killing/yanking
-                                  ;; interacting with primary X11
-                                  ;; selection
+;; interacting with primary X11
+;; selection
 (setq select-enable-clipboard t)  ;; makes killing/yanking interact with clipboard X11 selection
 
 ;; when pasting with middle click in Linux X11, paste at cursor position, not at click position
@@ -315,11 +315,11 @@
 ;; if you want to)
 (setq select-active-regions t) ;  active region sets primary X11 selection
 (global-set-key [mouse-2] 'mouse-yank-primary)  ; make mouse
-                                                ; middle-click only
-                                                ; paste from primary
-                                                ; X11 selection, not
-                                                ; clipboard and kill
-                                                ; ring.
+                                        ; middle-click only
+                                        ; paste from primary
+                                        ; X11 selection, not
+                                        ; clipboard and kill
+                                        ; ring.
 
 ;; with this, doing an M-y will also affect the X11 clipboard, making
 ;; emacs act as a sort of clipboard history, at least of text you've
@@ -369,35 +369,35 @@
   (sml/setup)
   (sml/apply-theme 'respectful)  ; Respect the theme colors
   (setq sml/mode-width 'right
-      sml/name-width 60)
+        sml/name-width 60)
 
   (setq-default mode-line-format
-  `("%e"
-      mode-line-front-space
-      evil-mode-line-tag
-      mode-line-mule-info
-      mode-line-client
-      mode-line-modified
-      mode-line-remote
-      mode-line-frame-identification
-      mode-line-buffer-identification
-      sml/pos-id-separator
-      (vc-mode vc-mode)
-      " "
-      ;mode-line-position
-      sml/pre-modes-separator
-      mode-line-modes
-      " "
-      mode-line-misc-info))
+                `("%e"
+                  mode-line-front-space
+                  evil-mode-line-tag
+                  mode-line-mule-info
+                  mode-line-client
+                  mode-line-modified
+                  mode-line-remote
+                  mode-line-frame-identification
+                  mode-line-buffer-identification
+                  sml/pos-id-separator
+                  (vc-mode vc-mode)
+                  " "
+                                        ;mode-line-position
+                  sml/pre-modes-separator
+                  mode-line-modes
+                  " "
+                  mode-line-misc-info))
 
   (setq rm-excluded-modes
-    (mapconcat
-      'identity
-      ; These names must start with a space!
-      '(" GitGutter" " MRev" " company"
-      " Helm" " Undo-Tree" " Projectile.*" " Z" " Ind"
-      " Org-Agenda.*" " ElDoc" " SP/s" " cider.*")
-      "\\|")))
+        (mapconcat
+         'identity
+                                        ; These names must start with a space!
+         '(" GitGutter" " MRev" " company"
+           " Helm" " Undo-Tree" " Projectile.*" " Z" " Ind"
+           " Org-Agenda.*" " ElDoc" " SP/s" " cider.*")
+         "\\|")))
 
 
 ;; -------------------------------------------------------------------
@@ -460,8 +460,8 @@
 ;;   )
 
 (use-package setup-ivy
- :load-path local-load-path
- )
+  :load-path local-load-path
+  )
 
 ;; -------------------------------------------------------------------
 ;; Projectile mode
@@ -504,11 +504,11 @@
 ;; -------------------------------------------------------------------
 (use-package highlight-symbol
   :bind* (
-         ("C-<f3>" . highlight-symbol)
-         ("<f3>" . highlight-symbol-next)
-         ("S-<f3>" . highlight-symbol-prev)
-         ("M-<f3>" . highlight-symbol-query-replace)
-         )
+          ("C-<f3>" . highlight-symbol)
+          ("<f3>" . highlight-symbol-next)
+          ("S-<f3>" . highlight-symbol-prev)
+          ("M-<f3>" . highlight-symbol-query-replace)
+          )
   )
 
 ;; -------------------------------------------------------------------
@@ -579,29 +579,43 @@
           treemacs-space-between-root-nodes nil)
     (treemacs-follow-mode t)
     (treemacs-filewatch-mode t)
-    (treemacs-fringe-indicator-mode nil)))
+    (treemacs-fringe-indicator-mode nil))
+
+  (treemacs-git-mode 'extended)
+  (add-to-list 'treemacs-pre-file-insert-predicates #'treemacs-is-file-git-ignored?)
+
+  (defun treemacs-custom-filter (file _)
+    (or (s-ends-with? ".aux" file)
+        (s-ends-with? ".lint" file)
+        ))
+  (push #'treemacs-custom-filter treemacs-ignored-file-predicates)
+)
 
 (use-package lsp-treemacs
   :after lsp
   :after treemacs
   :after company
   :commands lsp-treemacs-errors-list
-  :config (setq gc-cons-threshold (* 100 1024 1024)
-                read-process-output-max (* 1024 1024)
-                treemacs-space-between-root-nodes nil
-                company-idle-delay 0.0
-                company-minimum-prefix-length 1
-                lsp-idle-delay 0.1 ;; clangd is fast
-                ;; be more ide-ish
-                lsp-headerline-breadcrumb-enable)
+  :config
+  (setq gc-cons-threshold (* 100 1024 1024)
+        read-process-output-max (* 1024 1024)
+        treemacs-space-between-root-nodes nil
+        company-idle-delay 0.0
+        company-minimum-prefix-length 1
+        lsp-idle-delay 0.1 ;; clangd is fast
+        ;; be more ide-ish
+        lsp-headerline-breadcrumb-enable)
+  (lsp-treemacs-sync-mode t) ;; enables bidirectional sync
   )
+
+(global-set-key [f9] 'ff-lsp-treemacs-symbols-toggle)
 
 ;; -------------------------------------------------------------------
 ;; Enable dap
 ;; -------------------------------------------------------------------
 (use-package dap-mode
   :after lsp-mode
-  :ensure-system-package ("~/.local/lib/python3.6/site-packages/ptvsd" . "pip3 install 'ptvsd>=4.2'") ; for dap-python
+  :ensure-system-package ("~/.local/lib/python3.8/site-packages/ptvsd" . "pip3 install 'ptvsd>=4.2'") ; for dap-python
   :config (dap-auto-configure-mode)
   :init
   ;; enables mouse hover support
@@ -681,6 +695,7 @@
 
 (use-package company-prescient
   :after company
+  :after counsel
   :config
   (company-prescient-mode 1))
 
@@ -872,13 +887,13 @@
 
 ;; add make, scons and latexmk commands as tex build commands
 (add-hook 'LaTeX-mode-hook
-   (lambda ()
-     (add-to-list 'TeX-command-list
-                  '("Make" "make" TeX-run-TeX nil t :help "Runs make") t)
-     (add-to-list 'TeX-command-list
-                  '("Scons" "scons" TeX-run-TeX nil t :help "Runs scons") t)
-     (add-to-list 'TeX-command-list
-                  '("latexmk" "latexmk -pdf" TeX-run-TeX nil t :help "Runs latexmk") t)))
+          (lambda ()
+            (add-to-list 'TeX-command-list
+                         '("Make" "make" TeX-run-TeX nil t :help "Runs make") t)
+            (add-to-list 'TeX-command-list
+                         '("Scons" "scons" TeX-run-TeX nil t :help "Runs scons") t)
+            (add-to-list 'TeX-command-list
+                         '("latexmk" "latexmk -pdf" TeX-run-TeX nil t :help "Runs latexmk") t)))
 ;; -------------------------------------------------------------------
 ;; add new environment types to auctex
 ;; http://www.gnu.org/software/auctex/manual/auctex/Adding-Environments.html
@@ -926,11 +941,11 @@
         langtool-url (concat "https://languagetool.org/download/" langtool-name ".zip")
         langtool-extract-to (expand-file-name "~/opt/languageTool")
         langtool-expected-binary (concat langtool-extract-to "/" langtool-name "/languagetool-commandline.jar"))
-  (download-and-extract-zip-archive langtool-url
-                                    langtool-name
-                                    langtool-extract-to
-                                    langtool-expected-binary
-                                    "langtool")
+  (ff-download-and-extract-zip-archive langtool-url
+                                       langtool-name
+                                       langtool-extract-to
+                                       langtool-expected-binary
+                                       "langtool")
   :config
   (setq langtool-autoshow-message-function 'langtool-autoshow-detail-popup)
   (setq langtool-language-tool-jar langtool-expected-binary)
@@ -981,12 +996,12 @@
 ;; alist leeren und für aspell /de_DE.UTF-8 richtig einstellen:
 (setq ispell-local-dictionary-alist nil)
 (add-to-list 'ispell-local-dictionary-alist
-	     '("de_DE"
- 	       "[[:alpha:]]" "[^[:alpha:]]"
-	       "[']" t
-	       ("-C" "-d" "de_DE")
- 	        "~latin1" iso-8859-1)
- 	     )
+	         '("de_DE"
+ 	           "[[:alpha:]]" "[^[:alpha:]]"
+	           "[']" t
+	           ("-C" "-d" "de_DE")
+ 	           "~latin1" iso-8859-1)
+ 	         )
 
 ;; flyspell mode
 (put 'LaTeX-mode 'flyspell-mode-predicate 'auctex-mode-flyspell-verify)
@@ -997,8 +1012,8 @@
     (not (looking-at "bibliographystyle{"))))
 
 (add-hook 'LaTeX-mode-hook
-  (lambda () (setq flyspell-generic-check-word-predicate
-    'auctex-mode-flyspell-verify)))
+          (lambda () (setq flyspell-generic-check-word-predicate
+                           'auctex-mode-flyspell-verify)))
 
 (autoload 'flyspell-mode "flyspell"
   "On-the-fly spelling checking" t)
@@ -1039,8 +1054,8 @@
 (use-package lsp-python-ms
   :init (setq lsp-python-ms-auto-install-server t)
   :hook (python-mode . (lambda ()
-                          (require 'lsp-python-ms)
-                          (lsp))))  ; or lsp-deferred
+                         (require 'lsp-python-ms)
+                         (lsp))))  ; or lsp-deferred
 
 ;; Enable autopep8
 (use-package py-autopep8
@@ -1066,7 +1081,7 @@
   :config
   (setq conda-anaconda-home (expand-file-name "~/anaconda3/"))
   (setq conda-env-home-directory (expand-file-name "~/anaconda3"))
-)
+  )
 
 ;; install via pip install "ptvsd>=4.2"
 (require 'dap-python)
@@ -1097,7 +1112,7 @@
   :diminish flycheck-mode
   :config
   (global-flycheck-mode)
-)
+  )
 
 ;; -------------------------------------------------------------------
 ;; Shell
@@ -1127,7 +1142,7 @@
   (interactive)
   (swig-switch-compile-command-auto)
   (compile compile-command)
-)
+  )
 
 (use-package swig-mode
   :load-path local-load-path
@@ -1135,7 +1150,7 @@
   :init
   ;; Deactivate autpair
   (add-hook 'swig-mode-hook (lambda () (setq autopair-dont-activate t)))
-)
+  )
 
 ;; -------------------------------------------------------------------
 ;; Git - magit
@@ -1146,7 +1161,7 @@
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
   :config
   (setq magit-diff-refine-hunk 'all) ; Show word based diff
-)
+  )
 
 ;; (dw/leader-key-def
 ;;   "g"   '(:ignore t :which-key "git")
@@ -1258,7 +1273,7 @@
          (js2-mode-hook . js-mode-bindings))
   :bind (
          ("C-C C-g" . jsons-print-path)
-        )
+         )
   )
 
 ;; -------------------------------------------------------------------
@@ -1276,11 +1291,11 @@
         plantuml-url (concat "https://sourceforge.net/projects/plantuml/files/" plantuml-version "/" plantuml-name ".zip/download")
         plantuml-extract-to (expand-file-name (concat "~/opt/plantuml/" plantuml-name))
         plantuml-expected-binary (concat plantuml-extract-to "/plantuml.jar"))
-  (download-and-extract-zip-archive plantuml-url
-                                    plantuml-name
-                                    plantuml-extract-to
-                                    plantuml-expected-binary
-                                    "plantuml")
+  (ff-download-and-extract-zip-archive plantuml-url
+                                       plantuml-name
+                                       plantuml-extract-to
+                                       plantuml-expected-binary
+                                       "plantuml")
   :config
   ;; Sample jar configuration
   (setq plantuml-jar-path plantuml-expected-binary
