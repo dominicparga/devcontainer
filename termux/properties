@@ -1,5 +1,5 @@
 extra-keys = [ \
-  ['ESC', '-', '', '{', '}', 'DOWN', 'UP'], \
-  ['ESC', '/', 'LEFT', 'RIGHT', '$', 'CTRL', 'TAB'] \
+  ['ESC', '/', 'LEFT', 'RIGHT', '$', 'DOWN', 'UP'  ], \
+  ['ESC', '_', '-',    '{',     '}', 'CTRL', 'TAB' ]  \
 ]
 
