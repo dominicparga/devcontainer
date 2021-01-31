@@ -384,6 +384,16 @@
 
 
 ;; -------------------------------------------------------------------
+;; Auto-saving changed files
+;; -------------------------------------------------------------------
+(use-package super-save
+  :defer 1
+  :diminish super-save-mode
+  :config
+  (super-save-mode +1)
+  (setq super-save-auto-save-when-idle t))
+
+;; -------------------------------------------------------------------
 ;; Insert Pairs of Matching Elements
 ;; -------------------------------------------------------------------
 (use-package autopair
@@ -419,13 +429,13 @@
 ;; Highlight parens
 (use-package paren
   :config
-  (setq show-paren-style 'mixed)	;; The entire expression
-  (setq blink-matching-paren t)
-  :init
-  (show-paren-mode 1)
   (set-face-background 'show-paren-match (face-background 'default))
   (set-face-foreground 'show-paren-match "#def")
-  (set-face-attribute 'show-paren-match nil :weight 'extra-bold))
+  (set-face-attribute 'show-paren-match nil :weight 'extra-bold)
+  ;; (set-face-attribute 'show-paren-match-expression nil :background "#363e4a")
+  (setq show-paren-style 'mixed)	;; The entire expression
+  (setq blink-matching-paren t)
+  (show-paren-mode 1))
 
 ;; -------------------------------------------------------------------
 ;; Save history during sessions
@@ -1150,6 +1160,71 @@
 
 (use-package magit-todos)
 
+(use-package git-gutter-fringe)
+
+(use-package git-gutter
+  :after git-gutter-fringe
+  :diminish
+  :hook ((text-mode . git-gutter-mode)
+         (prog-mode . git-gutter-mode))
+  :config
+  (setq git-gutter:update-interval 2)
+  (set-face-foreground 'git-gutter-fr:added "LightGreen")
+  (fringe-helper-define 'git-gutter-fr:added nil
+                        "XXXXXXXXXX"
+                        "XXXXXXXXXX"
+                        "XXXXXXXXXX"
+                        ".........."
+                        ".........."
+                        "XXXXXXXXXX"
+                        "XXXXXXXXXX"
+                        "XXXXXXXXXX"
+                        ".........."
+                        ".........."
+                        "XXXXXXXXXX"
+                        "XXXXXXXXXX"
+                        "XXXXXXXXXX")
+
+  (set-face-foreground 'git-gutter-fr:modified "LightGoldenrod")
+  (fringe-helper-define 'git-gutter-fr:modified nil
+                        "XXXXXXXXXX"
+                        "XXXXXXXXXX"
+                        "XXXXXXXXXX"
+                        ".........."
+                        ".........."
+                        "XXXXXXXXXX"
+                        "XXXXXXXXXX"
+                        "XXXXXXXXXX"
+                        ".........."
+                        ".........."
+                        "XXXXXXXXXX"
+                        "XXXXXXXXXX"
+                        "XXXXXXXXXX")
+
+  (set-face-foreground 'git-gutter-fr:deleted "LightCoral")
+  (fringe-helper-define 'git-gutter-fr:deleted nil
+                        "XXXXXXXXXX"
+                        "XXXXXXXXXX"
+                        "XXXXXXXXXX"
+                        ".........."
+                        ".........."
+                        "XXXXXXXXXX"
+                        "XXXXXXXXXX"
+                        "XXXXXXXXXX"
+                        ".........."
+                        ".........."
+                        "XXXXXXXXXX"
+                        "XXXXXXXXXX"
+                        "XXXXXXXXXX")
+
+  ;; These characters are used in terminal mode
+  (setq git-gutter:modified-sign "≡")
+  (setq git-gutter:added-sign "≡")
+  (setq git-gutter:deleted-sign "≡")
+  (set-face-foreground 'git-gutter:added "LightGreen")
+  (set-face-foreground 'git-gutter:modified "LightGoldenrod")
+  (set-face-foreground 'git-gutter:deleted "LightCoral"))
+
 ;; -------------------------------------------------------------------
 ;; yaml mode
 ;; -------------------------------------------------------------------
@@ -1328,5 +1403,19 @@
 ;; -------------------------------------------------------------------
 ;; Other stuff
 ;; -------------------------------------------------------------------
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(git-gutter-fringe yaml-mode xterm-color whole-line-or-region which-key wgrep vterm volatile-highlights use-package-ensure-system-package tide super-save sphinx-doc smex smart-mode-line scala-mode rainbow-delimiters pyvenv python-black py-autopep8 protobuf-mode poly-rst ox-rst openwith multi-term material-theme magit-todos lsp-ui lsp-python-ms lsp-java lsp-ivy lsp-docker langtool json-mode ivy-rich ivy-prescient ivy-pass ivy-hydra highlight-symbol groovy-mode groovy-imports git-timemachine general flymake-yaml flymake-shellcheck flymake-shell flymake-json flycheck-pycheckers flycheck-plantuml flx fill-column-indicator exec-path-from-shell evil-nerd-commenter ess eshell-z emojify edwina drag-stuff dockerfile-mode dired-narrow diminish counsel-projectile company-prescient company-c-headers company-auctex command-log-mode cmake-mode clang-format+ blacken beacon autopair auto-package-update auto-complete ag ack)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
 
 ;;; init.el ends here
