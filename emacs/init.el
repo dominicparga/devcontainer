@@ -229,6 +229,12 @@
 (use-package evil-nerd-commenter
   :bind ("M-;" . evilnc-comment-or-uncomment-lines))
 
+(use-package which-key
+  :diminish which-key-mode
+  :init (which-key-mode 1)
+  :config
+  (setq which-key-idle-delay 0.5))
+
 ;; -------------------------------------------------------------------
 ;; Credential management
 ;; -------------------------------------------------------------------
@@ -529,9 +535,7 @@
          )
   :config
   (define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
-  (setq lsp-ui-doc-position 'top
-        lsp-ui-doc-alignment 'window
-        ;; if set to true can cause a performance hit
+  (setq ;; if set to true can cause a performance hit
         lsp-log-io nil
         lsp-pyls-plugins-flake8-enabled t
         lsp-pyls-plugins-pycodestyle-enabled nil
@@ -540,6 +544,8 @@
         ;; Ignore files and folders when watchin
         ;; lsp-file-watch-ignored ("[/\\\\]\\.pyc$" "[/\\\\]_build")
         )
+  :bind (:map lsp-mode-map
+              ("TAB" . completion-at-point))
   )
 
 ;; increase threshold for lsp to run smoothly
@@ -548,22 +554,22 @@
 (setq lsp-completion-provider :capf)
 
 (use-package lsp-ui
+  :after lsp-mode
   :commands lsp-ui-mode
-  :init
+  :hook (lsp-mode . lsp-ui-mode)
+  :config
   (setq imenu-auto-rescan t
         imenu-auto-rescan-maxout (* 1024 1024)
         imenu--rescan-item '("" . -99))
-  )
+  (setq lsp-ui-doc-position 'top
+        lsp-ui-doc-alignment 'window
+        lsp-ui-sideline-enable t
+        lsp-ui-sideline-show-hover nil)
+  (lsp-ui-doc-show))
 
 (with-eval-after-load 'lsp-mode
   ;; :global/:workspace/:file
   (setq lsp-modeline-diagnostics-scope :workspace))
-
-(use-package which-key
-  :diminish which-key-mode
-  :init (which-key-mode 1)
-  :config
-  (setq which-key-idle-delay 0.5))
 
 (use-package treemacs
   :commands (treemacs
@@ -738,8 +744,12 @@
 ;; Adjusting modes for programming
 ;; ===================================================================
 ;; -------------------------------------------------------------------
-;; C++
+;; C/C++
 ;; -------------------------------------------------------------------
+(use-package ccls
+  :hook ((c-mode c++-mode objc-mode cuda-mode) .
+         (lambda () (require 'ccls) (lsp))))
+
 (use-package cmake-mode
   :mode (("\\.cmake$" . cmake-mode)
          ("CMakeLists.txt" . cmake-mode)))
@@ -1290,6 +1300,8 @@
   (tide-hl-identifier-mode +1))
 
 (use-package tide)
+(use-package nvm
+  :defer t)
 
 (use-package typescript-mode
   :after dap-node tide
@@ -1298,6 +1310,7 @@
          ("\\.tsx$" . typescript-mode)
          )
   :config
+  (setq typescript-indent-level 4)
   (flycheck-mode 1)
   (company-mode 1)
   (dap-node-setup) ;; automatically installs Node debug adapter if needed
@@ -1410,7 +1423,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(git-gutter-fringe yaml-mode xterm-color whole-line-or-region which-key wgrep vterm volatile-highlights use-package-ensure-system-package tide super-save sphinx-doc smex smart-mode-line scala-mode rainbow-delimiters pyvenv python-black py-autopep8 protobuf-mode poly-rst ox-rst openwith multi-term material-theme magit-todos lsp-ui lsp-python-ms lsp-java lsp-ivy lsp-docker langtool json-mode ivy-rich ivy-prescient ivy-pass ivy-hydra highlight-symbol groovy-mode groovy-imports git-timemachine general flymake-yaml flymake-shellcheck flymake-shell flymake-json flycheck-pycheckers flycheck-plantuml flx fill-column-indicator exec-path-from-shell evil-nerd-commenter ess eshell-z emojify edwina drag-stuff dockerfile-mode dired-narrow diminish counsel-projectile company-prescient company-c-headers company-auctex command-log-mode cmake-mode clang-format+ blacken beacon autopair auto-package-update auto-complete ag ack)))
+   '(ccls git-gutter-fringe yaml-mode xterm-color whole-line-or-region which-key wgrep vterm volatile-highlights use-package-ensure-system-package tide super-save sphinx-doc smex smart-mode-line scala-mode rainbow-delimiters pyvenv python-black py-autopep8 protobuf-mode poly-rst ox-rst openwith multi-term material-theme magit-todos lsp-ui lsp-python-ms lsp-java lsp-ivy lsp-docker langtool json-mode ivy-rich ivy-prescient ivy-pass ivy-hydra highlight-symbol groovy-mode groovy-imports git-timemachine general flymake-yaml flymake-shellcheck flymake-shell flymake-json flycheck-pycheckers flycheck-plantuml flx fill-column-indicator exec-path-from-shell evil-nerd-commenter ess eshell-z emojify edwina drag-stuff dockerfile-mode dired-narrow diminish counsel-projectile company-prescient company-c-headers company-auctex command-log-mode cmake-mode clang-format+ blacken beacon autopair auto-package-update auto-complete ag ack)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
