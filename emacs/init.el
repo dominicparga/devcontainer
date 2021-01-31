@@ -98,16 +98,13 @@
 (setq vc-follow-symlinks t)
 
 ;; disable scrollbar
-(scroll-bar-mode -1)
+(scroll-bar-mode -1) ; disbale scrollbar
+(menu-bar-mode -1) ; disable menu bar
+(tool-bar-mode -1) ; disbale tool bar
+(set-fringe-mode 10)
 
-;; disable menu
-(menu-bar-mode nil)
-
-;; remove toolbar
-(tool-bar-mode -1)
-
-;; remove menu bar
-(menu-bar-mode -1)
+;; Set up the visible bell
+(setq visible-bell t)
 
 ;; enable revert from disk
 (global-auto-revert-mode 1)
