@@ -1101,7 +1101,9 @@
 (require 'dap-python)
 
 ;; supports virtual environments. To be set with pyvenv-workon
-(use-package pyvenv)
+(use-package pyvenv
+  :config
+  (pyvenv-mode 1))
 
 (use-package flycheck-pycheckers
   :after flycheck
