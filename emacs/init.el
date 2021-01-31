@@ -468,26 +468,36 @@
 ;; -------------------------------------------------------------------
 (use-package projectile
   :after counsel
+  :after ivy
+  :custom ((projectile-completion-system 'ivy))
   :init
-  (setq projectile-file-exists-remote-cache-expire nil)
-  (setq projectile-mode-line nil)
-  (setq projectile-globally-ignored-directories
+  (setq projectile-file-exists-remote-cache-expire nil
+        projectile-mode-line nil
+        projectile-globally-ignored-directories
         (quote
          (".idea" ".eunit" ".git" ".hg" ".svn"
           ".fslckout" ".bzr" "_darcs" ".tox"
           "build" "target" "_build" ".history"
-          "tmp")))
-  (setq projectile-require-project-root nil)
-  ;; (setq projectile-indexing-method 'alien)
-  ;; (setq projectile-enable-caching nil)
-  (setq projectile-completion-system 'default)
-  (setq projectile-svn-command "find . -type f -not -iwholename '*.svn/*' -print0")
+          "tmp"))
+        projectile-require-project-root nil
+        ;; projectile-indexing-method 'alien
+        ;; projectile-enable-caching nil
+        projectile-completion-system 'default
+        projectile-svn-command "find . -type f -not -iwholename '*.svn/*' -print0")
+  (when (file-directory-p "~/workspace")
+    (setq projectile-project-search-path '("~/workspace")))
   :config
   (projectile-mode 1)
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+  )
+
+(use-package counsel-projectile
+  :ensure-system-package (rg . riprep)
+  :config (counsel-projectile-mode)
   :bind* (
           ("C-c p s a" . counsel-ack)
           ("C-c p s g" . counsel-git-grep)
+          ("C-c p s c" . counsel-rg)
           ("C-c p s r" . rgrep)
           )
   )
@@ -1363,7 +1373,7 @@
  '(custom-safe-themes
    '("d4f8fcc20d4b44bf5796196dbeabec42078c2ddb16dcb6ec145a1c610e0842f3" default))
  '(package-selected-packages
-   '(flymake-yaml drag-stuff multi-eshell lsp-ivy which-key use-package-ensure-system-package rainbow-delimiters command-log-mode company-prescient ivy-prescient emojify xterm-color evil-collection ivy-posframe smex ivy-rich eshell-z general openwith ivy-pass evil-nerd-commenter smart-mode-line dap-node pyvenv jedi dap-mode lsp-docker lsp-java lsp-mode lsp-ui helm-swoop quelpa quelpa-use-package python-black meghanada scala-mode ess flycheck-clang-tidy helm-mt multi-term winner-mode dockerfile-mode groovy-imports groovy-mode flycheck-plantuml plantuml-mode org-mode poly-rst rst-mode yaml-mode whole-line-or-region wgrep volatile-highlights use-package tide tangotango-theme sphinx-doc smart-jump python-mode py-autopep8 protobuf-mode neotree markdown-mode magit langtool ivy-rtags ivy-hydra highlight-symbol helm-projectile helm-ag helm-R haskell-mode git-timemachine flycheck-rtags fill-column-indicator exec-path-from-shell ensime elpy dired-narrow diminish cython-mode crux counsel cmake-mode clang-format blacken beacon autopair auto-complete auctex anaconda-mode ag))
+   '(counsel-projectile edwina flymake-yaml drag-stuff multi-eshell lsp-ivy which-key use-package-ensure-system-package rainbow-delimiters command-log-mode company-prescient ivy-prescient emojify xterm-color evil-collection ivy-posframe smex ivy-rich eshell-z general openwith ivy-pass evil-nerd-commenter smart-mode-line dap-node pyvenv jedi dap-mode lsp-docker lsp-java lsp-mode lsp-ui helm-swoop quelpa quelpa-use-package python-black meghanada scala-mode ess flycheck-clang-tidy helm-mt multi-term winner-mode dockerfile-mode groovy-imports groovy-mode flycheck-plantuml plantuml-mode org-mode poly-rst rst-mode yaml-mode whole-line-or-region wgrep volatile-highlights use-package tide tangotango-theme sphinx-doc smart-jump python-mode py-autopep8 protobuf-mode neotree markdown-mode magit langtool ivy-rtags ivy-hydra highlight-symbol helm-projectile helm-ag helm-R haskell-mode git-timemachine flycheck-rtags fill-column-indicator exec-path-from-shell ensime elpy dired-narrow diminish cython-mode crux counsel cmake-mode clang-format blacken beacon autopair auto-complete auctex anaconda-mode ag))
  '(safe-local-variable-values
    '((company-clang-arguments "-I/home/frf2lr/workspace/recapp_int/recompute/dol/core/src" "-I/home/frf2lr/workspace/recapp_int/recompute/target" "-I/home/frf2lr/workspace/recapp_int/recompute/utils/include" "-I/home/frf2lr/workspace/recapp_int/recompute/tests/mocks/mock_algo" "-I/home/frf2lr/workspace/recapp_int/recompute/target/strategies/shared/include"))))
 (custom-set-faces
