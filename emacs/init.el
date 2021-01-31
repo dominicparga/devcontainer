@@ -519,12 +519,16 @@
 ;; -------------------------------------------------------------------
 ;; Enable lsp and treemacs
 ;; -------------------------------------------------------------------
+(defun ff-lsp-mode-setup ()
+  "Setup-hook for lsp-mode."
+  (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
+  (lsp-headerline-breadcrumb-mode)
+  )
+
 (use-package lsp-mode
   :commands lsp
   :ensure-system-package (clangd-10 . clangd)
-  :hook ((lsp-mode . (lambda ()
-                       (let ((lsp-keymap-prefix "C-c l"))
-                         (lsp-enable-which-key-integration))))
+  :hook ((lsp-mode . ff-lsp-mode-setup)
          (c++-mode . lsp-deferred)
          (c-mode . lsp-deferred)
          (java-mode . lsp-deferred)
@@ -544,6 +548,7 @@
         ;; Ignore files and folders when watchin
         ;; lsp-file-watch-ignored ("[/\\\\]\\.pyc$" "[/\\\\]_build")
         )
+  (lsp-enable-which-key-integration)
   :bind (:map lsp-mode-map
               ("TAB" . completion-at-point))
   )
@@ -565,7 +570,8 @@
         lsp-ui-doc-alignment 'window
         lsp-ui-sideline-enable t
         lsp-ui-sideline-show-hover nil)
-  (lsp-ui-doc-show))
+  ;; (lsp-ui-doc-show) ; does not work for python currently
+  )
 
 (with-eval-after-load 'lsp-mode
   ;; :global/:workspace/:file
@@ -621,7 +627,6 @@
 (use-package dap-mode
   :after lsp-mode
   :ensure-system-package ("~/.local/lib/python3.8/site-packages/ptvsd" . "pip3 install 'ptvsd>=4.2'") ; for dap-python
-  :config (dap-auto-configure-mode)
   :init
   ;; enables mouse hover support
   (dap-tooltip-mode 1)
@@ -631,7 +636,12 @@
   ;; displays floating panel with debug buttons
   ;; requies emacs 26+
   (dap-ui-controls-mode 1)
+  :config (dap-auto-configure-mode)
   :hook ((dap-stopped . (lambda (arg) (call-interactively #'dap-hydra))))
+  :bind(("C-c d d" . dap-debug)
+        ("C-c d h" . dap-hydra)
+        ("C-c d r" . dap-ui-repl)
+        )
   )
 
 ;; -------------------------------------------------------------------
@@ -695,7 +705,8 @@
 (dolist (mode '(term-mode-hook
                 multi-term-mode-hook
                 ansi-term-mode-hook
-                eshell-mode-hook))
+                eshell-mode-hook
+                dap-ui-repl-mode-hook))
   (add-hook mode (lambda () (company-mode 0))))
 
 (use-package company-prescient
