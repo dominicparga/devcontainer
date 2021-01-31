@@ -439,12 +439,8 @@
   (setq savehist-additional-variables '(extended-command-history kill-ring)))
 
 ;; -------------------------------------------------------------------
-;; Helm/Ivy project
+;; Ivy project
 ;; -------------------------------------------------------------------
-;; (use-package setup-helm
-;;   :load-path local-load-path
-;;   )
-
 (use-package setup-ivy
   :load-path local-load-path
   )
@@ -1335,23 +1331,5 @@
 ;; -------------------------------------------------------------------
 ;; Other stuff
 ;; -------------------------------------------------------------------
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   '("d4f8fcc20d4b44bf5796196dbeabec42078c2ddb16dcb6ec145a1c610e0842f3" default))
- '(package-selected-packages
-   '(counsel-projectile edwina flymake-yaml drag-stuff multi-eshell lsp-ivy which-key use-package-ensure-system-package rainbow-delimiters command-log-mode company-prescient ivy-prescient emojify xterm-color evil-collection ivy-posframe smex ivy-rich eshell-z general openwith ivy-pass evil-nerd-commenter smart-mode-line dap-node pyvenv jedi dap-mode lsp-docker lsp-java lsp-mode lsp-ui helm-swoop quelpa quelpa-use-package python-black meghanada scala-mode ess flycheck-clang-tidy helm-mt multi-term winner-mode dockerfile-mode groovy-imports groovy-mode flycheck-plantuml plantuml-mode org-mode poly-rst rst-mode yaml-mode whole-line-or-region wgrep volatile-highlights use-package tide tangotango-theme sphinx-doc smart-jump python-mode py-autopep8 protobuf-mode neotree markdown-mode magit langtool ivy-rtags ivy-hydra highlight-symbol helm-projectile helm-ag helm-R haskell-mode git-timemachine flycheck-rtags fill-column-indicator exec-path-from-shell ensime elpy dired-narrow diminish cython-mode crux counsel cmake-mode clang-format blacken beacon autopair auto-complete auctex anaconda-mode ag))
- '(safe-local-variable-values
-   '((company-clang-arguments "-I/home/frf2lr/workspace/recapp_int/recompute/dol/core/src" "-I/home/frf2lr/workspace/recapp_int/recompute/target" "-I/home/frf2lr/workspace/recapp_int/recompute/utils/include" "-I/home/frf2lr/workspace/recapp_int/recompute/tests/mocks/mock_algo" "-I/home/frf2lr/workspace/recapp_int/recompute/target/strategies/shared/include"))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
 
 ;;; init.el ends here
