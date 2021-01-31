@@ -108,9 +108,6 @@
   :hook ((eshell-mode . (lambda () (require 'eshell-z)))
          (eshell-z-change-dir .  (lambda () (eshell/pushd (eshell/pwd))))))
 
-;; (dw/leader-key-def
-;;   "SPC" 'eshell)
-
 (provide 'setup-eshell)
 
 ;;; setup-eshell.el ends here

@@ -69,20 +69,6 @@
 
 (server-start)
 
-;; library for defining prefixed keybindings
-;; https://github.com/noctuid/general.el
-(use-package general
-  :config
-  (general-evil-setup t)
-
-  (general-create-definer dw/leader-key-def
-    :keymaps '(normal insert visual emacs)
-    :prefix "SPC"
-    :global-prefix "C-SPC")
-
-  (general-create-definer dw/ctrl-c-keys
-    :prefix "C-c"))
-
 ;; The default is 800 kilobytes.  Measured in bytes.
 (setq gc-cons-threshold (* 100 1000 1000))
 
@@ -390,10 +376,10 @@
                   " "
                   mode-line-misc-info))
 
-  (setq rm-excluded-modes
+  (setq rm-blacklist
         (mapconcat
          'identity
-                                        ; These names must start with a space!
+         ;; These names must start with a space!
          '(" GitGutter" " MRev" " company"
            " Helm" " Undo-Tree" " Projectile.*" " Z" " Ind"
            " Org-Agenda.*" " ElDoc" " SP/s" " cider.*")
@@ -1167,21 +1153,6 @@
   (setq magit-diff-refine-hunk 'all) ; Show word based diff
   )
 
-;; (dw/leader-key-def
-;;   "g"   '(:ignore t :which-key "git")
-;;   "gs"  'magit-status
-;;   "gd"  'magit-diff-unstaged
-;;   "gc"  'magit-branch-or-checkout
-;;   "gl"   '(:ignore t :which-key "log")
-;;   "glc" 'magit-log-current
-;;   "glf" 'magit-log-buffer-file
-;;   "gb"  'magit-branch
-;;   "gP"  'magit-push-current
-;;   "gp"  'magit-pull-branch
-;;   "gf"  'magit-fetch
-;;   "gF"  'magit-fetch-all
-;;   "gr"  'magit-rebase)
-
 (use-package git-timemachine)
 
 (use-package magit-todos)
@@ -1383,4 +1354,4 @@
  ;; If there is more than one, they won't work right.
  )
 
-;;; .emacs ends here
+;;; init.el ends here

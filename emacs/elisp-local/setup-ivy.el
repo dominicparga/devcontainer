@@ -102,15 +102,6 @@
   :after ivy
   :after lsp-mode)
 
-(dw/leader-key-def
-  "r"   '(ivy-resume :which-key "ivy resume")
-  "f"   '(:ignore t :which-key "files")
-  "ff"  '(counsel-find-file :which-key "open file")
-  "C-f" 'counsel-find-file
-  "fr"  '(counsel-recentf :which-key "recent files")
-  "fR"  '(revert-buffer :which-key "revert file")
-  "fj"  '(counsel-file-jump :which-key "jump to file"))
-
 (provide 'setup-ivy)
 
 ;;; setup-ivy.el ends here
