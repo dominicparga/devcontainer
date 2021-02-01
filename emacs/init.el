@@ -83,6 +83,8 @@
 
 ;; enables local variables per default
 (setq enable-local-variables :safe)
+;; dir-local variables will be applied to remote files.
+(setq enable-remote-dir-locals t)
 
 ;; disable backup
 (setq backup-inhibited t)
@@ -121,10 +123,7 @@
 ;; Kill this buffer, instead of prompting for which one to kill
 (global-set-key (kbd "C-x k") 'kill-this-buffer)
 
-;; dir-local variables will be applied to remote files.
-(setq enable-remote-dir-locals t)
-
-                                        ; Turn on syntax colouring in all modes supporting it
+;; Turn on syntax colouring in all modes supporting it
 (global-font-lock-mode t)
 
 ;; I want the current user name, the emacs version and the name of the
