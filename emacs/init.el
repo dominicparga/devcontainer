@@ -636,6 +636,7 @@
   :hook ((dap-stopped . (lambda (arg) (call-interactively #'dap-hydra))))
   :bind(("C-c d d" . dap-debug)
         ("C-c d h" . dap-hydra)
+        ("C-c d t" . dap-breakpoint-toggle)
         ("C-c d r" . dap-ui-repl)
         )
   )
