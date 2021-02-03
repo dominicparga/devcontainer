@@ -141,7 +141,7 @@ token_sv() {
 
 
 # Recompute flow
-export PYTHONPATH=$PYTHONPATH:$RECOMPUTE_FLOW_HOME/airflow-home/dags
+export PYTHONPATH=$PYTHONPATH:$RECOMPUTE_FLOW_HOME/airflow-home/dags:$RECOMPUTE_FLOW_HOME/micro_pipeline:$RECOMPUTE_FLOW_HOME/web-ui/server
 
 # Postgres debug port
 export POSTGRES_PORT=2345
@@ -179,7 +179,7 @@ export RECAPP_INT_RELEASE_DIR=$RECAPP_INT_HOME/install
 export RECAPP_RELEASE_DIR=$RECAPP_INT_HOME/install/recapp
 
 export RECAPP_VERSION=0.12.0jtv1
-export RECAPP_RELEASE_DIR=/opt/recapp/${RECAPP_VERSION}/ubuntu1804/
+export RECAPP_RELEASE_DIR=/opt/recapp/${RECAPP_VERSION}/ubuntu1804
 export PATH=$PATH:$RECAPP_RELEASE_DIR/bin:$RECAPP_RELEASE_DIR/bin/dol
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$RECAPP_RELEASE_DIR/lib
 export PYTHONPATH=$PYTHONPATH:$RECAPP_RELEASE_DIR/lib/python2.7/dist-packages:$RECAPP_RELEASE_DIR/lib:$RECAPP_RELEASE_DIR/bin/bytesoup_inspector
