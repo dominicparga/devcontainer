@@ -10,18 +10,18 @@
     helper = "cache --timeout=43200"  # cache credentials for 12 hours
 [http "https://athena.*.corpintra.net"]
     username = franzef
-    sslCert = /lhome/franzef/.local/share/certificates/cert-dap.crt
-    sslKey = /lhome/franzef/.local/share/certificates/cert-dap.key
+    sslCert = /home/frf2lr/.local/share/certificates/cert-dap.crt
+    sslKey = /home/frf2lr/.local/share/certificates/cert-dap.key
     sslCaInfo = /etc/ssl/certs/ca-certificates.crt
 [http "https://athena.daimler.com"]
     username = franzef
-    sslCert = /lhome/franzef/.local/share/certificates/cert-dap.crt
-    sslKey = /lhome/franzef/.local/share/certificates/cert-dap.key
+    sslCert = /home/frf2lr/.local/share/certificates/cert-dap.crt
+    sslKey = /home/frf2lr/.local/share/certificates/cert-dap.key
     sslCaInfo = /etc/ssl/certs/ca-certificates.crt
 [credential "https://scm-manager.rd.corpintra.net"]
     username = franzef
-    sslCert = /lhome/franzef/.local/share/certificates/cert-dap.crt
-    sslKey = /lhome/franzef/.local/share/certificates/cert-dap.key
+    sslCert = /home/frf2lr/.local/share/certificates/cert-dap.crt
+    sslKey = /home/frf2lr/.local/share/certificates/cert-dap.key
     sslCaInfo = /etc/ssl/certs/ca-certificates.crt
 [credential "https://github.com"]
     username = fabianfranzelin

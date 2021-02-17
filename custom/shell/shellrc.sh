@@ -44,6 +44,7 @@ untar() {
 # use vim as SVN editor
 export SVN_EDITOR=vim
 export GIT_EDITOR=vim
+export GIT_LFS_SKIP_SMUDGE=1
 
 # expand path to include local bin directory
 PATH=$HOME/opt/bin:$HOME/.local/bin:$PATH
@@ -76,7 +77,7 @@ fi
 #------------------------------------------------------------------------------#
 # setup hadoop, and gradle
 export HADOOP_HOME=$HOME/opt/hadoop-3.1.0
-export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 
 export PATH=$SPARK_HOME/bin:$HADOOP_HOME/bin:$HOME/opt/gradle/gradle-4.7/bin:$PATH
 
@@ -114,6 +115,8 @@ export SPARK_SUBMIT_COMMAND="$SPARK_HOME/bin/spark-submit"
 export YARN_CONF_DIR="$HADOOP_HOME/etc/hadoop"
 
 export SLUGIFY_USES_TEXT_UNIDECODE=yes
+
+export AIRFLOW__CORE__PARALLELISM=10
 
 export KUBERNETES_CONTEXT=kubernetes-dol-master@abstatt
 export KUBERNETES_CONTEXT_SUNNYVALE=dol_master@sunnyvale

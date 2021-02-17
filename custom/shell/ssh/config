@@ -1,5 +1,5 @@
 # Host node0
-#      User franzef
+#      User frf2lr
 #      Hostname ipvslogin.informatik.uni-stuttgart.de
 #      ProxyCommand nc -X connect -x proxy-ut.rd.corpintra.net:3128 %h %p
 
@@ -20,115 +20,35 @@
 
 # 3-node cluster
 
-Host node1
-     Hostname CMTCDEU53965046.rd.corpintra.net
-     IdentityFile /lhome/franzef/.ssh/id_three_node_cluster
-     Port 42022
+Host ws_jens
+     Hostname ST39-C-0005P.fe.de.bosch.com
+     Port 22
+     IdentityFile /home/frf2lr/.ssh/id_rsa
+     ForwardX11 yes
 
-Host node2
-     Hostname CMTCDEU53965049.rd.corpintra.net
-     IdentityFile /lhome/franzef/.ssh/id_three_node_cluster
-     Port 42022
+Host ws_gabi
+     Hostname ST39-C-00065.fe.de.bosch.com
+     Port 22
+     IdentityFile /home/frf2lr/.ssh/id_rsa
+     ForwardX11 yes
 
-Host node3
-     Hostname CMTCDEU53965055.rd.corpintra.net
-     IdentityFile /lhome/franzef/.ssh/id_three_node_cluster
-     Port 42022
-
-Host node4
-     Hostname cmtcdeu58434227.rd.corpintra.net
-     IdentityFile /lhome/franzef/.ssh/id_three_node_cluster
-     Port 42022
-
-Host node5
-     Hostname cmtcdeu58434230.rd.corpintra.net
-     IdentityFile /lhome/franzef/.ssh/id_three_node_cluster
-     Port 42022
-
-Host node6
-     Hostname cmtcdeu58434245.rd.corpintra.net
-     IdentityFile /lhome/franzef/.ssh/id_three_node_cluster
-     Port 42022
-
-Host node7
-     Hostname cmtcdeu58434221.rd.corpintra.net
-     IdentityFile /lhome/franzef/.ssh/id_three_node_cluster
-     Port 42022
-
-Host node8
-     Hostname cmtcdeu5481584.rd.corpintra.net
-     IdentityFile /lhome/franzef/.ssh/id_three_node_cluster
-     Port 42022
-
-Host node9
-     Hostname cmtcdeu53965085.rd.corpintra.net
-     IdentityFile /lhome/franzef/.ssh/id_three_node_cluster
-     Port 42022
-
-Host node10
-     Hostname cmtcdeu58434224.rd.corpintra.net
-     IdentityFile /lhome/franzef/.ssh/id_three_node_cluster
-     Port 42022
-
-Host node11
-     Hostname cmtcdeu54815187.rd.corpintra.net
-     IdentityFile /lhome/franzef/.ssh/id_three_node_cluster
-     Port 42022
-
-Host node12
-     Hostname cmtcdeu54815181.rd.corpintra.net
-     IdentityFile /lhome/franzef/.ssh/id_three_node_cluster
-     Port 42022
+Host ws_michael
+     Hostname ST39-C-0006C.fe.de.bosch.com
+     Port 22
+     IdentityFile /home/frf2lr/.ssh/id_rsa
+     ForwardX11 yes
 
 Host ws
-     Hostname CMTCDEU54801610.rd.corpintra.net
-     IdentityFile /lhome/franzef/.ssh/id_rsa
+     Hostname ST39-C-00066.fe.de.bosch.com
+     Port 22
+     IdentityFile /home/frf2lr/.ssh/id_rsa
      ForwardX11 yes
-     Port 42022
 
-Host lp
-     Hostname CMTCLE7U103.rd.corpintra.net
-     IdentityFile /lhome/franzef/.ssh/id_rsa
+Host jump
+     Hostname ST39-C-0005P.fe.de.bosch.com
      Port 22
-
-Host rat29
-     Hostname s624duadrat0029.us624.corpintra.net
-     IdentityFile /lhome/franzef/.ssh/id_three_node_cluster
-     Port 22
-
-Host rat30
-     Hostname s624duadrat0030.us624.corpintra.net
-     IdentityFile /lhome/franzef/.ssh/id_three_node_cluster
-     Port 22
-
-Host nfs
-     Hostname cmtcdeu53965085.rd.corpintra.net
-     IdentityFile /lhome/franzef/.ssh/id_three_node_cluster
-     Port 22
-
-Host henry
-     Hostname cmtcleu58909599.rd.corpintra.net
-     Port 22
-
-Host rudolf
-     Hostname cmtcleu58922401.rd.corpintra.net
-     Port 22
-
-Host abstatt
-     Hostname 53.115.240.97
-     IdentityFile /lhome/franzef/.ssh/id_rsa
-     Port 22
-
-Host abstatt_remote
-     Hostname cmtcdeu53965049.rd.corpintra.net
-     Port 22
-     LocalForward 10000 cluster-prod.athena.corpintra.net:6443
-     LocalForward 10001 registry-prod.athena.corpintra.net:443
-     LocalForward 10002 k8s-dashboard.apps.athena.corpintra.net:443
-
-Host ali
-     Hostname c624duadsf00031.us264.corpintra.net
-     Port 22
+     IdentityFile /home/frf2lr/.ssh/id_rsa
+     ForwardX11 yes
 
 Host hdc
      Hostname hdc.de.bosch.com
