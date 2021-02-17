@@ -152,9 +152,9 @@
 ;; Key bindings
 (global-set-key "\C-n" 'make-frame)
 
-;; F6 stores a position in a file F7 brings you back to this position
-(global-set-key [f6] '(lambda () (interactive) (point-to-register ?1)))
-(global-set-key [f7] '(lambda () (interactive) (register-to-point ?1)))
+;; Ctrl-1 stores a position in a file, Alt-1 brings you back to this position
+(global-set-key (kbd "C-1")  '(lambda () (interactive) (point-to-register ?1)))
+(global-set-key (kbd "M-1")  '(lambda () (interactive) (register-to-point ?1)))
 
 ;; higlight the marked region (C-SPC) and use commands (like
 ;; latex-environment) on current region.
@@ -505,10 +505,8 @@
 ;; -------------------------------------------------------------------
 (use-package highlight-symbol
   :bind* (
-          ("C-<f3>" . highlight-symbol)
-          ("<f3>" . highlight-symbol-next)
-          ("S-<f3>" . highlight-symbol-prev)
-          ("M-<f3>" . highlight-symbol-query-replace)
+          ("C-3" . highlight-symbol)
+          ("M-3" . highlight-symbol-query-replace)
           )
   )
 
@@ -589,7 +587,7 @@
     (treemacs-fringe-indicator-mode nil))
 
   (treemacs-git-mode 'extended)
-  (add-to-list 'treemacs-pre-file-insert-predicates #'treemacs-is-file-git-ignored?)
+  ;; (add-to-list 'treemacs-pre-file-insert-predicates #'treemacs-is-file-git-ignored?)
 
   (defun treemacs-custom-filter (file _)
     (or (s-ends-with? ".aux" file)
