@@ -448,6 +448,15 @@
   (setq savehist-additional-variables '(extended-command-history kill-ring)))
 
 ;; -------------------------------------------------------------------
+;; Ripgrep integration
+;; -------------------------------------------------------------------
+(use-package rg
+  :ensure-system-package (rg . ripgrep)
+  :init
+  (rg-enable-menu)
+  )
+
+;; -------------------------------------------------------------------
 ;; Ivy project
 ;; -------------------------------------------------------------------
 (use-package setup-ivy
@@ -483,13 +492,11 @@
   )
 
 (use-package counsel-projectile
-  :ensure-system-package (rg . riprep)
   :config (counsel-projectile-mode)
   :bind* (
           ("C-c p s a" . counsel-ack)
           ("C-c p s g" . counsel-git-grep)
-          ("C-c p s c" . counsel-rg)
-          ("C-c p s r" . rgrep)
+          ("C-c p s r" . counsel-rg)
           )
   )
 
@@ -586,14 +593,12 @@
     (treemacs-filewatch-mode t)
     (treemacs-fringe-indicator-mode nil))
 
-  (treemacs-git-mode 'extended)
   ;; (add-to-list 'treemacs-pre-file-insert-predicates #'treemacs-is-file-git-ignored?)
-
-  (defun treemacs-custom-filter (file _)
-    (or (s-ends-with? ".aux" file)
-        (s-ends-with? ".lint" file)
-        ))
-  (push #'treemacs-custom-filter treemacs-ignored-file-predicates)
+  ;; (defun treemacs-custom-filter (file _)
+  ;;   (or (s-ends-with? ".aux" file)
+  ;;       (s-ends-with? ".lint" file)
+  ;;       ))
+  ;; (push #'treemacs-custom-filter treemacs-ignored-file-predicates)
 )
 
 (use-package lsp-treemacs

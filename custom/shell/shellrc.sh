@@ -28,6 +28,10 @@ if [[ -n "${ZSH_NAME}" ]]; then
 
     autoload -U bashcompinit
     bashcompinit
+    AOS_BASH_COMPLETION="$HOME/.bash_aos_completion"
+    if [[ -f "${AOS_BASH_COMPLETION}" ]]; then
+        . "${AOS_BASH_COMPLETION}"
+    fi
 fi
 
 alias la='ls -altrh'
@@ -57,7 +61,7 @@ alias "trash"="gvfs-trash"
 
 alias dfs="hdfs dfs"
 
-EMACS="emacsclient -c -a emacs %f"
+export EMACS="emacsclient -c -a emacs %f"
 
 #------------------------------------------------------------------------------#
 # ros setup
@@ -75,34 +79,10 @@ elif [[ -n "${BASH}" ]]; then
 fi
 
 #------------------------------------------------------------------------------#
-# setup hadoop, and gradle
-export HADOOP_HOME=$HOME/opt/hadoop-3.1.0
 export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
-
-export PATH=$SPARK_HOME/bin:$HADOOP_HOME/bin:$HOME/opt/gradle/gradle-4.7/bin:$PATH
-
-# add kerberbos to LD_LIBRARY_PATH
-export KERBEROS_HOME=$HOME/opt/krb5-1.16
-export LIBHDFS3_ROOT=$HOME/opt/attic-c-hdfs-client-apache-rpc-9
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$KERBEROS_HOME/lib:$LIBHDFS3_ROOT/lib
 
 # athena certificates path
 export CERT_PATH=$HOME/.local/share/certificates
-
-# athena -> with athena_dol
-export ATHENA_ROOT=$HOME/workspace/athena_sil
-# export WORKSPACE=$ATHENA_ROOT
-export HOST_ARTIFACTS_CACHE=$HOME/artifacts
-# export DOL_HOST="http://172.17.0.2:5000"
-
-# required by lidar
-export C2C_CAR_ID=lisa # lisa hks22
-# export C2C_HW_VERSION=3.1
-
-# # export cuda paths
-# export CUDA_ROOT=/usr/local/cuda
-# export CUDA_INC_DIR=$CUDA_ROOT/include
-# source /etc/profile.d/cuda-10-0.sh
 
 # Airflow
 export CLUSTER_DEPLOYMENTS_HOME="$HOME/workspace/cluster-deployments"
@@ -112,36 +92,22 @@ export AIRFLOW_HOME="$HOME/workspace/recompute-flow/airflow-home"
 export AIRFLOW_HOST="localhost"
 export AIRFLOW_PORT="8080"
 export SPARK_SUBMIT_COMMAND="$SPARK_HOME/bin/spark-submit"
-export YARN_CONF_DIR="$HADOOP_HOME/etc/hadoop"
 
 export SLUGIFY_USES_TEXT_UNIDECODE=yes
-
 export AIRFLOW__CORE__PARALLELISM=10
 
 export KUBERNETES_CONTEXT=kubernetes-dol-master@abstatt
-export KUBERNETES_CONTEXT_SUNNYVALE=dol_master@sunnyvale
 export KUBERNETES_NAMESPACE=development-$USER
-export KUBERNETES_NAMESPACE_SUNNYVALE=sunnyvale-mock
 export DOCKER_REGISTRY=cmtcdeu58434236.rd.corpintra.net:32455
-export DOCKER_REGISTRY_SUNNYVALE=cmtcdeu53965049.rd.corpintra.net:31753
 export HADOOP_NAME_NODE=http://cmtcdeu53965055.rd.corpintra.net:50070
 export HADOOP_HDFS_ENDPOINT=hdfs://nameservice1
 export HADOOP_USER_NAME=airflow
-
-export ADSTATS_HOST="http://s624duadwebapps.us624.corpintra.net:8080/"
 
 token() {
     kubectl -n kube-system describe secret admin-user-token-d57m4 |\
     awk '/token:/ {print $2;}' |\
     xclip -selection c
 }
-
-token_sv() {
-    kubectl -n kube-system describe secret $(kubectl -n kube-system get secret --context dol_master@sunnyvale | grep admin-user | awk '{print $1}') --context dol_master@sunnyvale |\
-    awk '/token:/ {print $2;}' |\
-    xclip -selection c
-}
-
 
 # Recompute flow
 export PYTHONPATH=$PYTHONPATH:$RECOMPUTE_FLOW_HOME/airflow-home/dags:$RECOMPUTE_FLOW_HOME/micro_pipeline:$RECOMPUTE_FLOW_HOME/web-ui/server
@@ -160,15 +126,10 @@ then
     fi
 fi
 
-# Lidar semantic labelingcod
-export EXPORTER_BASE_OUTPATH=/tmp/lidar
-export VEHICLE_IDENTIFIER=WDD2221621Z003456
-
 # npm
 NPM_VERSION='v13.14.0'
 NPM_DISTRO='linux-x64'
 export PATH="/usr/local/lib/nodejs/node-${NPM_VERSION}-${NPM_DISTRO}/bin:${PATH}"
-
 
 # SGpp
 export SGPP_HOME=$HOME/workspace/SGpp_ff
@@ -181,8 +142,6 @@ export RECAPP_HOME=$RECAPP_INT_HOME/recompute
 export RECAPP_INT_RELEASE_DIR=$RECAPP_INT_HOME/install
 export RECAPP_RELEASE_DIR=$RECAPP_INT_HOME/install/recapp
 
-export RECAPP_VERSION=0.12.0jtv1
-export RECAPP_RELEASE_DIR=/opt/recapp/${RECAPP_VERSION}/ubuntu1804
 export PATH=$PATH:$RECAPP_RELEASE_DIR/bin:$RECAPP_RELEASE_DIR/bin/dol
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$RECAPP_RELEASE_DIR/lib
 export PYTHONPATH=$PYTHONPATH:$RECAPP_RELEASE_DIR/lib/python2.7/dist-packages:$RECAPP_RELEASE_DIR/lib:$RECAPP_RELEASE_DIR/bin/bytesoup_inspector
