@@ -16,6 +16,7 @@ Maybe, it is concept for later documentation, or just keep-up-the-good-work (`ku
   - Add message to alert as input arg
 - `vscode`: add snippets
 - Maybe: Let __github-actions__ merge automatically when no commit has happened (meaning that everything works for days and is ready to publish).
+- Maybe: use enabled-directory for symlinking into shell-folders to enable/disable modules (eg emacs-aliases or whatever) similar to Apache2
 
 
 ## Some notes from earlier (kutgw, could be trash)
