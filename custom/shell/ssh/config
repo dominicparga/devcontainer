@@ -39,10 +39,19 @@ Host ws_michael
      ForwardX11 yes
 
 Host ws
-     Hostname ST39-C-00066.fe.de.bosch.com
+     # Hostname ST39-C-00066.fe.de.bosch.com
+     Hostname 10.61.3.111
      Port 22
      IdentityFile /home/frf2lr/.ssh/id_rsa
      ForwardX11 yes
+     AddressFamily inet
+     Compression yes
+
+     ControlMaster auto
+     ControlPath /home/frf2lr/.ssh/socket/%r@%h-%p
+     ControlPersist 3600
+
+     PreferredAuthentications=publickey
 
 Host jump
      Hostname ST39-C-0005P.fe.de.bosch.com
