@@ -266,7 +266,8 @@
          (list (openwith-make-extension-regexp
                 '("pdf"))
                "okular"
-               '(file))))
+               '(file))
+         ))
   (openwith-mode 1))
 
 ;; -------------------------------------------------------------------
@@ -594,11 +595,11 @@
     (treemacs-fringe-indicator-mode nil))
 
   ;; (add-to-list 'treemacs-pre-file-insert-predicates #'treemacs-is-file-git-ignored?)
-  ;; (defun treemacs-custom-filter (file _)
-  ;;   (or (s-ends-with? ".aux" file)
-  ;;       (s-ends-with? ".lint" file)
-  ;;       ))
-  ;; (push #'treemacs-custom-filter treemacs-ignored-file-predicates)
+  (defun treemacs-custom-filter (file _)
+    (or (s-ends-with? ".aux" file)
+        (s-ends-with? ".lint" file)
+        ))
+  (push #'treemacs-custom-filter treemacs-ignored-file-predicates)
 )
 
 (use-package lsp-treemacs

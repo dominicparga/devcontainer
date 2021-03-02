@@ -163,7 +163,7 @@ if [ ! -e "${__FILE}" ]; then
     echo "created '${__FILE}'"
 fi
 # link: dotfiles/custom/shell/ssh/config <- ${HOME}/.ssh/config
-mkdir -p -v "${HOME}/.ssh/"
+mkdir -p -v "${HOME}/.ssh/socket"
 ln -i -v -s "${__FILE}" "${HOME}/.ssh/config"
 chmod 600 "${HOME}/.ssh/config"
 echo -e "${__COLOR_SUCC}SUCCESS: ssh configured${__COLOR_RESET}"
