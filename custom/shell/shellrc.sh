@@ -34,6 +34,14 @@ if [[ -n "${ZSH_NAME}" ]]; then
     fi
 fi
 
+. "${HOME}/.ssh-find-agent"
+ssh_find_agent -a
+if [ -z "$SSH_AUTH_SOCK" ]
+then
+   eval $(ssh-agent) > /dev/null
+   ssh-add
+fi
+
 alias la='ls -altrh'
 alias cnt='ls -F |grep -v / | wc -l'
 
