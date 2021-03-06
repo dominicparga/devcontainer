@@ -168,7 +168,7 @@ ln -i -v -s "${__FILE}" "${HOME}/.ssh/config"
 chmod 600 "${HOME}/.ssh/config"
 
 # link: dotfiles/custom/shell/ssh/config <- ${HOME}/.ssh/config
-__FILE="${__DOTFILES}/shell/ssh-find-agent.sh"
+__FILE="${DOTFILES}/shell/ssh-find-agent.sh"
 ln -i -v -s "${__FILE}" "${HOME}/.ssh-find-agent"
 
 echo -e "${__COLOR_SUCC}SUCCESS: ssh configured${__COLOR_RESET}"
