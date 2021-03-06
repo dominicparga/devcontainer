@@ -9,8 +9,9 @@
   :bind (("C-s" . swiper)
          ("C-c C-o" . ivy-occur)
          :map ivy-minibuffer-map
+         ("RET" . ivy-immediate-done)
          ("TAB" . ivy-alt-done)
-         ;; ("C-l" . ivy-alt-done)
+         ("C-l" . ivy-partial)
          ("C-j" . ivy-next-line)
          ("C-k" . ivy-previous-line)
          :map ivy-switch-buffer-map
