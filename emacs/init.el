@@ -527,6 +527,10 @@
   (lsp-headerline-breadcrumb-mode)
   )
 
+;; Disables lsp linter as default for python-mode. It is crucial that
+;; this happens before loading lsp-mode.
+(setq lsp-diagnostic-package :none)
+
 (use-package lsp-mode
   :commands lsp
   :ensure-system-package (clangd-10 . clangd)
