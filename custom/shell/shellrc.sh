@@ -15,7 +15,7 @@ export DOTFILES="$HOME/workspace/dotfiles/."
 
 . "${DOTFILES}/shell/shellrc.sh"
 
-# greet
+greet
 
 #------------------------------------------------------------------------------#
 
@@ -32,6 +32,13 @@ if [[ -n "${ZSH_NAME}" ]]; then
     if [[ -f "${AOS_BASH_COMPLETION}" ]]; then
         . "${AOS_BASH_COMPLETION}"
     fi
+fi
+
+# start ssh agent for remote sessions and add personal certificates to
+# prevent repeated password input
+if [ -n "$DESKTOP_SESSION" ];then
+    eval "$(gnome-keyring-daemon --start)"
+    export SSH_AUTH_SOCK
 fi
 
 . "${HOME}/.ssh-find-agent"
