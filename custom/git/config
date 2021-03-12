@@ -7,7 +7,11 @@
     name = Fabian Franzelin (XC-AD/ESB4)
     email = fabian.franzelin@de.bosch.com
 [credential]
-    helper = "cache --timeout=43200"  # cache credentials for 12 hours
+    # For installation, run:
+    # sudo apt-get install libsecret-1-0 libsecret-1-dev
+    # cd /usr/share/doc/git/contrib/credential/libsecret
+    # sudo make
+	helper = /usr/share/doc/git/contrib/credential/libsecret/git-credential-libsecret
 [http "https://athena.*.corpintra.net"]
     username = franzef
     sslCert = /home/frf2lr/.local/share/certificates/cert-dap.crt
