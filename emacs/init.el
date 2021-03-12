@@ -170,23 +170,6 @@
 ;; Delete trailing white spaces
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-;; It reverts when a dired buffer is reselected dired mode
-(use-package dired
-  :ensure nil
-  :hook (dired-mode . auto-revert-mode)
-  :config
-  (setq dired-auto-revert-buffer t ; Auto update when buffer is revisited
-        dired-dwim-target t
-        dired-recursive-deletes 'always
-        dired-recursive-copies 'always
-        delete-by-moving-to-trash t
-        dired-listing-switches "-alh") ; human readable file sizes
-  )
-
-;; Quick filter dired view
-(use-package dired-narrow
-  :bind (:map dired-mode-map ("/" . dired-narrow)))
-
 ;; Let kill operate on the whole line when no region is selected
 (use-package whole-line-or-region
   :config (whole-line-or-region-global-mode))
@@ -230,6 +213,54 @@
   :init (which-key-mode 1)
   :config
   (setq which-key-idle-delay 0.5))
+
+;; -------------------------------------------------------------------
+;; Set up dired
+;; -------------------------------------------------------------------
+
+;; It reverts when a dired buffer is reselected dired mode
+(use-package dired
+  :ensure nil
+  :commands (dired dired-jump)
+  :bind (("C-x C-j" . dired-jump)
+         :map dired-mode-map
+         ("<backspace>" . dired-single-up-directory)
+         ("h" . dired-single-up-directory))
+  :hook (dired-mode . auto-revert-mode)
+  :config
+  :custom
+  (
+   (dired-listing-switches "-agho --group-directories-first")
+   (dired-auto-revert-buffer t) ; Auto update when buffer is revisited
+   (dired-dwim-target t)
+   (dired-recursive-deletes 'always)
+   (dired-recursive-copies 'always)
+   (delete-by-moving-to-trash t)
+   (dired-listing-switches "-alh") ; human readable file sizes
+   )
+  )
+
+(use-package dired-single
+  :commands (dired dired-jump))
+
+;; Quick filter dired view
+(use-package dired-narrow
+  :bind (:map dired-mode-map ("/" . dired-narrow)))
+
+(use-package all-the-icons-dired
+  :hook (dired-mode . all-the-icons-dired-mode))
+
+(use-package dired-open
+  :commands (dired dired-jump)
+  :config
+  (setq dired-open-extensions '(("png" . "feh")
+                                ("mkv" . "mpv"))))
+
+(use-package dired-hide-dotfiles
+  :hook (dired-mode . dired-hide-dotfiles-mode)
+  :bind (:map dired-mode-map
+         ("H" . dired-hide-dotfiles-mode))
+  )
 
 ;; -------------------------------------------------------------------
 ;; Credential management
@@ -696,12 +727,7 @@
   :after yasnippet
   :hook (lsp-mode . company-mode)
   :config
-  (setq company-backends
-        (delete 'company-semantic company-backends))
-  (setq company-minimum-prefix-length 1
-        company-idle-delay 0.0) ;; default is 0.2
   ;; aligns annotation to the right hand side
-  (setq company-tooltip-align-annotations t)
   ;; enable yasnippets for company
   (add-to-list 'company-backends 'company-yasnippet)
   ;; enable company globally
@@ -709,6 +735,8 @@
   :custom
   (company-minimum-prefix-length 1)
   (company-idle-delay 0.0)
+  (company-tooltip-align-annotations t)
+  (company-backends (delete 'company-semantic company-backends))
   :bind (:map company-active-map
               ("<tab>" . company-complete-selection)
               :map lsp-mode-map
@@ -1456,7 +1484,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(yasnippet-snippets ccls git-gutter-fringe yaml-mode xterm-color whole-line-or-region which-key wgrep vterm volatile-highlights use-package-ensure-system-package tide super-save sphinx-doc smex smart-mode-line scala-mode rainbow-delimiters pyvenv python-black py-autopep8 protobuf-mode poly-rst ox-rst openwith multi-term material-theme magit-todos lsp-ui lsp-python-ms lsp-java lsp-ivy lsp-docker langtool json-mode ivy-rich ivy-prescient ivy-pass ivy-hydra highlight-symbol groovy-mode groovy-imports git-timemachine general flymake-yaml flymake-shellcheck flymake-shell flymake-json flycheck-pycheckers flycheck-plantuml flx fill-column-indicator exec-path-from-shell evil-nerd-commenter ess eshell-z emojify edwina drag-stuff dockerfile-mode dired-narrow diminish counsel-projectile company-prescient company-c-headers company-auctex command-log-mode cmake-mode clang-format+ blacken beacon autopair auto-package-update auto-complete ag ack)))
+   '(dired-hide-dotfiles dired-open all-the-icons-dired dired-single yasnippet-snippets ccls git-gutter-fringe yaml-mode xterm-color whole-line-or-region which-key wgrep vterm volatile-highlights use-package-ensure-system-package tide super-save sphinx-doc smex smart-mode-line scala-mode rainbow-delimiters pyvenv python-black py-autopep8 protobuf-mode poly-rst ox-rst openwith multi-term material-theme magit-todos lsp-ui lsp-python-ms lsp-java lsp-ivy lsp-docker langtool json-mode ivy-rich ivy-prescient ivy-pass ivy-hydra highlight-symbol groovy-mode groovy-imports git-timemachine general flymake-yaml flymake-shellcheck flymake-shell flymake-json flycheck-pycheckers flycheck-plantuml flx fill-column-indicator exec-path-from-shell evil-nerd-commenter ess eshell-z emojify edwina drag-stuff dockerfile-mode dired-narrow diminish counsel-projectile company-prescient company-c-headers company-auctex command-log-mode cmake-mode clang-format+ blacken beacon autopair auto-package-update auto-complete ag ack)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
