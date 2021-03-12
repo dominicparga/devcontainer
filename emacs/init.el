@@ -224,7 +224,8 @@
   :commands (dired dired-jump)
   :bind (("C-x C-j" . dired-jump)
          :map dired-mode-map
-         ("<backspace>" . dired-single-up-directory))
+         ("<backspace>" . dired-single-up-directory)
+         ("TAB" . dired-find-file))
   :hook (dired-mode . auto-revert-mode)
   :config
   :custom
