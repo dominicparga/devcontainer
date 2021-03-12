@@ -1,7 +1,7 @@
 [include]
     path = "~/.gitconfig.general"
 [core]
-    autocrlf = input
+	autocrlf = false
     editor = vim
 [user]
     name = Fabian Franzelin (XC-AD/ESB4)
