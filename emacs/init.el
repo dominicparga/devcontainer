@@ -727,6 +727,8 @@
   :after yasnippet
   :hook (lsp-mode . company-mode)
   :config
+  (setq company-backends
+        (delete 'company-semantic company-backends))
   ;; aligns annotation to the right hand side
   ;; enable yasnippets for company
   (add-to-list 'company-backends 'company-yasnippet)
@@ -736,7 +738,6 @@
   (company-minimum-prefix-length 1)
   (company-idle-delay 0.0)
   (company-tooltip-align-annotations t)
-  (company-backends (delete 'company-semantic company-backends))
   :bind (:map company-active-map
               ("<tab>" . company-complete-selection)
               :map lsp-mode-map

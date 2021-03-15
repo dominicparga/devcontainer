@@ -42,6 +42,7 @@
 
 (use-package org
   :pin org
+  :ensure-system-package ("/usr/share/fonts/opentype/cantarell" . fonts-cantarell)
   :commands (org-capture org-agenda)
   :hook (org-mode . efs/org-mode-setup)
   :config
