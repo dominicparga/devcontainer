@@ -251,16 +251,23 @@
   :hook (dired-mode . all-the-icons-dired-mode))
 
 (use-package dired-open
+  :ensure-system-package ((vlc . vlc)
+                          (eog . eog))
   :commands (dired dired-jump)
   :config
-  (setq dired-open-extensions '(("png" . "feh")
-                                ("mkv" . "mpv"))))
+  (setq dired-open-extensions '(("png" . "eog")
+                                ("mkv" . "vlc"))))
 
 (use-package dired-hide-dotfiles
   :hook (dired-mode . dired-hide-dotfiles-mode)
   :bind (:map dired-mode-map
          ("H" . dired-hide-dotfiles-mode))
   )
+
+;; -------------------------------------------------------------------
+;; Undo tree - make undos more powerful
+;; -------------------------------------------------------------------
+(use-package undo-tree)
 
 ;; -------------------------------------------------------------------
 ;; Credential management
