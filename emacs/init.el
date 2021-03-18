@@ -785,15 +785,14 @@
   :config
   (setq company-backends
         (delete 'company-semantic company-backends))
+  (setq company-minimum-prefix-length 1
+        company-idle-delay 0.0) ;; default is 0.2
   ;; aligns annotation to the right hand side
+  (setq company-tooltip-align-annotations t)
   ;; enable yasnippets for company
   (add-to-list 'company-backends 'company-yasnippet)
   ;; enable company globally
   (global-company-mode 1)
-  :custom
-  (company-minimum-prefix-length 1)
-  (company-idle-delay 0.0)
-  (company-tooltip-align-annotations t)
   :bind (:map company-active-map
               ("<tab>" . company-complete-selection)
               :map lsp-mode-map
