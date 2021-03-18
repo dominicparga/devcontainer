@@ -92,6 +92,7 @@ alias py2='python2'
 alias py3='python3'
 # Kubernetes
 alias k='kubectl --namespace=development-${USER}'
+alias kp='kubectl --namespace=production'
 
 # Docker
 alias dor='docker run -it -e "DEBIAN_FRONTEND=noninteractive" -e "TERM=xterm-color" -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --shm-size="16g" --entrypoint "/bin/bash"'
