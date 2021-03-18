@@ -709,8 +709,6 @@
   (setq gc-cons-threshold (* 100 1024 1024)
         read-process-output-max (* 1024 1024)
         treemacs-space-between-root-nodes nil
-        company-idle-delay 0.0
-        company-minimum-prefix-length 1
         lsp-idle-delay 0.1 ;; clangd is fast
         ;; be more ide-ish
         lsp-headerline-breadcrumb-enable)
@@ -783,20 +781,20 @@
   :after yasnippet
   :hook (lsp-mode . company-mode)
   :config
-  (setq company-backends
-        (delete 'company-semantic company-backends))
-  (setq company-minimum-prefix-length 1
-        company-idle-delay 0.0) ;; default is 0.2
-  ;; aligns annotation to the right hand side
-  (setq company-tooltip-align-annotations t)
+  (setq company-backends (delete 'company-semantic company-backends)
+        company-minimum-prefix-length 1
+        company-idle-delay 0.0 ;; default is 0.2
+        ;; aligns annotation to the right hand side
+        company-tooltip-align-annotations t)
+
   ;; enable yasnippets for company
   (add-to-list 'company-backends 'company-yasnippet)
   ;; enable company globally
   (global-company-mode 1)
   :bind (:map company-active-map
-              ("<tab>" . company-complete-selection)
+              ("TAB" . company-complete-selection)
               :map lsp-mode-map
-              ("<tab>" . company-indent-or-complete-common))
+              ("TAB" . company-indent-or-complete-common))
   )
 
 
@@ -1195,8 +1193,7 @@
 (use-package python-black
   :after python
   :ensure-system-package (black . "pip3 install --user -U black")
-  :hook ((python-mode . python-black-on-save-mode)
-         (python-mode . blacken-mode))
+  :hook ((python-mode . python-black-on-save-mode))
   )
 
 (use-package blacken)
@@ -1209,10 +1206,13 @@
   :config
   (pyvenv-mode 1))
 
-(use-package flycheck-pycheckers
-  :after flycheck
-  :config
-  (add-hook 'flycheck-mode-hook #'flycheck-pycheckers-setup))
+;; add python auto completion for company
+(defun ff/python-mode-hook ()
+  (add-to-list 'company-backends 'company-jedi))
+
+(use-package company-jedi
+  :after company
+  :hook (company-mode . ff/python-mode-hook))
 
 ;; -------------------------------------------------------------------
 ;; Sphinx documentation
@@ -1540,7 +1540,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(buffer-move dired-hide-dotfiles dired-open all-the-icons-dired dired-single yasnippet-snippets ccls git-gutter-fringe yaml-mode xterm-color whole-line-or-region which-key wgrep vterm volatile-highlights use-package-ensure-system-package tide super-save sphinx-doc smex smart-mode-line scala-mode rainbow-delimiters pyvenv python-black py-autopep8 protobuf-mode poly-rst ox-rst openwith multi-term material-theme magit-todos lsp-ui lsp-python-ms lsp-java lsp-ivy lsp-docker langtool json-mode ivy-rich ivy-prescient ivy-pass ivy-hydra highlight-symbol groovy-mode groovy-imports git-timemachine general flymake-yaml flymake-shellcheck flymake-shell flymake-json flycheck-pycheckers flycheck-plantuml flx fill-column-indicator exec-path-from-shell evil-nerd-commenter ess eshell-z emojify edwina drag-stuff dockerfile-mode dired-narrow diminish counsel-projectile company-prescient company-c-headers company-auctex command-log-mode cmake-mode clang-format+ blacken beacon autopair auto-package-update auto-complete ag ack)))
+   '(company-jedi buffer-move dired-hide-dotfiles dired-open all-the-icons-dired dired-single yasnippet-snippets ccls git-gutter-fringe yaml-mode xterm-color whole-line-or-region which-key wgrep vterm volatile-highlights use-package-ensure-system-package tide super-save sphinx-doc smex smart-mode-line scala-mode rainbow-delimiters pyvenv python-black py-autopep8 protobuf-mode poly-rst ox-rst openwith multi-term material-theme magit-todos lsp-ui lsp-python-ms lsp-java lsp-ivy lsp-docker langtool json-mode ivy-rich ivy-prescient ivy-pass ivy-hydra highlight-symbol groovy-mode groovy-imports git-timemachine general flymake-yaml flymake-shellcheck flymake-shell flymake-json flycheck-pycheckers flycheck-plantuml flx fill-column-indicator exec-path-from-shell evil-nerd-commenter ess eshell-z emojify edwina drag-stuff dockerfile-mode dired-narrow diminish counsel-projectile company-prescient company-c-headers company-auctex command-log-mode cmake-mode clang-format+ blacken beacon autopair auto-package-update auto-complete ag ack)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
