@@ -691,7 +691,7 @@
     (treemacs-follow-mode t)
     (treemacs-filewatch-mode t)
     (treemacs-fringe-indicator-mode nil))
-
+  :config
   ;; (add-to-list 'treemacs-pre-file-insert-predicates #'treemacs-is-file-git-ignored?)
   (defun treemacs-custom-filter (file _)
     (or (s-ends-with? ".aux" file)
