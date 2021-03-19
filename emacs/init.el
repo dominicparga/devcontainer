@@ -230,11 +230,24 @@
 ;; -------------------------------------------------------------------
 ;; Set up dired
 ;; -------------------------------------------------------------------
+
+(defun ff-dired-init ()
+  "Bunch of stuff to run for dired, either immediately or when it's
+   loaded."
+  ;; <add other stuff here>
+  (define-key dired-mode-map [remap dired-find-file]
+    'dired-single-buffer)
+  (define-key dired-mode-map [remap dired-mouse-find-file-other-window]
+    'dired-single-buffer-mouse)
+  (define-key dired-mode-map [remap dired-up-directory]
+    'dired-single-up-directory))
+
 (use-package dired
   :ensure nil
   :defer 1
   :commands (dired dired-jump)
-  :hook (dired-mode . auto-revert-mode)
+  :hook ((dired-mode . auto-revert-mode)
+         (dired-mode . ff-dired-init))
   :bind (("C-x C-j" . dired-jump)
          :map dired-mode-map
          ("<backspace>" . dired-single-up-directory)
@@ -293,7 +306,8 @@
   (dired-rainbow-define-chmod executable-unix "#38c172" "-.*x.*"))
 
 (use-package dired-single
-  :defer t)
+  :defer t
+  :commands (dired dired-jump))
 
 (use-package dired-ranger
   :defer t)
