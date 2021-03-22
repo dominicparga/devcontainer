@@ -83,7 +83,7 @@
                      gcs-done)))
 
 ;; enables local variables per default
-(setq enable-local-variables :all)
+(setq enable-local-variables t)
 ;; dir-local variables will be applied to remote files.
 (setq enable-remote-dir-locals t)
 
@@ -662,8 +662,8 @@
         lsp-pyls-plugins-pycodestyle-enabled nil
         lsp-enable-snippet nil
         lsp-prefer-flymake nil
-        ;; Ignore files and folders when watchin
-        ;; lsp-file-watch-ignored ("[/\\\\]\\.pyc$" "[/\\\\]_build")
+        ;; increase watch threshold
+        lsp-file-watch-threshold 30000
         )
   (lsp-enable-which-key-integration)
   :bind (:map lsp-mode-map
