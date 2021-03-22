@@ -16,8 +16,9 @@
 (require 'package)
 (setq package-enable-at-startup nil)
 
-(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+(setq package-archives '(
                          ;; ("melpa-stable" . "https://stable.melpa.org/packages/")
+                         ("melpa" . "https://melpa.org/packages/")
                          ("org" . "https://orgmode.org/elpa/")
                          ("elpa" . "https://elpa.gnu.org/packages/")))
 
@@ -587,9 +588,11 @@
          (".idea" ".eunit" ".git" ".hg" ".svn"
           ".fslckout" ".bzr" "_darcs" ".tox"
           "build" "target" "_build" ".history"
-          "tmp"))
+          "tmp", "*ccls-cache" ".ccls-root"
+          ".ccls-cache" "compile_commands.json"
+          ".clangd"))
         projectile-require-project-root nil
-        ;; projectile-indexing-method 'alien
+        projectile-indexing-method 'alien
         ;; projectile-enable-caching nil
         projectile-completion-system 'default
         projectile-svn-command "find . -type f -not -iwholename '*.svn/*' -print0")
@@ -598,7 +601,7 @@
   :config
   (projectile-mode 1)
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-  )
+)
 
 (use-package counsel-projectile
   :config (counsel-projectile-mode)
@@ -641,7 +644,6 @@
 
 (use-package lsp-mode
   :commands lsp
-  :ensure-system-package (clangd-10 . clangd)
   :hook ((lsp-mode . ff-lsp-mode-setup)
          (c++-mode . lsp-deferred)
          (c-mode . lsp-deferred)
@@ -883,41 +885,9 @@
 ;; -------------------------------------------------------------------
 ;; C/C++
 ;; -------------------------------------------------------------------
-(use-package ccls
-  :after lsp-mode
-  :ensure-system-package (ccls . "sudo snap install ccls --classic")
-  :hook ((c-mode c++-mode objc-mode cuda-mode) .
-         (lambda () (require 'ccls) (lsp)))
-  :config
-  (ccls-code-lens-mode t)
+(use-package setup-cc
+  :load-path local-load-path
   )
-
-(use-package cmake-mode
-  :mode (("\\.cmake$" . cmake-mode)
-         ("CMakeLists.txt" . cmake-mode)))
-
-;; switch between header and source
-(global-set-key [(control tab)] 'ff-find-other-file)
-
-(require 'dap-cpptools)
-
-(use-package company-c-headers
-  :after company
-  :config
-  (add-to-list 'company-backends 'company-c-headers)
-  (add-to-list 'company-c-headers-path-system "/usr/include/c++/9/")
-  )
-
-(use-package clang-format+
-  :hook (c++-mode . clang-format+-mode)
-  :config
-  (let ((athena_clang "/usr/bin/clang-format-athena-1"))
-    (when (file-exists-p athena_clang)
-      (setq clang-format-executable athena_clang)
-      )
-    )
-  )
-
 ;; -------------------------------------------------------------------
 ;; CRAN R
 ;; -------------------------------------------------------------------
@@ -1314,8 +1284,6 @@
 
 (use-package git-timemachine)
 
-(use-package magit-todos)
-
 (use-package git-gutter-fringe)
 
 (use-package git-gutter
@@ -1569,7 +1537,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(company-jedi buffer-move dired-hide-dotfiles dired-open all-the-icons-dired dired-single yasnippet-snippets ccls git-gutter-fringe yaml-mode xterm-color whole-line-or-region which-key wgrep vterm volatile-highlights use-package-ensure-system-package tide super-save sphinx-doc smex smart-mode-line scala-mode rainbow-delimiters pyvenv python-black py-autopep8 protobuf-mode poly-rst ox-rst openwith multi-term material-theme magit-todos lsp-ui lsp-python-ms lsp-java lsp-ivy lsp-docker langtool json-mode ivy-rich ivy-prescient ivy-pass ivy-hydra highlight-symbol groovy-mode groovy-imports git-timemachine general flymake-yaml flymake-shellcheck flymake-shell flymake-json flycheck-pycheckers flycheck-plantuml flx fill-column-indicator exec-path-from-shell evil-nerd-commenter ess eshell-z emojify edwina drag-stuff dockerfile-mode dired-narrow diminish counsel-projectile company-prescient company-c-headers company-auctex command-log-mode cmake-mode clang-format+ blacken beacon autopair auto-package-update auto-complete ag ack)))
+   '(with-editor company-jedi buffer-move dired-hide-dotfiles dired-open all-the-icons-dired dired-single yasnippet-snippets ccls git-gutter-fringe yaml-mode xterm-color whole-line-or-region which-key wgrep vterm volatile-highlights use-package-ensure-system-package tide super-save sphinx-doc smex smart-mode-line scala-mode rainbow-delimiters pyvenv python-black py-autopep8 protobuf-mode poly-rst ox-rst openwith multi-term material-theme magit-todos lsp-ui lsp-python-ms lsp-java lsp-ivy lsp-docker langtool json-mode ivy-rich ivy-prescient ivy-pass ivy-hydra highlight-symbol groovy-mode groovy-imports git-timemachine general flymake-yaml flymake-shellcheck flymake-shell flymake-json flycheck-pycheckers flycheck-plantuml flx fill-column-indicator exec-path-from-shell evil-nerd-commenter ess eshell-z emojify edwina drag-stuff dockerfile-mode dired-narrow diminish counsel-projectile company-prescient company-c-headers company-auctex command-log-mode cmake-mode clang-format+ blacken beacon autopair auto-package-update auto-complete ag ack)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
