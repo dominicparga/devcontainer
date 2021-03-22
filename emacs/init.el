@@ -650,6 +650,7 @@
          (typescript-mode . lsp-deferred)
          (json-mode . lsp-deferred)
          (yaml-mode . lsp-deferred)
+         (before-save-hook . lsp-format-buffer)
          )
   :config
   (define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
@@ -658,7 +659,7 @@
         lsp-pyls-plugins-flake8-enabled t
         lsp-pyls-plugins-pycodestyle-enabled nil
         lsp-enable-snippet nil
-        ;; lsp-prefer-flymake :none
+        lsp-prefer-flymake nil
         ;; Ignore files and folders when watchin
         ;; lsp-file-watch-ignored ("[/\\\\]\\.pyc$" "[/\\\\]_build")
         )
@@ -683,13 +684,22 @@
   (setq lsp-ui-doc-position 'top
         lsp-ui-doc-alignment 'window
         lsp-ui-sideline-enable t
-        lsp-ui-sideline-show-hover nil)
+        lsp-ui-sideline-show-hover nil
+        lsp-ui-doc-include-signature nil  ; don't include type signature in the child frame
+        lsp-ui-sideline-show-symbol nil)  ; don't show symbol on the right of info
+  (lsp-ui-peek-enable t)
   ;; (lsp-ui-doc-show) ; does not work for python currently
   )
 
 (with-eval-after-load 'lsp-mode
   ;; :global/:workspace/:file
-  (setq lsp-modeline-diagnostics-scope :workspace))
+  (setq lsp-modeline-diagnostics-scope :workspace)
+  )
+
+(with-eval-after-load 'lsp-ui-mode
+  (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
+  (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
+  )
 
 (use-package treemacs
   :commands (treemacs
@@ -874,8 +884,13 @@
 ;; C/C++
 ;; -------------------------------------------------------------------
 (use-package ccls
+  :after lsp-mode
+  :ensure-system-package (ccls . "sudo snap install ccls --classic")
   :hook ((c-mode c++-mode objc-mode cuda-mode) .
-         (lambda () (require 'ccls) (lsp))))
+         (lambda () (require 'ccls) (lsp)))
+  :config
+  (ccls-code-lens-mode t)
+  )
 
 (use-package cmake-mode
   :mode (("\\.cmake$" . cmake-mode)
@@ -1205,7 +1220,7 @@
 ;; ~/.local/bin, provide a dummy one that runs black in library mode
 ;; python3 -m black "${@}"
 (use-package python-black
-  :after python
+  :after python-mode
   :ensure-system-package (black . "pip3 install --user -U black")
   :hook ((python-mode . python-black-on-save-mode))
   )
