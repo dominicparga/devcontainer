@@ -1192,7 +1192,8 @@
 (use-package python-black
   :after python-mode
   :ensure-system-package (black . "pip3 install --user -U black")
-  :hook ((python-mode . python-black-on-save-mode))
+  :hook ((python-mode . blacken-mode)
+         (python-mode . python-black-on-save-mode))
   )
 
 (use-package blacken)
@@ -1539,7 +1540,25 @@
  '(package-selected-packages
    '(with-editor company-jedi buffer-move dired-hide-dotfiles dired-open all-the-icons-dired dired-single yasnippet-snippets ccls git-gutter-fringe yaml-mode xterm-color whole-line-or-region which-key wgrep vterm volatile-highlights use-package-ensure-system-package tide super-save sphinx-doc smex smart-mode-line scala-mode rainbow-delimiters pyvenv python-black py-autopep8 protobuf-mode poly-rst ox-rst openwith multi-term material-theme magit-todos lsp-ui lsp-python-ms lsp-java lsp-ivy lsp-docker langtool json-mode ivy-rich ivy-prescient ivy-pass ivy-hydra highlight-symbol groovy-mode groovy-imports git-timemachine general flymake-yaml flymake-shellcheck flymake-shell flymake-json flycheck-pycheckers flycheck-plantuml flx fill-column-indicator exec-path-from-shell evil-nerd-commenter ess eshell-z emojify edwina drag-stuff dockerfile-mode dired-narrow diminish counsel-projectile company-prescient company-c-headers company-auctex command-log-mode cmake-mode clang-format+ blacken beacon autopair auto-package-update auto-complete ag ack))
  '(safe-local-variable-values
-   '((projectile-project-test-cmd . "python -m pytest ./tests")
+   '((eval progn
+           (setq flycheck-python-mypy-config
+                 '(".mypy.ini"))
+           (setq flycheck-pylintrc ".pylintrc")
+           (setq flycheck-checker 'python-pylint)
+           (set
+            (make-local-variable 'main)
+            (concat
+             (projectile-project-root)))
+           (set
+            (make-local-variable 'sphinx-extensions)
+            (concat
+             (projectile-project-root)
+             "src"))
+           (set
+            (make-local-variable 'python-path)
+            (concat main ":" sphinx-extensions))
+           (setenv "PYTHONPATH" python-path))
+     (projectile-project-test-cmd . "python -m pytest ./tests")
      (projectile-project-compilation-cmd . "./build -d architecture -b html")
      (eval progn
            (set
