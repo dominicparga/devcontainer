@@ -1539,7 +1539,44 @@
  '(package-selected-packages
    '(with-editor company-jedi buffer-move dired-hide-dotfiles dired-open all-the-icons-dired dired-single yasnippet-snippets ccls git-gutter-fringe yaml-mode xterm-color whole-line-or-region which-key wgrep vterm volatile-highlights use-package-ensure-system-package tide super-save sphinx-doc smex smart-mode-line scala-mode rainbow-delimiters pyvenv python-black py-autopep8 protobuf-mode poly-rst ox-rst openwith multi-term material-theme magit-todos lsp-ui lsp-python-ms lsp-java lsp-ivy lsp-docker langtool json-mode ivy-rich ivy-prescient ivy-pass ivy-hydra highlight-symbol groovy-mode groovy-imports git-timemachine general flymake-yaml flymake-shellcheck flymake-shell flymake-json flycheck-pycheckers flycheck-plantuml flx fill-column-indicator exec-path-from-shell evil-nerd-commenter ess eshell-z emojify edwina drag-stuff dockerfile-mode dired-narrow diminish counsel-projectile company-prescient company-c-headers company-auctex command-log-mode cmake-mode clang-format+ blacken beacon autopair auto-package-update auto-complete ag ack))
  '(safe-local-variable-values
-   '((eval progn
+   '((projectile-project-test-cmd . "python -m pytest ./tests")
+     (projectile-project-compilation-cmd . "./build -d architecture -b html")
+     (eval progn
+           (set
+            (make-local-variable 'airflow-home-dags)
+            (concat
+             (projectile-project-root)
+             "airflow-home/dags"))
+           (set
+            (make-local-variable 'dol-launcher)
+            (concat
+             (projectile-project-root)
+             "micro_pipeline/dol_launcher/src"))
+           (set
+            (make-local-variable 'dol-launcher-compute)
+            (concat
+             (projectile-project-root)
+             "micro_pipeline/dol_launcher_compute/src"))
+           (set
+            (make-local-variable 'dol-launcher-athena)
+            (concat
+             (projectile-project-root)
+             "micro_pipeline/dol_launcher_athena/src"))
+           (set
+            (make-local-variable 'dol-launcher-hol)
+            (concat
+             (projectile-project-root)
+             "micro_pipeline/dol_launcher_hol/src"))
+           (set
+            (make-local-variable 'web-ui)
+            (concat
+             (projectile-project-root)
+             "web-ui/server"))
+           (set
+            (make-local-variable 'python-path)
+            (concat airflow-home-dags ":" dol-launcher ":" dol-launcher-compute ":" dol-launcher-athena ":" dol-launcher-hol ":" web-ui))
+           (setenv "PYTHONPATH" python-path))
+     (eval progn
            (setq +ccls-initial-blacklist
                  '("conan"
                    (\, "ext")
