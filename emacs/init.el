@@ -577,8 +577,7 @@
 ;; Projectile mode
 ;; -------------------------------------------------------------------
 (use-package projectile
-  :after counsel
-  :after ivy
+  :after counsel ivy
   :custom ((projectile-completion-system 'ivy))
   :init
   (setq projectile-file-exists-remote-cache-expire nil
@@ -727,9 +726,7 @@
 )
 
 (use-package lsp-treemacs
-  :after lsp
-  :after treemacs
-  :after company
+  :after lsp treemacs company
   :commands lsp-treemacs-errors-list
   :config
   (setq gc-cons-threshold (* 100 1024 1024)
@@ -803,8 +800,7 @@
 ;; Company
 ;; -------------------------------------------------------------------
 (use-package company
-  :after lsp-mode
-  :after yasnippet
+  :after lsp-mode yasnippet
   :hook (lsp-mode . company-mode)
   :config
   (setq company-backends (delete 'company-semantic company-backends)
@@ -814,8 +810,14 @@
         ;; aligns annotation to the right hand side
         company-tooltip-align-annotations t)
 
-  ;; enable yasnippets for company
-  (add-to-list 'company-backends 'company-yasnippet)
+  ;; The company-backends support list of lists. Lists are evaluated
+  ;; at once, which
+  (setq company-backends (append '((company-jedi
+                                    company-clang
+                                    company-tide
+                                    company-capf
+                                    company-yasnippet))
+                                 company-backends))
 
   ;; enable company globally
   (global-company-mode 1)
@@ -836,8 +838,7 @@
   (add-hook mode (lambda () (company-mode 0))))
 
 (use-package company-prescient
-  :after company
-  :after counsel
+  :after company counsel
   :config
   (company-prescient-mode 1))
 
@@ -1208,14 +1209,6 @@
   :config
   (pyvenv-mode 1))
 
-;; add python auto completion for company
-(defun ff/python-mode-hook ()
-  (add-to-list 'company-backends 'company-jedi))
-
-(use-package company-jedi
-  :after company
-  :hook (company-mode . ff/python-mode-hook))
-
 ;; -------------------------------------------------------------------
 ;; Sphinx documentation
 ;; -------------------------------------------------------------------
@@ -1233,6 +1226,7 @@
 (use-package flycheck
   :diminish flycheck-mode
   :config
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
   (global-flycheck-mode)
   )
 
@@ -1408,32 +1402,28 @@
 ;; -------------------------------------------------------------------
 ;; Typescript
 ;; -------------------------------------------------------------------
-(defun setup-tide-mode ()
-  (interactive)
-  (tide-setup)
-  (flycheck-mode +1)
-  (setq flycheck-check-syntax-automatically '(save mode-enabled))
-  (eldoc-mode +1)
-  (tide-hl-identifier-mode +1))
-
 (use-package tide)
+
 (use-package nvm
   :defer t)
 
 (use-package typescript-mode
-  :after dap-node tide
+  :after dap-node tide company
   :mode (
          ("\\.ts$" . typescript-mode)
          ("\\.tsx$" . typescript-mode)
          )
   :config
   (setq typescript-indent-level 4)
-  (flycheck-mode 1)
-  (company-mode 1)
   (dap-node-setup) ;; automatically installs Node debug adapter if needed
+  (tide-setup) ;; provided by the tide package
+  ;; remove company-tide from company backends manually, since it is
+  ;; added by company setup explicitly
+  (setq company-backends (delete 'company-tide company-backends))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
   :hook (
          (before-save-hook . tide-format-before-save)
-         (typescript-mode . setup-tide-mode)
          )
   )
 
@@ -1486,8 +1476,7 @@
   )
 
 (use-package flycheck-plantuml
-  :after plantuml-mode
-  :after flycheck
+  :after plantuml-mode flycheck
   :commands (flycheck-plantuml-setup))
 
 (use-package org
