@@ -810,17 +810,20 @@
   (setq company-backends (delete 'company-semantic company-backends)
         company-minimum-prefix-length 1
         company-idle-delay 0.0 ;; default is 0.2
+        company-echo-delay 0.0
         ;; aligns annotation to the right hand side
         company-tooltip-align-annotations t)
 
   ;; enable yasnippets for company
   (add-to-list 'company-backends 'company-yasnippet)
+
   ;; enable company globally
   (global-company-mode 1)
-  :bind (:map company-active-map
-              ("TAB" . company-complete-selection)
-              :map lsp-mode-map
-              ("TAB" . company-indent-or-complete-common))
+  :bind (("C-c C-y" . company-yasnippet)
+         :map company-active-map
+         ("TAB" . company-complete-selection)
+         :map lsp-mode-map
+         ("TAB" . company-indent-or-complete-common))
   )
 
 
