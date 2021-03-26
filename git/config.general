@@ -47,6 +47,7 @@
     cob = "checkout -b"
     # list branches sorted by last modified
     b   = "branch"
+    bsc = "branch --show-current"
     ba  = "branch --list -a"
     bv  = "branch --list -v"
     bav = "branch --list -av"
