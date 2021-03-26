@@ -312,12 +312,6 @@
   :defer t
   :commands (dired dired-jump))
 
-(use-package dired-ranger
-  :defer t)
-
-(use-package dired-collapse
-  :defer t)
-
 (use-package all-the-icons-dired
   :hook (dired-mode . all-the-icons-dired-mode))
 
@@ -814,8 +808,7 @@
 
   ;; The company-backends support list of lists. Lists are evaluated
   ;; at once, which
-  (setq company-backends (append '((company-jedi
-                                    company-clang
+  (setq company-backends (append '((company-clang
                                     company-tide
                                     company-capf
                                     company-yasnippet))
