@@ -18,8 +18,8 @@
 
 (setq package-archives '(
                          ;; ("melpa-stable" . "https://stable.melpa.org/packages/")
-                         ("melpa" . "https://melpa.org/packages/")
                          ("org" . "https://orgmode.org/elpa/")
+                         ("melpa" . "https://melpa.org/packages/")
                          ("elpa" . "https://elpa.gnu.org/packages/")))
 
 (defvar local-load-path (expand-file-name "~/.emacs.d/elisp-local"))
@@ -600,11 +600,6 @@
 
 (use-package counsel-projectile
   :config (counsel-projectile-mode)
-  :bind* (
-          ("C-c p s a" . counsel-ack)
-          ("C-c p s g" . counsel-git-grep)
-          ("C-c p s r" . counsel-rg)
-          )
   )
 
 (use-package vterm
@@ -734,14 +729,19 @@
   (lsp-treemacs-sync-mode t) ;; enables bidirectional sync
   )
 
-(global-set-key [f9] 'ff-lsp-treemacs-symbols-toggle)
+(global-set-key [f9] 'ff/lsp-treemacs-symbols-toggle)
 
 ;; -------------------------------------------------------------------
 ;; Enable dap
 ;; -------------------------------------------------------------------
 (use-package dap-mode
-  :after lsp-mode
-  :ensure-system-package ("~/.local/lib/python3.6/site-packages/ptvsd" . "pip3 install --user 'ptvsd>=4.2'") ; for dap-python
+  :after lsp-mode python-mode
+  :ensure-system-package ((concat "~/.local/lib/python"
+                                  (ff/python-interpreter-version "major")
+                                  "."
+                                  (ff/python-interpreter-version "minor")
+                                  "/site-packages/ptvsd")
+                          . "pip3 install --user 'ptvsd>=4.2'") ; for dap-python
   :init
   ;; enables mouse hover support
   (dap-tooltip-mode 1)
@@ -1061,7 +1061,7 @@
         langtool-url (concat "https://languagetool.org/download/" langtool-name ".zip")
         langtool-extract-to (expand-file-name "~/opt/languageTool")
         langtool-expected-binary (concat langtool-extract-to "/" langtool-name "/languagetool-commandline.jar"))
-  (ff-download-and-extract-zip-archive langtool-url
+  (ff/download-and-extract-zip-archive langtool-url
                                        langtool-name
                                        langtool-extract-to
                                        langtool-expected-binary
@@ -1095,9 +1095,9 @@
     ))
 
 (use-package ispell
-  :ensure-system-package ("/usr/bin/ispell" . ispell)
-  :ensure-system-package ("/usr/lib/ispell/american-insane.hash" . iamerican-insane)
-  :ensure-system-package ("/usr/lib/ispell/ngerman.hash" . ingerman)
+  :ensure-system-package (("/usr/bin/ispell" . ispell)
+                          ("/usr/lib/ispell/american-insane.hash" . iamerican-insane)
+                          ("/usr/lib/ispell/ngerman.hash" . ingerman))
   :init
   (setq ispell-dictionary "en_US")
   (setq ispell-local-dictionary "en_US")
@@ -1157,6 +1157,7 @@
 
 (use-package python-mode
   :ensure nil
+  :ensure-system-package (pip3 . python3-pip)
   :mode (
          ("\\.py$" . python-mode)
          ("SConstruct" . python-mode)
@@ -1167,8 +1168,8 @@
   ;; delete output buffer on buffer execution
   (setq py-shell-switch-buffers-on-execute nil
         python-indent-offset 4)
-  :custom
-  (python-shell-interpreter "python3")
+  (setq python-shell-interpreter "python3")
+
   )
 
 (use-package lsp-python-ms
@@ -1176,13 +1177,6 @@
   :hook (python-mode . (lambda ()
                          (require 'lsp-python-ms)
                          (lsp))))  ; or lsp-deferred
-
-;; Enable autopep8
-(use-package py-autopep8
-  :ensure-system-package (autopep8 . "pip3 install --user -U autopep8")
-  ;; :hook ((python-mode . py-autopep8-enable-on-save)) ;; enables autoformat
-  :config
-  (setq py-autopep8-options '("--select=W504")))
 
 ;; install black and black-macchiato with pip3 install --user -U
 ;; black-macchiato black if black is not available as executable in
@@ -1449,7 +1443,7 @@
         plantuml-url (concat "https://sourceforge.net/projects/plantuml/files/" plantuml-version "/" plantuml-name ".zip/download")
         plantuml-extract-to (expand-file-name (concat "~/opt/plantuml/" plantuml-name))
         plantuml-expected-binary (concat plantuml-extract-to "/plantuml.jar"))
-  (ff-download-and-extract-zip-archive plantuml-url
+  (ff/download-and-extract-zip-archive plantuml-url
                                        plantuml-name
                                        plantuml-extract-to
                                        plantuml-expected-binary
@@ -1524,7 +1518,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(transpose-frame with-editor company-jedi buffer-move dired-hide-dotfiles dired-open all-the-icons-dired dired-single yasnippet-snippets ccls git-gutter-fringe yaml-mode xterm-color whole-line-or-region which-key wgrep vterm volatile-highlights use-package-ensure-system-package tide super-save sphinx-doc smex smart-mode-line scala-mode rainbow-delimiters pyvenv python-black py-autopep8 protobuf-mode poly-rst ox-rst openwith multi-term material-theme magit-todos lsp-ui lsp-python-ms lsp-java lsp-ivy lsp-docker langtool json-mode ivy-rich ivy-prescient ivy-pass ivy-hydra highlight-symbol groovy-mode groovy-imports git-timemachine general flymake-yaml flymake-shellcheck flymake-shell flymake-json flycheck-pycheckers flycheck-plantuml flx fill-column-indicator exec-path-from-shell evil-nerd-commenter ess eshell-z emojify edwina drag-stuff dockerfile-mode dired-narrow diminish counsel-projectile company-prescient company-c-headers company-auctex command-log-mode cmake-mode clang-format+ blacken beacon autopair auto-package-update auto-complete ag ack))
+   '(org-tempo transpose-frame with-editor company-jedi buffer-move dired-hide-dotfiles dired-open all-the-icons-dired dired-single yasnippet-snippets ccls git-gutter-fringe yaml-mode xterm-color whole-line-or-region which-key wgrep vterm volatile-highlights use-package-ensure-system-package tide super-save sphinx-doc smex smart-mode-line scala-mode rainbow-delimiters pyvenv python-black py-autopep8 protobuf-mode poly-rst ox-rst openwith multi-term material-theme magit-todos lsp-ui lsp-python-ms lsp-java lsp-ivy lsp-docker langtool json-mode ivy-rich ivy-prescient ivy-pass ivy-hydra highlight-symbol groovy-mode groovy-imports git-timemachine general flymake-yaml flymake-shellcheck flymake-shell flymake-json flycheck-pycheckers flycheck-plantuml flx fill-column-indicator exec-path-from-shell evil-nerd-commenter ess eshell-z emojify edwina drag-stuff dockerfile-mode dired-narrow diminish counsel-projectile company-prescient company-c-headers company-auctex command-log-mode cmake-mode clang-format+ blacken beacon autopair auto-package-update auto-complete ag ack))
  '(safe-local-variable-values
    '((eval progn
            (setq flycheck-python-mypy-config

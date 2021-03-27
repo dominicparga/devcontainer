@@ -116,8 +116,8 @@
   (lsp-deferred))
 
 (use-package cc-mode
-  :ensure-system-package (clangd-10 . clangd-10)
-  :ensure-system-package (clang-10 . clang-10)
+  :ensure-system-package ((clangd-10 . clangd-10)
+                          (clang-10 . clang-10))
   :hook (((c++-mode c-mode) . (lambda ()
                                 (ccls//enable)
                                 (setq-local ccls-code-lens-mode t)

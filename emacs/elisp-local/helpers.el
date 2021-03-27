@@ -4,7 +4,7 @@
 
 ;;; Code:
 
-(defun ff-download-and-extract-zip-archive (url name extract-to expected-binary-file package-name)
+(defun ff/download-and-extract-zip-archive (url name extract-to expected-binary-file package-name)
   "Download and install zip archives."
   (let* ((temporary-file (concat temporary-file-directory name ".zip")))
     (unless (file-directory-p extract-to) (make-directory extract-to))
@@ -17,13 +17,26 @@
       )
     ))
 
-(defun ff-lsp-treemacs-symbols-toggle ()
+(defun ff/lsp-treemacs-symbols-toggle ()
   "Toggle the lsp-treemacs-symbols buffer."
   (interactive)
   (if (get-buffer "*LSP Symbols List*")
       (kill-buffer "*LSP Symbols List*")
     (progn (lsp-treemacs-symbols)
            (other-window -1))))
+
+(defun ff/python-interpreter-version (type)
+  "Provide version of python interpreter."
+  (let ((python-interpreter-versions
+         (split-string (car (cdr
+                             (split-string
+                              (shell-command-to-string
+                               (concat (eval python-shell-interpreter)
+                                       " --version"))
+                              " "))) "\\.")))
+    (cond ((equal (eval type) "major") (elt python-interpreter-versions 0))
+          ((equal (eval type) "minor") (elt python-interpreter-versions 1)))
+    ))
 
 (provide 'helpers)
 

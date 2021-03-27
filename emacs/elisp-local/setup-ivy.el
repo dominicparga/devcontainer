@@ -69,29 +69,6 @@
 (use-package smex ;; Adds M-x recent command sorting for counsel-M-x
   :after counsel)
 
-(use-package wgrep)
-
-(use-package ack
-  :ensure-system-package (ack . ack)
-  )
-
-(use-package ag
-  :ensure-system-package (ag . silversearcher-ag)
-  )
-
-;; (use-package ivy-posframe
-;;   :custom
-;;   (ivy-posframe-width      115)
-;;   (ivy-posframe-min-width  115)
-;;   (ivy-posframe-height     11)
-;;   (ivy-posframe-min-height 11)
-;;   :config
-;;   (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
-;;   (setq ivy-posframe-parameters '((parent-frame . nil)
-;;                                   (left-fringe . 8)
-;;                                   (right-fringe . 8)))
-;;   (ivy-posframe-mode 1))
-
 (use-package ivy-prescient
   :after counsel
   :config
