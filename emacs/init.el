@@ -933,7 +933,7 @@
   )
 
 (use-package company-auctex
-  :after company)
+  :after company auctex)
 
 (use-package reftex
   :init
