@@ -34,19 +34,20 @@ if [[ -n "${ZSH_NAME}" ]]; then
     fi
 fi
 
-# start ssh agent for remote sessions and add personal certificates to
-# prevent repeated password input
+# Start gnome keyring
 if [ -n "$DESKTOP_SESSION" ];then
     eval "$(gnome-keyring-daemon --start)"
     export SSH_AUTH_SOCK
-fi
-
-. "${HOME}/.ssh-find-agent"
-ssh_find_agent -a
-if [ -z "$SSH_AUTH_SOCK" ]
-then
-   eval $(ssh-agent) > /dev/null
-   ssh-add
+else
+    # start ssh agent for remote sessions and add personal certificates to
+    # prevent repeated password input
+    . "${HOME}/.ssh-find-agent"
+    ssh_find_agent -a
+    if [ -z "$SSH_AUTH_SOCK" ]
+    then
+        eval $(ssh-agent) > /dev/null
+        ssh-add
+    fi
 fi
 
 alias la='ls -altrh'
