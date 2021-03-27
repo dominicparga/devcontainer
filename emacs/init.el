@@ -603,7 +603,8 @@
   )
 
 (use-package vterm
-  :ensure-system-package (libtool . libtool-bin)
+  :ensure-system-package ((cmake . cmake)
+                          (libtool . libtool-bin)
   :commands vterm
   :config
   (setq vterm-max-scrollback 10000))
@@ -614,8 +615,8 @@
 ;; -------------------------------------------------------------------
 (use-package highlight-symbol
   :bind* (
-          ("C-3" . highlight-symbol)
-          ("M-3" . highlight-symbol-query-replace)
+          ("C-c h" . highlight-symbol)
+          ("C-c r" . highlight-symbol-query-replace)
           )
   )
 
@@ -1160,8 +1161,10 @@
          )
   :hook ((python-mode . annotate-pdb)
          (python-mode . (lambda ()
-                         (require 'lsp-python-ms)
-                         (lsp))))  ; or lsp-deferred
+                          (require 'lsp-python-ms)
+                          ;; debugging package for python using ptvsd
+                          (require 'dap-python)
+                          (lsp))))  ; or lsp-deferred
   :init
   (setq python-indent-offset 4)
   (setq python-shell-interpreter "python")
@@ -1171,21 +1174,14 @@
   (setq py-shell-switch-buffers-on-execute nil)
   )
 
-
 ;; install black and black-macchiato with pip3 install --user -U
 ;; black-macchiato black if black is not available as executable in
 ;; ~/.local/bin, provide a dummy one that runs black in library mode
 ;; python3 -m black "${@}"
 (use-package python-black
-  :ensure-system-package ((pip3 . python3-pip)
-                          (black . "pip3 install --user -U black"))
+  :ensure-system-package ((black . "pip3 install --user -U black"))
   :hook ((python-mode . python-black-on-save-mode))
   )
-
-(use-package blacken)
-
-;; install via pip install "ptvsd>=4.2"
-(require 'dap-python)
 
 ;; supports virtual environments. To be set with pyvenv-workon
 (use-package pyvenv
@@ -1358,7 +1354,6 @@
                           (pandoc . pandoc))
   :init
   (add-hook 'markdown-mode-hook #'visual-line-mode)
-  (add-hook 'markdown-mode-hook #'variable-pitch-mode)
   (add-hook 'markdown-mode-hook #'flyspell-mode)
   :config
   ;; The default command for markdown (~markdown~), doesn't support tables
@@ -1377,7 +1372,6 @@
   :init
   (set-default 'truncate-lines t)
   )
-
 
 ;; C-c C-e r r (org-rst-export-to-rst)
 ;;    Export as a text file written in reStructured syntax.
