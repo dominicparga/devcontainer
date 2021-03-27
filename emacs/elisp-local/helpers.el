@@ -27,16 +27,28 @@
 
 (defun ff/python-interpreter-version (type)
   "Provide version of python interpreter."
-  (let ((python-interpreter-versions
-         (split-string (car (cdr
-                             (split-string
-                              (shell-command-to-string
-                               (concat (eval python-shell-interpreter)
-                                       " --version"))
-                              " "))) "\\.")))
+  (let* ((python-command (if (boundp 'python-shell-interpreter)
+                             (eval python-shell-interpreter)
+                           "python"))
+         (python-interpreter-versions
+          (split-string (car (cdr
+                              (split-string
+                               (shell-command-to-string
+                                (concat (eval python-command)
+                                        " --version"))
+                               " "))) "\\.")))
     (cond ((equal (eval type) "major") (elt python-interpreter-versions 0))
           ((equal (eval type) "minor") (elt python-interpreter-versions 1)))
     ))
+
+(defun ff/python-local-site-packages-path (package-name)
+  "Provide the path to the local site packages."
+  (concat (expand-file-name "~/.local/lib/python")
+          (ff/python-interpreter-version "major")
+          "."
+          (ff/python-interpreter-version "minor")
+          "/site-packages/" (eval package-name))
+  )
 
 (provide 'helpers)
 

@@ -16,9 +16,7 @@
 (require 'package)
 (setq package-enable-at-startup nil)
 
-(setq package-archives '(
-                         ;; ("melpa-stable" . "https://stable.melpa.org/packages/")
-                         ("org" . "https://orgmode.org/elpa/")
+(setq package-archives '(("org" . "https://orgmode.org/elpa/")
                          ("melpa" . "https://melpa.org/packages/")
                          ("elpa" . "https://elpa.gnu.org/packages/")))
 
@@ -599,7 +597,9 @@
 )
 
 (use-package counsel-projectile
-  :config (counsel-projectile-mode)
+  :config
+  (setq counsel-projectile-sort-files t)
+  (counsel-projectile-mode)
   )
 
 (use-package vterm
@@ -735,13 +735,6 @@
 ;; Enable dap
 ;; -------------------------------------------------------------------
 (use-package dap-mode
-  :after lsp-mode python-mode
-  :ensure-system-package ((concat "~/.local/lib/python"
-                                  (ff/python-interpreter-version "major")
-                                  "."
-                                  (ff/python-interpreter-version "minor")
-                                  "/site-packages/ptvsd")
-                          . "pip3 install --user 'ptvsd>=4.2'") ; for dap-python
   :init
   ;; enables mouse hover support
   (dap-tooltip-mode 1)
@@ -1155,36 +1148,37 @@
   (highlight-lines-matching-regexp "import pdb")
   (highlight-lines-matching-regexp "pdb.set_trace()"))
 
-(use-package python-mode
-  :ensure nil
-  :ensure-system-package (pip3 . python3-pip)
+
+(use-package lsp-python-ms
+  :ensure-system-package ((pip3 . python3-pip)
+                          ("~/.local/lib/python3.6/site-packages/epc" . "pip3 install --user -U 'epc'")
+                          ("~/.local/lib/python3.6/site-packages/ptvsd" . "pip3 install --user -U 'ptvsd>=4.2'"))
   :mode (
          ("\\.py$" . python-mode)
          ("SConstruct" . python-mode)
          ("SConscript" . python-mode)
          )
-  :hook (python-mode . annotate-pdb)
-  :config
-  ;; delete output buffer on buffer execution
-  (setq py-shell-switch-buffers-on-execute nil
-        python-indent-offset 4)
-  (setq python-shell-interpreter "python3")
-
-  )
-
-(use-package lsp-python-ms
-  :init (setq lsp-python-ms-auto-install-server t)
-  :hook (python-mode . (lambda ()
+  :hook ((python-mode . annotate-pdb)
+         (python-mode . (lambda ()
                          (require 'lsp-python-ms)
                          (lsp))))  ; or lsp-deferred
+  :init
+  (setq python-indent-offset 4)
+  (setq python-shell-interpreter "python")
+  (setq lsp-python-ms-auto-install-server t)
+  :config
+  ;; delete output buffer on buffer execution
+  (setq py-shell-switch-buffers-on-execute nil)
+  )
+
 
 ;; install black and black-macchiato with pip3 install --user -U
 ;; black-macchiato black if black is not available as executable in
 ;; ~/.local/bin, provide a dummy one that runs black in library mode
 ;; python3 -m black "${@}"
 (use-package python-black
-  :after python
-  :ensure-system-package (black . "pip3 install --user -U black")
+  :ensure-system-package ((pip3 . python3-pip)
+                          (black . "pip3 install --user -U black"))
   :hook ((python-mode . python-black-on-save-mode))
   )
 
@@ -1358,7 +1352,19 @@
 ;; -------------------------------------------------------------------
 ;; markdown mode
 ;; -------------------------------------------------------------------
-(use-package markdown-mode)
+(use-package markdown-mode
+  :commands markdown-mode
+  :ensure-system-package ((markdown . markdown)
+                          (pandoc . pandoc))
+  :init
+  (add-hook 'markdown-mode-hook #'visual-line-mode)
+  (add-hook 'markdown-mode-hook #'variable-pitch-mode)
+  (add-hook 'markdown-mode-hook #'flyspell-mode)
+  :config
+  ;; The default command for markdown (~markdown~), doesn't support tables
+  ;; (e.g. GitHub flavored markdown). Pandoc does, so let's use that.
+  (setq markdown-command "pandoc --from markdown --to html")
+  (setq markdown-command-needs-filename t))
 
 ;; -------------------------------------------------------------------
 ;; RST mode
@@ -1518,7 +1524,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(org-tempo transpose-frame with-editor company-jedi buffer-move dired-hide-dotfiles dired-open all-the-icons-dired dired-single yasnippet-snippets ccls git-gutter-fringe yaml-mode xterm-color whole-line-or-region which-key wgrep vterm volatile-highlights use-package-ensure-system-package tide super-save sphinx-doc smex smart-mode-line scala-mode rainbow-delimiters pyvenv python-black py-autopep8 protobuf-mode poly-rst ox-rst openwith multi-term material-theme magit-todos lsp-ui lsp-python-ms lsp-java lsp-ivy lsp-docker langtool json-mode ivy-rich ivy-prescient ivy-pass ivy-hydra highlight-symbol groovy-mode groovy-imports git-timemachine general flymake-yaml flymake-shellcheck flymake-shell flymake-json flycheck-pycheckers flycheck-plantuml flx fill-column-indicator exec-path-from-shell evil-nerd-commenter ess eshell-z emojify edwina drag-stuff dockerfile-mode dired-narrow diminish counsel-projectile company-prescient company-c-headers company-auctex command-log-mode cmake-mode clang-format+ blacken beacon autopair auto-package-update auto-complete ag ack))
+   '(org-tempo transpose-frame with-editor buffer-move dired-hide-dotfiles dired-open all-the-icons-dired dired-single yasnippet-snippets ccls git-gutter-fringe yaml-mode xterm-color whole-line-or-region which-key wgrep vterm volatile-highlights use-package-ensure-system-package tide super-save sphinx-doc smex smart-mode-line scala-mode rainbow-delimiters pyvenv python-black py-autopep8 protobuf-mode poly-rst ox-rst openwith multi-term material-theme magit-todos lsp-ui lsp-python-ms lsp-java lsp-ivy lsp-docker langtool json-mode ivy-rich ivy-prescient ivy-pass ivy-hydra highlight-symbol groovy-mode groovy-imports git-timemachine general flymake-yaml flymake-shellcheck flymake-shell flymake-json flycheck-pycheckers flycheck-plantuml flx fill-column-indicator exec-path-from-shell evil-nerd-commenter ess eshell-z emojify edwina drag-stuff dockerfile-mode dired-narrow diminish counsel-projectile company-prescient company-c-headers company-auctex command-log-mode cmake-mode clang-format+ blacken beacon autopair auto-package-update auto-complete ag ack))
  '(safe-local-variable-values
    '((eval progn
            (setq flycheck-python-mypy-config
