@@ -52,7 +52,7 @@ fi
 
 # fixes fancy prompt issues when called from remote modules like emacs
 if [[ $TERM == "dumb" ]]; then
-    export PS1="$ "
+    export PS1="# "
 fi
 
 alias la='ls -altrh'

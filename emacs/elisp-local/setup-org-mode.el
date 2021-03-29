@@ -4,6 +4,34 @@
 
 ;;; Code:
 
+(setq org-directory "~/workspace/org_files")
+
+(setq org-agenda-files `(,org-directory))
+
+;; Inspired by this great article:
+;; https://d12frosted.io/posts/2021-01-16-task-management-with-roam-vol5.html
+(defun dw/org-roam-project-files ()
+  "Return a list of note files containing Project tag."
+  (seq-filter
+    #'identity
+    (seq-map
+      #'car
+      (org-roam-db-query
+        [:select file
+        :from tags
+        :where (like tags (quote "%\"Project\"%"))]))))
+
+(defun dw/update-org-agenda-files ()
+  (interactive)
+  (setq org-agenda-files (dw/org-roam-project-files)))
+
+(with-eval-after-load 'org-roam
+  (dw/update-org-agenda-files))
+
+(defun dw/org-path (path)
+  (expand-file-name path org-directory))
+
+(setq org-default-notes-file (dw/org-path "notes.org"))
 
 (defun efs/org-font-setup ()
   ;; Replace list hyphen with dot
@@ -52,20 +80,20 @@
   (setq org-log-done 'time)
   (setq org-log-into-drawer t)
 
-  (setq org-agenda-files
-        '("~/workspace/org/tasks.org"))
+  (setq org-agenda-files (dw/org-path "tasks.org"))
+  (setq org-agenda-files nil)
 
   (require 'org-habit)
   (add-to-list 'org-modules 'org-habit)
   (setq org-habit-graph-column 60)
 
+  ;; -------------------------------------------------------------------
+  ;; Todos
+  ;; -------------------------------------------------------------------
   (setq org-todo-keywords
-    '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")
-      (sequence "BACKLOG(b)" "PLAN(p)" "READY(r)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w@/!)" "HOLD(h)" "|" "COMPLETED(c)" "CANC(k@)")))
+        '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")
+          (sequence "BACKLOG(b)" "READY(r)" "ACTIVE(a)" "|" "COMPLETED(c)" "CANC(k@)")))
 
-  (setq org-refile-targets
-    '(("Archive.org" :maxlevel . 1)
-      ("Tasks.org" :maxlevel . 1)))
 
   ;; Save Org buffers after refiling!
   (advice-add 'org-refile :after 'org-save-all-org-buffers)
@@ -74,15 +102,23 @@
     '((:startgroup)
        ; Put mutually exclusive tags here
        (:endgroup)
-       ("@errand" . ?E)
        ("@home" . ?H)
        ("@work" . ?W)
        ("agenda" . ?a)
-       ("planning" . ?p)
-       ("publish" . ?P)
-       ("batch" . ?b)
-       ("note" . ?n)
-       ("idea" . ?i)))
+       ("note" . ?n)))
+
+  ;; -------------------------------------------------------------------
+  ;; Agenda
+  ;; -------------------------------------------------------------------
+  (setq org-agenda-window-setup 'current-window)
+  (setq org-agenda-span 'day)
+  (setq org-agenda-start-with-log-mode t)
+
+  ;; Make done tasks show up in the agenda log
+  (setq org-log-done 'time)
+  (setq org-log-into-drawer t)
+
+  (setq org-columns-default-format "%20CATEGORY(Category) %65ITEM(Task) %TODO %6Effort(Estim){:}  %6CLOCKSUM(Clock) %TAGS")
 
   ;; Configure custom agenda views
   (setq org-agenda-custom-commands
@@ -105,17 +141,7 @@
       (org-agenda-files org-agenda-files)))
 
     ("w" "Workflow Status"
-     ((todo "WAIT"
-            ((org-agenda-overriding-header "Waiting on External")
-             (org-agenda-files org-agenda-files)))
-      (todo "REVIEW"
-            ((org-agenda-overriding-header "In Review")
-             (org-agenda-files org-agenda-files)))
-      (todo "PLAN"
-            ((org-agenda-overriding-header "In Planning")
-             (org-agenda-todo-list-sublevels nil)
-             (org-agenda-files org-agenda-files)))
-      (todo "BACKLOG"
+     ((todo "BACKLOG"
             ((org-agenda-overriding-header "Project Backlog")
              (org-agenda-todo-list-sublevels nil)
              (org-agenda-files org-agenda-files)))
@@ -132,38 +158,39 @@
             ((org-agenda-overriding-header "Cancelled Projects")
              (org-agenda-files org-agenda-files)))))))
 
+  ;; -------------------------------------------------------------------
+  ;; Capture templates
+  ;; -------------------------------------------------------------------
+  (defun dw/on-org-capture ()
+    ;; Don't show the confirmation header text
+    (setq header-line-format nil)
+
+    ;; Control how some buffers are handled
+    (let ((template (org-capture-get :key t)))
+      (pcase template
+        ("jj" (delete-other-windows)))))
+
+  (add-hook 'org-capture-mode-hook 'dw/on-org-capture)
+
   (setq org-capture-templates
     `(("t" "Tasks / Projects")
-      ("tt" "Task" entry (file+olp "~/Projects/Code/emacs-from-scratch/OrgFiles/Tasks.org" "Inbox")
-           "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
-
-      ("j" "Journal Entries")
-      ("jj" "Journal" entry
-           (file+olp+datetree "~/Projects/Code/emacs-from-scratch/OrgFiles/Journal.org")
-           "\n* %<%I:%M %p> - Journal :journal:\n\n%?\n\n"
-           ;; ,(dw/read-file-as-string "~/Notes/Templates/Daily.org")
-           :clock-in :clock-resume
-           :empty-lines 1)
-      ("jm" "Meeting" entry
-           (file+olp+datetree "~/Projects/Code/emacs-from-scratch/OrgFiles/Journal.org")
-           "* %<%I:%M %p> - %a :meetings:\n\n%?\n\n"
-           :clock-in :clock-resume
-           :empty-lines 1)
-
-      ("w" "Workflows")
-      ("we" "Checking Email" entry (file+olp+datetree "~/Projects/Code/emacs-from-scratch/OrgFiles/Journal.org")
-           "* Checking Email :email:\n\n%?" :clock-in :clock-resume :empty-lines 1)
-
-      ("m" "Metrics Capture")
-      ("mw" "Weight" table-line (file+headline "~/Projects/Code/emacs-from-scratch/OrgFiles/Metrics.org" "Weight")
-       "| %U | %^{Weight} | %^{Notes} |" :kill-buffer t)))
+      ("tt" "Task" entry (file+olp (dw/org-path "tasks.org") "Inbox")
+           "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)))
 
   (define-key global-map (kbd "C-c j")
     (lambda () (interactive) (org-capture nil "jj")))
 
-  (efs/org-font-setup))
+  (efs/org-font-setup)
 
+  ;; -------------------------------------------------------------------
+  ;; Clocking
+  ;; -------------------------------------------------------------------
+  (add-hook 'org-timer-set-hook #'org-clock-in)
+  )
 
+;; -------------------------------------------------------------------
+;; Fonts and Design
+;; -------------------------------------------------------------------
 (use-package org-bullets
   :hook (org-mode . org-bullets-mode)
   :custom
@@ -193,7 +220,8 @@
 
   (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
   (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
-  (add-to-list 'org-structure-template-alist '("py" . "src python")))
+  (add-to-list 'org-structure-template-alist '("py" . "src python"))
+  (add-to-list 'org-structure-template-alist '("cc" . "src c++")))
 
 
 ;; Automatically tangle our Emacs.org config file when we save it

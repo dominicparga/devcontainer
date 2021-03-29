@@ -202,6 +202,7 @@
 (setq shell-file-name "/bin/zsh")
 
 ;; Set default connection mode to SSH
+(setq tramp-terminal-type "dumb")
 (setq tramp-default-method "ssh")
 
 (use-package evil-nerd-commenter
@@ -594,7 +595,7 @@
   :config
   (projectile-mode 1)
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-)
+  )
 
 (use-package counsel-projectile
   :config
@@ -604,7 +605,7 @@
 
 (use-package vterm
   :ensure-system-package ((cmake . cmake)
-                          (libtool . libtool-bin)
+                          (libtool . libtool-bin))
   :commands vterm
   :config
   (setq vterm-max-scrollback 10000))
@@ -648,14 +649,14 @@
   :config
   (define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
   (setq ;; if set to true can cause a performance hit
-        lsp-log-io nil
-        lsp-pyls-plugins-flake8-enabled t
-        lsp-pyls-plugins-pycodestyle-enabled nil
-        lsp-enable-snippet nil
-        lsp-prefer-flymake nil
-        ;; increase watch threshold
-        lsp-file-watch-threshold 100000
-        )
+   lsp-log-io nil
+   lsp-pyls-plugins-flake8-enabled t
+   lsp-pyls-plugins-pycodestyle-enabled nil
+   lsp-enable-snippet nil
+   lsp-prefer-flymake nil
+   ;; increase watch threshold
+   lsp-file-watch-threshold 100000
+   )
   (lsp-enable-which-key-integration)
   :bind (:map lsp-mode-map
               ("TAB" . completion-at-point))
@@ -715,7 +716,7 @@
         (s-ends-with? ".lint" file)
         ))
   (push #'treemacs-custom-filter treemacs-ignored-file-predicates)
-)
+  )
 
 (use-package lsp-treemacs
   :after lsp treemacs company
