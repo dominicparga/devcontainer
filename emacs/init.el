@@ -60,20 +60,25 @@
   (interactive)
   (let* ((xdg-config-home (getenv "XDG_CONFIG_HOME"))
          (emacs-d-folder (expand-file-name "~/.emacs.d")))
-    (if (eval xdg-config-home) (concat xdg-config-home "/emacs") emacs-d-folder)
-  ))
+    (if xdg-config-home
+	(let ((xdg-emacs-config-home (concat xdg-config-home "/emacs")))
+          (if (file-directory-p xdg-emacs-config-home) xdg-emacs-config-home emacs-d-folder))
+      emacs-d-folder
+      )
+    )
+  )
 
 (defvar emacs-config-home (ff/emacs-config-home)
-  "Location of the emacs configuration.")
+  "Location of the Emacs configuration.")
 (defvar local-load-path (concat emacs-config-home "/elisp-local")
-  "Load path for local emacs configurations.")
+  "Load path for local Emacs configurations.")
 (add-to-list 'load-path local-load-path)
 
 (use-package helpers
   :load-path local-load-path
   )
 
-;; ===================================================================
+  ;; ===================================================================
 ;; Basic Settings
 ;; ===================================================================
 
