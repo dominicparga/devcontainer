@@ -20,9 +20,6 @@
                          ("melpa" . "https://melpa.org/packages/")
                          ("elpa" . "https://elpa.gnu.org/packages/")))
 
-(defvar local-load-path (expand-file-name "~/.emacs.d/elisp-local"))
-(add-to-list 'load-path local-load-path)
-
 ;; Initialise packages
 (package-initialize)
 
@@ -57,6 +54,20 @@
   (when (or (memq window-system '(mac ns x)))
     (exec-path-from-shell-initialize))
   )
+
+(defun ff/emacs-config-home ()
+  "Provide the home of the emacs configuration folder."
+  (interactive)
+  (let* ((xdg-config-home (getenv "XDG_CONFIG_HOME"))
+         (emacs-d-folder (expand-file-name "~/.emacs.d")))
+    (if (eval xdg-config-home) (concat xdg-config-home "/emacs") emacs-d-folder)
+  ))
+
+(defvar emacs-config-home (ff/emacs-config-home)
+  "Location of the emacs configuration.")
+(defvar local-load-path (concat emacs-config-home "/elisp-local")
+  "Load path for local emacs configurations.")
+(add-to-list 'load-path local-load-path)
 
 (use-package helpers
   :load-path local-load-path
@@ -1033,8 +1044,8 @@
   ;; http://inthearmchair.wordpress.com/2010/09/02/latex-inverse-pdf-search-with-emacs/
   ;; (setq TeX-source-specials-mode 1)         ;; Inverse search
 
-  (setq TeX-auto-global "~/.emacs.d/auctex-auto-generated-info/")
-  (setq TeX-auto-local  "~/.emacs.d/auctex-auto-generated-info/")
+  (setq TeX-auto-global (concat emacs-config-home "/auctex-auto-generated-info/"))
+  (setq TeX-auto-local  (concat emacs-config-home "/auctex-auto-generated-info/"))
   )
 
 ;; -------------------------------------------------------------------
