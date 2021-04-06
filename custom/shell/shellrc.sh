@@ -160,15 +160,21 @@ export SGPP_HOME=$HOME/workspace/SGpp_ff
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$SGPP_HOME/lib/sgpp
 export PYTHONPATH=$PYTHONPATH:$SGPP_HOME/lib
 
-# Player 2.0
-export RECAPP_INT_HOME=$HOME/workspace/recapp_int
-export RECAPP_HOME=$RECAPP_INT_HOME/recompute
-export RECAPP_INT_RELEASE_DIR=$RECAPP_INT_HOME/install
-export RECAPP_RELEASE_DIR=$RECAPP_INT_HOME/install/recapp
+# AOS
+export AOS_BASE_HOME=$HOME/workspace/aos_base
+export RECOMPUTE_HOME=$RECAPP_INT_HOME/recompute
+export AOS_BUILD_DIR=$AOS_BASE_HOME/_build/OSD5/DEBUG/ALL
+export AOS_INSTALL_DIR=$AOS_BASE_HOME/_install/OSD5/DEBUG/ALL
+export RECOMPUTE_BUILD_DIR=$AOS_BUILD_DIR/recompute
+export RECOMPUTE_INSTALL_DIR=$AOS_INSTALL_DIR/recapp
 
-export PATH=$PATH:$RECAPP_RELEASE_DIR/bin:$RECAPP_RELEASE_DIR/bin/dol
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$RECAPP_RELEASE_DIR/lib
-export PYTHONPATH=$PYTHONPATH:$RECAPP_RELEASE_DIR/lib/python2.7/dist-packages:$RECAPP_RELEASE_DIR/lib:$RECAPP_RELEASE_DIR/bin/bytesoup_inspector
+## MTA
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$AOS_BUILD_DIR/mta/tools
+
+## DoL player
+export PATH=$PATH:$RECOMPUTE_INSTALL_DIR/bin:$RECOMPUTE_INSTALL_DIR/bin/dol
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$RECOMPUTE_INSTALL_DIR/lib
+export PYTHONPATH=$PYTHONPATH:$RECOMPUTE_INSTALL_DIR/lib/python3.6/dist-packages:$RECOMPUTE_INSTALL_DIR/lib
 
 # Azure DevOps
 # Run cat BOSCH-CA-DE_pem.cer /opt/az/lib/python3.6/site-packages/certifi/cacert.pem > azure-bosch-cert.pem
