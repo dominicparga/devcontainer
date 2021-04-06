@@ -16,8 +16,8 @@
 (require 'package)
 (setq package-enable-at-startup nil)
 
-(setq package-archives '(("org" . "https://orgmode.org/elpa/")
-                         ("melpa" . "https://melpa.org/packages/")
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                         ("nongnu" . "https://elpa.nongnu.org/")
                          ("elpa" . "https://elpa.gnu.org/packages/")))
 
 ;; Initialise packages
@@ -78,7 +78,7 @@
   :load-path local-load-path
   )
 
-  ;; ===================================================================
+;; ===================================================================
 ;; Basic Settings
 ;; ===================================================================
 
@@ -108,8 +108,8 @@
 ;; make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
-;; disable auto save
-(setq auto-save-default nil)
+;; enable auto save
+(setq auto-save-default t)
 
 ;; dont warn for following symlinked files
 (setq vc-follow-symlinks t)
@@ -154,8 +154,11 @@
 ;; no splash screen
 (setq inhibit-splash-screen t)
 
-;; no backup files
-(setq make-backup-files nil)
+;; increase undo limit
+(setq undo-limit 8000000)
+
+;; Iterate through CamelCase
+(global-subword-mode t)
 
 ;; Color theme
 (use-package material-theme)
@@ -181,6 +184,10 @@
 ;; Indentation
 (setq-default indent-tabs-mode nil)    ; use only spaces and no tabs
 (setq-default tab-width 4)
+
+;; Always split the frame vertically and never horizontally
+(setq split-width-threshold 0)
+(setq split-height-threshold nil)
 
 ;; Delete trailing white spaces
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
@@ -1538,6 +1545,86 @@
    '(org-tempo transpose-frame with-editor buffer-move dired-hide-dotfiles dired-open all-the-icons-dired dired-single yasnippet-snippets ccls git-gutter-fringe yaml-mode xterm-color whole-line-or-region which-key wgrep vterm volatile-highlights use-package-ensure-system-package tide super-save sphinx-doc smex smart-mode-line scala-mode rainbow-delimiters pyvenv python-black py-autopep8 protobuf-mode poly-rst ox-rst openwith multi-term material-theme magit-todos lsp-ui lsp-python-ms lsp-java lsp-ivy lsp-docker langtool json-mode ivy-rich ivy-prescient ivy-pass ivy-hydra highlight-symbol groovy-mode groovy-imports git-timemachine general flymake-yaml flymake-shellcheck flymake-shell flymake-json flycheck-pycheckers flycheck-plantuml flx fill-column-indicator exec-path-from-shell evil-nerd-commenter ess eshell-z emojify edwina drag-stuff dockerfile-mode dired-narrow diminish counsel-projectile company-prescient company-c-headers company-auctex command-log-mode cmake-mode clang-format+ blacken beacon autopair auto-package-update auto-complete ag ack))
  '(safe-local-variable-values
    '((eval progn
+           (set
+            (make-local-variable 'build-path)
+            (concat
+             (projectile-project-root)
+             "_build/OSD5/DEBUG/ALL"))
+           (set
+            (make-local-variable 'dol-cli)
+            (concat
+             (projectile-project-root)
+             "recompute/dol/cli"))
+           (set
+            (make-local-variable 'dol-rest-api)
+            (concat
+             (projectile-project-root)
+             "recompute/dol/rest_api"))
+           (set
+            (make-local-variable 'python-path)
+            (concat build-path ":" dol-cli ":" dol-rest-api))
+           (setenv "PYTHONPATH" python-path))
+     (eval progn
+           (set
+            (make-local-variable 'rest-api)
+            (concat
+             (projectile-project-root)
+             "recompute/dol/rest_api"))
+           (set
+            (make-local-variable 'build-path)
+            (concat
+             (projectile-project-root)
+             "_build/OSD5/DEBUG/ALL"))
+           (set
+            (make-local-variable 'dol-cli)
+            (concat
+             (projectile-project-root)
+             "recompute/dol/cli"))
+           (set
+            (make-local-variable 'dol-rest)
+            (concat
+             (projectile-project-root)
+             "recompute/dol/rest_api"))
+           (set
+            (make-local-variable 'python-path)
+            (concat rest-api ":" build-path ":" dol-cli))
+           (setenv "PYTHONPATH" python-path))
+     (eval progn
+           (set
+            (make-local-variable 'rest-api)
+            (concat
+             (projectile-project-root)
+             "recompute/dol/rest_api"))
+           (set
+            (make-local-variable 'build-path)
+            (concat
+             (projectile-project-root)
+             "_build/OSD5/DEBUG/ALL"))
+           (set
+            (make-local-variable 'dol-cli)
+            (concat
+             (projectile-project-root)
+             "recompute/dol/cli"))
+           (set
+            (make-local-variable 'python-path)
+            (concat rest-api ":" build-path ":" dol-cli))
+           (setenv "PYTHONPATH" python-path))
+     (eval progn
+           (set
+            (make-local-variable 'rest-api)
+            (concat
+             (projectile-project-root)
+             "recompute/dol/rest_api"))
+           (set
+            (make-local-variable 'build-path)
+            (concat
+             (projectile-project-root)
+             "_build/OSD5/DEBUG/ALL"))
+           (set
+            (make-local-variable 'python-path)
+            (concat rest-api ":" build-path))
+           (setenv "PYTHONPATH" python-path))
+     (eval progn
            (setq flycheck-python-mypy-config
                  '(".mypy.ini"))
            (setq flycheck-pylintrc ".pylintrc")
