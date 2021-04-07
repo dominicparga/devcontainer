@@ -16,8 +16,8 @@
 (require 'package)
 (setq package-enable-at-startup nil)
 
-(setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                         ("nongnu" . "https://elpa.nongnu.org/")
+(setq package-archives '(("org" . "https://orgmode.org/elpa/") ;; will be deprecated soon
+                         ("melpa" . "https://melpa.org/packages/")
                          ("elpa" . "https://elpa.gnu.org/packages/")))
 
 ;; Initialise packages
