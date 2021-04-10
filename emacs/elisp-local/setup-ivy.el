@@ -44,6 +44,7 @@
   :after hydra)
 
 (use-package ivy-rich
+  :requires counsel
   :init
   (ivy-rich-mode 1)
   :config
