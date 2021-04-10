@@ -260,23 +260,11 @@
 ;; Set up dired
 ;; -------------------------------------------------------------------
 
-(defun ff-dired-init ()
-  "Bunch of stuff to run for dired, either immediately or when it's
-   loaded."
-  ;; <add other stuff here>
-  (define-key dired-mode-map [remap dired-find-file]
-    'dired-single-buffer)
-  (define-key dired-mode-map [remap dired-mouse-find-file-other-window]
-    'dired-single-buffer-mouse)
-  (define-key dired-mode-map [remap dired-up-directory]
-    'dired-single-up-directory))
-
 (use-package dired
   :ensure nil
   :defer 1
   :commands (dired dired-jump)
-  :hook ((dired-mode . auto-revert-mode)
-         (dired-mode . ff-dired-init))
+  :hook ((dired-mode . auto-revert-mode))
   :bind (("C-x C-j" . dired-jump)
          :map dired-mode-map
          ("<backspace>" . dired-single-up-directory)
@@ -334,15 +322,10 @@
   (dired-rainbow-define vc "#0074d9" ("git" "gitignore" "gitattributes" "gitmodules"))
   (dired-rainbow-define-chmod executable-unix "#38c172" "-.*x.*"))
 
-(use-package dired-single
-  :defer t
-  :commands (dired dired-jump))
-
 (use-package all-the-icons-dired
   :hook (dired-mode . all-the-icons-dired-mode))
 
 (use-package dired-hide-dotfiles
-  :hook (dired-mode . dired-hide-dotfiles-mode)
   :bind (:map dired-mode-map
               ("H" . dired-hide-dotfiles-mode))
   )
