@@ -50,6 +50,13 @@
           "/site-packages/" (eval package-name))
   )
 
+(defun ff/ansi-term ()
+  "Start Bash in a terminal emulator. Like `ansi-term', but
+   respect buffer display actions."
+  (interactive)
+  (let ((switch-to-buffer-obey-display-actions t))
+    (ansi-term "/bin/zsh")))
+
 (provide 'helpers)
 
 ;;; helpers.el ends here

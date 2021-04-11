@@ -662,6 +662,7 @@
   (when (file-directory-p "~/workspace")
     (setq projectile-project-search-path '("~/workspace")))
   (setq projectile-switch-project-action #'projectile-dired)
+  :config
   (setq projectile-file-exists-remote-cache-expire nil
         projectile-mode-line nil
         projectile-globally-ignored-directories
@@ -677,7 +678,6 @@
         ;; projectile-enable-caching nil
         projectile-completion-system 'default
         projectile-svn-command "find . -type f -not -iwholename '*.svn/*' -print0")
-  :config
   ;; enable projectile mode
   (projectile-mode t)
   )
@@ -867,6 +867,7 @@
   :config
   (setq multi-term-program "/bin/zsh")
   (setq explicit-shell-file-name "/bin/zsh")
+  :bind (("C-x j" . ff/ansi-term))
   )
 
 (eval-after-load "term"
@@ -1555,6 +1556,25 @@
   :mode ("\\.j2\\'" "\\.jinja2\\'"))
 
 ;; -------------------------------------------------------------------
+;; Placement of windows with shackle
+;; -------------------------------------------------------------------
+(use-package shackle
+  :commands shackle-mode
+  :config
+  (setq shackle-rules
+	'(("\\*TeX.*\\*" :regexp t :autoclose t :align below :size 0.5)
+	  ("\\*.*Help\\*" :regexp t :autoclose t :align below :size 0.5)
+      ("\\`\\*e?shell" :regexp t :popup t :size 0.5 :align right)
+      ("\\`\\*ansi?term" :regexp t :popup t :size 0.5 :align right)
+      ("\\`\\*PLANTUML Preview.*?\\*\\'" :regexp t :popup t :size 0.5 :align right)
+      ("\\`\\*undo?tree" :regexp t :popup t :size 0.2 :align right)
+      ))
+  (setq shackle-default-rule '(:select f :align right))
+  (setq shackle-default-alignment 'right)
+  (shackle-mode t)
+  )
+
+;; -------------------------------------------------------------------
 ;; Other stuff
 ;; -------------------------------------------------------------------
 
@@ -1564,7 +1584,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(toml-mode jinja2-mode all-the-icons-ivy-rich prescient projectile gnu-elpa-keyring-update docker org-tempo transpose-frame with-editor buffer-move dired-hide-dotfiles dired-open all-the-icons-dired dired-single yasnippet-snippets ccls git-gutter-fringe yaml-mode xterm-color whole-line-or-region which-key wgrep vterm volatile-highlights use-package-ensure-system-package tide super-save sphinx-doc smex smart-mode-line scala-mode rainbow-delimiters pyvenv python-black py-autopep8 protobuf-mode poly-rst ox-rst openwith multi-term material-theme magit-todos lsp-ui lsp-python-ms lsp-java lsp-ivy lsp-docker langtool json-mode ivy-rich ivy-prescient ivy-pass ivy-hydra highlight-symbol groovy-mode groovy-imports git-timemachine general flymake-yaml flymake-shellcheck flymake-shell flymake-json flycheck-pycheckers flycheck-plantuml flx fill-column-indicator exec-path-from-shell evil-nerd-commenter ess eshell-z emojify edwina drag-stuff dockerfile-mode dired-narrow diminish counsel-projectile company-prescient company-c-headers company-auctex command-log-mode cmake-mode clang-format+ blacken beacon autopair auto-package-update auto-complete ag ack))
+   '(shackle toml-mode jinja2-mode all-the-icons-ivy-rich prescient projectile gnu-elpa-keyring-update docker org-tempo transpose-frame with-editor buffer-move dired-hide-dotfiles dired-open all-the-icons-dired dired-single yasnippet-snippets ccls git-gutter-fringe yaml-mode xterm-color whole-line-or-region which-key wgrep vterm volatile-highlights use-package-ensure-system-package tide super-save sphinx-doc smex smart-mode-line scala-mode rainbow-delimiters pyvenv python-black py-autopep8 protobuf-mode poly-rst ox-rst openwith multi-term material-theme magit-todos lsp-ui lsp-python-ms lsp-java lsp-ivy lsp-docker langtool json-mode ivy-rich ivy-prescient ivy-pass ivy-hydra highlight-symbol groovy-mode groovy-imports git-timemachine general flymake-yaml flymake-shellcheck flymake-shell flymake-json flycheck-pycheckers flycheck-plantuml flx fill-column-indicator exec-path-from-shell evil-nerd-commenter ess eshell-z emojify edwina drag-stuff dockerfile-mode dired-narrow diminish counsel-projectile company-prescient company-c-headers company-auctex command-log-mode cmake-mode clang-format+ blacken beacon autopair auto-package-update auto-complete ag ack))
  '(safe-local-variable-values
    '((eval progn
            (set
