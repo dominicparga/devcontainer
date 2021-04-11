@@ -225,6 +225,19 @@
 ;; winner mode for for redo/undo window configurations
 (winner-mode 1)
 
+;; setup all the icons with fix for fonts from
+;; https://github.com/domtronn/all-the-icons.el/issues/107
+(require 'font-lock)
+(use-package font-lock+
+  :load-path local-load-path
+  )
+
+;; NOTE: The first time you load your configuration on a new machine,
+;; you’ll need to run `M-x all-the-icons-install-fonts` so that mode
+;; line icons display correctly.
+(use-package all-the-icons
+  :after font-lock+)
+
 ;; set zsh as default shell name
 (setq shell-file-name "/bin/zsh")
 
@@ -241,6 +254,56 @@
   :config
   (setq which-key-idle-delay 0.5))
 
+;; -------------------------------------------------------------------
+;; Ivy project
+;; -------------------------------------------------------------------
+(use-package setup-ivy
+  :load-path local-load-path
+  )
+
+;; -------------------------------------------------------------------
+;; Company
+;; -------------------------------------------------------------------
+(use-package company
+  :after (lsp-mode yasnippet)
+  :hook (lsp-mode . company-mode)
+  :config
+  (setq company-backends (delete 'company-semantic company-backends)
+        company-minimum-prefix-length 1
+        company-idle-delay 0.0 ;; default is 0.2
+        company-echo-delay 0.0
+        ;; aligns annotation to the right hand side
+        company-tooltip-align-annotations t)
+
+  ;; The company-backends support list of lists. Lists are evaluated
+  ;; at once, which
+  (setq company-backends (append '((company-clang
+                                    company-tide
+                                    company-capf
+                                    company-yasnippet))
+                                 company-backends))
+
+  ;; enable company globally
+  (global-company-mode 1)
+  :bind (("C-c C-y" . company-yasnippet)
+         :map company-active-map
+         ("TAB" . company-complete-selection)
+         :map lsp-mode-map
+         ("TAB" . company-indent-or-complete-common))
+  )
+
+
+;; disable company mode for terminals
+(dolist (mode '(term-mode-hook
+                multi-term-mode-hook
+                ansi-term-mode-hook
+                eshell-mode-hook
+                dap-ui-repl-mode-hook))
+  (add-hook mode (lambda () (company-mode 0))))
+
+(use-package company-prescient
+  :config
+  (company-prescient-mode 1))
 
 ;; -------------------------------------------------------------------
 ;; Buffer move & transpose frame
@@ -344,7 +407,7 @@
 (use-package ivy-pass
   :commands ivy-pass
   :config
-  (setq password-store-password-length 12))
+  (setq password-store-password-length 20))
 
 (use-package auth-source-pass
   :config
@@ -567,13 +630,6 @@
   )
 
 ;; -------------------------------------------------------------------
-;; Ivy project
-;; -------------------------------------------------------------------
-(use-package setup-ivy
-  :load-path local-load-path
-  )
-
-;; -------------------------------------------------------------------
 ;; Org-mode
 ;; -------------------------------------------------------------------
 (use-package setup-org-mode
@@ -584,7 +640,7 @@
 ;; Projectile mode
 ;; -------------------------------------------------------------------
 (use-package projectile
-  :after counsel ivy
+  :after (counsel ivy)
   :custom ((projectile-completion-system 'ivy))
   :init
   (setq projectile-file-exists-remote-cache-expire nil
@@ -610,6 +666,7 @@
   )
 
 (use-package counsel-projectile
+  :after counsel
   :config
   (setq counsel-projectile-sort-files t)
   (counsel-projectile-mode)
@@ -800,51 +857,6 @@
   '(define-key term-raw-map (kbd "C-y") 'term-paste))
 
 ;; -------------------------------------------------------------------
-;; Company
-;; -------------------------------------------------------------------
-(use-package company
-  :after lsp-mode yasnippet
-  :hook (lsp-mode . company-mode)
-  :config
-  (setq company-backends (delete 'company-semantic company-backends)
-        company-minimum-prefix-length 1
-        company-idle-delay 0.0 ;; default is 0.2
-        company-echo-delay 0.0
-        ;; aligns annotation to the right hand side
-        company-tooltip-align-annotations t)
-
-  ;; The company-backends support list of lists. Lists are evaluated
-  ;; at once, which
-  (setq company-backends (append '((company-clang
-                                    company-tide
-                                    company-capf
-                                    company-yasnippet))
-                                 company-backends))
-
-  ;; enable company globally
-  (global-company-mode 1)
-  :bind (("C-c C-y" . company-yasnippet)
-         :map company-active-map
-         ("TAB" . company-complete-selection)
-         :map lsp-mode-map
-         ("TAB" . company-indent-or-complete-common))
-  )
-
-
-;; disable company mode for terminals
-(dolist (mode '(term-mode-hook
-                multi-term-mode-hook
-                ansi-term-mode-hook
-                eshell-mode-hook
-                dap-ui-repl-mode-hook))
-  (add-hook mode (lambda () (company-mode 0))))
-
-(use-package company-prescient
-  :after company counsel
-  :config
-  (company-prescient-mode 1))
-
-;; -------------------------------------------------------------------
 ;; Show number of lines in the left side of the buffer
 ;; -------------------------------------------------------------------
 (column-number-mode 1)
@@ -941,7 +953,7 @@
   )
 
 (use-package company-auctex
-  :after company auctex)
+  :after (company auctex))
 
 (use-package reftex
   :init
@@ -1414,7 +1426,7 @@
   :defer t)
 
 (use-package typescript-mode
-  :after dap-node tide company
+  :after (dap-node tide company)
   :mode (
          ("\\.ts$" . typescript-mode)
          ("\\.tsx$" . typescript-mode)
@@ -1482,18 +1494,8 @@
   )
 
 (use-package flycheck-plantuml
-  :after plantuml-mode flycheck
+  :after (plantuml-mode flycheck)
   :commands (flycheck-plantuml-setup))
-
-(use-package org
-  :mode (("\\.org$" . org-mode))
-  :after plantuml-mode
-  :config
-  ;; config stuff
-  (setq org-plantuml-jar-path plantuml-jar-path)
-  (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
-  (org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t)))
-  )
 
 ;; -------------------------------------------------------------------
 ;; Groovy mode for Jenkins
@@ -1520,7 +1522,7 @@
 ;; make sure that you have jsonlint installed: sudo env "PATH=$PATH"
 ;; npm install jsonlint -g
 (use-package flymake-json
-  :requires json-mode flymake-easy flymake-haml
+  :after json-mode
   :hook ((json-mode . flymake-json-load)
          (js-mode . flymake-json-maybe-load))
   )
@@ -1535,7 +1537,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(gnu-elpa-keyring-update docker org-tempo transpose-frame with-editor buffer-move dired-hide-dotfiles dired-open all-the-icons-dired dired-single yasnippet-snippets ccls git-gutter-fringe yaml-mode xterm-color whole-line-or-region which-key wgrep vterm volatile-highlights use-package-ensure-system-package tide super-save sphinx-doc smex smart-mode-line scala-mode rainbow-delimiters pyvenv python-black py-autopep8 protobuf-mode poly-rst ox-rst openwith multi-term material-theme magit-todos lsp-ui lsp-python-ms lsp-java lsp-ivy lsp-docker langtool json-mode ivy-rich ivy-prescient ivy-pass ivy-hydra highlight-symbol groovy-mode groovy-imports git-timemachine general flymake-yaml flymake-shellcheck flymake-shell flymake-json flycheck-pycheckers flycheck-plantuml flx fill-column-indicator exec-path-from-shell evil-nerd-commenter ess eshell-z emojify edwina drag-stuff dockerfile-mode dired-narrow diminish counsel-projectile company-prescient company-c-headers company-auctex command-log-mode cmake-mode clang-format+ blacken beacon autopair auto-package-update auto-complete ag ack))
+   '(all-the-icons-ivy-rich prescient projectile gnu-elpa-keyring-update docker org-tempo transpose-frame with-editor buffer-move dired-hide-dotfiles dired-open all-the-icons-dired dired-single yasnippet-snippets ccls git-gutter-fringe yaml-mode xterm-color whole-line-or-region which-key wgrep vterm volatile-highlights use-package-ensure-system-package tide super-save sphinx-doc smex smart-mode-line scala-mode rainbow-delimiters pyvenv python-black py-autopep8 protobuf-mode poly-rst ox-rst openwith multi-term material-theme magit-todos lsp-ui lsp-python-ms lsp-java lsp-ivy lsp-docker langtool json-mode ivy-rich ivy-prescient ivy-pass ivy-hydra highlight-symbol groovy-mode groovy-imports git-timemachine general flymake-yaml flymake-shellcheck flymake-shell flymake-json flycheck-pycheckers flycheck-plantuml flx fill-column-indicator exec-path-from-shell evil-nerd-commenter ess eshell-z emojify edwina drag-stuff dockerfile-mode dired-narrow diminish counsel-projectile company-prescient company-c-headers company-auctex command-log-mode cmake-mode clang-format+ blacken beacon autopair auto-package-update auto-complete ag ack))
  '(safe-local-variable-values
    '((eval progn
            (set

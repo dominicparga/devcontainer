@@ -6,6 +6,7 @@
 
 (use-package ivy
   :diminish
+  :after (counsel counsel-projectile)
   :bind (("C-s" . swiper)
          ("C-c C-o" . ivy-occur)
          :map ivy-minibuffer-map
@@ -21,8 +22,6 @@
          :map ivy-reverse-i-search-map
          ("C-k" . ivy-previous-line)
          ("C-d" . ivy-reverse-i-search-kill))
-  :init
-  (ivy-mode 1)
   :config
   (setq ivy-use-virtual-buffers t)
   (setq ivy-wrap t)
@@ -38,13 +37,25 @@
   (setf (alist-get 'counsel-projectile-ag ivy-height-alist) 15)
   (setf (alist-get 'counsel-projectile-rg ivy-height-alist) 15)
   (setf (alist-get 'swiper ivy-height-alist) 15)
-  (setf (alist-get 'counsel-switch-buffer ivy-height-alist) 7))
+  (setf (alist-get 'counsel-switch-buffer ivy-height-alist) 7)
+
+  ;; enable ivy mode
+  (ivy-mode 1)
+)
 
 (use-package ivy-hydra
-  :after hydra)
+  :after ivy)
+
+(use-package all-the-icons-ivy-rich
+  :init
+  (all-the-icons-ivy-rich-mode 1)
+  :config
+  (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line)
+  (setq inhibit-compacting-font-caches t)
+  )
 
 (use-package ivy-rich
-  :requires counsel
+  :after (counsel counsel-projectile projectile ivy all-the-icons-ivy-rich)
   :init
   (ivy-rich-mode 1)
   :config
@@ -61,7 +72,12 @@
   :custom
   (counsel-linux-app-format-function #'counsel-linux-app-format-function-name-only)
   :config
-  (setq ivy-initial-inputs-alist nil)) ;; Don't start searches with ^
+  (setq ivy-initial-inputs-alist nil) ;; Don't start searches with ^
+
+  ;; enable counsel mode
+  (counsel-mode 1)
+  )
+
 
 (use-package flx  ;; Improves sorting for fuzzy-matched results
   :init
@@ -70,16 +86,17 @@
 (use-package smex ;; Adds M-x recent command sorting for counsel-M-x
   :after counsel)
 
-(use-package ivy-prescient
-  :after counsel
-  :config
-  (ivy-prescient-mode 1)
-  (prescient-persist-mode 1)
-  )
+(use-package prescient)
 
-(use-package lsp-ivy
-  :after ivy
-  :after lsp-mode)
+(use-package ivy-prescient
+  :after (ivy counsel prescient)
+  :custom
+  (ivy-prescient-enable-filtering nil)
+  :config
+  (prescient-persist-mode 1)
+  (ivy-prescient-mode 1))
+
+(use-package lsp-ivy)
 
 (provide 'setup-ivy)
 

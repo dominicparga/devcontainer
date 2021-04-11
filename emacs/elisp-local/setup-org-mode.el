@@ -69,6 +69,7 @@
   (visual-line-mode 1))
 
 (use-package org
+  :after plantuml-mode
   :pin org
   :ensure-system-package ("/usr/share/fonts/opentype/cantarell" . fonts-cantarell)
   :commands (org-capture org-agenda)
@@ -86,6 +87,11 @@
   (require 'org-habit)
   (add-to-list 'org-modules 'org-habit)
   (setq org-habit-graph-column 60)
+
+  ;; plantuml
+  (setq org-plantuml-jar-path plantuml-jar-path)
+  (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
+  (org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t)))
 
   ;; -------------------------------------------------------------------
   ;; Todos
