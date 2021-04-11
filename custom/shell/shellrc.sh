@@ -13,7 +13,12 @@ esac
 
 export DOTFILES="$HOME/workspace/dotfiles/."
 
+# fixes fancy prompt issues when called from remote modules like emacs
+if [[ $TERM == "dumb" ]]; then
+    export PS1="$ "
+else
 . "${DOTFILES}/shell/shellrc.sh"
+fi
 
 greet
 
@@ -48,11 +53,6 @@ else
         eval $(ssh-agent) > /dev/null
         ssh-add
     fi
-fi
-
-# fixes fancy prompt issues when called from remote modules like emacs
-if [[ $TERM == "dumb" ]]; then
-    export PS1="# "
 fi
 
 # set as a default for configurations
