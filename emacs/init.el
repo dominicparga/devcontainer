@@ -241,9 +241,22 @@
 ;; set zsh as default shell name
 (setq shell-file-name "/bin/zsh")
 
-;; Set default connection mode to SSH
-(setq tramp-terminal-type "dumb")
-(setq tramp-default-method "ssh")
+;; -------------------------------------------------------------------
+;; Tramp
+;; -------------------------------------------------------------------
+(use-package tramp
+  :ensure nil
+  :config
+  (put 'temporary-file-directory 'standard-value '("/tmp"))
+  (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
+  (setq tramp-use-ssh-controlmaster-options nil)
+  (setq tramp-auto-save-directory "~/.cache/emacs/backups")
+  (setq tramp-persistency-file-name "~/.emacs.d/data/tramp")
+  (setq tramp-terminal-type "dumb")
+  (setq tramp-default-method "ssh")
+  )
+
+(use-package docker-tramp)
 
 (use-package evil-nerd-commenter
   :bind ("M-;" . evilnc-comment-or-uncomment-lines))
@@ -322,7 +335,6 @@
 ;; -------------------------------------------------------------------
 ;; Set up dired
 ;; -------------------------------------------------------------------
-
 (use-package dired
   :ensure nil
   :defer 1
