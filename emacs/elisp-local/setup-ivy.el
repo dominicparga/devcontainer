@@ -93,8 +93,8 @@
   :custom
   (ivy-prescient-enable-filtering nil)
   :config
-  (prescient-persist-mode 1)
-  (ivy-prescient-mode 1))
+  (prescient-persist-mode t)
+  (ivy-prescient-mode t))
 
 (use-package lsp-ivy)
 
