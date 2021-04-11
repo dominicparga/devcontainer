@@ -1535,9 +1535,8 @@
   :mode (("\\.json$" . json-mode))
   )
 
-;; make sure that you have jsonlint installed: sudo env "PATH=$PATH"
-;; npm install jsonlint -g
 (use-package flymake-json
+  :ensure-system-package (jsonlint . "sudo env \"PATH=$PATH\" npm install jsonlint -g")
   :after json-mode
   :hook ((json-mode . flymake-json-load)
          (js-mode . flymake-json-maybe-load))
