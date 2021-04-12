@@ -1499,13 +1499,6 @@
   (setq plantuml-jar-path plantuml-expected-binary
         plantuml-default-exec-mode 'jar
         plantuml-indent-level 4)
-  ;; Open in same window
-  (add-to-list 'display-buffer-alist
-               '(progn
-                  (get-buffer-create "*PLANTUML Preview*")
-                  '((display-buffer-below-selected display-buffer-at-bottom)
-                    (inhibit-same-window . t)
-                    (window-height . fit-window-to-buffer))))
   :bind (:map plantuml-mode-map
               ("C-M-i" . plantuml-complete-symbol))
   )
@@ -1565,9 +1558,7 @@
 	'(("\\*TeX.*\\*" :regexp t :autoclose t :align below :size 0.5)
 	  ("\\*.*Help\\*" :regexp t :autoclose t :align below :size 0.5)
       ("\\`\\*e?shell" :regexp t :popup t :size 0.5 :align right)
-      ("\\`\\*ansi?term" :regexp t :popup t :size 0.5 :align right)
       ("\\`\\*PLANTUML Preview.*?\\*\\'" :regexp t :popup t :size 0.5 :align right)
-      ("\\`\\*undo?tree" :regexp t :popup t :size 0.2 :align right)
       ))
   (setq shackle-default-rule '(:select f :align right))
   (setq shackle-default-alignment 'right)

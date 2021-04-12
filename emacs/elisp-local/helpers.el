@@ -55,6 +55,8 @@
    respect buffer display actions."
   (interactive)
   (let ((switch-to-buffer-obey-display-actions t))
+    (split-window-sensibly)
+    (other-window 1)
     (ansi-term "/bin/zsh")))
 
 (provide 'helpers)
