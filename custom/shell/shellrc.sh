@@ -105,7 +105,7 @@ fi
 #------------------------------------------------------------------------------#
 export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 
-# athena certificates path
+# certificates path
 export CERT_PATH=$HOME/.local/share/certificates
 
 # Airflow
@@ -179,6 +179,9 @@ export PYTHONPATH=$PYTHONPATH:$RECOMPUTE_INSTALL_DIR/lib/python3.6/dist-packages
 # Azure DevOps
 # Run cat BOSCH-CA-DE_pem.cer /opt/az/lib/python3.6/site-packages/certifi/cacert.pem > azure-bosch-cert.pem
 export REQUESTS_CA_BUNDLE="${HOME}/.local/share/certificates/bosch/azure-bosch-cert.pem"
+
+# DoL Documentation
+export SPHINX_VIRTUALENV="${HOME}/workspace/dol_arc_doc/sphinx-packages"
 
 # Virtual environments for python
 export WORKON_HOME=$HOME/.virtualenvs

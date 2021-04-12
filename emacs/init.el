@@ -726,15 +726,13 @@
          )
   :config
   (define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
-  (setq ;; if set to true can cause a performance hit
-   lsp-log-io nil
-   lsp-pyls-plugins-flake8-enabled t
-   lsp-pyls-plugins-pycodestyle-enabled nil
-   lsp-enable-snippet nil
-   lsp-prefer-flymake nil
-   ;; increase watch threshold
-   lsp-file-watch-threshold 100000
-   )
+  (setq lsp-log-io nil ;; if set to true can cause a performance hit
+        lsp-pyls-plugins-flake8-enabled t
+        lsp-pyls-plugins-pycodestyle-enabled nil
+        lsp-enable-snippet nil
+        lsp-prefer-flymake nil
+        lsp-file-watch-threshold 100000 ;; increase watch threshold
+        )
   (lsp-enable-which-key-integration)
   :bind (:map lsp-mode-map
               ("TAB" . completion-at-point))
@@ -1389,7 +1387,7 @@
 (use-package lsp-docker)
 
 (use-package docker
-  :bind ("C-c d" . docker))
+  :bind ("C-x d" . docker))
 
 ;; -------------------------------------------------------------------
 ;; markdown mode
