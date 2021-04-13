@@ -191,8 +191,8 @@
 (setq-default tab-width 4)
 
 ;; Always split the frame vertically and never horizontally
-(setq split-width-threshold 0)
-(setq split-height-threshold nil)
+;; (setq split-width-threshold 0)
+;; (setq split-height-threshold nil)
 
 ;; Delete trailing white spaces
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
@@ -881,8 +881,7 @@
                 term-mode-hook
                 multi-term-mode-hook
                 eshell-mode-hook
-                treemacs-mode-hook
-                undo-tree-mode-hook))
+                treemacs-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 ;; enable rainbow delimiters for all programming-modes (prog-mode)
@@ -1293,6 +1292,7 @@
 ;; -------------------------------------------------------------------
 (use-package magit
   :commands (magit-status magit-get-current-branch)
+  :bind (("C-c m h" . magit-log-buffer-file))
   :custom
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
   :config
