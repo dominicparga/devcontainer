@@ -848,20 +848,9 @@
 ;; -------------------------------------------------------------------
 ;; Ansi term for zsh in emacs buffer
 ;; -------------------------------------------------------------------
-(defun oleh-term-exec-hook ()
-  "Delete the buffer once the terminal session is terminated."
-  (let* ((buff (current-buffer))
-         (proc (get-buffer-process buff)))
-    (set-process-sentinel
-     proc
-     `(lambda (process event)
-        (if (string= event "finished\n")
-            (kill-buffer ,buff))))))
-
-(add-hook 'term-exec-hook 'oleh-term-exec-hook)
-
 (use-package multi-term
   :ensure-system-package ("/bin/zsh" . zsh)
+  :hook ((term-exec . ff/term-exec-hook))
   :config
   (setq multi-term-program "/bin/zsh")
   (setq explicit-shell-file-name "/bin/zsh")

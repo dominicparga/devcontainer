@@ -65,6 +65,16 @@
       (ansi-term "/bin/zsh")
       )))
 
+(defun ff/term-exec-hook ()
+  "Delete the buffer once the terminal session is terminated."
+  (let* ((buff (current-buffer))
+         (proc (get-buffer-process buff)))
+    (set-process-sentinel
+     proc
+     `(lambda (process event)
+        (if (string= event "finished\n")
+            (kill-buffer-and-window))))))
+
 (provide 'helpers)
 
 ;;; helpers.el ends here
