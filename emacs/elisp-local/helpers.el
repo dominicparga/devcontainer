@@ -50,6 +50,8 @@
           "/site-packages/" (eval package-name))
   )
 
+(defun ff/buffer-exists (bufname) (not (eq nil (get-buffer bufname))))
+
 (defun ff/ansi-term ()
   "Start Bash in a terminal emulator. Like `ansi-term', but
    respect buffer display actions."
@@ -57,7 +59,11 @@
   (let ((switch-to-buffer-obey-display-actions t))
     (split-window-sensibly)
     (other-window 1)
-    (ansi-term "/bin/zsh")))
+
+    (if (ff/buffer-exists "*ansi-term*")
+        (switch-to-buffer "*ansi-term*")
+      (ansi-term "/bin/zsh")
+      )))
 
 (provide 'helpers)
 

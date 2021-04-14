@@ -191,8 +191,8 @@
 (setq-default tab-width 4)
 
 ;; Always split the frame vertically and never horizontally
-;; (setq split-width-threshold 0)
-;; (setq split-height-threshold nil)
+(setq split-width-threshold 0)
+(setq split-height-threshold nil)
 
 ;; Delete trailing white spaces
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
