@@ -1570,7 +1570,44 @@
  '(package-selected-packages
    '(forge shackle toml-mode jinja2-mode all-the-icons-ivy-rich prescient projectile gnu-elpa-keyring-update docker org-tempo transpose-frame with-editor buffer-move dired-hide-dotfiles dired-open all-the-icons-dired dired-single yasnippet-snippets ccls git-gutter-fringe yaml-mode xterm-color whole-line-or-region which-key wgrep vterm volatile-highlights use-package-ensure-system-package tide super-save sphinx-doc smex smart-mode-line scala-mode rainbow-delimiters pyvenv python-black py-autopep8 protobuf-mode poly-rst ox-rst openwith multi-term material-theme magit-todos lsp-ui lsp-python-ms lsp-java lsp-ivy lsp-docker langtool json-mode ivy-rich ivy-prescient ivy-pass ivy-hydra highlight-symbol groovy-mode groovy-imports git-timemachine general flymake-yaml flymake-shellcheck flymake-shell flymake-json flycheck-pycheckers flycheck-plantuml flx fill-column-indicator exec-path-from-shell evil-nerd-commenter ess eshell-z emojify edwina drag-stuff dockerfile-mode dired-narrow diminish counsel-projectile company-prescient company-c-headers company-auctex command-log-mode cmake-mode clang-format+ blacken beacon autopair auto-package-update auto-complete ag ack))
  '(safe-local-variable-values
-   '((projectile-project-test-cmd . "./scripts/run_unit_tests")
+   '((eval progn
+           (setq flycheck-python-mypy-config
+                 '(".mypy.ini"))
+           (setq flycheck-pylintrc ".pylintrc")
+           (setq flycheck-checker 'python-pylint)
+           (set
+            (make-local-variable 'sphinx-packages)
+            (concat
+             (projectile-project-root)
+             "python"))
+           (set
+            (make-local-variable 'ext-recompute-flow)
+            (concat
+             (projectile-project-root)
+             "ext/recompute-flow/"))
+           (set
+            (make-local-variable 'airflow-home-dags)
+            (concat ext-recompute-flow "airflow-home/dags"))
+           (set
+            (make-local-variable 'dol-launcher)
+            (concat ext-recompute-flow "micro_pipeline/dol_launcher/src"))
+           (set
+            (make-local-variable 'dol-launcher-compute)
+            (concat ext-recompute-flow "micro_pipeline/dol_launcher_compute/src"))
+           (set
+            (make-local-variable 'dol-launcher-athena)
+            (concat ext-recompute-flow "micro_pipeline/dol_launcher_athena/src"))
+           (set
+            (make-local-variable 'dol-launcher-hol)
+            (concat ext-recompute-flow "micro_pipeline/dol_launcher_hol/src"))
+           (set
+            (make-local-variable 'web-ui)
+            (concat ext-recompute-flow "web-ui/server"))
+           (set
+            (make-local-variable 'python-path)
+            (concat main ":" sphinx-packages ":" airflow-home-dags ":" dol-launcher ":" dol-launcher-compute ":" dol-launcher-athena ":" dol-launcher-hol ":" web-ui))
+           (setenv "PYTHONPATH" python-path))
+     (projectile-project-test-cmd . "./scripts/run_unit_tests")
      (projectile-project-compilation-cmd . "./build -b html -d architecture"))))
 
 (custom-set-faces
