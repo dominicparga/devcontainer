@@ -75,6 +75,31 @@
         (if (string= event "finished\n")
             (kill-buffer-and-window))))))
 
+
+(defun ff/switch-to-last-window ()
+  "Switch to last visible window."
+  (interactive)
+  (let ((win (get-mru-window t t t)))
+    (unless win (error "Last window not found"))
+    (let ((frame (window-frame win)))
+      (select-frame-set-input-focus frame)
+      (select-window win))))
+
+(defun ff/plantum-preview ()
+  "First, delete the preview window if present, then compile puml file."
+  (interactive)
+  (let ((plantuml-preview-buffer-window
+         (get-buffer-window (eval plantuml-preview-buffer))))
+    ;; delete current preview window if visible
+    (when plantuml-preview-buffer-window
+      (delete-window (eval plantuml-preview-buffer-window)))
+    ;; run actual plantuml preview with 4=new frame setting
+    (plantuml-preview 4)
+    ;; go back to the cursor position in the previous window
+    (ff/switch-to-last-window)
+    )
+  )
+
 (provide 'helpers)
 
 ;;; helpers.el ends here

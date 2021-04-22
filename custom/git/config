@@ -1,17 +1,17 @@
 [include]
     path = "~/.gitconfig.general"
 [core]
-	autocrlf = false
+    autocrlf = false
     editor = vim
 [user]
-    name = Fabian Franzelin (XC-AD/ESB4)
+	name = " Franzelin Fabian (XC-AD/ESB4)"
     email = fabian.franzelin@de.bosch.com
 [credential]
     # For installation, run:
     # sudo apt-get install libsecret-1-0 libsecret-1-dev
     # cd /usr/share/doc/git/contrib/credential/libsecret
     # sudo make
-	helper = /usr/share/doc/git/contrib/credential/libsecret/git-credential-libsecret
+    helper = /usr/share/doc/git/contrib/credential/libsecret/git-credential-libsecret
 [http "https://athena.*.corpintra.net"]
     username = franzef
     sslCert = /home/frf2lr/.local/share/certificates/cert-dap.crt
