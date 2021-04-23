@@ -846,7 +846,8 @@
                 term-mode-hook
                 multi-term-mode-hook
                 eshell-mode-hook
-                treemacs-mode-hook))
+                treemacs-mode-hook
+                compilation-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 ;; enable rainbow delimiters for all programming-modes (prog-mode)
