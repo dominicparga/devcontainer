@@ -125,6 +125,9 @@
 (tool-bar-mode -1) ; disbale tool bar
 (set-fringe-mode 10)
 
+;; disable scroll lock mode permanently
+(setq scroll-lock-mode nil)
+
 ;; enable revert from disk
 (global-auto-revert-mode 1)
 
