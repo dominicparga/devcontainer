@@ -126,6 +126,8 @@
 (set-fringe-mode 10)
 
 ;; disable scroll lock mode permanently
+(defun do-nothing () (interactive))
+(global-set-key (kbd "<Scroll_Lock>") 'do-nothing)
 (setq scroll-lock-mode nil)
 
 ;; enable revert from disk
