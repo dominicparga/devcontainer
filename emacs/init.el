@@ -309,9 +309,7 @@
   (global-company-mode 1)
   :bind (("C-c C-y" . company-yasnippet)
          :map company-active-map
-         ("TAB" . company-complete-selection)
-         :map lsp-mode-map
-         ("TAB" . company-indent-or-complete-common))
+         ("TAB" . company-complete-selection))
   )
 
 
@@ -713,7 +711,7 @@
         )
   (lsp-enable-which-key-integration)
   :bind (:map lsp-mode-map
-              ("TAB" . completion-at-point))
+              ("TAB" . company-indent-or-complete-common))
   )
 
 ;; increase threshold for lsp to run smoothly
