@@ -52,18 +52,32 @@
 
 (defun ff/buffer-exists (bufname) (not (eq nil (get-buffer bufname))))
 
+
+
 (defun ff/ansi-term ()
   "Start Bash in a terminal emulator. Like `ansi-term', but
    respect buffer display actions."
   (interactive)
-  (let ((switch-to-buffer-obey-display-actions t))
-    (split-window-sensibly)
-    (other-window 1)
-
-    (if (ff/buffer-exists "*ansi-term*")
-        (switch-to-buffer "*ansi-term*")
-      (ansi-term "/bin/zsh")
-      )))
+  (let* ((ansi-term-buffer-name "*ansi-term*")
+         (is-ansi-term-buffer-selected (equal (buffer-name) (eval ansi-term-buffer-name)))
+         (is-ansi-term-buffer-visible (get-buffer-window (eval ansi-term-buffer-name))))
+    (cond ((eval is-ansi-term-buffer-selected)
+           ;; ansi term buffer is visible and selected. Do nothing
+           (message "ansi-term buffer is already selected."))
+          ((eval is-ansi-term-buffer-visible)
+           ;; switch to the visible buffer
+           (switch-to-buffer-other-window (eval ansi-term-buffer-name)))
+          (;;else
+           ;; create a new window right from the current one
+           (split-window-right)
+           (other-window 1)
+           ;; switch to the ansi term buffer if it already exists,
+           ;; otherwise, create one
+           (if (ff/buffer-exists (eval ansi-term-buffer-name))
+               (switch-to-buffer (eval ansi-term-buffer-name))
+             ;; else
+             (ansi-term "/bin/zsh"))
+           ))))
 
 (defun ff/term-exec-hook ()
   "Delete the buffer once the terminal session is terminated."
@@ -99,6 +113,25 @@
     (ff/switch-to-last-window)
     )
   )
+
+(defun ff/split-windows-python ()
+  "Split windows for Python development."
+  (interactive)
+  ;; open error list
+  (flycheck-list-errors)
+  (other-window 1)
+  ;; split window below and open a shell
+  (split-window-below)
+  ;; Start eshell in current window
+  (other-window 1)
+  (if (ff/buffer-exists "*ansi-term*")
+      (switch-to-buffer "*ansi-term*")
+    (ansi-term "/bin/zsh"))
+  ;; Go to first buffer
+  (other-window -1)
+  (other-window -1)
+  )
+
 
 (provide 'helpers)
 
