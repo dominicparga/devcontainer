@@ -55,8 +55,7 @@
 
 
 (defun ff/ansi-term ()
-  "Start Bash in a terminal emulator. Like `ansi-term', but
-   respect buffer display actions."
+  "Start Ansi terminal emulator."
   (interactive)
   (let* ((ansi-term-buffer-name "*ansi-term*")
          (is-ansi-term-buffer-selected (equal (buffer-name) (eval ansi-term-buffer-name)))
