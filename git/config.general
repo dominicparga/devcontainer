@@ -11,7 +11,7 @@
     # general
     h     = "help"
     s     = "status"
-    hash  = "rev-parse --verify HEAD"
+    hash  = !"hash() { git rev-parse --verify ${1:-HEAD}; }; hash"
     sub   = "submodule"
     subup = "submodule update --recursive"
 
