@@ -4,7 +4,7 @@
     autocrlf = false
     editor = vim
 [user]
-	name = " Franzelin Fabian (XC-AD/ESB4)"
+    name = " Franzelin Fabian (XC-AD/ETV5)"
     email = fabian.franzelin@de.bosch.com
 [credential]
     # For installation, run:

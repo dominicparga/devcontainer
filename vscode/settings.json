@@ -8,7 +8,7 @@
   "workbench.sideBar.location": "left",
   "workbench.statusBar.visible": true,
   "workbench.iconTheme": "material-icon-theme",
-  "workbench.colorTheme": "Nord", // "Dracula",
+  "workbench.colorTheme": "Dracula", // "Dracula",
   "workbench.activityBar.visible": true,
   "window.menuBarVisibility": "compact",
   "breadcrumbs.enabled": true,

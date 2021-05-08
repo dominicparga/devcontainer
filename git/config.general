@@ -11,7 +11,7 @@
     # general
     h     = "help"
     s     = "status"
-    hash  = "rev-parse --verify HEAD"
+    hash  = !"hash() { git rev-parse --verify ${1:-HEAD}; }; hash"
     sub   = "submodule"
     subup = "submodule update --recursive"
 
@@ -47,6 +47,7 @@
     cob = "checkout -b"
     # list branches sorted by last modified
     b   = "branch"
+    bsc = "branch --show-current"
     ba  = "branch --list -a"
     bv  = "branch --list -v"
     bav = "branch --list -av"
