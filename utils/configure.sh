@@ -191,10 +191,12 @@ echo -e "${__COLOR_INFO}INFO: Creating and linking vscode-setup..${__COLOR_RESET
 # macOS
 # linux - microsoft-release
 # linux - open-source-release
+# windows (path is for git-bash)
 for __DIR in \
     "${HOME}/Library/Application Support/Code/User" \
     "${HOME}/.config/Code/User" \
-    "${HOME}/.config/Code - OSS/User"
+    "${HOME}/.config/Code - OSS/User" \
+    "${HOME}/AppData/Roaming/Code/User"
 do
     if [ -e "${__DIR}" ]; then
         __VSCODE_HOME="${__DIR}"
