@@ -277,8 +277,20 @@
   (setq which-key-idle-delay 0.5))
 
 ;; -------------------------------------------------------------------
-;; Ivy project
+;; Tab bar
 ;; -------------------------------------------------------------------
+(use-package tab-bar
+  :config
+  ;; Don't turn on tab-bar-mode when tabs are created
+  (setq tab-bar-show nil)
+  (setq tab-bar-new-tab-choice "*scratch*")
+  (setq tab-bar-close-button-show nil
+        tab-bar-new-button-show nil)
+  )
+
+;; -------------------------------------------------------------------
+;; Ivy project
+;; ------------------------------------------------------------------
 (use-package setup-ivy
   :load-path local-load-path
   )
