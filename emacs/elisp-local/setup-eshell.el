@@ -57,6 +57,17 @@
        (propertize "\nλ" 'face `(:foreground "#aece4a")))
      (propertize " " 'face `(:foreground "white")))))
 
+(defun ff/open-eshell (direction)
+  "Opens new eshell either below or right of the current window."
+  (if (equal (eval direction) "below")
+      (split-window-below)
+    (split-window-right))
+
+  (balance-windows)
+  (other-window 1)
+  (eshell (ff/random-string 5))
+  )
+
 (defun dw/eshell-configure ()
   (use-package xterm-color)
 
@@ -88,6 +99,13 @@
   (define-key eshell-mode-map (kbd "C-r") 'counsel-esh-history)
   (define-key eshell-mode-map (kbd "<home>") 'eshell-bol)
 
+  ;; close eshell
+  (define-key eshell-mode-map (kbd "C-d") '(lambda () (interactive) (kill-buffer-and-window) (balance-windows)))
+
+  ;; if an eshell buffer is split, open a new session
+  (define-key eshell-mode-map (kbd "C-x 2") '(lambda () (interactive) (ff/open-eshell "below")))
+  (define-key eshell-mode-map (kbd "C-x 3") '(lambda () (interactive) (ff/open-eshell "right")))
+
   (setenv "PAGER" "cat")
 
   (setq eshell-prompt-function      'dw/eshell-prompt
@@ -97,10 +115,12 @@
         eshell-hist-ignoredups t
         eshell-highlight-prompt t
         eshell-scroll-to-bottom-on-input t
-        eshell-prefer-lisp-functions nil))
+        eshell-prefer-lisp-functions nil)
+)
 
 (use-package eshell
   :hook (eshell-first-time-mode . dw/eshell-configure)
+  :bind (("C-x e" . ff/eshell-term))
   :init
   (setq eshell-directory-name "~/.emacs.d/eshell/"))
 

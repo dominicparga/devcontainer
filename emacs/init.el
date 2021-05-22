@@ -836,17 +836,40 @@
 ;; -------------------------------------------------------------------
 ;; Ansi term for zsh in emacs buffer
 ;; -------------------------------------------------------------------
+(defun ff/open-ansi-term (direction)
+  "Opens new ansi-term either below or right of the current window."
+  (if (equal (eval direction) "below")
+      (split-window-below)
+    (split-window-right))
+
+  (balance-windows)
+  (other-window 1)
+  (ansi-term "/bin/zsh" (ff/random-string 5))
+  )
+
+(defun ff/open-ansi-term-right ()
+  (interactive)
+  (ff/open-ansi-term "right")
+)
+
+(defun ff/open-ansi-term-below ()
+  (interactive)
+  (ff/open-ansi-term "below")
+)
+
 (use-package multi-term
   :ensure-system-package ("/bin/zsh" . zsh)
   :hook ((term-exec . ff/term-exec-hook))
   :config
   (setq multi-term-program "/bin/zsh")
   (setq explicit-shell-file-name "/bin/zsh")
+
   :bind (("C-x j" . ff/ansi-term))
   )
 
-(eval-after-load "term"
-  '(define-key term-raw-map (kbd "C-y") 'term-paste))
+(eval-after-load "term" '(bind-key "C-y" #'term-paste term-raw-map))
+;; (eval-after-load "term" '(bind-key "C-x 2" #'ff/open-ansi-term-below term-raw-map))
+;; (eval-after-load "term" '(bind-key "C-x 3" #'ff/open-ansi-term-right term-raw-map))
 
 ;; -------------------------------------------------------------------
 ;; Show number of lines in the left side of the buffer
@@ -1558,7 +1581,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(forge shackle toml-mode jinja2-mode all-the-icons-ivy-rich prescient projectile gnu-elpa-keyring-update docker org-tempo transpose-frame with-editor buffer-move dired-hide-dotfiles dired-open all-the-icons-dired dired-single yasnippet-snippets ccls git-gutter-fringe yaml-mode xterm-color whole-line-or-region which-key wgrep vterm volatile-highlights use-package-ensure-system-package tide super-save sphinx-doc smex smart-mode-line scala-mode rainbow-delimiters pyvenv python-black py-autopep8 protobuf-mode poly-rst ox-rst openwith multi-term material-theme magit-todos lsp-ui lsp-python-ms lsp-java lsp-ivy lsp-docker langtool json-mode ivy-rich ivy-prescient ivy-pass ivy-hydra highlight-symbol groovy-mode groovy-imports git-timemachine general flymake-yaml flymake-shellcheck flymake-shell flymake-json flycheck-pycheckers flycheck-plantuml flx fill-column-indicator exec-path-from-shell evil-nerd-commenter ess eshell-z emojify edwina drag-stuff dockerfile-mode dired-narrow diminish counsel-projectile company-prescient company-c-headers company-auctex command-log-mode cmake-mode clang-format+ blacken beacon auto-package-update auto-complete ag ack))
+   '(em-tramp forge shackle toml-mode jinja2-mode all-the-icons-ivy-rich prescient projectile gnu-elpa-keyring-update docker org-tempo transpose-frame with-editor buffer-move dired-hide-dotfiles dired-open all-the-icons-dired dired-single yasnippet-snippets ccls git-gutter-fringe yaml-mode xterm-color whole-line-or-region which-key wgrep vterm volatile-highlights use-package-ensure-system-package tide super-save sphinx-doc smex smart-mode-line scala-mode rainbow-delimiters pyvenv python-black py-autopep8 protobuf-mode poly-rst ox-rst openwith multi-term material-theme magit-todos lsp-ui lsp-python-ms lsp-java lsp-ivy lsp-docker langtool json-mode ivy-rich ivy-prescient ivy-pass ivy-hydra highlight-symbol groovy-mode groovy-imports git-timemachine general flymake-yaml flymake-shellcheck flymake-shell flymake-json flycheck-pycheckers flycheck-plantuml flx fill-column-indicator exec-path-from-shell evil-nerd-commenter ess eshell-z emojify edwina drag-stuff dockerfile-mode dired-narrow diminish counsel-projectile company-prescient company-c-headers company-auctex command-log-mode cmake-mode clang-format+ blacken beacon auto-package-update auto-complete ag ack))
  '(safe-local-variable-values
    '((eval progn
            (set

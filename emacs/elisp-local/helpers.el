@@ -4,6 +4,22 @@
 
 ;;; Code:
 
+(defun ff/random-alnum ()
+  (let* ((alnum "abcdefghijklmnopqrstuvwxyz0123456789")
+         (i (% (abs (random)) (length alnum))))
+    (substring alnum i (1+ i))))
+
+(defun ff/random-string (n)
+  "Generate a slug of n random alphanumeric characters."
+  (let ((ans ""))
+    (while (<= 0 n)
+      (setq ans (concat ans (ff/random-alnum)))
+      (setq n (- n 1))
+      )
+    (eval ans)))
+
+;;; -------------------------------------------------------------
+
 (defun ff/download-and-extract-zip-archive (url name extract-to expected-binary-file package-name)
   "Download and install zip archives."
   (let* ((temporary-file (concat temporary-file-directory name ".zip")))
@@ -52,31 +68,45 @@
 
 (defun ff/buffer-exists (bufname) (not (eq nil (get-buffer bufname))))
 
-
-
-(defun ff/ansi-term ()
+(defun ff/start-term (term-buffer-name start-cmd)
   "Start Ansi terminal emulator."
   (interactive)
-  (let* ((ansi-term-buffer-name "*ansi-term*")
-         (is-ansi-term-buffer-selected (equal (buffer-name) (eval ansi-term-buffer-name)))
-         (is-ansi-term-buffer-visible (get-buffer-window (eval ansi-term-buffer-name))))
-    (cond ((eval is-ansi-term-buffer-selected)
+  (let* ((is-term-buffer-selected (equal (buffer-name) (eval term-buffer-name)))
+         (is-term-buffer-visible (get-buffer-window (eval term-buffer-name))))
+    (cond ((eval is-term-buffer-selected)
            ;; ansi term buffer is visible and selected. Do nothing
-           (message "ansi-term buffer is already selected."))
-          ((eval is-ansi-term-buffer-visible)
+           (message "term buffer is already selected."))
+          ((eval is-term-buffer-visible)
            ;; switch to the visible buffer
-           (switch-to-buffer-other-window (eval ansi-term-buffer-name)))
+           (switch-to-buffer-other-window (eval term-buffer-name)))
           (;;else
            ;; create a new window right from the current one
            (split-window-right)
            (other-window 1)
            ;; switch to the ansi term buffer if it already exists,
            ;; otherwise, create one
-           (if (ff/buffer-exists (eval ansi-term-buffer-name))
-               (switch-to-buffer (eval ansi-term-buffer-name))
+           (if (ff/buffer-exists (eval term-buffer-name))
+               (switch-to-buffer (eval term-buffer-name))
              ;; else
-             (ansi-term "/bin/zsh"))
+             (eval start-cmd))
            ))))
+
+
+(defun ff/ansi-term ()
+  "Start Ansi terminal emulator."
+  (interactive)
+  (let* ((term-buffer-name "*ansi-term*")
+         (start-cmd '(ansi-term "/bin/zsh")))
+    (ff/start-term term-buffer-name start-cmd)
+    ))
+
+(defun ff/eshell-term (&optional arg)
+  "Start Ansi terminal emulator."
+  (interactive "P")
+  (let* ((term-buffer-name "*eshell*")
+         (start-cmd '(eshell (or arg t))))
+    (ff/start-term term-buffer-name start-cmd)
+    ))
 
 (defun ff/term-exec-hook ()
   "Delete the buffer once the terminal session is terminated."
@@ -86,7 +116,8 @@
      proc
      `(lambda (process event)
         (if (string= event "finished\n")
-            (kill-buffer-and-window))))))
+            (kill-buffer-and-window)
+          )))))
 
 
 (defun ff/switch-to-last-window ()

@@ -224,3 +224,4 @@ fi
 
 # make aliases available in eshell
 alias | sed 's/^alias //' | sed -E "s/^([^=]+)='(.+?)'$/\1=\2/" | sed "s/'\\\\''/'/g" | sed "s/'\\\\$/'/;" | sed -E 's/^([^=]+)=(.+)$/alias \1 \2/' > ~/.emacs.d/eshell/alias
+echo "alias ff find-file" >> ~/.emacs.d/eshell/alias
