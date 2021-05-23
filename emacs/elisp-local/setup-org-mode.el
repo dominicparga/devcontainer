@@ -4,9 +4,20 @@
 
 ;;; Code:
 
-(setq org-directory "~/workspace/org_files")
-
-(setq org-agenda-files `(,org-directory))
+(setq-default org-directory "~/workspace/org_files"
+		      org-default-notes-file (concat org-directory "/notes.org")
+		      org-agenda-files (directory-files-recursively
+				                org-directory ".org")
+		      org-archive-location (concat org-directory "/archive/"
+						                   (format-time-string "%Y")
+						                   ".org::")
+		      org-return-follows-link t
+		      org-ellipsis "⤵"
+		      org-src-fontify-natively t
+		      org-src-tab-acts-natively t
+		      org-enforce-todo-dependencies t
+		      org-enforce-todo-checkbox-dependencies t
+		      org-agenda-dim-blocked-tasks t)
 
 ;; Inspired by this great article:
 ;; https://d12frosted.io/posts/2021-01-16-task-management-with-roam-vol5.html

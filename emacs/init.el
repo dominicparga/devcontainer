@@ -9,9 +9,9 @@
 ;; ==================================================================
 ;; Load Packages for different modes
 ;; ===================================================================
-(setq user-full-name "Fabian Franzelin")
-(setq user-mail-address "fabian.franzelin@de.bosch.com")
-(setq inhibit-startup-echo-area-message (getenv "USER"))
+(setq user-full-name "Fabian Franzelin"
+      user-mail-address "fabian.franzelin@de.bosch.com"
+      inhibit-startup-echo-area-message (getenv "USER"))
 
 ;; Package Management
 (require 'package)
@@ -55,10 +55,11 @@
 ;; make sure that the path environment from shell is available in
 ;; emacs
 (use-package exec-path-from-shell
-  :config
-  (when (or (memq window-system '(mac ns x)))
-    (exec-path-from-shell-initialize))
-  )
+  :unless (string-equal system-type "windows-nt")
+  :demand t
+  :init
+  (exec-path-from-shell-initialize)
+  (exec-path-from-shell-copy-env "SSH_AUTH_SOCK"))
 
 (defun ff/emacs-config-home ()
   "Provide the home of the emacs configuration folder."
@@ -119,6 +120,17 @@
 ;; dont warn for following symlinked files
 (setq vc-follow-symlinks t)
 
+;; disable lockfiles
+(setq create-lockfiles nil)
+
+;; setup a new custom file
+(setq emacs-d-custom (concat (ff/emacs-config-home) "/custom.el"))
+(unless (file-exists-p emacs-d-custom)
+  (with-temp-buffer (write-file emacs-d-custom)))
+
+(setq custom-file emacs-d-custom)
+(load custom-file)
+
 ;; disable scrollbar
 (scroll-bar-mode -1) ; disbale scrollbar
 (menu-bar-mode -1) ; disable menu bar
@@ -134,6 +146,9 @@
 (global-auto-revert-mode 1)
 
 (defalias 'yes-or-no-p 'y-or-n-p)
+
+;; let me confirm emacs before killing it
+(setq confirm-kill-emacs 'yes-or-no-p)
 
 ;; Enable ahead-of-time compliation when installing packages
 ;; https://www.emacswiki.org/emacs/GccEmacs
@@ -171,8 +186,10 @@
 (global-subword-mode t)
 
 ;; Color theme
-(use-package material-theme)
-(load-theme 'material t)
+(use-package material-theme
+  :demand t
+  :config
+  (load-theme 'material t))
 
 ;; show logs of executed commands
 (use-package command-log-mode)
@@ -247,8 +264,9 @@
 (use-package all-the-icons
   :after font-lock+)
 
-;; set zsh as default shell name
-(setq shell-file-name "/bin/zsh")
+
+;; turn on auto-fill-mode in all text buffers
+(add-hook 'text-mode-hook 'turn-on-auto-fill)
 
 ;; -------------------------------------------------------------------
 ;; Tramp
@@ -908,6 +926,14 @@
 ;; -------------------------------------------------------------------
 (use-package yasnippet
   :config
+  (setq yas-verbosity 1
+	    yas-wrap-around-region t)
+
+  ;; enable once you use personal snippets
+  ;; (with-eval-after-load 'yasnippet
+  ;;   (setq yas-snippet-dirs (list (concat emacs-d-custom "/personal-snippets"))))
+
+  (yas-reload-all)
   (yas-global-mode 1))
 
 (use-package yasnippet-snippets
@@ -1555,141 +1581,8 @@
   :mode ("\\.j2\\'" "\\.jinja2\\'"))
 
 ;; -------------------------------------------------------------------
-;; Placement of windows with shackle
+;; Restclient
 ;; -------------------------------------------------------------------
-(use-package shackle
-  :commands shackle-mode
-  :config
-  (setq shackle-rules
-	'(("\\*TeX.*\\*" :regexp t :autoclose t :align below :size 0.5)
-	  ("\\*.*Help\\*" :regexp t :autoclose t :align below :size 0.5)
-      ("\\`\\*e?shell" :regexp t :popup t :size 0.5 :align right)
-      ("\\`\\*PLANTUML Preview.*?\\*\\'" :regexp t :popup t :size 0.5 :align right)
-      ))
-  (setq shackle-default-rule '(:select f :align right))
-  (setq shackle-default-alignment 'right)
-  (shackle-mode t)
-  )
-
-;; -------------------------------------------------------------------
-;; Other stuff
-;; -------------------------------------------------------------------
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(em-tramp forge shackle toml-mode jinja2-mode all-the-icons-ivy-rich prescient projectile gnu-elpa-keyring-update docker org-tempo transpose-frame with-editor buffer-move dired-hide-dotfiles dired-open all-the-icons-dired dired-single yasnippet-snippets ccls git-gutter-fringe yaml-mode xterm-color whole-line-or-region which-key wgrep vterm volatile-highlights use-package-ensure-system-package tide super-save sphinx-doc smex smart-mode-line scala-mode rainbow-delimiters pyvenv python-black py-autopep8 protobuf-mode poly-rst ox-rst openwith multi-term material-theme magit-todos lsp-ui lsp-python-ms lsp-java lsp-ivy lsp-docker langtool json-mode ivy-rich ivy-prescient ivy-pass ivy-hydra highlight-symbol groovy-mode groovy-imports git-timemachine general flymake-yaml flymake-shellcheck flymake-shell flymake-json flycheck-pycheckers flycheck-plantuml flx fill-column-indicator exec-path-from-shell evil-nerd-commenter ess eshell-z emojify edwina drag-stuff dockerfile-mode dired-narrow diminish counsel-projectile company-prescient company-c-headers company-auctex command-log-mode cmake-mode clang-format+ blacken beacon auto-package-update auto-complete ag ack))
- '(safe-local-variable-values
-   '((eval progn
-           (set
-            (make-local-variable 'build-path)
-            (concat
-             (projectile-project-root)
-             "_build/OSD5/DEBUG/ALL"))
-           (set
-            (make-local-variable 'dol-cli)
-            (concat
-             (projectile-project-root)
-             "recompute/dol/cli"))
-           (set
-            (make-local-variable 'dol-rest-api)
-            (concat
-             (projectile-project-root)
-             "recompute/dol/rest_api"))
-           (set
-            (make-local-variable 'python-path)
-            (concat build-path ":" dol-cli ":" dol-rest-api))
-           (setenv "PYTHONPATH" python-path))
-     (eval progn
-           (setq +ccls-initial-blacklist
-                 '("conan"
-                   (\, "ext")
-                   (\, "rosi")
-                   (\, "xcom"))))
-     (eval progn
-           (set
-            (make-local-variable 'airflow-home-dags)
-            (concat
-             (projectile-project-root)
-             "airflow-home/dags"))
-           (set
-            (make-local-variable 'dol-launcher)
-            (concat
-             (projectile-project-root)
-             "micro_pipeline/dol_launcher/src"))
-           (set
-            (make-local-variable 'dol-launcher-compute)
-            (concat
-             (projectile-project-root)
-             "micro_pipeline/dol_launcher_compute/src"))
-           (set
-            (make-local-variable 'dol-launcher-athena)
-            (concat
-             (projectile-project-root)
-             "micro_pipeline/dol_launcher_athena/src"))
-           (set
-            (make-local-variable 'dol-launcher-hol)
-            (concat
-             (projectile-project-root)
-             "micro_pipeline/dol_launcher_hol/src"))
-           (set
-            (make-local-variable 'web-ui)
-            (concat
-             (projectile-project-root)
-             "web-ui/server"))
-           (set
-            (make-local-variable 'python-path)
-            (concat airflow-home-dags ":" dol-launcher ":" dol-launcher-compute ":" dol-launcher-athena ":" dol-launcher-hol ":" web-ui))
-           (setenv "PYTHONPATH" python-path))
-     (projectile-project-test-cmd . "python -m pytest ./tests -vv")
-     (eval progn
-           (setq flycheck-python-mypy-config
-                 '(".mypy.ini"))
-           (setq flycheck-pylintrc ".pylintrc")
-           (setq flycheck-checker 'python-pylint)
-           (set
-            (make-local-variable 'sphinx-packages)
-            (concat
-             (projectile-project-root)
-             "python"))
-           (set
-            (make-local-variable 'ext-recompute-flow)
-            (concat
-             (projectile-project-root)
-             "ext/recompute-flow/"))
-           (set
-            (make-local-variable 'airflow-home-dags)
-            (concat ext-recompute-flow "airflow-home/dags"))
-           (set
-            (make-local-variable 'dol-launcher)
-            (concat ext-recompute-flow "micro_pipeline/dol_launcher/src"))
-           (set
-            (make-local-variable 'dol-launcher-compute)
-            (concat ext-recompute-flow "micro_pipeline/dol_launcher_compute/src"))
-           (set
-            (make-local-variable 'dol-launcher-athena)
-            (concat ext-recompute-flow "micro_pipeline/dol_launcher_athena/src"))
-           (set
-            (make-local-variable 'dol-launcher-hol)
-            (concat ext-recompute-flow "micro_pipeline/dol_launcher_hol/src"))
-           (set
-            (make-local-variable 'web-ui)
-            (concat ext-recompute-flow "web-ui/server"))
-           (set
-            (make-local-variable 'python-path)
-            (concat main ":" sphinx-packages ":" airflow-home-dags ":" dol-launcher ":" dol-launcher-compute ":" dol-launcher-athena ":" dol-launcher-hol ":" web-ui))
-           (setenv "PYTHONPATH" python-path))
-     (projectile-project-test-cmd . "./scripts/run_unit_tests")
-     (projectile-project-compilation-cmd . "./build -b html -d architecture"))))
-
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+(use-package restclient)
 
 ;;; init.el ends here
