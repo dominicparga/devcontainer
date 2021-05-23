@@ -1,6 +1,8 @@
-;;; package --- Set up ansi-term
+;;; package --- Set up vterm
 ;;; Commentary:
-;;; Sets up ansi-term config for Emacs
+;;; Sets up vterm config for Emacs. Note that the features listed
+;;; here, require a shell integration that is done in vterm.sh in the
+;;; same repository.
 
 ;;; Code:
 

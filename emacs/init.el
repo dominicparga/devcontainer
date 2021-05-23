@@ -601,7 +601,7 @@
          'identity
          ;; These names must start with a space!
          '(" GitGutter" " MRev" " company"
-           " Helm" " Undo-Tree" " Projectile.*" " Z" " Ind"
+           " Undo-Tree" " Projectile.*" " Z" " Ind"
            " Org-Agenda.*" " ElDoc" " SP/s" " cider.*")
          "\\|")))
 
