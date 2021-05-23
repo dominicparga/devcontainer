@@ -264,10 +264,6 @@
 (use-package all-the-icons
   :after font-lock+)
 
-
-;; turn on auto-fill-mode in all text buffers
-(add-hook 'text-mode-hook 'turn-on-auto-fill)
-
 ;; -------------------------------------------------------------------
 ;; Tramp
 ;; -------------------------------------------------------------------
@@ -327,13 +323,25 @@
         ;; aligns annotation to the right hand side
         company-tooltip-align-annotations t)
 
+;;   (defvar +company-backend-alist
+;;     '((text-mode :derived (company-dabbrev company-ispell company-yasnippet))
+;;       (prog-mode :derived (:separate company-capf company-yasnippet))
+;;       (python-mode :derived ((company-capf company-yasnippet)))
+;;       (cc-mode :derived (company-clang company-yasnippet))
+;;       (typescript-mode :derived (company-tide company-yasnippet))
+;;       (conf-mode :derived company-capf company-dabbrev-code company-yasnippet))
+;;     "An alist matching modes to company backends. The backends
+;; for any mode is built from this.")
+
   ;; The company-backends support list of lists. Lists are evaluated
   ;; at once, which
   (setq company-backends (append '((company-clang
                                     company-tide
                                     company-capf
-                                    company-yasnippet))
-                                 company-backends))
+                                    company-yasnippet
+                                    company-dabbrev))
+                                 company-backends
+                                 ))
 
   ;; enable company globally
   (global-company-mode 1)
@@ -353,6 +361,20 @@
 (use-package company-prescient
   :config
   (company-prescient-mode 1))
+
+;; -------------------------------------------------------------------
+;; Simple text
+;; -------------------------------------------------------------------
+(defun ff/configure-text-mode ()
+  (interactive)
+  (define-key text-mode-map (kbd "<tab>") 'company-indent-or-complete-common)
+  )
+
+(use-package text-mode
+  :ensure nil
+  :after company
+  :hook (text-mode . ff/configure-text-mode)
+  )
 
 ;; -------------------------------------------------------------------
 ;; Buffer move & transpose frame
