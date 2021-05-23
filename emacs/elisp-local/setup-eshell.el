@@ -1,6 +1,6 @@
 ;;; package --- Set up eshell
 ;;; Commentary:
-;;; Sets up helm for Emacs
+;;; Sets up eshell config for Emacs
 
 ;;; Code:
 (defun read-file (file-path)

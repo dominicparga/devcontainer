@@ -345,8 +345,7 @@
 
 ;; disable company mode for terminals
 (dolist (mode '(term-mode-hook
-                multi-term-mode-hook
-                ansi-term-mode-hook
+                vterm-mode-hook
                 eshell-mode-hook
                 dap-ui-repl-mode-hook))
   (add-hook mode (lambda () (company-mode 0))))
@@ -840,54 +839,14 @@
 ;; -------------------------------------------------------------------
 ;; Eshell & Vterm
 ;; -------------------------------------------------------------------
-(use-package vterm
-  :ensure-system-package ((cmake . cmake)
-                          (libtool . libtool-bin))
-  :commands vterm
-  :config
-  (setq vterm-max-scrollback 10000))
 
 (use-package setup-eshell
   :load-path local-load-path
   )
 
-;; -------------------------------------------------------------------
-;; Ansi term for zsh in emacs buffer
-;; -------------------------------------------------------------------
-(defun ff/open-ansi-term (direction)
-  "Opens new ansi-term either below or right of the current window."
-  (if (equal (eval direction) "below")
-      (split-window-below)
-    (split-window-right))
-
-  (balance-windows)
-  (other-window 1)
-  (ansi-term "/bin/zsh" (ff/random-string 5))
+(use-package setup-vterm
+  :load-path local-load-path
   )
-
-(defun ff/open-ansi-term-right ()
-  (interactive)
-  (ff/open-ansi-term "right")
-)
-
-(defun ff/open-ansi-term-below ()
-  (interactive)
-  (ff/open-ansi-term "below")
-)
-
-(use-package multi-term
-  :ensure-system-package ("/bin/zsh" . zsh)
-  :hook ((term-exec . ff/term-exec-hook))
-  :config
-  (setq multi-term-program "/bin/zsh")
-  (setq explicit-shell-file-name "/bin/zsh")
-
-  :bind (("C-x j" . ff/ansi-term))
-  )
-
-(eval-after-load "term" '(bind-key "C-y" #'term-paste term-raw-map))
-;; (eval-after-load "term" '(bind-key "C-x 2" #'ff/open-ansi-term-below term-raw-map))
-;; (eval-after-load "term" '(bind-key "C-x 3" #'ff/open-ansi-term-right term-raw-map))
 
 ;; -------------------------------------------------------------------
 ;; Show number of lines in the left side of the buffer
@@ -897,8 +856,8 @@
 
 (dolist (mode '(org-mode-hook
                 term-mode-hook
-                multi-term-mode-hook
                 eshell-mode-hook
+                vterm-mode-hook
                 treemacs-mode-hook
                 compilation-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))

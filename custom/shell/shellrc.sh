@@ -23,6 +23,10 @@ fi
 greet
 
 #------------------------------------------------------------------------------#
+# EMACS setup
+if [[ -n "${ZSH_NAME}" ]] && [[ -f "${DOTFILES}/shell/vterm.sh" ]]; then
+    . "${DOTFILES}/shell/vterm.sh"
+fi
 
 # ----------------------------------------------------
 # personal

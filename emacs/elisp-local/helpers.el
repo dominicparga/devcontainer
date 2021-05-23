@@ -91,15 +91,6 @@
              (eval start-cmd))
            ))))
 
-
-(defun ff/ansi-term ()
-  "Start Ansi terminal emulator."
-  (interactive)
-  (let* ((term-buffer-name "*ansi-term*")
-         (start-cmd '(ansi-term "/bin/zsh")))
-    (ff/start-term term-buffer-name start-cmd)
-    ))
-
 (defun ff/eshell-term (&optional arg)
   "Start Ansi terminal emulator."
   (interactive "P")
@@ -107,18 +98,6 @@
          (start-cmd '(eshell (or arg t))))
     (ff/start-term term-buffer-name start-cmd)
     ))
-
-(defun ff/term-exec-hook ()
-  "Delete the buffer once the terminal session is terminated."
-  (let* ((buff (current-buffer))
-         (proc (get-buffer-process buff)))
-    (set-process-sentinel
-     proc
-     `(lambda (process event)
-        (if (string= event "finished\n")
-            (kill-buffer-and-window)
-          )))))
-
 
 (defun ff/switch-to-last-window ()
   "Switch to last visible window."
