@@ -355,6 +355,7 @@
 ;; Simple text
 ;; -------------------------------------------------------------------
 (defun ff/configure-text-mode ()
+  "Configure text mode."
   (interactive)
   (define-key text-mode-map (kbd "<tab>") 'company-indent-or-complete-common)
   (set (make-local-variable 'company-backends)
@@ -408,7 +409,6 @@
    )
   :config
   (setq dired-listing-switches "-agho --group-directories-first"
-        dired-omit-verbose nil
         dired-hide-details-hide-symlink-targets nil)
 
   (autoload 'dired-omit-mode "dired-x")
@@ -469,7 +469,6 @@
 ;; -------------------------------------------------------------------
 ;; Credential management
 ;; -------------------------------------------------------------------
-
 (use-package ivy-pass
   :commands ivy-pass
   :config
