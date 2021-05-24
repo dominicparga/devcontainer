@@ -323,25 +323,14 @@
         ;; aligns annotation to the right hand side
         company-tooltip-align-annotations t)
 
-;;   (defvar +company-backend-alist
-;;     '((text-mode :derived (company-dabbrev company-ispell company-yasnippet))
-;;       (prog-mode :derived (:separate company-capf company-yasnippet))
-;;       (python-mode :derived ((company-capf company-yasnippet)))
-;;       (cc-mode :derived (company-clang company-yasnippet))
-;;       (typescript-mode :derived (company-tide company-yasnippet))
-;;       (conf-mode :derived company-capf company-dabbrev-code company-yasnippet))
-;;     "An alist matching modes to company backends. The backends
-;; for any mode is built from this.")
-
   ;; The company-backends support list of lists. Lists are evaluated
   ;; at once, which
-  (setq company-backends (append '((company-clang
-                                    company-tide
-                                    company-capf
-                                    company-yasnippet
-                                    company-dabbrev))
-                                 company-backends
-                                 ))
+  (defvar +ff/company-default-backends '((company-capf
+                                          company-files
+                                          :with company-yasnippet)
+                                         (company-abbrev
+                                          company-ispell)))
+  (setq company-backends +ff/company-default-backends)
 
   ;; enable company globally
   (global-company-mode 1)
@@ -368,6 +357,13 @@
 (defun ff/configure-text-mode ()
   (interactive)
   (define-key text-mode-map (kbd "<tab>") 'company-indent-or-complete-common)
+  (set (make-local-variable 'company-backends)
+       '((company-abbrev
+          company-dabbrev
+          company-ispell
+          company-files
+          :with company-yasnippet)
+         ))
   )
 
 (use-package text-mode
@@ -761,6 +757,7 @@
         lsp-file-watch-threshold 100000 ;; increase watch threshold
         )
   (lsp-enable-which-key-integration)
+
   :bind (:map lsp-mode-map
               ("TAB" . company-indent-or-complete-common))
   )
@@ -768,7 +765,12 @@
 ;; increase threshold for lsp to run smoothly
 ;; https://emacs-lsp.github.io/lsp-mode/page/performance/
 (setq read-process-output-max (* 1024 1024)) ;; 1mb
-(setq lsp-completion-provider :capf)
+
+;; lsp mode adds automatically capf as first element in the list of
+;; company-backends. This disables implicitly the other backends that
+;; I define in the specific modes. Hence, each mode takes over
+;; responsibility for loading the required completion providers.
+(setq lsp-completion-provider :none)
 
 (use-package lsp-ui
   :after lsp-mode
@@ -1188,53 +1190,9 @@
 ;; -------------------------------------------------------------------
 ;; Python
 ;; -------------------------------------------------------------------
-;; pdb debugger
-(defun annotate-pdb ()
-  "Colors the background if pdb is active."
-  (interactive)
-  (highlight-lines-matching-regexp "import ipdb")
-  (highlight-lines-matching-regexp "ipdb.set_trace()")
-  (highlight-lines-matching-regexp "import pdb")
-  (highlight-lines-matching-regexp "pdb.set_trace()"))
-
-
-(use-package lsp-python-ms
-  :ensure-system-package ((pip3 . python3-pip)
-                          ("~/.local/lib/python3.6/site-packages/epc" . "pip3 install --user -U 'epc'")
-                          ("~/.local/lib/python3.6/site-packages/ptvsd" . "pip3 install --user -U 'ptvsd>=4.2'"))
-  :mode (
-         ("\\.py$" . python-mode)
-         ("SConstruct" . python-mode)
-         ("SConscript" . python-mode)
-         )
-  :hook ((python-mode . annotate-pdb)
-         (python-mode . (lambda ()
-                          (require 'lsp-python-ms)
-                          ;; debugging package for python using ptvsd
-                          (require 'dap-python)
-                          (lsp))))  ; or lsp-deferred
-  :init
-  (setq python-indent-offset 4)
-  (setq python-shell-interpreter "python")
-  (setq lsp-python-ms-auto-install-server t)
-  :config
-  ;; delete output buffer on buffer execution
-  (setq py-shell-switch-buffers-on-execute nil)
+(use-package setup-python
+  :load-path local-load-path
   )
-
-;; install black and black-macchiato with pip3 install --user -U
-;; black-macchiato black if black is not available as executable in
-;; ~/.local/bin, provide a dummy one that runs black in library mode
-;; python3 -m black "${@}"
-(use-package python-black
-  :ensure-system-package ((black . "pip3 install --user -U black"))
-  :hook ((python-mode . python-black-on-save-mode))
-  )
-
-;; supports virtual environments. To be set with pyvenv-workon
-(use-package pyvenv
-  :config
-  (pyvenv-mode 1))
 
 ;; -------------------------------------------------------------------
 ;; Sphinx documentation
@@ -1446,29 +1404,25 @@
 ;; -------------------------------------------------------------------
 ;; Typescript
 ;; -------------------------------------------------------------------
-(use-package tide)
+(use-package tide
+  :ensure t
+  :after (typescript-mode company flycheck)
+  :hook ((typescript-mode . tide-setup)
+         (typescript-mode . tide-hl-identifier-mode)
+         (before-save . tide-format-before-save)))
 
 (use-package nvm
   :defer t)
 
 (use-package typescript-mode
-  :after (dap-node tide company)
+  :after (dap-node company)
   :mode (
          ("\\.ts$" . typescript-mode)
          ("\\.tsx$" . typescript-mode)
          )
   :config
   (setq typescript-indent-level 4)
-  (dap-node-setup) ;; automatically installs Node debug adapter if needed
-  (tide-setup) ;; provided by the tide package
-  ;; remove company-tide from company backends manually, since it is
-  ;; added by company setup explicitly
-  (setq company-backends (delete 'company-tide company-backends))
-  (eldoc-mode +1)
-  (tide-hl-identifier-mode +1)
-  :hook (
-         (before-save-hook . tide-format-before-save)
-         )
+  (dap-node-setup) ;; automatically installs Node debug adapter if
   )
 
 ;; note, for some resion the mode directive does not work here, so I
