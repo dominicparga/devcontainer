@@ -83,6 +83,10 @@
 (use-package helpers
   :load-path local-load-path
   )
+(use-package shell-loader
+  :load-path local-load-path
+  )
+
 
 ;; ===================================================================
 ;; Basic Settings

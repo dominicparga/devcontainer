@@ -57,12 +57,10 @@
        (propertize "\nλ" 'face `(:foreground "#aece4a")))
      (propertize " " 'face `(:foreground "white")))))
 
-(defun ff/open-eshell (direction)
-  "Opens new eshell either below or right of the current window."
-  (if (equal (eval direction) "below")
-      (split-window-below)
-    (split-window-right))
-
+(defun ff/open-eshell-below ()
+  "Opens new eshell either below of the current window."
+  (interactive)
+  (split-window-below)
   (balance-windows)
   (other-window 1)
   (eshell (ff/random-string 5))
@@ -103,8 +101,7 @@
   (define-key eshell-mode-map (kbd "C-d") '(lambda () (interactive) (kill-buffer-and-window) (balance-windows)))
 
   ;; if an eshell buffer is split, open a new session
-  (define-key eshell-mode-map (kbd "C-x 2") '(lambda () (interactive) (ff/open-eshell "below")))
-  (define-key eshell-mode-map (kbd "C-x 3") '(lambda () (interactive) (ff/open-eshell "right")))
+  (define-key eshell-mode-map (kbd "C-x 2") 'ff/open-eshell-below)
 
   (setenv "PAGER" "cat")
 
@@ -118,9 +115,14 @@
         eshell-prefer-lisp-functions nil)
 )
 
+(defun ff/start-eshell ()
+  "Start Vterm terminal emulator."
+  (interactive)
+  (ff/toggle-windows-with-prefix "*eshell" '(eshell t)))
+
 (use-package eshell
   :hook (eshell-first-time-mode . dw/eshell-configure)
-  :bind (("C-x e" . ff/eshell-term))
+  :bind (("C-x e" . ff/start-eshell))
   :init
   (setq eshell-directory-name "~/.emacs.d/eshell/"))
 

@@ -6,35 +6,43 @@
 
 ;;; Code:
 
+;; (setq prefix "*eshell")
+;; (setq filtered-buffers '())
+;; (dolist (name (mapcar #'buffer-name (buffer-list)))
+;;   (if (string-match prefix name)
+;;        (add-to-list 'filtered-buffers name)
+;;     )
+;;   )
+
+;; (setq sorted-buffers (cl-sort filtered-buffers 'string-lessp :key 'downcase))
+;; (message (format "%S" sorted-buffers))
+
+;; (defun open-buffers (buffer-list)
+;;   (split-window-right)
+;;   (other-window)
+;;   (dolist (buffer-name 'buffer-list
+;; )
+;;     (switch-to-buffer buffer-name)
+;;     )
+;;   )
+
+;; (message "---------------------")
+
+
 (defun ff/start-vterm ()
   "Start Vterm terminal emulator."
   (interactive)
-  (let* ((term-buffer-name "*vterm*")
-         (start-cmd '(vterm)))
-    (ff/start-term term-buffer-name start-cmd)
-    ))
+  (ff/toggle-windows-with-prefix "*vterm" '(vterm t)))
 
 
-(defun ff/open-vterm (direction)
-  "Opens new ansi-term either below or right of the current window."
-  (if (equal (eval direction) "below")
-      (split-window-below)
-    (split-window-right))
-
+(defun ff/open-vterm-below ()
+  "Opens new v-term either below of the current window."
+  (interactive)
+  (split-window-below)
   (balance-windows)
   (other-window 1)
   (vterm t)
   )
-
-(defun ff/open-vterm-right ()
-  (interactive)
-  (ff/open-vterm "right")
-)
-
-(defun ff/open-vterm-below ()
-  (interactive)
-  (ff/open-vterm "below")
-)
 
 (defun ff/term-exec-hook ()
   "Delete the buffer once the terminal session is terminated."
@@ -76,7 +84,6 @@
          :map vterm-mode-map
          ("C-y" . term-paste)
          ("C-x 2" . ff/open-vterm-below)
-         ("C-x 3" . ff/open-vterm-right)
          )
   )
 

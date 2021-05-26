@@ -66,39 +66,6 @@
           "/site-packages/" (eval package-name))
   )
 
-(defun ff/buffer-exists (bufname) (not (eq nil (get-buffer bufname))))
-
-(defun ff/start-term (term-buffer-name start-cmd)
-  "Start Ansi terminal emulator."
-  (interactive)
-  (let* ((is-term-buffer-selected (equal (buffer-name) (eval term-buffer-name)))
-         (is-term-buffer-visible (get-buffer-window (eval term-buffer-name))))
-    (cond ((eval is-term-buffer-selected)
-           ;; ansi term buffer is visible and selected. Do nothing
-           (message "term buffer is already selected."))
-          ((eval is-term-buffer-visible)
-           ;; switch to the visible buffer
-           (switch-to-buffer-other-window (eval term-buffer-name)))
-          (;;else
-           ;; create a new window right from the current one
-           (split-window-right)
-           (other-window 1)
-           ;; switch to the ansi term buffer if it already exists,
-           ;; otherwise, create one
-           (if (ff/buffer-exists (eval term-buffer-name))
-               (switch-to-buffer (eval term-buffer-name))
-             ;; else
-             (eval start-cmd))
-           ))))
-
-(defun ff/eshell-term (&optional arg)
-  "Start Ansi terminal emulator."
-  (interactive "P")
-  (let* ((term-buffer-name "*eshell*")
-         (start-cmd '(eshell (or arg t))))
-    (ff/start-term term-buffer-name start-cmd)
-    ))
-
 (defun ff/switch-to-last-window ()
   "Switch to last visible window."
   (interactive)
@@ -122,25 +89,6 @@
     (ff/switch-to-last-window)
     )
   )
-
-(defun ff/split-windows-python ()
-  "Split windows for Python development."
-  (interactive)
-  ;; open error list
-  (flycheck-list-errors)
-  (other-window 1)
-  ;; split window below and open a shell
-  (split-window-below)
-  ;; Start eshell in current window
-  (other-window 1)
-  (if (ff/buffer-exists "*ansi-term*")
-      (switch-to-buffer "*ansi-term*")
-    (ansi-term "/bin/zsh"))
-  ;; Go to first buffer
-  (other-window -1)
-  (other-window -1)
-  )
-
 
 (provide 'helpers)
 
