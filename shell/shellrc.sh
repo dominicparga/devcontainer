@@ -63,9 +63,9 @@ alias grep='grep --color=auto'
 alias c='clear'
 # macOS: --color=auto needed for coreutils
 alias l='ls -1F --color=auto'
-alias la='l -a'
-alias ll='l -lh'
-alias lla='ll -a'
+alias la='ls -1F --color=auto -a'
+alias ll='ls -1F --color=auto -lh'
+alias lla='ls -1F --color=auto -lha'
 
 alias .2='cd ../..'
 alias .3='cd ../../..'

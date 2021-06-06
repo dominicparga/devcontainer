@@ -62,17 +62,6 @@ fi
 # set as a default for configurations
 export XDG_CONFIG_HOME="$HOME/.config"
 
-alias la='ls -altrh'
-alias cnt='ls -F |grep -v / | wc -l'
-
-grep_find() {
-  find . -type f -exec grep -i "$1" {} +
-}
-
-untar() {
-  tar -xvzf $1
-}
-
 # use vim as SVN editor
 export SVN_EDITOR=vim
 export GIT_EDITOR=vim
@@ -83,11 +72,6 @@ PATH=$HOME/opt/bin:$HOME/.local/bin:$PATH
 
 # expand path to include newest cmake version
 PATH=/usr/local/cmake/3.18.4/bin:$PATH
-
-# moving files to trash from command line
-alias "trash"="gvfs-trash"
-
-alias dfs="hdfs dfs"
 
 export EMACS="emacsclient -c -a emacs %f"
 

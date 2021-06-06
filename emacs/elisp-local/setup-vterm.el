@@ -6,29 +6,6 @@
 
 ;;; Code:
 
-;; (setq prefix "*eshell")
-;; (setq filtered-buffers '())
-;; (dolist (name (mapcar #'buffer-name (buffer-list)))
-;;   (if (string-match prefix name)
-;;        (add-to-list 'filtered-buffers name)
-;;     )
-;;   )
-
-;; (setq sorted-buffers (cl-sort filtered-buffers 'string-lessp :key 'downcase))
-;; (message (format "%S" sorted-buffers))
-
-;; (defun open-buffers (buffer-list)
-;;   (split-window-right)
-;;   (other-window)
-;;   (dolist (buffer-name 'buffer-list
-;; )
-;;     (switch-to-buffer buffer-name)
-;;     )
-;;   )
-
-;; (message "---------------------")
-
-
 (defun ff/start-vterm ()
   "Start Vterm terminal emulator."
   (interactive)
