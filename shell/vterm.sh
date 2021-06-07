@@ -17,13 +17,6 @@ if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
 fi
 
 
-
-vterm_prompt_end() {
-    vterm_printf "51;A$(whoami)@$(hostname):$(pwd)";
-}
-setopt PROMPT_SUBST
-PROMPT=$PROMPT'%{$(vterm_prompt_end)%}'
-
 vterm_cmd() {
     local vterm_elisp
     vterm_elisp=""

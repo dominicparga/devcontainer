@@ -107,6 +107,8 @@ alias dosp='docker system prune -f'
 alias dormi='docker rmi $(docker images --filter "dangling=true" -q --no-trunc)'
 alias doir='docker image rm'
 
+alias ff='find_file'
+
 #------------------------------------------------------------------------------#
 # prompt
 
