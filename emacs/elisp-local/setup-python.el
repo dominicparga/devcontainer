@@ -17,8 +17,8 @@
 
 (use-package lsp-python-ms
   :ensure-system-package ((pip3 . python3-pip)
-                          ("~/.local/lib/python3.8/site-packages/epc" . "pip3 install --user -U 'epc'")
-                          ("~/.local/lib/python3.8/site-packages/ptvsd" . "pip3 install --user -U 'ptvsd>=4.2'"))
+                          ("~/.local/lib/python3.6/site-packages/epc" . "python3 -m pip install -U 'epc'")
+                          ("~/.local/lib/python3.6/site-packages/ptvsd" . "python3 -m pip install -U 'ptvsd>=4.2'"))
   :mode (
          ("\\.py$" . python-mode)
          ("SConstruct" . python-mode)
