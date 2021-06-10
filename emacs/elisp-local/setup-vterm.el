@@ -48,9 +48,9 @@
   :commands vterm
   :hook ((vterm-mode . ff/term-exec-hook))
   :config
-  (setq vterm-shell "/bin/zsh")
+  (setq vterm-shell "/bin/bash")
   (setq vterm-max-scrollback 10000)
-  (setq explicit-shell-file-name "/bin/zsh")
+  (setq explicit-shell-file-name "/bin/bash")
 
   (define-key vterm-mode-map (kbd "<C-backspace>")
     (lambda () (interactive) (vterm-send-key (kbd "C-w"))))

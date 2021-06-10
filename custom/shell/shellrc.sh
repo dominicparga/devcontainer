@@ -31,16 +31,17 @@ fi
 # ----------------------------------------------------
 # personal
 
-# use emacs keybindings
+# bash compinit in zsh
 if [[ -n "${ZSH_NAME}" ]]; then
     bindkey -e
 
     autoload -U bashcompinit
     bashcompinit
-    AOS_BASH_COMPLETION="$HOME/.bash_aos_completion"
-    if [[ -f "${AOS_BASH_COMPLETION}" ]]; then
-        . "${AOS_BASH_COMPLETION}"
-    fi
+fi
+
+AOS_BASH_COMPLETION="$HOME/.bash_aos_completion"
+if [[ -f "${AOS_BASH_COMPLETION}" ]]; then
+    . "${AOS_BASH_COMPLETION}"
 fi
 
 # Start gnome keyring
