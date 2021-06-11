@@ -46,11 +46,11 @@ fi
 
 # Start gnome keyring
 if [ -n "$DESKTOP_SESSION" ];then
-    eval "$(gnome-keyring-daemon --start)"
+    eval "$(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)"
     export SSH_AUTH_SOCK
 else
-    # start ssh agent for remote sessions and add personal certificates to
-    # prevent repeated password input
+    # start ssh agent for remote sessions and add personal
+    # certificates to prevent repeated password input
     . "${HOME}/.ssh-find-agent"
     ssh_find_agent -a
     if [ -z "$SSH_AUTH_SOCK" ]
