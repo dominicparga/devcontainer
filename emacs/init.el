@@ -1342,6 +1342,8 @@
 ;; yaml mode
 ;; -------------------------------------------------------------------
 (use-package yaml-mode
+  :ensure-system-package ((pip3 . python3-pip)
+                          ("~/.local/lib/python3.6/site-packages/yamllint" . "python3 -m pip install -U 'yamllint'"))
   :mode (("\\.yml$" . yaml-mode)
          ("\\.yaml$" . yaml-mode)))
 
