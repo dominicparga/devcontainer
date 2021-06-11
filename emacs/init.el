@@ -62,17 +62,14 @@
   (exec-path-from-shell-copy-env "SSH_AUTH_SOCK"))
 
 (defun ff/emacs-config-home ()
-  "Provide the home of the emacs configuration folder."
+  "Provide the home of the Emacs configuration folder."
   (interactive)
   (let* ((xdg-config-home (getenv "XDG_CONFIG_HOME"))
          (emacs-d-folder (expand-file-name "~/.emacs.d")))
     (if xdg-config-home
-	(let ((xdg-emacs-config-home (concat xdg-config-home "/emacs")))
+	    (let ((xdg-emacs-config-home (concat xdg-config-home "/emacs")))
           (if (file-directory-p xdg-emacs-config-home) xdg-emacs-config-home emacs-d-folder))
-      emacs-d-folder
-      )
-    )
-  )
+      emacs-d-folder)))
 
 (defvar emacs-config-home (ff/emacs-config-home)
   "Location of the Emacs configuration.")
