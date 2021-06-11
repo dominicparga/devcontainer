@@ -59,7 +59,8 @@
   :demand t
   :init
   (exec-path-from-shell-initialize)
-  (exec-path-from-shell-copy-env "SSH_AUTH_SOCK"))
+  (exec-path-from-shell-copy-env "SSH_AUTH_SOCK")
+  )
 
 (defun ff/emacs-config-home ()
   "Provide the home of the Emacs configuration folder."
