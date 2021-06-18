@@ -46,14 +46,6 @@
 (use-package ivy-hydra
   :after ivy)
 
-(use-package all-the-icons-ivy-rich
-  :init
-  (all-the-icons-ivy-rich-mode 1)
-  :config
-  (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line)
-  (setq inhibit-compacting-font-caches t)
-  )
-
 (use-package ivy-rich
   :after (counsel counsel-projectile projectile ivy all-the-icons-ivy-rich)
   :init
@@ -78,6 +70,13 @@
   (counsel-mode 1)
   )
 
+(use-package all-the-icons-ivy-rich
+  :after (ivy-rich)
+  :init
+  (all-the-icons-ivy-rich-mode 1)
+  :config
+  (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line)
+  (setq inhibit-compacting-font-caches t))
 
 (use-package flx  ;; Improves sorting for fuzzy-matched results
   :init
@@ -96,7 +95,8 @@
   (prescient-persist-mode t)
   (ivy-prescient-mode t))
 
-(use-package lsp-ivy)
+(use-package lsp-ivy
+  :after (ivy lsp))
 
 (provide 'setup-ivy)
 

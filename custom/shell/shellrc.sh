@@ -31,8 +31,11 @@ fi
 # ----------------------------------------------------
 # personal
 
-# bash compinit in zsh
 if [[ -n "${ZSH_NAME}" ]]; then
+    # use oh-my-zsh init
+    . "${DOTFILES}/shell/oh-my-zsh.sh"
+
+    # bash compinit in zsh
     bindkey -e
 
     autoload -U bashcompinit

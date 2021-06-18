@@ -44,4 +44,4 @@ setopt prompt_subst
 # prepare colors and details
 . "${DOTFILES}/utils/formatting.zsh"
 # stick everything together
-RPS1='$(__update_RPS1)'
+# RPS1='$(__update_RPS1)'

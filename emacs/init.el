@@ -59,8 +59,7 @@
   :demand t
   :init
   (exec-path-from-shell-initialize)
-  (exec-path-from-shell-copy-env "SSH_AUTH_SOCK")
-  )
+  (exec-path-from-shell-copy-env "SSH_AUTH_SOCK"))
 
 (defun ff/emacs-config-home ()
   "Provide the home of the Emacs configuration folder."
@@ -79,12 +78,10 @@
 (add-to-list 'load-path local-load-path)
 
 (use-package helpers
-  :load-path local-load-path
-  )
-(use-package shell-loader
-  :load-path local-load-path
-  )
+  :load-path local-load-path)
 
+(use-package shell-loader
+  :load-path local-load-path)
 
 ;; ===================================================================
 ;; Basic Settings
@@ -278,8 +275,7 @@
   (setq tramp-auto-save-directory "~/.cache/emacs/backups")
   (setq tramp-persistency-file-name "~/.emacs.d/data/tramp")
   (setq tramp-terminal-type "dumb")
-  (setq tramp-default-method "ssh")
-  )
+  (setq tramp-default-method "ssh"))
 
 (use-package docker-tramp)
 
@@ -301,15 +297,13 @@
   (setq tab-bar-show nil)
   (setq tab-bar-new-tab-choice "*scratch*")
   (setq tab-bar-close-button-show nil
-        tab-bar-new-button-show nil)
-  )
+        tab-bar-new-button-show nil))
 
 ;; -------------------------------------------------------------------
 ;; Ivy project
 ;; ------------------------------------------------------------------
 (use-package setup-ivy
-  :load-path local-load-path
-  )
+  :load-path local-load-path)
 
 ;; -------------------------------------------------------------------
 ;; Company
@@ -338,8 +332,7 @@
   (global-company-mode 1)
   :bind (("C-c C-y" . company-yasnippet)
          :map company-active-map
-         ("TAB" . company-complete-selection))
-  )
+         ("TAB" . company-complete-selection)))
 
 
 ;; disable company mode for terminals
@@ -366,14 +359,12 @@
           company-ispell
           company-files
           :with company-yasnippet)
-         ))
-  )
+         )))
 
 (use-package text-mode
   :ensure nil
   :after company
-  :hook (text-mode . ff/configure-text-mode)
-  )
+  :hook (text-mode . ff/configure-text-mode))
 
 ;; -------------------------------------------------------------------
 ;; Buffer move & transpose frame
@@ -382,12 +373,10 @@
   :bind (("C-c b <down>" . buf-move-down)
          ("C-c b <up>" . buf-move-up)
          ("C-c b <left>" . buf-move-left)
-         ("C-c b <right>" . buf-move-right))
-  )
+         ("C-c b <right>" . buf-move-right)))
 
 (use-package transpose-frame
-  :bind (("C-c b t" . transpose-frame))
-  )
+  :bind (("C-c b t" . transpose-frame)))
 
 ;; -------------------------------------------------------------------
 ;; Set up dired
@@ -402,13 +391,11 @@
          ("<backspace>" . dired-single-up-directory)
          ("TAB" . dired-find-file))
   :custom
-  (
-   (dired-auto-revert-buffer t) ; Auto update when buffer is revisited
+  ((dired-auto-revert-buffer t) ; Auto update when buffer is revisited
    (dired-dwim-target t)
    (dired-recursive-deletes 'always)
    (dired-recursive-copies 'always)
-   (delete-by-moving-to-trash t)
-   )
+   (delete-by-moving-to-trash t))
   :config
   (setq dired-listing-switches "-agho --group-directories-first"
         dired-hide-details-hide-symlink-targets nil)
@@ -426,8 +413,7 @@
               (dired-omit-mode 1)
               (dired-hide-details-mode 1)
               (all-the-icons-dired-mode 1)
-              (hl-line-mode 1)))
-  )
+              (hl-line-mode 1))))
 
 (use-package dired-rainbow
   :defer 2
@@ -458,8 +444,7 @@
 
 (use-package dired-hide-dotfiles
   :bind (:map dired-mode-map
-              ("H" . dired-hide-dotfiles-mode))
-  )
+              ("H" . dired-hide-dotfiles-mode)))
 
 ;; -------------------------------------------------------------------
 ;; Undo tree - make undos more powerful
@@ -505,8 +490,7 @@
          (list (openwith-make-extension-regexp
                 '("pdf"))
                "okular"
-               '(file))
-         ))
+               '(file))))
   (openwith-mode 1))
 
 ;; -------------------------------------------------------------------
@@ -580,8 +564,7 @@
   :init
   (setq fci-rule-color "#f8f8f8") ;;#cccccc
   (define-globalized-minor-mode
-    global-fci-mode fci-mode (lambda () (fci-mode 1)))
-  )
+    global-fci-mode fci-mode (lambda () (fci-mode 1))))
 
 ;; -------------------------------------------------------------------
 ;; Beautify modline
@@ -663,15 +646,13 @@
 (use-package rg
   :ensure-system-package (rg . ripgrep)
   :init
-  (rg-enable-menu)
-  )
+  (rg-enable-menu))
 
 ;; -------------------------------------------------------------------
 ;; Org-mode
 ;; -------------------------------------------------------------------
 (use-package setup-org-mode
-  :load-path local-load-path
-  )
+  :load-path local-load-path)
 
 ;; -------------------------------------------------------------------
 ;; Projectile mode
@@ -703,15 +684,13 @@
         projectile-completion-system 'default
         projectile-svn-command "find . -type f -not -iwholename '*.svn/*' -print0")
   ;; enable projectile mode
-  (projectile-mode t)
-  )
+  (projectile-mode t))
 
 (use-package counsel-projectile
   :after projectile
   :config
   (setq counsel-projectile-sort-files t)
-  (counsel-projectile-mode t)
-  )
+  (counsel-projectile-mode t))
 
 ;; -------------------------------------------------------------------
 ;; highlight symbol and replace
@@ -720,8 +699,7 @@
   :bind* (
           ("C-c h" . highlight-symbol)
           ("C-c r" . highlight-symbol-query-replace)
-          )
-  )
+          ))
 
 ;; -------------------------------------------------------------------
 ;; Enable lsp and treemacs
@@ -729,8 +707,7 @@
 (defun ff-lsp-mode-setup ()
   "Setup-hook for lsp-mode."
   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
-  (lsp-headerline-breadcrumb-mode)
-  )
+  (lsp-headerline-breadcrumb-mode))
 
 ;; Disables lsp linter as default for python-mode. It is crucial that
 ;; this happens before loading lsp-mode.
@@ -760,8 +737,7 @@
   (lsp-enable-which-key-integration)
 
   :bind (:map lsp-mode-map
-              ("TAB" . company-indent-or-complete-common))
-  )
+              ("TAB" . company-indent-or-complete-common)))
 
 ;; increase threshold for lsp to run smoothly
 ;; https://emacs-lsp.github.io/lsp-mode/page/performance/
@@ -787,19 +763,15 @@
         lsp-ui-sideline-show-hover nil
         lsp-ui-doc-include-signature nil  ; don't include type signature in the child frame
         lsp-ui-sideline-show-symbol nil)  ; don't show symbol on the right of info
-  (lsp-ui-peek-enable t)
-  ;; (lsp-ui-doc-show) ; does not work for python currently
-  )
+  (lsp-ui-peek-enable t))
 
 (with-eval-after-load 'lsp-mode
   ;; :global/:workspace/:file
-  (setq lsp-modeline-diagnostics-scope :workspace)
-  )
+  (setq lsp-modeline-diagnostics-scope :workspace))
 
 (with-eval-after-load 'lsp-ui-mode
   (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
-  (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
-  )
+  (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references))
 
 (use-package treemacs
   :commands (treemacs
@@ -821,8 +793,7 @@
     (or (s-ends-with? ".aux" file)
         (s-ends-with? ".lint" file)
         ))
-  (push #'treemacs-custom-filter treemacs-ignored-file-predicates)
-  )
+  (push #'treemacs-custom-filter treemacs-ignored-file-predicates))
 
 (use-package lsp-treemacs
   :after lsp treemacs company
@@ -834,8 +805,8 @@
         lsp-idle-delay 0.1 ;; clangd is fast
         ;; be more ide-ish
         lsp-headerline-breadcrumb-enable)
-  (lsp-treemacs-sync-mode t) ;; enables bidirectional sync
-  )
+  ;; enables bidirectional sync
+  (lsp-treemacs-sync-mode t))
 
 (global-set-key [f9] 'ff/lsp-treemacs-symbols-toggle)
 
@@ -858,20 +829,17 @@
         ("C-c d h" . dap-hydra)
         ("C-c d t" . dap-breakpoint-toggle)
         ("C-c d r" . dap-ui-repl)
-        )
-  )
+        ))
 
 ;; -------------------------------------------------------------------
 ;; Eshell & Vterm
 ;; -------------------------------------------------------------------
 
 (use-package setup-eshell
-  :load-path local-load-path
-  )
+  :load-path local-load-path)
 
 (use-package setup-vterm
-  :load-path local-load-path
-  )
+  :load-path local-load-path)
 
 ;; -------------------------------------------------------------------
 ;; Show number of lines in the left side of the buffer
@@ -902,8 +870,7 @@
          ("M-<left>" . drag-stuff-left)
          ("M-<up>" . drag-stuff-up)
          ("M-<down>" . drag-stuff-down)
-         )
-  )
+         ))
 
 ;; -------------------------------------------------------------------
 ;; Yasnippet
@@ -930,8 +897,8 @@
 ;; C/C++
 ;; -------------------------------------------------------------------
 (use-package setup-cc
-  :load-path local-load-path
-  )
+  :load-path local-load-path)
+
 ;; -------------------------------------------------------------------
 ;; CRAN R
 ;; -------------------------------------------------------------------
@@ -941,8 +908,7 @@
   ;; ESS will not print the evaluated commands, also speeds up the evaluation
   (setq ess-eval-visibly nil)
   ;; if you don't want to be prompted each time you start an interactive R session
-  (setq ess-ask-for-ess-directory nil)
-  )
+  (setq ess-ask-for-ess-directory nil))
 
  ;;; ESS
 (add-hook 'ess-mode-hook
@@ -971,11 +937,8 @@
 ;; -------------------------------------------------------------------
 (use-package auctex
   :defer t
-  :hook (
-         (LaTeX-mode . TeX-fold-mode)
-         (LaTeX-mode . outline-minor-mode)
-         )
-  )
+  :hook ((LaTeX-mode . TeX-fold-mode)
+         (LaTeX-mode . outline-minor-mode)))
 
 (use-package company-auctex
   :after (company auctex))
@@ -998,15 +961,13 @@
   ;; Set index on document
   (add-hook 'reftex-load-hook 'imenu-add-menubar-index)
   (add-hook 'reftex-mode-hook 'imenu-add-menubar-index)
-  :hook (
-         (reftex-mode . imenu-add-menubar-index)
+  :hook ((reftex-mode . imenu-add-menubar-index)
          (LaTeX-mode . turn-on-reftex)
          (latex-mode . turn-on-reftex)
          (LaTeX-mode . reftex-mode)
          (LaTeX-mode . LaTeX-math-mode)
          (LaTeX-mode . TeX-PDF-mode)
-         )
-  )
+         ))
 
 ;; emacs RefTeX
 ;; (setq reftex-ref-macro-prompt nil) ; skips picking the reference style
@@ -1022,9 +983,7 @@
              (?o . "\\citet[]{%l}")      ;; Franzelin [FR05] (with link)
              (?p . "\\parencite[]{%l}")  ;; [Franzelin, 2015] (without link)
              (?o . "\\citep[]{%l}")      ;; [Franzelin, 2015] (with link)
-             (?n . "\\nocite{%l}")))
-     )
-  )
+             (?n . "\\nocite{%l}")))))
 
 (eval-after-load
     "latex"
@@ -1073,8 +1032,7 @@
   :bind (:map LaTeX-mode-map
               ("C-c C-a" . okular-jump-to-line)
               :map tex-mode-map
-              ("C-c C-a" . okular-jump-to-line)
-              )
+              ("C-c C-a" . okular-jump-to-line))
   :init
   (setq TeX-view-program-list '(("Okular" "okular --unique %o")))
   (setq TeX-view-program-selection '((output-pdf "Okular") (output-dvi "Okular")))
@@ -1084,8 +1042,7 @@
   ;; (setq TeX-source-specials-mode 1)         ;; Inverse search
 
   (setq TeX-auto-global (concat emacs-config-home "/auctex-auto-generated-info/"))
-  (setq TeX-auto-local  (concat emacs-config-home "/auctex-auto-generated-info/"))
-  )
+  (setq TeX-auto-local  (concat emacs-config-home "/auctex-auto-generated-info/")))
 
 ;; -------------------------------------------------------------------
 ;; Language tool
@@ -1114,14 +1071,11 @@
   :config
   (setq langtool-autoshow-message-function 'langtool-autoshow-detail-popup)
   (setq langtool-language-tool-jar langtool-expected-binary)
-  :bind (
-         ("C-x 4 w" . langtool-check-buffer)
+  :bind (("C-x 4 w" . langtool-check-buffer)
          ("C-x 4 W" . langtool-check-done)
          ("C-x 4 n" . langtool-goto-next-error)
          ("C-x 4 p" . langtool-goto-previous-error)
-         ("C-x 4 4" . langtool-show-message-at-point)
-         )
-  )
+         ("C-x 4 4" . langtool-show-message-at-point)))
 
 ;; -------------------------------------------------------------------
 ;; On the fly spell checker using ispell
@@ -1136,8 +1090,7 @@
   (let* ((dic ispell-current-dictionary)
          (change (if (string= dic "de_DE") "de-DE" "en-US")))
     (setq langtool-default-language change)
-    (message "[langtool] Dictionary switched to %s" change)
-    ))
+    (message "[langtool] Dictionary switched to %s" change)))
 
 (use-package ispell
   :ensure-system-package (("/usr/bin/ispell" . ispell)
@@ -1153,10 +1106,7 @@
   (setq ispell-list-command "list")
   (setq ispell-extra-args '("--dont-tex-check-comments"))
   (setq ispell-current-dictionary "en_US")
-  :bind (
-         ("<f4>" . fd-switch-dictionary)
-         )
-  )
+  :bind (("<f4>" . fd-switch-dictionary)))
 
 ;; alist leeren und für aspell /de_DE.UTF-8 richtig einstellen:
 (setq ispell-local-dictionary-alist nil)
@@ -1192,8 +1142,7 @@
 ;; Python
 ;; -------------------------------------------------------------------
 (use-package setup-python
-  :load-path local-load-path
-  )
+  :load-path local-load-path)
 
 ;; -------------------------------------------------------------------
 ;; Sphinx documentation
@@ -1203,8 +1152,7 @@
 (use-package sphinx-doc
   :hook ((python-mode . sphinx-doc-mode))
   :config
-  (sphinx-doc-mode t)
-  )
+  (sphinx-doc-mode t))
 
 ;; -------------------------------------------------------------------
 ;; code style checker
@@ -1213,22 +1161,19 @@
   :diminish flycheck-mode
   :config
   (setq flycheck-check-syntax-automatically '(save mode-enabled))
-  (global-flycheck-mode)
-  )
+  (global-flycheck-mode))
 
 ;; -------------------------------------------------------------------
 ;; Shell
 ;; -------------------------------------------------------------------
 (use-package flymake-shell
   :commands flymake-shell-load
-  :hook ((sh-set-shell . flymake-shell-load))
-  )
+  :hook ((sh-set-shell . flymake-shell-load)))
 
 (use-package flymake-shellcheck
   :ensure-system-package (shellcheck . shellcheck)
   :commands flymake-shellcheck-load
-  :hook ((sh-mode . flymake-shellcheck-load))
-  )
+  :hook ((sh-mode . flymake-shellcheck-load)))
 
 ;; -------------------------------------------------------------------
 ;; Swig-Mode
@@ -1243,13 +1188,11 @@
 (defun swig-compile()
   (interactive)
   (swig-switch-compile-command-auto)
-  (compile compile-command)
-  )
+  (compile compile-command))
 
 (use-package swig-mode
   :load-path local-load-path
-  :mode (("\\.i$" . swig-mode))
-  )
+  :mode (("\\.i$" . swig-mode)))
 
 ;; -------------------------------------------------------------------
 ;; Git - magit
@@ -1260,8 +1203,8 @@
   :custom
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
   :config
-  (setq magit-diff-refine-hunk 'all) ; Show word based diff
-  )
+  ; Show word based diff
+  (setq magit-diff-refine-hunk 'all))
 
 ;; NOTE: Make sure to configure a GitHub token before using this package!
 ;; - https://magit.vc/manual/forge/Token-Creation.html#Token-Creation
@@ -1353,13 +1296,17 @@
 (use-package dockerfile-mode
   :mode (("Dockerfile\\'" . dockerfile-mode))
   :init
-  (put 'dockerfile-image-name 'safe-local-variable #'stringp)
-  )
+  (put 'dockerfile-image-name 'safe-local-variable #'stringp))
 
 (use-package lsp-docker)
 
 (use-package docker
   :bind ("C-x d" . docker))
+
+;; -------------------------------------------------------------------
+;; Kubernetes
+;; -------------------------------------------------------------------
+(use-package kubernetes)
 
 ;; -------------------------------------------------------------------
 ;; markdown mode
@@ -1381,13 +1328,10 @@
 ;; RST mode
 ;; -------------------------------------------------------------------
 (use-package poly-rst
-  :mode (
-         ("\\.rst$" . poly-rst-mode)
-         ("\\.rest$" . poly-rst-mode)
-         )
+  :mode (("\\.rst$" . poly-rst-mode)
+         ("\\.rest$" . poly-rst-mode))
   :init
-  (set-default 'truncate-lines t)
-  )
+  (set-default 'truncate-lines t))
 
 ;; C-c C-e r r (org-rst-export-to-rst)
 ;;    Export as a text file written in reStructured syntax.
@@ -1396,13 +1340,11 @@
 (use-package ox-rst)
 
 (use-package rst
-  :mode (
-         ("\\.txtt$" . rst-mode)
+  :mode (("\\.txtt$" . rst-mode)
          ("\\.rst$" . rst-mode)
-         ("\\.rest$" . rst-mode)
-         )
-  :hook ((rst-mode . pyvenv-mode)) ;; enable support of virtualenvironments
-  )
+         ("\\.rest$" . rst-mode))
+  ;; enable support of virtualenvironments
+  :hook ((rst-mode . pyvenv-mode)))
 
 ;; -------------------------------------------------------------------
 ;; Typescript
@@ -1419,14 +1361,11 @@
 
 (use-package typescript-mode
   :after (dap-node company)
-  :mode (
-         ("\\.ts$" . typescript-mode)
-         ("\\.tsx$" . typescript-mode)
-         )
+  :mode (("\\.ts$" . typescript-mode)
+         ("\\.tsx$" . typescript-mode))
   :config
   (setq typescript-indent-level 4)
-  (dap-node-setup) ;; automatically installs Node debug adapter if
-  )
+  (dap-node-setup))
 
 ;; note, for some resion the mode directive does not work here, so I
 ;; added the typescript mode explicitly to tsx files.
@@ -1435,10 +1374,7 @@
 (use-package json-snatcher
   :hook ((js-mode-hook . js-mode-bindings)
          (js2-mode-hook . js-mode-bindings))
-  :bind (
-         ("C-C C-g" . jsons-print-path)
-         )
-  )
+  :bind (("C-C C-g" . jsons-print-path)))
 
 ;; -------------------------------------------------------------------
 ;; Org + Plantuml mode
@@ -1469,8 +1405,7 @@
   ;; not accept it
   (define-key plantuml-mode-map [remap plantuml-preview] 'ff/plantum-preview)
   :bind (:map plantuml-mode-map
-              ("C-M-i" . plantuml-complete-symbol))
-  )
+              ("C-M-i" . plantuml-complete-symbol)))
 
 
 (use-package flycheck-plantuml
@@ -1496,15 +1431,13 @@
 ;; Json
 ;; -------------------------------------------------------------------
 (use-package json-mode
-  :mode (("\\.json$" . json-mode))
-  )
+  :mode (("\\.json$" . json-mode)))
 
 (use-package flymake-json
   :ensure-system-package (jsonlint . "sudo env \"PATH=$PATH\" npm install jsonlint -g")
   :after json-mode
   :hook ((json-mode . flymake-json-load)
-         (js-mode . flymake-json-maybe-load))
-  )
+         (js-mode . flymake-json-maybe-load)))
 
 ;; -------------------------------------------------------------------
 ;; TOML
