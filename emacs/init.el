@@ -471,7 +471,8 @@
 (use-package openwith
   :ensure-system-package ((vlc . vlc)
                           (okular . okular)
-                          (eog . eog))
+                          (eog . eog)
+                          (firefox . firefox))
   :config
   (setq openwith-associations
         (list
@@ -490,6 +491,10 @@
          (list (openwith-make-extension-regexp
                 '("pdf"))
                "okular"
+               '(file))
+         (list (openwith-make-extension-regexp
+                '("html"))
+               "firefox"
                '(file))))
   (openwith-mode 1))
 
