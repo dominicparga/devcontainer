@@ -484,7 +484,8 @@
                '(file))
          (list (openwith-make-extension-regexp
                 '("xbm" "pbm" "pgm" "ppm" "pnm"
-                  "png" "gif" "bmp" "tif" "jpeg")) ;; Removed jpg because Telega was
+                  "png" "gif" "bmp" "tif" "jpeg"
+                  "jpg")) ;; Removed jpg because Telega was
                ;; causing feh to be opened...
                "eog"
                '(file))
