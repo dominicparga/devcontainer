@@ -385,7 +385,9 @@
   :ensure nil
   :defer 1
   :commands (dired dired-jump)
-  :hook ((dired-mode . auto-revert-mode))
+  :hook ((dired-mode . auto-revert-mode)
+         (dired-mode . dired-hide-details-mode)
+         (dired-mode . hl-line-mode))
   :bind (("C-x C-j" . dired-jump)
          :map dired-mode-map
          ("<backspace>" . dired-single-up-directory)
@@ -405,15 +407,7 @@
   (add-hook 'dired-load-hook
             (lambda ()
               (interactive)
-              (dired-collapse)))
-
-  (add-hook 'dired-mode-hook
-            (lambda ()
-              (interactive)
-              (dired-omit-mode 1)
-              (dired-hide-details-mode 1)
-              (all-the-icons-dired-mode 1)
-              (hl-line-mode 1))))
+              (dired-collapse))))
 
 (use-package dired-rainbow
   :defer 2
