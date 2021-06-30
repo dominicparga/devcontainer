@@ -143,6 +143,13 @@ echo -e "${__COLOR_INFO}INFO: ${HOME}/.bashrc@ -> ${HOME}/.profile@${__COLOR_RES
 ln -i -v -s "${HOME}/.profile" "${HOME}/.bashrc"
 echo -e "${__COLOR_SUCC}SUCCESS: shellrc configured${__COLOR_RESET}"
 
+POWERLEVEL10K_HOME=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+if [[ -d "$POWERLEVEL10K_HOME" ]]; then
+    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${POWERLEVEL10K_HOME}"
+fi
+ln -i -v -s "${HOME}/.p10k.zsh" "${HOME}/.p10k.zsh"
+echo -e "${__COLOR_SUCC}SUCCESS: p10k.zsh configured${__COLOR_RESET}"
+
 #------------------------------------------------------------------------------#
 # setup custom/shell/ssh
 
