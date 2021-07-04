@@ -81,20 +81,6 @@ mkdir -p -v "${__CUSTOM_DIR}/termux/"
 mkdir -p -v "${__CUSTOM_DIR}/R/"
 
 #------------------------------------------------------------------------------#
-# setup custom/git
-
-echo -e "${__COLOR_INFO}INFO: Copying and linking git-files..${__COLOR_RESET}"
-# copy dotfiles/git/config into custom
-echo -e "${__COLOR_INFO}INFO: ${HOME}/.gitconfig@ -> ${DOTFILES}/custom/git/config == ${DOTFILES}/git/config${__COLOR_RESET}"
-cp -i -P "${DOTFILES}/git/config" "${__CUSTOM_DIR}/git/config"
-ln -i -v -s "${__CUSTOM_DIR}/git/config" "${HOME}/.gitconfig"
-# link to config.general
-echo -e "${__COLOR_INFO}INFO: ${HOME}/.gitconfig.general@ -> ${DOTFILES}/custom/git/config.general@ -> ${DOTFILES}/git/config.general${__COLOR_RESET}"
-ln -i -v -s "${DOTFILES}/git/config.general" "${__CUSTOM_DIR}/git/config.general"
-ln -i -v -s "${__CUSTOM_DIR}/git/config.general" "${HOME}/.gitconfig.general"
-echo -e "${__COLOR_SUCC}SUCCESS: git-files configured${__COLOR_RESET}"
-
-#------------------------------------------------------------------------------#
 # setup custom/shell
 
 echo -e "${__COLOR_INFO}INFO: Creating and linking custom shellrc..${__COLOR_RESET}"
@@ -134,6 +120,19 @@ if [ ! -e "${__FILE}" ]; then
     echo "created '${__FILE}'"
 fi
 
+# install oh-my-zsh if required
+OH_MY_ZSH_HOME="$HOME/.oh-my-zsh"
+if [[ ! -d "${OH_MY_ZSH_HOME}" ]]; then
+    sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+fi
+
+POWERLEVEL10K_HOME=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+if [[ ! -d "${POWERLEVEL10K_HOME}" ]]; then
+    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${POWERLEVEL10K_HOME}"
+fi
+ln -i -v -s "${__CUSTOM_DIR}/shell/p10k.zsh" "${HOME}/.p10k.zsh"
+echo -e "${__COLOR_SUCC}SUCCESS: p10k.zsh configured${__COLOR_RESET}"
+
 # create symlinks in $HOME
 echo -e "${__COLOR_INFO}INFO: ${HOME}/.profile@ -> ${__CUSTOM_DIR}/shell/shellrc.sh${__COLOR_RESET}"
 ln -i -v -s "${__CUSTOM_DIR}/shell/shellrc.sh" "${HOME}/.profile"
@@ -142,13 +141,6 @@ ln -i -v -s "${HOME}/.profile" "${HOME}/.zshrc"
 echo -e "${__COLOR_INFO}INFO: ${HOME}/.bashrc@ -> ${HOME}/.profile@${__COLOR_RESET}"
 ln -i -v -s "${HOME}/.profile" "${HOME}/.bashrc"
 echo -e "${__COLOR_SUCC}SUCCESS: shellrc configured${__COLOR_RESET}"
-
-POWERLEVEL10K_HOME=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-if [[ -d "$POWERLEVEL10K_HOME" ]]; then
-    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${POWERLEVEL10K_HOME}"
-fi
-ln -i -v -s "${HOME}/.p10k.zsh" "${HOME}/.p10k.zsh"
-echo -e "${__COLOR_SUCC}SUCCESS: p10k.zsh configured${__COLOR_RESET}"
 
 #------------------------------------------------------------------------------#
 # setup custom/shell/ssh
@@ -179,6 +171,20 @@ __FILE="${DOTFILES}/shell/ssh-find-agent.sh"
 ln -i -v -s "${__FILE}" "${HOME}/.ssh-find-agent"
 
 echo -e "${__COLOR_SUCC}SUCCESS: ssh configured${__COLOR_RESET}"
+
+#------------------------------------------------------------------------------#
+# setup custom/git
+
+echo -e "${__COLOR_INFO}INFO: Copying and linking git-files..${__COLOR_RESET}"
+# copy dotfiles/git/config into custom
+echo -e "${__COLOR_INFO}INFO: ${HOME}/.gitconfig@ -> ${DOTFILES}/custom/git/config == ${DOTFILES}/git/config${__COLOR_RESET}"
+cp -i -P "${DOTFILES}/git/config" "${__CUSTOM_DIR}/git/config"
+ln -i -v -s "${__CUSTOM_DIR}/git/config" "${HOME}/.gitconfig"
+# link to config.general
+echo -e "${__COLOR_INFO}INFO: ${HOME}/.gitconfig.general@ -> ${DOTFILES}/custom/git/config.general@ -> ${DOTFILES}/git/config.general${__COLOR_RESET}"
+ln -i -v -s "${DOTFILES}/git/config.general" "${__CUSTOM_DIR}/git/config.general"
+ln -i -v -s "${__CUSTOM_DIR}/git/config.general" "${HOME}/.gitconfig.general"
+echo -e "${__COLOR_SUCC}SUCCESS: git-files configured${__COLOR_RESET}"
 
 #------------------------------------------------------------------------------#
 # setup custom/alacritty

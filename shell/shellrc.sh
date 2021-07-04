@@ -110,10 +110,10 @@ alias doir='docker image rm'
 alias ff='find_file'
 
 #------------------------------------------------------------------------------#
-# prompt
+# prompt -> replaced by oh-my-zsh
 
-. "${__SHELL_LIB}/prompts/left/default.sh"
-. "${__SHELL_LIB}/prompts/right/git_info.sh"
+# . "${__SHELL_LIB}/prompts/left/default.sh"
+# . "${__SHELL_LIB}/prompts/right/git_info.sh"
 
 #------------------------------------------------------------------------------#
 # cleanup

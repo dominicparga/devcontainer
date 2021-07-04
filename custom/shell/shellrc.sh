@@ -1,11 +1,11 @@
+#!/usr/bin/env sh
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
-
-#!/usr/bin/env sh
 
 #------------------------------------------------------------------------------#
 # If not running interactively, don't do anything
@@ -24,13 +24,13 @@ export DOTFILES="$HOME/workspace/dotfiles/."
 if [[ $TERM == "dumb" ]]; then
     export PS1="$ "
 else
-. "${DOTFILES}/shell/shellrc.sh"
+    . "${DOTFILES}/shell/shellrc.sh"
 fi
 
-greet
+# greet
 
 #------------------------------------------------------------------------------#
-# EMACS setup
+# EMACS vterm setup
 if [[ -n "${ZSH_NAME}" ]] && [[ -f "${DOTFILES}/shell/vterm.sh" ]]; then
     . "${DOTFILES}/shell/vterm.sh"
 fi
