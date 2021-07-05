@@ -1,12 +1,5 @@
 #!/usr/bin/env sh
 
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 #------------------------------------------------------------------------------#
 # If not running interactively, don't do anything
 
@@ -39,6 +32,13 @@ fi
 # personal
 
 if [[ -n "${ZSH_NAME}" ]]; then
+    # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+    # Initialization code that may require console input (password prompts, [y/n]
+    # confirmations, etc.) must go above this block; everything else may go below.
+    if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+        source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+    fi
+
     # use oh-my-zsh init
     . "${DOTFILES}/shell/oh-my-zsh.sh"
 
