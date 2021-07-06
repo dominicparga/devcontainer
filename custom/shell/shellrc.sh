@@ -58,7 +58,7 @@ if [[ -f "${AOS_BASH_COMPLETION}" ]]; then
 fi
 
 # Start gnome keyring
-if [ -n "$DESKTOP_SESSION" ];then
+if [[ -n "$DESKTOP_SESSION" ]]; then
     eval "$(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)"
     export SSH_AUTH_SOCK
 else
@@ -171,7 +171,11 @@ export RECOMPUTE_BUILD_DIR=$AOS_BASE_HOME/_build_recapp
 export RECOMPUTE_INSTALL_DIR=$AOS_BASE_HOME/install_recapp/recompute
 
 ## DoL player
-export PATH=$PATH:$RECOMPUTE_INSTALL_DIR/host/bin:$RECOMPUTE_INSTALL_DIR/target/bin:$RECOMPUTE_INSTALL_DIR/target/bin/test:$RECOMPUTE_INSTALL_DIR/shared/bin
+if [[ -d "${RECOMPUTE_INSTALL_DIR}" ]]; then
+    "${RECOMPUTE_INSTALL_DIR}/host/bin/test/dol_source_env.sh"
+fi
+
+export PATH=$PATH:$RECOMPUTE_INSTALL_DIR/host/bin:$RECOMPUTE_INSTALL_DIR/host/bin/test:$RECOMPUTE_INSTALL_DIR/target/bin:$RECOMPUTE_INSTALL_DIR/target/bin/test:$RECOMPUTE_INSTALL_DIR/shared/bin
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$RECOMPUTE_INSTALL_DIR/host/lib:$LD_LIBRARY_PATH:$RECOMPUTE_INSTALL_DIR/target/lib:$RECOMPUTE_INSTALL_DIR/shared/lib
 export PYTHONPATH=$PYTHONPATH:$RECOMPUTE_INSTALL_DIR/host/lib/python3.6/dist-packages
 

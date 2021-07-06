@@ -346,6 +346,9 @@
   :config
   (company-prescient-mode 1))
 
+(use-package company-quickhelp
+  :after company)
+
 ;; -------------------------------------------------------------------
 ;; Simple text
 ;; -------------------------------------------------------------------
