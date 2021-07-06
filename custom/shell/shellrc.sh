@@ -167,12 +167,14 @@ export AOS_BASE_HOME=$HOME/workspace/aos_base
 export RECOMPUTE_HOME=$AOS_BASE_HOME/recompute
 export AOS_BUILD_DIR=$AOS_BASE_HOME/_build
 export AOS_INSTALL_DIR=$AOS_BASE_HOME/_install
-export RECOMPUTE_BUILD_DIR=$AOS_BASE_HOME/_build_recapp
+export RECOMPUTE_BUILD_DIR=$AOS_BASE_HOME/build_recapp
 export RECOMPUTE_INSTALL_DIR=$AOS_BASE_HOME/install_recapp/recompute
 
 ## DoL player
 if [[ -d "${RECOMPUTE_INSTALL_DIR}" ]]; then
     "${RECOMPUTE_INSTALL_DIR}/host/bin/test/dol_source_env.sh"
+    export DOL_MANIFEST_DIR="${RECOMPUTE_INSTALL_DIR}/target/share/manifests"
+    PATH=$PATH:${RECOMPUTE_BUILD_DIR}/recompute/source/host/tooling/sequenceprofiler
 fi
 
 export PATH=$PATH:$RECOMPUTE_INSTALL_DIR/host/bin:$RECOMPUTE_INSTALL_DIR/host/bin/test:$RECOMPUTE_INSTALL_DIR/target/bin:$RECOMPUTE_INSTALL_DIR/target/bin/test:$RECOMPUTE_INSTALL_DIR/shared/bin
