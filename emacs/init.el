@@ -1061,7 +1061,7 @@
 
 (use-package langtool
   :init
-  (setq langtool-version "5.2"
+  (setq langtool-version "5.4"
         langtool-name (concat "LanguageTool-" langtool-version)
         langtool-url (concat "https://languagetool.org/download/" langtool-name ".zip")
         langtool-extract-to (expand-file-name "~/opt/languageTool")
@@ -1389,7 +1389,7 @@
          ("\\.uml" . plantuml-mode))
   :init
   ;; Consider using (plantuml-download-jar) as alternative
-  (setq plantuml-version "1.2020.26"
+  (setq plantuml-version "1.2021.8"
         plantuml-name (concat "plantuml-jar-asl-" plantuml-version)
         plantuml-url (concat "https://sourceforge.net/projects/plantuml/files/" plantuml-version "/" plantuml-name ".zip/download")
         plantuml-extract-to (expand-file-name (concat "~/opt/plantuml/" plantuml-name))
