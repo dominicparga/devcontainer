@@ -76,18 +76,8 @@ fi
 # set as a default for configurations
 export XDG_CONFIG_HOME="$HOME/.config"
 
-# use vim as SVN editor
-export SVN_EDITOR=vim
-export GIT_EDITOR=vim
-export GIT_LFS_SKIP_SMUDGE=1
-
 # expand path to include local bin directory
 PATH=$HOME/opt/bin:$HOME/.local/bin:$PATH
-
-# expand path to include newest cmake version
-PATH=/usr/local/cmake/3.18.4/bin:$PATH
-
-export EMACS="emacsclient -c -a emacs %f"
 
 #------------------------------------------------------------------------------#
 # ros setup
@@ -113,27 +103,11 @@ export CERT_PATH=$HOME/.local/share/certificates
 # Airflow
 export CLUSTER_DEPLOYMENTS_HOME="$HOME/workspace/cluster-deployments"
 export RECOMPUTE_FLOW_HOME="$HOME/workspace/recompute-flow"
-export INCUBATOR_AIRFLOW_HOME="$HOME/workspace/incubator-airflow"
-export AIRFLOW_HOME="$HOME/workspace/recompute-flow/airflow-home"
 export AIRFLOW_HOST="localhost"
 export AIRFLOW_PORT="8080"
-export SPARK_SUBMIT_COMMAND="$SPARK_HOME/bin/spark-submit"
 
 export SLUGIFY_USES_TEXT_UNIDECODE=yes
 export AIRFLOW__CORE__PARALLELISM=10
-
-export KUBERNETES_CONTEXT=kubernetes-dol-master@abstatt
-export KUBERNETES_NAMESPACE=development-$USER
-export DOCKER_REGISTRY=cmtcdeu58434236.rd.corpintra.net:32455
-export HADOOP_NAME_NODE=http://cmtcdeu53965055.rd.corpintra.net:50070
-export HADOOP_HDFS_ENDPOINT=hdfs://nameservice1
-export HADOOP_USER_NAME=airflow
-
-token() {
-    kubectl -n kube-system describe secret admin-user-token-d57m4 |\
-    awk '/token:/ {print $2;}' |\
-    xclip -selection c
-}
 
 # Recompute flow
 export PYTHONPATH=$PYTHONPATH:$RECOMPUTE_FLOW_HOME/airflow-home/dags:$RECOMPUTE_FLOW_HOME/micro_pipeline:$RECOMPUTE_FLOW_HOME/web-ui/server
@@ -152,16 +126,19 @@ then
     fi
 fi
 
+#------------------------------------------------------------------------------#
 # npm
 NPM_VERSION='v13.14.0'
 NPM_DISTRO='linux-x64'
 export PATH="/usr/local/lib/nodejs/node-${NPM_VERSION}-${NPM_DISTRO}/bin:${PATH}"
 
+#------------------------------------------------------------------------------#
 # SGpp
 export SGPP_HOME=$HOME/workspace/SGpp_ff
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$SGPP_HOME/lib/sgpp
 export PYTHONPATH=$PYTHONPATH:$SGPP_HOME/lib
 
+#------------------------------------------------------------------------------#
 # AOS
 export AOS_BASE_HOME=$HOME/workspace/aos_base
 export RECOMPUTE_HOME=$AOS_BASE_HOME/recompute
@@ -170,16 +147,13 @@ export AOS_INSTALL_DIR=$AOS_BASE_HOME/_install
 export RECOMPUTE_BUILD_DIR=$AOS_BASE_HOME/build_recapp
 export RECOMPUTE_INSTALL_DIR=$AOS_BASE_HOME/install_recapp/recompute
 
+#------------------------------------------------------------------------------#
 ## DoL player
 if [[ -d "${RECOMPUTE_INSTALL_DIR}" ]]; then
     "${RECOMPUTE_INSTALL_DIR}/host/bin/test/dol_source_env.sh"
     export DOL_MANIFEST_DIR="${RECOMPUTE_INSTALL_DIR}/target/share/manifests"
     PATH=$PATH:${RECOMPUTE_BUILD_DIR}/recompute/source/host/tooling/sequenceprofiler
 fi
-
-export PATH=$PATH:$RECOMPUTE_INSTALL_DIR/host/bin:$RECOMPUTE_INSTALL_DIR/host/bin/test:$RECOMPUTE_INSTALL_DIR/target/bin:$RECOMPUTE_INSTALL_DIR/target/bin/test:$RECOMPUTE_INSTALL_DIR/shared/bin
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$RECOMPUTE_INSTALL_DIR/host/lib:$LD_LIBRARY_PATH:$RECOMPUTE_INSTALL_DIR/target/lib:$RECOMPUTE_INSTALL_DIR/shared/lib
-export PYTHONPATH=$PYTHONPATH:$RECOMPUTE_INSTALL_DIR/host/lib/python3.6/dist-packages
 
 # Azure DevOps
 # Run cat BOSCH-CA-DE_pem.cer /opt/az/lib/python3.6/site-packages/certifi/cacert.pem > azure-bosch-cert.pem
@@ -191,6 +165,7 @@ export SPHINX_VIRTUALENV="${HOME}/workspace/dol_arc_doc/sphinx-packages"
 # Virtual environments for python
 export WORKON_HOME=$HOME/.virtualenvs
 export PIP_VIRTUALENV_BASE=$WORKON_HOME
+
 # Make sure that the debian package virtualenvwrapper is installed for
 # the following to work. If errors occur, install it via "pip3 install
 # virtualenvwrapper"
@@ -207,25 +182,6 @@ if [[ -f "/usr/share/virtualenvwrapper/virtualenvwrapper.sh" ]]; then
     complete -o default -F _pip_completion pip
     # pip bash completion end
 fi
-
-# >>> conda initialize >>>
-if [[ -f "$HOME/anaconda3/bin/conda" ]]; then
-    # !! Contents within this block are managed by 'conda init' !!
-    __conda_setup="$('$HOME/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-    if [ $? -eq 0 ]; then
-        eval "$__conda_setup"
-    else
-        if [ -f "$HOME/anaconda3/etc/profile.d/conda.sh" ]; then
-            . "$HOME/anaconda3/etc/profile.d/conda.sh"
-        else
-            export PATH="$HOME/anaconda3/bin:$PATH"
-        fi
-    fi
-    unset __conda_setup
-    conda deactivate
-fi
-# <<< conda initialize <<<
-
 
 # make aliases available in eshell
 alias | sed 's/^alias //' | sed -E "s/^([^=]+)='(.+?)'$/\1=\2/" | sed "s/'\\\\''/'/g" | sed "s/'\\\\$/'/;" | sed -E 's/^([^=]+)=(.+)$/alias \1 \2/' > ~/.emacs.d/eshell/alias

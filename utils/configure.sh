@@ -57,6 +57,15 @@ while [ "${#}" -gt 0 ]; do
 done
 
 #------------------------------------------------------------------------------#
+# install required packages
+
+echo -e "${__COLOR_INFO}INFO: Installing minimal required packages for setup..${__COLOR_RESET}"
+sudo apt-get update && \
+    sudo apt-get install -y \
+         xclip \
+         apt-transport-https
+
+#------------------------------------------------------------------------------#
 # create folders
 
 echo -e "${__COLOR_INFO}INFO: Creating custom-folders..${__COLOR_RESET}"
@@ -120,6 +129,7 @@ if [ ! -e "${__FILE}" ]; then
     echo "created '${__FILE}'"
 fi
 
+#------------------------------------------------------------------------------#
 # install oh-my-zsh if required
 OH_MY_ZSH_HOME="$HOME/.oh-my-zsh"
 if [[ ! -d "${OH_MY_ZSH_HOME}" ]]; then
@@ -133,6 +143,7 @@ fi
 ln -i -v -s "${__CUSTOM_DIR}/shell/p10k.zsh" "${HOME}/.p10k.zsh"
 echo -e "${__COLOR_SUCC}SUCCESS: p10k.zsh configured${__COLOR_RESET}"
 
+#------------------------------------------------------------------------------#
 # create symlinks in $HOME
 echo -e "${__COLOR_INFO}INFO: ${HOME}/.profile@ -> ${__CUSTOM_DIR}/shell/shellrc.sh${__COLOR_RESET}"
 ln -i -v -s "${__CUSTOM_DIR}/shell/shellrc.sh" "${HOME}/.profile"

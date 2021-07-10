@@ -1,0 +1,5 @@
+token() {
+    kubectl -n kube-system describe secret admin-user-token-d57m4 |\
+    awk '/token:/ {print $2;}' |\
+    xclip -selection c
+}
