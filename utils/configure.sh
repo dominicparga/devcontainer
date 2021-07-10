@@ -242,7 +242,7 @@ fi
 #------------------------------------------------------------------------------#
 # setup custom/termux
 
-if [ -n "${HOME}/.termux" ]; then
+if [ -d "${HOME}/.termux" ]; then
     echo -e "${__COLOR_INFO}INFO: Copying and linking termux-files..${__COLOR_RESET}"
     # copy dotfiles/termux.properties into custom
     echo -e "${__COLOR_INFO}INFO: ${HOME}/.termux/termux.properties -> ${DOTFILES}/custom/termux/properties -> ${DOTFILES}/termux/properties${__COLOR_RESET}"
@@ -274,9 +274,6 @@ echo -e "${__COLOR_SUCC}SUCCESS: R-files configured${__COLOR_RESET}"
 # setup custom/emacs
 
 echo -e "${__COLOR_INFO}INFO: Creating and linking emacs-setup..${__COLOR_RESET}"
-
-# Set __VSCODE_HOME dependent of system.
-# See https://code.visualstudio.com/docs/getstarted/settings#_settings-file-locations
 
 __EMACS_HOME="${HOME}"
 __DOT_EMACS="${HOME}/.emacs"

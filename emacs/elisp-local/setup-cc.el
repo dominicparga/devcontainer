@@ -190,23 +190,23 @@
 ;; dap debugging for c++
 (require 'dap-cpptools)
 
-(provide 'setup-cc)
-
-(ccls-xref-find-custom "$ccls/base")
-(ccls-xref-find-custom "$ccls/callers")
+;; (ccls-xref-find-custom "$ccls/base")
+;; (ccls-xref-find-custom "$ccls/callers")
 
 ;; Use lsp-goto-implementation or lsp-ui-peek-find-implementation for derived types/functions
-(ccls-xref-find-custom "$ccls/vars")
+;; (ccls-xref-find-custom "$ccls/vars")
 
 ;; Alternatively, use lsp-ui-peek interface
-(lsp-ui-peek-find-custom 'base "$ccls/base")
-(lsp-ui-peek-find-custom 'callers "$ccls/callers")
-(lsp-ui-peek-find-custom 'random "$ccls/random") ;; jump to a random declaration
+;; (lsp-ui-peek-find-custom 'base "$ccls/base")
+;; (lsp-ui-peek-find-custom 'callers "$ccls/callers")
+;; (lsp-ui-peek-find-custom 'random "$ccls/random") ;; jump to a random declaration
 
-(ccls-member-hierarchy)
-(ccls-call-hierarchy nil) ; caller hierarchy
-(ccls-call-hierarchy t) ; callee hierarchy
-(ccls-inheritance-hierarchy nil) ; base hierarchy
-(ccls-inheritance-hierarchy t) ; derived hierarchy
+;; (ccls-member-hierarchy)
+;; (ccls-call-hierarchy nil) ; caller hierarchy
+;; (ccls-call-hierarchy t) ; callee hierarchy
+;; (ccls-inheritance-hierarchy nil) ; base hierarchy
+;; (ccls-inheritance-hierarchy t) ; derived hierarchy
+
+(provide 'setup-cc)
 
 ;;; setup-cc.el ends here
