@@ -41,6 +41,8 @@
             (apply orig-fun args)))
     (apply orig-fun args)))
 
+;; (use-package vterm-toggle)
+
 (use-package vterm
   :ensure-system-package ((cmake . cmake)
                           (libtool . libtool-bin)

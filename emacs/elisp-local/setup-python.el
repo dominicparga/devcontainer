@@ -35,7 +35,7 @@
                           (lsp))))  ; or lsp-deferred
   :init
   (setq python-indent-offset 4)
-  (setq python-shell-interpreter "python")
+  (setq python-shell-interpreter "/usr/bin/python3")
   (setq lsp-python-ms-auto-install-server t)
   :config
   ;; delete output buffer on buffer execution
@@ -47,7 +47,7 @@
 ;; ~/.local/bin, provide a dummy one that runs black in library mode
 ;; python3 -m black "${@}"
 (use-package python-black
-  :ensure-system-package ((black . "pip3 install --user -U black"))
+  :ensure-system-package ((black . "python3 -m pip install --user -U black"))
   :hook ((python-mode . python-black-on-save-mode))
   )
 

@@ -736,6 +736,7 @@
         lsp-enable-snippet nil
         lsp-prefer-flymake nil
         lsp-file-watch-threshold 100000 ;; increase watch threshold
+        lsp-python-ms-python-executable "/usr/bin/python3"
         )
   (lsp-enable-which-key-integration)
 
