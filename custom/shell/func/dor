@@ -1,0 +1,3 @@
+dor() {
+      docker run -it -e "DEBIAN_FRONTEND=noninteractive" -e "TERM=xterm-color" -e "DISPLAY=$DISPLAY" -v "/tmp/.X11-unix:/tmp/.X11-unix" --shm-size="16g" --entrypoint "/bin/bash" "${1}"
+}

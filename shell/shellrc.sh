@@ -95,12 +95,6 @@ alias k='kubectl --namespace=development-${USER}'
 alias kp='kubectl --namespace=production'
 
 # Docker
-alias dor='docker run -it -e "DEBIAN_FRONTEND=noninteractive" -e "TERM=xterm-color" -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --shm-size="16g" --entrypoint "/bin/bash"'
-
-doe() {
-    docker exec -it "${1}" "/bin/bash"
-}
-
 alias doi='docker images'
 alias doc='docker container list'
 alias dosp='docker system prune -f'
