@@ -314,8 +314,8 @@
   :config
   (setq company-backends (delete 'company-semantic company-backends)
         company-minimum-prefix-length 1
-        company-idle-delay 0.0 ;; default is 0.2
-        company-echo-delay 0.0
+        company-idle-delay 0.2 ;; default is 0.2
+        company-echo-delay 0.2
         ;; aligns annotation to the right hand side
         company-tooltip-align-annotations t)
 
@@ -819,8 +819,6 @@
 ;; -------------------------------------------------------------------
 (use-package dap-mode
   :init
-  ;; enables mouse hover support
-  (dap-tooltip-mode 1)
   ;; use tooltips for mouse hover
   ;; if it is not enabled `dap-mode' will use the minibuffer.
   (tooltip-mode 1)
