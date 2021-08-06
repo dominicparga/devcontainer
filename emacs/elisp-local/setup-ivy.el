@@ -48,10 +48,12 @@
 
 (use-package ivy-rich
   :after (counsel counsel-projectile projectile ivy all-the-icons-ivy-rich)
-  :init
-  (ivy-rich-mode 1)
   :config
   (setq ivy-format-function #'ivy-format-function-line)
+  ;; needs to be set otherwise (ivy-rich-set-display-transformer) does not get called
+  (setq ivy-rich--original-display-transformers-list nil)
+  ;; enable ivy rich mode
+  (ivy-rich-mode 1)
   )
 
 (use-package counsel
@@ -93,6 +95,8 @@
   (ivy-prescient-enable-filtering nil)
   :config
   (prescient-persist-mode t)
+
+  ;; enable ivy prescient mode
   (ivy-prescient-mode t))
 
 (use-package lsp-ivy
