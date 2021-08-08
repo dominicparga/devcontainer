@@ -5,7 +5,6 @@
 ;;; Code:
 
 (use-package ivy
-  :diminish
   :after (counsel counsel-projectile)
   :bind (("C-s" . swiper)
          ("C-c C-o" . ivy-occur)
@@ -22,6 +21,9 @@
          :map ivy-reverse-i-search-map
          ("C-k" . ivy-previous-line)
          ("C-d" . ivy-reverse-i-search-kill))
+  :init
+  ;; enable ivy mode
+  (ivy-mode t)
   :config
   (setq ivy-use-virtual-buffers t)
   (setq ivy-wrap t)
@@ -38,22 +40,18 @@
   (setf (alist-get 'counsel-projectile-rg ivy-height-alist) 15)
   (setf (alist-get 'swiper ivy-height-alist) 15)
   (setf (alist-get 'counsel-switch-buffer ivy-height-alist) 7)
-
-  ;; enable ivy mode
-  (ivy-mode 1)
 )
 
-(use-package ivy-hydra
-  :after ivy)
+(use-package ivy-hydra)
 
 (use-package ivy-rich
-  :after (counsel counsel-projectile projectile ivy all-the-icons-ivy-rich)
+  :init
+  ;; Do not enable ivy rich mode here but in all-the-icons-ivy-rich
+  ;; (ivy-rich-mode t)
   :config
   (setq ivy-format-function #'ivy-format-function-line)
   ;; needs to be set otherwise (ivy-rich-set-display-transformer) does not get called
   (setq ivy-rich--original-display-transformers-list nil)
-  ;; enable ivy rich mode
-  (ivy-rich-mode 1)
   )
 
 (use-package counsel
@@ -63,22 +61,41 @@
          ("M-y" . counsel-yank-pop)
          :map minibuffer-local-map
          ("C-r" . 'counsel-minibuffer-history))
+  :init
+  ;; enable counsel mode
+  (counsel-mode 1)
   :custom
   (counsel-linux-app-format-function #'counsel-linux-app-format-function-name-only)
   :config
   (setq ivy-initial-inputs-alist nil) ;; Don't start searches with ^
-
-  ;; enable counsel mode
-  (counsel-mode 1)
   )
 
+;; To display icons correctly, you should run M-x
+;; all-the-icons-install-fonts to install the necessary fonts.
 (use-package all-the-icons-ivy-rich
-  :after (ivy-rich)
+  :after (ivy-rich counsel-projectile)
   :init
-  (all-the-icons-ivy-rich-mode 1)
+  (all-the-icons-ivy-rich-mode t)
+  (ivy-rich-mode t)
   :config
-  (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line)
-  (setq inhibit-compacting-font-caches t))
+  ;; Whether display the colorful icons.
+  ;; It respects `all-the-icons-color-icons'.
+  (setq all-the-icons-ivy-rich-color-icon t)
+
+  ;; The icon size
+  (setq all-the-icons-ivy-rich-icon-size 1.0)
+
+  ;; Whether support project root
+  (setq all-the-icons-ivy-rich-project t)
+
+  ;; Slow Rendering
+  ;; If you experience a slow down in performance when rendering multiple icons simultaneously,
+  ;; you can try setting the following variable
+  (setq inhibit-compacting-font-caches t)
+
+  ;; (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line)
+  ;; (setq inhibit-compacting-font-caches t)
+  )
 
 (use-package flx  ;; Improves sorting for fuzzy-matched results
   :init
@@ -90,17 +107,16 @@
 (use-package prescient)
 
 (use-package ivy-prescient
-  :after (ivy counsel prescient)
+  :after prescient
   :custom
   (ivy-prescient-enable-filtering nil)
-  :config
-  (prescient-persist-mode t)
-
+  :init
   ;; enable ivy prescient mode
-  (ivy-prescient-mode t))
+  (ivy-prescient-mode t)
+  (prescient-persist-mode t))
 
-(use-package lsp-ivy
-  :after (ivy lsp))
+
+(use-package lsp-ivy)
 
 (provide 'setup-ivy)
 
