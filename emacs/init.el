@@ -263,6 +263,14 @@
 (use-package all-the-icons
   :after font-lock+)
 
+;; Google search integration
+(use-package google-this
+  :init
+  (google-this-mode t)
+  :config
+  (global-set-key (kbd "C-c g") 'google-this-mode-submap)
+  )
+
 ;; -------------------------------------------------------------------
 ;; Tramp
 ;; -------------------------------------------------------------------

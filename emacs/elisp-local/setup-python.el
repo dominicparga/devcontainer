@@ -53,8 +53,14 @@
 
 ;; supports virtual environments. To be set with pyvenv-workon
 (use-package pyvenv
-  :config
+  :init
   (pyvenv-mode 1))
+
+(use-package pipenv
+  :hook (python-mode . pipenv-mode)
+  :init
+  (setq pipenv-projectile-after-switch-function
+        #'pipenv-projectile-after-switch-extended))
 
 (provide 'setup-python)
 
