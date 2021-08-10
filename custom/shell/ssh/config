@@ -1,8 +1,3 @@
-# Host node0
-#      User frf2lr
-#      Hostname ipvslogin.informatik.uni-stuttgart.de
-#      ProxyCommand nc -X connect -x proxy-ut.rd.corpintra.net:3128 %h %p
-
 # Host sedcaath0020.emea.bg.corpintra.net
 #      Hostname sedcaath0020.emea.bg.corpintra.net
 #      User franzef

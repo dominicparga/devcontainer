@@ -401,7 +401,7 @@
          (dired-mode . hl-line-mode))
   :bind (("C-x C-j" . dired-jump)
          :map dired-mode-map
-         ("<backspace>" . dired-single-up-directory)
+         ("<backspace>" . dired-up-directory)
          ("TAB" . dired-find-file))
   :custom
   ((dired-auto-revert-buffer t) ; Auto update when buffer is revisited
@@ -413,12 +413,7 @@
   (setq dired-listing-switches "-agho --group-directories-first"
         dired-hide-details-hide-symlink-targets nil)
 
-  (autoload 'dired-omit-mode "dired-x")
-
-  (add-hook 'dired-load-hook
-            (lambda ()
-              (interactive)
-              (dired-collapse))))
+  (autoload 'dired-omit-mode "dired-x"))
 
 (use-package dired-rainbow
   :defer 2
@@ -478,6 +473,8 @@
                           (okular . okular)
                           (eog . eog)
                           (firefox . firefox))
+  :init
+  (openwith-mode t)
   :config
   (setq openwith-associations
         (list
@@ -501,8 +498,7 @@
          (list (openwith-make-extension-regexp
                 '("html"))
                "firefox"
-               '(file))))
-  (openwith-mode 1))
+               '(file)))))
 
 ;; -------------------------------------------------------------------
 ;; Copy & Paste
