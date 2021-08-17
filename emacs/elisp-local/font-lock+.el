@@ -59,7 +59,7 @@
 ;;; Change Log:
 ;;
 ;; 2014/08/30 dadams
-;;     Require cl.el when compile, for incf.
+;;     Require cl.el when compile, for cl-incf.
 ;;     Load font-lock.el[c] when compile, for macro save-buffer-state.
 ;;     font-lock-(prepend|append)-text-property:
 ;;       Update for Emacs 24: Canonicalize old forms.
@@ -93,7 +93,7 @@
 (require 'font-lock)
 
 (eval-when-compile
-  (require 'cl) ;; incf
+  (require 'cl) ;; cl-incf
   (load-library "font-lock")) ;; Macro save-buffer-state
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -375,7 +375,7 @@ LOUDLY, if non-nil, allows progress-meter bar."
     ;; Fontify each item in `font-lock-keywords' from `start' to `end'.
     (while keywords
       (when loudly
-        (message "Fontifying %s... (regexps..%s)" bufname (make-string (incf count)
+        (message "Fontifying %s... (regexps..%s)" bufname (make-string (cl-incf count)
                                                                        ?.)))
       ;;
       ;; Find an occurrence of `matcher' from `start' to `end'.

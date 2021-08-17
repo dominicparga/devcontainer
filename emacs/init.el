@@ -197,8 +197,8 @@
 (global-set-key "\C-n" 'make-frame)
 
 ;; Ctrl-1 stores a position in a file, Alt-1 brings you back to this position
-(global-set-key (kbd "C-1")  '(lambda () (interactive) (point-to-register ?1)))
-(global-set-key (kbd "M-1")  '(lambda () (interactive) (register-to-point ?1)))
+(global-set-key (kbd "C-1") #'(lambda () (interactive) (point-to-register ?1)))
+(global-set-key (kbd "M-1") #'(lambda () (interactive) (register-to-point ?1)))
 
 ;; higlight the marked region (C-SPC) and use commands (like
 ;; latex-environment) on current region.
