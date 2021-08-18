@@ -34,3 +34,10 @@ find_file() {
 say() {
     vterm_cmd message "%s" "$*"
 }
+
+vterm_prompt_end() {
+    vterm_printf "51;A$(whoami)@$(hostname):$(pwd)";
+}
+
+setopt PROMPT_SUBST
+PROMPT=$PROMPT'%{$(vterm_prompt_end)%}'
