@@ -51,7 +51,7 @@
   :hook ((vterm-mode . ff/term-exec-hook))
   :config
   (setq vterm-shell "/bin/zsh")
-  (setq vterm-max-scrollback 10000)
+  (setq vterm-max-scrollback 100000)
   (setq explicit-shell-file-name "/bin/zsh")
 
   (define-key vterm-mode-map (kbd "<C-backspace>")
@@ -61,8 +61,9 @@
 
   :bind (("C-x j" . ff/start-vterm)
          :map vterm-mode-map
-         ("C-y" . term-paste)
+         ("C-y" . vterm-yank)
          ("C-x 2" . ff/open-vterm-below)
+         ("C-c C-t" . vterm-copy-mode)
          ))
 
 (provide 'setup-vterm)
