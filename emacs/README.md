@@ -1,6 +1,6 @@
 # Download
 
-- Newest version: `git clone git://git.savannah.gnu.org/emacs.git`
+- Newest version: `git clone https://git.savannah.gnu.org/git/emacs.git`
 - Released version: [GNU FTP](https://ftp.gnu.org/gnu/emacs/)
 
 # Build and install
@@ -13,7 +13,7 @@
 
 - `export CC=/usr/bin/gcc-10 CXX=/usr/bin/gcc-10`
 - `./autogen.sh`
-- `./configure --with-modules --with-gnutls --with-rsvg --with-x --with-json --prefix /home/franzef/opt/emacs-27.2 --bindir /home/franzef/opt/emacs-27.2/bin CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer" --with-mailutils --with-native-compilation`
+- `./configure --with-modules --with-gnutls --with-rsvg --with-x --with-json --prefix $HOME/opt/emacs-27.2 --bindir $HOME/opt/emacs-27.2/bin CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer" --with-mailutils --with-native-compilation`
 - `make -j${nproc} && make install`
 
 # Install with update-alternatives
