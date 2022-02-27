@@ -59,6 +59,7 @@ alias reboot='shutdown now --reboot'
 alias cp='cp -i -P'
 alias mv='mv -i'
 alias grep='grep --color=auto'
+alias diff='diff --color=auto'
 
 alias c='clear'
 # macOS: --color=auto needed for coreutils

@@ -33,7 +33,7 @@
   "explorer.confirmDragAndDrop": false,
   "extensions.ignoreRecommendations": false,
   "editor.cursorSmoothCaretAnimation": true,
-  "editor.lineNumbers": "relative",
+  "editor.lineNumbers": "on",
   "editor.rulers": [80, 100, 120],
   "editor.cursorSurroundingLines": 0,
   "editor.cursorStyle": "line",
