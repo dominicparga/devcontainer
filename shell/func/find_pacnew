@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+find_pacnew() {
+    sudo find /var /etc /opt /usr /sys -type f -name '*.pacnew'
+}
+
+if [ -n "${ZSH_NAME}" ]; then
+    find_pacnew "${@}"
+fi
