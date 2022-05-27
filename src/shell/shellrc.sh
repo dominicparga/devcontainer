@@ -14,8 +14,9 @@ if [ -z "${DOTFILES}" ] || [ ! -d "${DOTFILES}" ]; then
     sleep 4
     exit 1
 fi
-export __SHELL_LIB="${DOTFILES}/shell"
-export __CUSTOM_SHELL_LIB="${DOTFILES}/custom/shell"
+DOT_SRC_DIR="${DOTFILES}/src"
+export __SHELL_LIB="${DOT_SRC_DIR}/shell"
+export __CUSTOM_SHELL_LIB="${DOT_SRC_DIR}/custom/shell"
 
 . "${DOTFILES}/utils/faq.sh"
 
@@ -23,9 +24,9 @@ export __CUSTOM_SHELL_LIB="${DOTFILES}/custom/shell"
 # load gear for used shell
 
 if ( __is_zsh ); then
-    . "${DOTFILES}/shell/gear.zsh"
+    . "${__SHELL_LIB}/gear.zsh"
 elif ( __is_bash ); then
-    . "${DOTFILES}/shell/gear.bash"
+    . "${__SHELL_LIB}/gear.bash"
 fi
 
 #------------------------------------------------------------------------------#

@@ -1,70 +1,45 @@
 # dotfiles
 
-[![Tag][github/self/tags/badge]][github/self/tags]
-
-[![Changelog][github/self/blob/changelog/badge]][github/self/blob/changelog]
-[![Last commit][github/self/last-commit/badge]][github/self/last-commit]
-
-[![License][github/self/license/badge]][github/self/license]
+[![Last commit](https://img.shields.io/github/last-commit/dominicparga/dotfiles?style=for-the-badge)](https://github.com/dominicparga/dotfiles/commits) [![License](https://img.shields.io/github/license/dominicparga/dotfiles?style=for-the-badge)](https://github.com/dominicparga/dotfiles/blob/nightly/LICENSE)
 
 
 ## Table of Contents
 
-1. [Dry and short](#dry-and-short)
-1. [Usage](#usage)
-    1. [Configuration](#configuration)
-    1. [Change default location after configuration](#change-default-location)
-1. [Features](#features)
-    1. [Shell environment](#shell-environment)
-    1. [git aliases](#git-aliases)
-1. [Structure](#structure)
-1. [Contributing](#contributing)
-1. [FAQ / Troubleshooting](#faq)
-    1. [Syntax error](#syntax-error)
-    1. [Insecure files or directories](#insecure-files-and-dirs)
-    1. [vscode-extensions doesn't work](#vscode-extensions-doesnt-work)
-    1. [vscode doesn't take my environment-variable](#vscode-env-vars)
+<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
+
+<!-- code_chunk_output -->
+
+- [dotfiles](#dotfiles)
+  - [Table of Contents](#table-of-contents)
+  - [Dry and short](#dry-and-short)
+  - [Usage](#usage)
+    - [Configuration](#configuration)
+    - [Change default location after configuration](#change-default-location-after-configuration)
+  - [Features](#features)
+    - [Shell environment](#shell-environment)
+    - [Git aliases](#git-aliases)
+  - [Structure](#structure)
+  - [Contributing](#contributing)
+  - [FAQ / Troubleshooting](#faq-troubleshooting)
+    - [Syntax error](#syntax-error)
+    - [Insecure files or directories](#insecure-files-or-directories)
+    - [vscode-extensions doesn't work](#vscode-extensions-doesnt-work)
+    - [vscode doesn't take my environment-variable](#vscode-doesnt-take-my-environment-variable)
+
+<!-- /code_chunk_output -->
 
 
-## Dry and short <a name="dry-and-short"></a>
+## Dry and short
 
-These dotfiles should speed up a personal workflow and help setting it up.
-Focus lays on keeping overview since using this repo should feel like speeding up manual steps.
-Therefore, kind of plugin-structure is not implemented.
-Instead, (more or less) slight customization of existing files is supported providing some flexibility without the need of forking the whole project.
-
-Hence, the general idea of these files is:
-
-1. Create a `custom`-folder (ignored by git) inside the folder `dotfiles` (can be changed).
-2. Create all necessary dotfiles in `custom` by copying originals or symlinking to them.
-3. Create symlinks from `${HOME}` linking to files in `custom`-folder.
-
-Since everything is, kind of, filtered through this `custom`-folder, every option can be changed pretty easily without forking.
-So result in home will be
-
-```zsh
-DOTFILES="${HOME}/dotfiles" # can be changed
-
-~/
-├── .alacritty.yml@ -> ${DOTFILES}/custom/alacritty/alacritty.yml*
-│
-├── .gitconfig@ -> ${DOTFILES}/custom/git/config*
-├── .gitconfig.general@ -> ${DOTFILES}/custom/git/config.general*
-│
-├── .bashrc@ -> ${HOME}/.profile
-├── .zshrc@ -> ${HOME}/.profile
-├── .profile@ -> ${DOTFILES}/custom/shell/shellrc.sh
-│
-├── .ssh
-│   ├── config@ -> ${DOTFILES}/custom/shell/ssh/config*
-│   └── ...
-└── ...
-```
+1. Replace settings in `${HOME}` (`.gitconfig`, `.bashrc`, ...) by symlinks.
+1. These symlinks in `${HOME}` point to symlinks in `dotfiles/custom`.
+1. These symlinks in `dotfiles/custom` point to files in `dotfiles/src`.
+1. Since `dotfiles/custom` is gitignored, you might replace these symlinks here.
 
 `Visual Studio code` is also configured.
-Following paths are linux-related (see [vscode-website][vscode/docs/settings-file-locations]).
+Following paths are linux-related (see [vscode-website](https://code.visualstudio.com/docs/getstarted/settings#_settings-file-locations)).
 
-```zsh
+```shell
 DOTFILES="${HOME}/dotfiles" # can be changed
 
 # path here is linux-related
@@ -76,20 +51,23 @@ ${HOME}/.config/Code/User/
 These dotfiles are used and tested with `archlinux`.
 
 
-## Usage <a name="usage"></a>
+## Usage
 
-Long story short, download these files (`git clone` or from releases) and execute `./configure`.
-Every file-creation or -replacement is interactive and verbose.
+```shell
+cd ~
+git clone https://github.com/dominicparga/dotfiles.git
+./dotfiles/configure.bash
+```
 
 
-### Configuration <a name="configuration"></a>
+### Configuration
 
 You can setup your dotfiles using the provided `configure`-file (`macOS`, `linux`).
 The `configure` initially sets `${DOTFILES}` dependent on its own location and calls `utils/configure.sh` creating the `custom`-folder and symlinks given the variable `${DOTFILES}` (set in `configure`).
 
 Executing the following will create a folder `custom/` in the dotfiles folder and create all needed symlinks in there, but also in `${HOME}` and in `vscode`'s home (where `settings.json` lays, which is system-dependent).
 
-```zsh
+```shell
 # location of the dotfiles, probably in ${HOME}
 cd ~
 
@@ -108,11 +86,11 @@ Opening a new window will use the new setup.
 > __Note:__ `custom/` contains some generic info that should probably be updated by hand (e.g. gitconfig's `user.name`).
 
 
-### Change default location after configuration <a name="change-default-location"></a>
+### Change default location after configuration
 
 You can change the default-location of your dotfiles easily by moving the dotfiles-folder around and executing `configure` again.
 
-```zsh
+```shell
 cd ~
 mv dotfiles dotties
 cd dotties
@@ -125,15 +103,15 @@ This is necessary to be fully custom here (e.g. moving `shellrc.sh` around).
 If you keep your existing `custom/shell/shellrc.sh`, you have to change the hardcoded path manually.
 
 
-## Features <a name="features"></a>
+## Features
 
 Besides some handy functions and a clean way of structuring your dotfiles, useful aliases and functions are provided.
 These dotfiles are used with `bash` and `zsh` on `macOS` and some `linux`-distributions.
 
 
-### Shell environment <a name="shell-environment"></a>
+### Shell environment
 
-Beside autocompletion for several tools, aliases and exports can be found in [`shell/shellrc.sh`][github/self/shell/shellrc.sh].
+Beside autocompletion for several tools, aliases and exports can be found in [`shell/shellrc.sh`](https://github.com/dominicparga/dotfiles/blob/nightly/shell/shellrc.sh).
 Some commands like `grep` or `tree` are just flagged to use colors.
 Those are not mentioned here.
 
@@ -161,9 +139,9 @@ Those are not mentioned here.
 | `gitignore` | uses the `gitignore.io` API to echo gitignore entries, which can be piped into a `.gitignore`-file |
 
 
-### Git aliases <a name="git-aliases"></a>
+### Git aliases
 
-Have a look at the handy [git aliases][github/self/git/config.general].
+Have a look at the handy [git aliases](https://github.com/dominicparga/dotfiles/blob/nightly/git/config.general).
 In addition, visual-studio-code is opening as diff-tool and for commit-messages.
 
 `g` is alias for `git` (see above).
@@ -211,7 +189,7 @@ In addition, visual-studio-code is opening as diff-tool and for commit-messages.
 > Due to `git help log`, this flag refers to stored references in `.git/refs`.
 
 
-## Structure <a name="structure"></a>
+## Structure
 
 In general, every file in `custom` can be removed and calling `configure` will recreate the default version of it.
 So playing around with this project is only cricital in the case that own changes in `custom` are removed manually.
@@ -220,7 +198,7 @@ The idea behind the `custom`-folder is, besides supporting private files (e.g. s
 The following (incomplete) tree is supported after configuration.
 Symlinks are marked with `@` at the end of their name and can be replaced manually for further customization.
 
-```zsh
+```shell
 dotfiles/
 ├── custom/
 │   ├── custom/                         # completely untouched by the project
@@ -259,10 +237,10 @@ dotfiles/
 | `shell/func/`                         | provides useful shell functions. Functions in `custom/shell/func/` are autoloaded/included and overwrite default functions in `shell/func/` if their name is the same. |
 | `shell/prompts/`                      | contains some prompts. |
 | `utils/`                              | contains scripts for configuration. |
-| `vscode/`                             | [Visual studio code][vscode] uses some `settings.json` and `keybindings.json` for user settings and keybindings. |
+| `vscode/`                             | [Visual studio code](https://code.visualstudio.com/) uses some `settings.json` and `keybindings.json` for user settings and keybindings. |
 
 
-## Contributing <a name="contributing"></a>
+## Contributing
 
 These dotfiles are created in a __modular__ and __lightweight__ way.
 For example, to find the `shellrc.sh`, the respective script is located in `shell`.
@@ -270,17 +248,17 @@ For example, to find the `shellrc.sh`, the respective script is located in `shel
 For more detailed information, please look [at the contribution section](CONTRIBUTING.md).
 
 
-## FAQ / Troubleshooting <a name="faq"></a>
+## FAQ / Troubleshooting
 
 Weird experiences from friends and others, which are using this repo, are mentioned below.
 
 
-### Syntax error <a name="syntax-error"></a>
+### Syntax error
 
 These dotfiles are used with `bash` and `zsh`.
 Check how `sh` is symlinked, e.g. via
 
-```zsh
+```shell
 ls -1GF --color=auto -lh -a $(which sh)
 ```
 
@@ -288,39 +266,24 @@ For instance, `Debian` uses `dash` instead of `bash`.
 In this case, you have to change the system-shell with `chsh` or change the used shell in your terminal.
 
 
-### Insecure files or directories <a name="insecure-files-and-dirs"></a>
+### Insecure files or directories
 
 Your file permissions for your `dotfiles` are probably too loose.
 Execute the following to set the permissions to `drwxr-xr-x`.
 
-```zsh
+```shell
 chmod -R 755 "${DOTFILES}"
 ```
 
 
-### vscode-extensions doesn't work <a name="vscode-extensions-doesnt-work"></a>
+### vscode-extensions doesn't work
 
 You can downgrade installed extensions manually in vscode under `Extensions`.
 Here, you click on the gear next to the installed and affected extension and select `Install Another Version...`.
 
 
-### vscode doesn't take my environment-variable <a name="vscode-env-vars"></a>
+### vscode doesn't take my environment-variable
 
 `vscode`-settings can contain environment-dependent variables (e.g. `"key": "${env:VAR_NAME}"`).
 Inside of `vscode`, a new terminal does source your `.profile`-file, but the `vscode`-window itself bases the shell-environment from its callee.
 To use env-variables in `vscode`-settings, you set this variable in your shell before opening `vscode` with `code` (e.g. opening current folder with `code .`).
-
-
-[github/self/blob/changelog]: https://github.com/dominicparga/dotfiles/blob/nightly/CHANGELOG.md
-[github/self/blob/changelog/badge]: https://img.shields.io/badge/CHANGELOG-nightly-blueviolet?style=for-the-badge
-[github/self/contributing]: https://github.com/dominicparga/dotfiles/blob/nightly/CONTRIBUTING.md
-[github/self/git/config.general]: https://github.com/dominicparga/dotfiles/blob/nightly/git/config.general
-[github/self/last-commit]: https://github.com/dominicparga/dotfiles/commits
-[github/self/last-commit/badge]: https://img.shields.io/github/last-commit/dominicparga/dotfiles?style=for-the-badge
-[github/self/license]: https://github.com/dominicparga/dotfiles/blob/nightly/LICENSE
-[github/self/license/badge]: https://img.shields.io/github/license/dominicparga/dotfiles?style=for-the-badge
-[github/self/shell/shellrc.sh]: https://github.com/dominicparga/dotfiles/blob/nightly/shell/shellrc.sh
-[github/self/tags]: https://github.com/dominicparga/dotfiles/tags
-[github/self/tags/badge]: https://img.shields.io/github/v/tag/dominicparga/dotfiles?sort=semver&style=for-the-badge
-[vscode]: https://code.visualstudio.com/
-[vscode/docs/settings-file-locations]: https://code.visualstudio.com/docs/getstarted/settings#_settings-file-locations

@@ -61,11 +61,10 @@ done
 
 echo -e "${__COLOR_INFO}INFO: Creating custom-folders..${__COLOR_RESET}"
 __CUSTOM_DIR="${DOTFILES}/custom"
+SRC_DIR="${DOTFILES}/src"
 
 # custom
 mkdir -p -v "${__CUSTOM_DIR}/"
-# custom/alacritty
-mkdir -p -v "${__CUSTOM_DIR}/alacritty/"
 # custom/git
 mkdir -p -v "${__CUSTOM_DIR}/git/"
 # custom/shell
@@ -75,8 +74,6 @@ mkdir -p -v "${__CUSTOM_DIR}/shell/ssh/"
 # custom/vscode
 mkdir -p -v "${__CUSTOM_DIR}/vscode/"
 echo -e "${__COLOR_SUCC}SUCCESS: custom-folders created${__COLOR_RESET}"
-# custom/termux
-mkdir -p -v "${__CUSTOM_DIR}/termux/"
 # custom/R
 mkdir -p -v "${__CUSTOM_DIR}/R/"
 
@@ -85,12 +82,12 @@ mkdir -p -v "${__CUSTOM_DIR}/R/"
 
 echo -e "${__COLOR_INFO}INFO: Copying and linking git-files..${__COLOR_RESET}"
 # copy dotfiles/git/config into custom
-echo -e "${__COLOR_INFO}INFO: ${HOME}/.gitconfig@ -> ${DOTFILES}/custom/git/config == ${DOTFILES}/git/config${__COLOR_RESET}"
-cp -i -P "${DOTFILES}/git/config" "${__CUSTOM_DIR}/git/config"
+echo -e "${__COLOR_INFO}INFO: ${HOME}/.gitconfig@ -> ${__CUSTOM_DIR}/git/config == ${SRC_DIR}/git/config${__COLOR_RESET}"
+cp -i -P "${SRC_DIR}/git/config" "${__CUSTOM_DIR}/git/config"
 ln -i -v -s "${__CUSTOM_DIR}/git/config" "${HOME}/.gitconfig"
 # link to config.general
-echo -e "${__COLOR_INFO}INFO: ${HOME}/.gitconfig.general@ -> ${DOTFILES}/custom/git/config.general@ -> ${DOTFILES}/git/config.general${__COLOR_RESET}"
-ln -i -v -s "${DOTFILES}/git/config.general" "${__CUSTOM_DIR}/git/config.general"
+echo -e "${__COLOR_INFO}INFO: ${HOME}/.gitconfig.general@ -> ${__CUSTOM_DIR}/git/config.general@ -> ${SRC_DIR}/git/config.general${__COLOR_RESET}"
+ln -i -v -s "${SRC_DIR}/git/config.general" "${__CUSTOM_DIR}/git/config.general"
 ln -i -v -s "${__CUSTOM_DIR}/git/config.general" "${HOME}/.gitconfig.general"
 echo -e "${__COLOR_SUCC}SUCCESS: git-files configured${__COLOR_RESET}"
 
@@ -99,7 +96,7 @@ echo -e "${__COLOR_SUCC}SUCCESS: git-files configured${__COLOR_RESET}"
 
 echo -e "${__COLOR_INFO}INFO: Creating and linking custom shellrc..${__COLOR_RESET}"
 __FILE="${__CUSTOM_DIR}/shell/shellrc.sh"
-# if already existing, ask for removing it 
+# if already existing, ask for removing it
 if [ -e "${__FILE}" ]; then
     echo -e "${__COLOR_WARN}WARN: custom shellrc found -> remove and recreate?${__COLOR_RESET}"
     rm -i -v "${__FILE}"
@@ -175,9 +172,9 @@ if [ -e "${__FILE}" ]; then
     echo -e "${__COLOR_WARN}WARN: ${__FILE} found -> remove?${__COLOR_RESET}"
     rm -i -v "${__FILE}"
 fi
-echo -e "${__COLOR_INFO}INFO: ${HOME}/.alacritty.yml@ -> ${__CUSTOM_DIR}/alacritty/alacritty.yml -> ${DOTFILES}/alacritty/alacritty.yml${__COLOR_RESET}"
-ln -i -v -s "${DOTFILES}/alacritty/alacritty.yml" "${__CUSTOM_DIR}/alacritty/alacritty.yml"
-ln -i -v -s "${__CUSTOM_DIR}/alacritty/alacritty.yml" "${HOME}/.alacritty.yml"
+echo -e "${__COLOR_INFO}INFO: ${HOME}/.alacritty.yml@ -> ${__CUSTOM_DIR}/alacritty.yml -> ${SRC_DIR}/alacritty.yml${__COLOR_RESET}"
+ln -i -v -s "${SRC_DIR}/alacritty.yml" "${__CUSTOM_DIR}/alacritty.yml"
+ln -i -v -s "${__CUSTOM_DIR}/alacritty.yml" "${HOME}/.alacritty.yml"
 echo -e "${__COLOR_SUCC}SUCCESS: alacritty-files configured${__COLOR_RESET}"
 
 #------------------------------------------------------------------------------#
@@ -203,17 +200,16 @@ do
         break
     fi
 done
-# check if var is set, which means the directory exists
-if [ -n "${__VSCODE_HOME}" ]; then
-    __DOTFILES_VSCODE_DIR="${DOTFILES}/vscode"
+if [ -d "${__VSCODE_HOME}" ]; then
+    __DOTFILES_SRC_VSCODE_DIR="${SRC_DIR}/vscode"
     __DOTFILES_CUSTOM_VSCODE_DIR="${__CUSTOM_DIR}/vscode"
 
     # set vscode-links
-    echo -e "${__COLOR_INFO}INFO: ${__VSCODE_HOME}/settings.json@ -> ${DOTFILES}/custom/vscode/settings.json@ -> ${DOTFILES}/vscode/settings.json${__COLOR_RESET}"
-    ln -i -v -s "${__DOTFILES_VSCODE_DIR}/settings.json" "${__DOTFILES_CUSTOM_VSCODE_DIR}/settings.json"
+    echo -e "${__COLOR_INFO}INFO: ${__VSCODE_HOME}/settings.json@ -> ${__DOTFILES_CUSTOM_VSCODE_DIR}/settings.json@ -> ${__DOTFILES_SRC_VSCODE_DIR}/settings.json${__COLOR_RESET}"
+    ln -i -v -s "${__DOTFILES_SRC_VSCODE_DIR}/settings.json" "${__DOTFILES_CUSTOM_VSCODE_DIR}/settings.json"
     ln -i -v -s "${__DOTFILES_CUSTOM_VSCODE_DIR}/settings.json" "${__VSCODE_HOME}/settings.json"
-    echo -e "${__COLOR_INFO}INFO: ${__VSCODE_HOME}/keybindings.json@ -> ${DOTFILES}/custom/vscode/keybindings.json@ -> ${DOTFILES}/vscode/keybindings.json${__COLOR_RESET}"
-    ln -i -v -s "${__DOTFILES_VSCODE_DIR}/keybindings.json" "${__DOTFILES_CUSTOM_VSCODE_DIR}/keybindings.json"
+    echo -e "${__COLOR_INFO}INFO: ${__VSCODE_HOME}/keybindings.json@ -> ${__CUSTOM_DIR}/vscode/keybindings.json@ -> ${SRC_DIR}/vscode/keybindings.json${__COLOR_RESET}"
+    ln -i -v -s "${__DOTFILES_SRC_VSCODE_DIR}/keybindings.json" "${__DOTFILES_CUSTOM_VSCODE_DIR}/keybindings.json"
     ln -i -v -s "${__DOTFILES_CUSTOM_VSCODE_DIR}/keybindings.json" "${__VSCODE_HOME}/keybindings.json"
     echo -e "${__COLOR_SUCC}SUCCESS: vscode-setup configured${__COLOR_RESET}"
 else
@@ -224,13 +220,13 @@ fi
 #------------------------------------------------------------------------------#
 # setup custom/termux
 
-if [ -n "${HOME}/.termux" ]; then
+if [ -e "${HOME}/.termux" ]; then
     echo -e "${__COLOR_INFO}INFO: Copying and linking termux-files..${__COLOR_RESET}"
     # copy dotfiles/termux.properties into custom
-    echo -e "${__COLOR_INFO}INFO: ${HOME}/.termux/termux.properties -> ${DOTFILES}/custom/termux/properties -> ${DOTFILES}/termux/properties${__COLOR_RESET}"
-    cp -i -P "${DOTFILES}/termux/properties" "${__CUSTOM_DIR}/termux/properties"
-    ln -i -v -s "${DOTFILES}/termux/properties" "${__CUSTOM_DIR}/termux/properties"
-    ln -i -v -s "${__CUSTOM_DIR}/termux/properties" "${HOME}/.termux/termux.properties"
+    echo -e "${__COLOR_INFO}INFO: ${HOME}/.termux/termux.properties -> ${__CUSTOM_DIR}/termux.properties -> ${SRC_DIR}/termux.properties${__COLOR_RESET}"
+    #cp -i -P "${SRC_DIR}/termux.properties" "${__CUSTOM_DIR}/termux.properties"
+    ln -i -v -s "${SRC_DIR}/termux.properties" "${__CUSTOM_DIR}/termux.properties"
+    ln -i -v -s "${__CUSTOM_DIR}/termux.properties" "${HOME}/.termux/termux.properties"
     echo -e "${__COLOR_SUCC}SUCCESS: termux-files configured${__COLOR_RESET}"
 else
     echo -e "${__COLOR_WARN}WARN: Could not find .termux in home-directory${__COLOR_RESET}"
@@ -242,13 +238,12 @@ fi
 
 echo -e "${__COLOR_INFO}INFO: Copying and linking R-files..${__COLOR_RESET}"
 # copy dotfiles/R/profile.R into custom
-echo -e "${__COLOR_INFO}INFO: ${HOME}/.Rprofile@ -> ${DOTFILES}/custom/R/profile.R -> ${DOTFILES}/R/profile.R${__COLOR_RESET}"
-cp -i -P "${DOTFILES}/R/profile.R" "${__CUSTOM_DIR}/R/profile.R"
-ln -i -v -s "${DOTFILES}/R/profile.R" "${__CUSTOM_DIR}/R/profile.R"
+echo -e "${__COLOR_INFO}INFO: ${HOME}/.Rprofile@ -> ${__CUSTOM_DIR}/R/profile.R -> ${SRC_DIR}/R/profile.R${__COLOR_RESET}"
+#cp -i -P "${SRC_DIR}/R/profile.R" "${__CUSTOM_DIR}/R/profile.R"
+ln -i -v -s "${SRC_DIR}/R/profile.R" "${__CUSTOM_DIR}/R/profile.R"
 ln -i -v -s "${__CUSTOM_DIR}/R/profile.R" "${HOME}/.Rprofile"
 # link to environ.sh
-echo -e "${__COLOR_INFO}INFO: ${HOME}/.Renviron@ -> ${DOTFILES}/custom/R/environ.sh@ -> ${DOTFILES}/R/environ.sh${__COLOR_RESET}"
-ln -i -v -s "${DOTFILES}/R/environ.sh" "${__CUSTOM_DIR}/R/environ.sh"
+echo -e "${__COLOR_INFO}INFO: ${HOME}/.Renviron@ -> ${__CUSTOM_DIR}/R/environ.sh@ -> ${SRC_DIR}/R/environ.sh${__COLOR_RESET}"
+ln -i -v -s "${SRC_DIR}/R/environ.sh" "${__CUSTOM_DIR}/R/environ.sh"
 ln -i -v -s "${__CUSTOM_DIR}/R/environ.sh" "${HOME}/.Renviron"
 echo -e "${__COLOR_SUCC}SUCCESS: R-files configured${__COLOR_RESET}"
-

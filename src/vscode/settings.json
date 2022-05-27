@@ -530,5 +530,6 @@
       "before": ["<leader>", "t", "9"],
       "commands": ["workbench.action.openEditorAtIndex9"]
     }
-  ]
+  ],
+  "markdown-preview-enhanced.previewTheme": "github-light.css"
 }
