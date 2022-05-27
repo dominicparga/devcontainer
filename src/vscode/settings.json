@@ -1,535 +1,420 @@
 {
-  //------------------------------------------------------------------------//
-  // window settings
-  "window.title": "${activeEditorMedium}${separator}${rootName}",
-  "window.titleBarStyle": "custom",
-  "window.zoomLevel": 1,
-  "workbench.editor.showTabs": true,
-  "workbench.sideBar.location": "left",
-  "workbench.statusBar.visible": true,
-  "workbench.iconTheme": "material-icon-theme",
-  "workbench.colorTheme": "Dracula", // "Dracula",
-  "workbench.activityBar.visible": true,
-  "window.menuBarVisibility": "compact",
-  "breadcrumbs.enabled": true,
-  "editor.renderControlCharacters": false,
-  // settings-ui
-  "workbench.settings.editor": "json",
-  "workbench.settings.useSplitJSON": true,
-  "workbench.settings.openDefaultSettings": false,
-  // terminal
-  "terminal.integrated.scrollback": 100000,
-  //------------------------------------------------------------------------//
-  // editor settings
-  "explorer.sortOrder": "filesFirst",
-  "files.exclude": {
-    "**/.DS_Store": true,
-    "**/.git": true,
-    "**/.hg": true,
-    "**/.pyc": true,
-    "**/.svn": true,
-    "**/CVS": true
-  },
-  "explorer.confirmDragAndDrop": false,
-  "extensions.ignoreRecommendations": false,
-  "editor.cursorSmoothCaretAnimation": true,
-  "editor.lineNumbers": "on",
-  "editor.rulers": [80, 100, 120],
-  "editor.cursorSurroundingLines": 0,
-  "editor.cursorStyle": "line",
-  "editor.renderLineHighlight": "none",
-  "editor.renderFinalNewline": true,
-  "editor.formatOnSave": false,
-  "editor.tokenColorCustomizations": true,
-  // whitespaces (change whitespace+ mode to trailing in the Command Palette)
-  "editor.renderWhitespace": "none",
-  // "workbench.colorCustomizations": {
-  //     "editorWhitespace.foreground": "#ff0000",
-  //     // "editorIndentGuide.activeBackground": "#88C0D0",
-  //     // "editorIndentGuide.background": "#4C566A",
-  // }a
+    // PRIVACY
 
-  "files.trimTrailingWhitespace": false, // some files need false!
-  "diffEditor.ignoreTrimWhitespace": false,
-  // tabs
-  "editor.insertSpaces": true,
-  "editor.tabSize": 4,
-  "editor.detectIndentation": false,
-  // line wrapping
-  "editor.wordWrap": "off",
-  // minimap
-  "editor.minimap.enabled": true,
-  "editor.minimap.maxColumn": 120,
-  // utility
-  "files.autoSave": "onFocusChange",
-  "files.autoSaveDelay": 1000,
-  "editor.suggestSelection": "first",
-  // DO NOT SET MANUALLY
-  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
-  // font settings
-  // - Cascadia Code is from Microsoft, easily installed (< 1 min) via GitHub
-  //   GitHub-Link: https://github.com/microsoft/cascadia-code/releases
-  // - Menlo is macOS
-  // - Courier and monospace are thinner and just fallbacks for the other two
-  //
-  // - all fonts are monospace-fonts
-  // - Cascadia Code and Menlo have * in the line's center
-  //   e.g. 3*4, /* comment */, x *= 4, * item in markdown
-  "editor.fontFamily": "Cascadia Code, Menlo, Courier, monospace",
-  // replaces (only visually!) common chars, e.g. >=
-  // - safe when searching >, =, >=
-  // - keep width of original chars (2 for >=)
-  // - shows original char under block-cursor
-  "editor.fontLigatures": true,
-  "editor.fontSize": 16,
-  //------------------------------------------------------------------------//
-  // brackets
-  "editor.matchBrackets": "never",
-  "bracket-pair-colorizer-2.forceUniqueOpeningColor": false,
-  "bracket-pair-colorizer-2.forceIterationColorCycle": false,
-  "bracket-pair-colorizer-2.colorMode": "Consecutive",
-  "bracket-pair-colorizer-2.highlightActiveScope": true,
-  "bracket-pair-colorizer-2.activeScopeCSS": [
-    "borderStyle : solid",
-    "borderWidth : 1px",
-    "borderColor : {color}",
-    "opacity     : 1.00"
-  ],
-  "bracket-pair-colorizer-2.showBracketsInGutter": true,
-  "bracket-pair-colorizer-2.showBracketsInRuler": false,
-  "bracket-pair-colorizer-2.showVerticalScopeLine": true,
-  "bracket-pair-colorizer-2.showHorizontalScopeLine": false,
-  "bracket-pair-colorizer-2.scopeLineRelativePosition": true,
-  "bracket-pair-colorizer-2.scopeLineCSS": [
-    "borderStyle : solid",
-    "borderWidth : 1px",
-    "borderColor : {color}",
-    "opacity     : 1.00"
-  ],
-  //------------------------------------------------------------------------//
-  // privacy
-  "telemetry.enableTelemetry": false,
-  // Also usage data is included and we're talking about microsoft.
-  "telemetry.enableCrashReporter": false,
-  //------------------------------------------------------------------------//
-  // specific stuff
-  "files.associations": {
-    "SConscript": "python",
-    "SConstruct": "python",
-    "TAG_EDITMSG": "git-commit",
-    ".latexmkrc": "perl",
-    "config": "properties",
-    "config.general": "properties",
-    "*.fmi": "properties", // github.com/dominicparga/osmgraphing
-    "*.route-pairs": "properties", // github.com/dominicparga/osmgraphing
-    "*.mdx": "markdown"
-    // "*.thor": "ruby",
-  },
-  //------------------------------------------------------------------------//
-  // cpp
-  "[cpp]": {
-    "editor.rulers": [100]
-  },
-  //------------------------------------------------------------------------//
-  // css
-  "[css]": {
-    "editor.rulers": [80],
-    "editor.tabSize": 2
-  },
-  //------------------------------------------------------------------------//
-  // git
-  "scm.defaultViewMode": "tree",
-  "[git-commit]": {
-    "editor.rulers": [50, 72]
-  },
-  //------------------------------------------------------------------------//
-  // html
-  "[html]": {
-    "editor.rulers": [80],
-    "editor.tabSize": 2
-  },
-  //------------------------------------------------------------------------//
-  // java
-  "[java]": {
-    "editor.rulers": [100],
-    "editor.defaultFormatter": "redhat.java",
-    "editor.formatOnSave": true
-  },
-  "java.format.settings.url": "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml",
-  "java.configuration.checkProjectSettingsExclusions": false,
-  //------------------------------------------------------------------------//
-  // JavaScript
-  "[javascript]": {
-    "editor.rulers": [100],
-    "editor.tabSize": 2,
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true
-  },
-  "[javascriptreact]": {
-    "editor.rulers": [100],
-    "editor.tabSize": 2,
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true
-  },
-  "[json]": {
-    "editor.rulers": [80],
-    "editor.tabSize": 2,
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true
-  },
-  "[jsonc]": {
-    "editor.rulers": [80],
-    "editor.tabSize": 2,
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true
-  },
-  //------------------------------------------------------------------------//
-  // LaTeX
-  "[latex]": {
-    "editor.wordWrap": "on"
-  },
-  // TexLab
-  // "latex.build.args": [],
-  // "latex.build.executable": "latexmk",
-  // "latex.build.onSave": false,
-  // LaTeX-Workshop
-  "latex-workshop.latex.autoBuild.run": "never",
-  "latex-workshop.view.pdf.viewer": "tab",
-  "latex-workshop.hover.preview.scale": 1,
-  "latex-workshop.latex.external.build.command": "latexmk",
-  // // relative to main.tex
-  // "latex-workshop.latex.outDir": "build",
-  // "latex-workshop.latex.magic.args": [
-  //     "-lualatex",
-  //     "-shell-escape",
-  //     "-file-line-error",
-  //     "-halt-on-error",
-  //     "-interaction=nonstopmode",
-  //     "-output-dir=%OUTDIR%",
-  //     "-synctex=1",
-  //     "%DOC%"
-  // ],
-  // "latex-workshop.latex.magic.bib.args": [
-  //     "%DOCFILE%",
-  //     "--input-directory=%OUTDIR%",
-  //     "--output-directory=%OUTDIR%"
-  // ],
-  //------------------------------------------------------------------------//
-  // Markdown
-  "[markdown]": {
-    "editor.wordWrap": "on",
-    "editor.quickSuggestions": true,
-    "editor.tabSize": 2
-  },
-  "markdownlint.config": {
-    "MD012": false, // no multiple blanks
-    "MD013": false, // line length
-    "MD024": false, // no duplicate heading/header
-    "MD033": false, // no inline-html
-    "MD041": false, // first line should be '# h1'
-    "MD046": false // code-block-style
-  },
-  //------------------------------------------------------------------------//
-  // python
-  "[python]": {
-    "editor.rulers": [72, 79],
-    "editor.trimAutoWhitespace": true,
-    "editor.formatOnSave": true
-  },
-  "python.formatting.provider": "autopep8",
-  "python.languageServer": "Pylance",
-  "python.analysis.completeFunctionParens": true,
-  "python.pythonPath": "${env:PYTHON_INTERPRETER_PATH}",
-  "python.autoComplete.addBrackets": true,
-  "python.linting.enabled": true,
-  "python.linting.pylintEnabled": true,
-  "python.linting.pylintArgs": ["--max-line-length=79"],
-  "python.venvFolders": ["envs", ".pyenv", ".direnv", ".venv"],
-  "python.jediEnabled": false,
-  //------------------------------------------------------------------------//
-  // rust
-  "[rust]": {
-    "editor.rulers": [100],
-    "editor.trimAutoWhitespace": true,
-    "editor.defaultFormatter": "matklad.rust-analyzer",
-    "editor.formatOnSave": true
-  },
-  "rust-analyzer.inlayHints.chainingHints": false,
-  "rust-analyzer.inlayHints.parameterHints": false,
-  "rust-analyzer.inlayHints.typeHints": false,
-  "rust-analyzer.cargo.allFeatures": true,
-  "rust-analyzer.cargo.features": ["gpl"],
-  "rust-analyzer.updates.askBeforeDownload": true,
-  //------------------------------------------------------------------------//
-  // R
-  "[r]": {
-    "editor.rulers": [80],
-    "editor.trimAutoWhitespace": true,
-    "editor.defaultFormatter": "REditorSupport.r-lsp",
-    "editor.formatOnSave": false
-  },
-  //------------------------------------------------------------------------//
-  // shellscript
-  // SC1090 - Can't follow non-constant source.
-  // SC1091 - Not following
-  // SC2016 - ${...} doesn't expand in '...', use "..."
-  // SC2139 - Expansion when defined, not when used.
-  "[shellscript]": {
-    "editor.rulers": [80],
-    "editor.trimAutoWhitespace": true
-  },
-  "shellcheck.enable": true,
-  "shellcheck.run": "onType",
-  "shellcheck.executablePath": "shellcheck",
-  "shellcheck.exclude": ["SC1090", "SC1091", "SC2016", "SC2139"],
-  "shellcheck.customArgs": [],
-  "shellcheck.ignorePatterns": {},
-  "shellcheck.useWSL": false,
-  //------------------------------------------------------------------------//
-  // SQL
-  "vscode-mysql.enableTelemetry": false,
-  //------------------------------------------------------------------------//
-  // TypeScript
-  "[typescript]": {
-    "editor.rulers": [100],
-    "editor.tabSize": 2,
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true
-  },
-  "[typescriptreact]": {
-    "editor.rulers": [100],
-    "editor.tabSize": 2,
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true
-  },
-  //------------------------------------------------------------------------//
-  // yaml
-  "[yaml]": {
-    "editor.rulers": [80],
-    "editor.tabSize": 2,
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true
-  },
-  //------------------------------------------------------------------------//
-  // vim
-  "vim.leader": ",",
-  "vim.useSystemClipboard": true,
-  "vim.scroll": 20,
-  // moving cursor over folded text without entering it
-  "vim.foldfix": true,
-  // search
-  "vim.hlsearch": true,
-  "vim.smartcase": true,
-  // easymotion
-  "vim.easymotion": true,
-  // keybindings
-  "vim.changeWordIncludesWhitespace": true,
-  "vim.visualModeKeyBindingsNonRecursive": [
-    //--------------------------------------------------------------------//
-    // utils
-    {
-      "before": ["<leader>", "p"], // dont forget normal-mode
-      "commands": ["workbench.action.quickOpen"]
+    // Also usage data is included in the crash-reporter
+    // and we're talking about microsoft.
+    "telemetry.telemetryLevel": "off",
+
+    // APPEARANCE
+
+    // window
+
+    "window.title": "${activeEditorMedium}${separator}${rootName}",
+    "window.titleBarStyle": "custom",
+    "window.menuBarVisibility": "compact",
+    "window.zoomLevel": 1,
+
+    // settings
+
+    "workbench.settings.editor": "json",
+    "workbench.settings.useSplitJSON": true,
+    "workbench.settings.openDefaultSettings": false,
+
+    // workbench + explorer + breadcrumbs
+
+    "workbench.editor.showTabs": true,
+    "workbench.sideBar.location": "left",
+    "workbench.statusBar.visible": true,
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.colorTheme": "Dracula", // "Dracula",
+    "workbench.activityBar.visible": true,
+    "explorer.sortOrder": "filesFirst",
+    "explorer.confirmDragAndDrop": false,
+    "breadcrumbs.enabled": true,
+    "breadcrumbs.icons": true,
+
+    // EDITOR
+
+    // general
+
+    "editor.formatOnSave": false,
+    "editor.renderControlCharacters": false,
+    "editor.renderLineHighlight": "none",
+    "editor.renderFinalNewline": true,
+    "editor.lineNumbers": "on",
+    "editor.suggestSelection": "first",
+
+    // cursor
+
+    "editor.cursorSmoothCaretAnimation": true,
+    "editor.cursorSurroundingLines": 0,
+    "editor.cursorStyle": "line",
+
+    // line wrapping
+
+    "editor.wordWrap": "off",
+
+    // minimap
+
+    "editor.minimap.enabled": true,
+    "editor.minimap.maxColumn": 120,
+
+    // DO NOT SET MANUALLY
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+
+    // font settings
+
+    // - Cascadia Code is from Microsoft, easily installed (< 1 min) via GitHub
+    //   GitHub-Link: https://github.com/microsoft/cascadia-code/releases
+    // - Menlo is macOS
+    // - Courier and monospace are thinner and just fallbacks for the other two
+    //
+    // - all fonts are monospace-fonts
+    // - Cascadia Code and Menlo have * in the line's height's center
+    //   e.g. 3*4, /* comment */, x *= 4, * item in markdown
+    "editor.fontFamily": "Cascadia Code, Menlo, Courier, monospace",
+    // replaces (only visually!) common chars, e.g. >=
+    // - safe when searching >, =, >=
+    // - keep width of original chars (2 for >=)
+    // - shows original char under block-cursor
+    "editor.fontLigatures": true,
+    "editor.fontSize": 16,
+
+    // whitespaces
+
+    "editor.renderWhitespace": "none",
+    "editor.insertSpaces": true,
+    "editor.tabSize": 4,
+    "editor.detectIndentation": false,
+    // some files need false!
+    "files.trimTrailingWhitespace": false,
+    "diffEditor.ignoreTrimWhitespace": false,
+
+    // brackets
+
+    "editor.matchBrackets": "always",
+    "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs": "active",
+
+    // terminal
+
+    "terminal.integrated.scrollback": 100000,
+
+    // general
+
+    "extensions.ignoreRecommendations": false,
+    // utility
+    "files.autoSave": "onFocusChange",
+    "files.autoSaveDelay": 1000,
+    "files.associations": {
+        ".latexmkrc": "perl",
+        "*.mdx": "markdown",
+        "config.general": "properties",
+        "config": "properties",
+        "SConscript": "python",
+        "SConstruct": "python",
+        "TAG_EDITMSG": "git-commit"
+        // "*.thor": "ruby",
     },
-    {
-      "before": ["<leader>", "P"], // dont forget normal-mode
-      "commands": ["workbench.action.showCommands"]
+    "files.exclude": {
+        "**/.DS_Store": true,
+        "**/.git": true,
+        "**/.hg": true,
+        "**/.pyc": true,
+        "**/.svn": true,
+        "**/CVS": true
     },
-    {
-      "before": ["<leader>", "e"], // dont forget normal-mode
-      "commands": ["workbench.action.toggleSidebarVisibility"]
+
+    // GIT
+
+    "scm.defaultViewMode": "tree",
+    "[git-commit]": {
+        "editor.rulers": [50, 72]
     },
-    //--------------------------------------------------------------------//
-    // code interaction
-    {
-      "before": ["<leader>", "U"], // dont forget normal-mode
-      "commands": ["editor.action.transformToUppercase"]
+
+    // CPP
+
+    "[cpp]": {
+        "editor.rulers": [100]
     },
-    {
-      "before": ["<leader>", "u"], // dont forget normal-mode
-      "commands": ["editor.action.transformToLowercase"]
+
+    // CSS
+
+    "[css]": {
+        "editor.rulers": [80],
+        "editor.tabSize": 2
     },
-    {
-      "before": ["<leader>", "/"], // dont forget normal-mode
-      "commands": ["editor.action.commentLine"]
+
+    // HTML
+
+    "[html]": {
+        "editor.rulers": [80],
+        "editor.tabSize": 2
     },
-    {
-      "before": [">"], // dont forget normal-mode
-      "commands": ["editor.action.indentLines"]
+
+    // JAVA
+
+    "[java]": {
+        "editor.rulers": [100],
+        "editor.defaultFormatter": "redhat.java",
+        "editor.formatOnSave": true
     },
-    {
-      "before": ["<"], // dont forget normal-mode
-      "commands": ["editor.action.outdentLines"]
-    }
-  ],
-  "vim.normalModeKeyBindingsNonRecursive": [
-    //--------------------------------------------------------------------//
-    // utils
-    {
-      "before": ["<leader>", "p"], // dont forget visual-mode
-      "commands": ["workbench.action.quickOpen"]
+    "java.format.settings.url": "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml",
+    "java.import.generatesMetadataFilesAtProjectRoot": false,
+
+    // JAVASCRIPT
+
+    "[javascript]": {
+        "editor.rulers": [100],
+        "editor.tabSize": 4,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true
     },
-    {
-      "before": ["<leader>", "P"], // dont forget visual-mode
-      "commands": ["workbench.action.showCommands"]
+    "[javascriptreact]": {
+        "editor.rulers": [100],
+        "editor.tabSize": 4,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true
     },
-    {
-      "before": ["<leader>", "c", "j"],
-      "commands": ["editor.action.insertCursorBelow"]
+    "[json]": {
+        "editor.rulers": [80, 100, 120],
+        "editor.tabSize": 4,
+        "editor.formatOnSave": false
     },
-    {
-      "before": ["<leader>", "c", "k"],
-      "commands": ["editor.action.insertCursorAbove"]
+    "[jsonc]": {
+        "editor.rulers": [80, 100, 120],
+        "editor.tabSize": 4,
+        "editor.formatOnSave": false
     },
-    {
-      "before": ["<leader>", "e"], // dont forget visual-mode
-      "commands": ["workbench.action.toggleSidebarVisibility"]
+
+    // LATEX
+
+    "[latex]": {
+        "editor.wordWrap": "on"
     },
-    //--------------------------------------------------------------------//
-    // code navigation
-    {
-      "before": ["<leader>", "b"],
-      "commands": ["workbench.action.navigateBack"]
+    // TexLab
+    // "latex.build.args": [],
+    // "latex.build.executable": "latexmk",
+    // "latex.build.onSave": false,
+    // LaTeX-Workshop
+    "latex-workshop.latex.autoBuild.run": "never",
+    "latex-workshop.view.pdf.viewer": "tab",
+    "latex-workshop.hover.preview.scale": 1,
+    "latex-workshop.latex.external.build.command": "latexmk",
+    // // relative to main.tex
+    // "latex-workshop.latex.outDir": "build",
+    // "latex-workshop.latex.magic.args": [
+    //     "-lualatex",
+    //     "-shell-escape",
+    //     "-file-line-error",
+    //     "-halt-on-error",
+    //     "-interaction=nonstopmode",
+    //     "-output-dir=%OUTDIR%",
+    //     "-synctex=1",
+    //     "%DOC%"
+    // ],
+    // "latex-workshop.latex.magic.bib.args": [
+    //     "%DOCFILE%",
+    //     "--input-directory=%OUTDIR%",
+    //     "--output-directory=%OUTDIR%"
+    // ],
+
+    // MARKDOWN
+
+    "[markdown]": {
+        "editor.rulers": [80, 120],
+        "editor.wordWrap": "off",
+        "editor.quickSuggestions": true,
+        "editor.tabSize": 2
     },
-    {
-      "before": ["<leader>", "f"],
-      "commands": ["workbench.action.navigateForward"]
+    "markdownlint.config": {
+        "MD012": false, // no multiple blanks
+        "MD013": false, // line length
+        "MD024": true, // no duplicate heading/header
+        "MD033": false, // no inline-html
+        "MD041": false, // first line should be '# h1'
+        "MD046": false // code-block-style
     },
-    {
-      "before": ["<leader>", "#"],
-      "commands": ["editor.action.goToDeclaration"]
+    "markdown-preview-enhanced.previewTheme": "github-light.css",
+
+    // PYTHON
+
+    "[python]": {
+        "editor.rulers": [72, 79],
+        "editor.trimAutoWhitespace": true,
+        "editor.formatOnSave": true
     },
-    //--------------------------------------------------------------------//
-    // code interaction
-    {
-      "before": ["<leader>", "U"], // dont forget visual-mode
-      "commands": ["editor.action.transformToUppercase"]
+
+    // linting
+    "python.linting.enabled": true,
+    "python.analysis.completeFunctionParens": true,
+    "python.linting.pylintEnabled": true,
+    "python.linting.pylintArgs": ["--max-line-length=120"],
+    "python.languageServer": "Pylance",
+
+    // formatting
+    "python.formatting.provider": "black",
+    "python.formatting.blackArgs": ["--max-line-length", "120"],
+
+    // RUST
+
+    "[rust]": {
+        "editor.rulers": [100],
+        "editor.trimAutoWhitespace": true,
+        "editor.defaultFormatter": "rust-lang.rust-analyzer",
+        "editor.formatOnSave": true
     },
-    {
-      "before": ["<leader>", "u"], // dont forget visual-mode
-      "commands": ["editor.action.transformToLowercase"]
+
+    // R
+
+    "[r]": {
+        "editor.rulers": [80],
+        "editor.trimAutoWhitespace": true,
+        "editor.defaultFormatter": "REditorSupport.r",
+        "editor.formatOnSave": false
     },
-    {
-      "before": ["<leader>", "/"], // dont forget visual-mode
-      "commands": ["editor.action.commentLine"]
+
+    // SHELLSCRIPT
+
+    "[shellscript]": {
+        "editor.rulers": [80],
+        "editor.trimAutoWhitespace": true
     },
-    {
-      "before": [">"], // dont forget visual-mode
-      "commands": ["editor.action.indentLines"]
+    "shellcheck.enable": true,
+    "shellcheck.run": "onType",
+    "shellcheck.executablePath": "shellcheck",
+    // SC1090 - Can't follow non-constant source.
+    // SC1091 - Not following
+    // SC2016 - ${...} doesn't expand in '...', use "..."
+    // SC2139 - Expansion when defined, not when used.
+    "shellcheck.exclude": ["SC1090", "SC1091", "SC2016", "SC2139"],
+    "shellcheck.customArgs": [],
+    "shellcheck.ignorePatterns": {},
+
+    // TypeScript
+
+    "[typescript]": {
+        "editor.rulers": [100],
+        "editor.tabSize": 2,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true
     },
-    {
-      "before": ["<"], // dont forget visual-mode
-      "commands": ["editor.action.outdentLines"]
+    "[typescriptreact]": {
+        "editor.rulers": [100],
+        "editor.tabSize": 2,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true
     },
-    //--------------------------------------------------------------------//
-    // tab splitting
-    {
-      "before": ["<leader>", "s", "h"],
-      "commands": ["workbench.action.splitEditorLeft"]
+
+    // YAML
+
+    "[yaml]": {
+        "editor.rulers": [80, 100, 120],
+        "editor.tabSize": 4,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": false
     },
-    {
-      "before": ["<leader>", "s", "j"],
-      "commands": ["workbench.action.splitEditorDown"]
-    },
-    {
-      "before": ["<leader>", "s", "k"],
-      "commands": ["workbench.action.splitEditorUp"]
-    },
-    {
-      "before": ["<leader>", "s", "l"],
-      "commands": ["workbench.action.splitEditorRight"]
-    },
-    //--------------------------------------------------------------------//
-    // tab moving
-    {
-      "before": ["<leader>", "m", "h"],
-      "commands": ["workbench.action.moveEditorToLeftGroup"]
-    },
-    {
-      "before": ["<leader>", "m", "j"],
-      "commands": ["workbench.action.moveEditorToBelowGroup"]
-    },
-    {
-      "before": ["<leader>", "m", "k"],
-      "commands": ["workbench.action.moveEditorToAboveGroup"]
-    },
-    {
-      "before": ["<leader>", "m", "l"],
-      "commands": ["workbench.action.moveEditorToRightGroup"]
-    },
-    //--------------------------------------------------------------------//
-    // group navigation
-    {
-      "before": ["<leader>", "w", "h"],
-      "commands": ["workbench.action.navigateLeft"]
-    },
-    {
-      "before": ["<leader>", "w", "j"],
-      "commands": ["workbench.action.navigateDown"]
-    },
-    {
-      "before": ["<leader>", "w", "k"],
-      "commands": ["workbench.action.navigateUp"]
-    },
-    {
-      "before": ["<leader>", "w", "l"],
-      "commands": ["workbench.action.navigateRight"]
-    },
-    //--------------------------------------------------------------------//
-    // tab navigation
-    {
-      "before": ["<leader>", "t", "h"],
-      "commands": ["workbench.action.previousEditorInGroup"]
-    },
-    {
-      "before": ["<leader>", "t", "j"],
-      "commands": ["workbench.action.previousEditorInGroup"]
-    },
-    {
-      "before": ["<leader>", "t", "k"],
-      "commands": ["workbench.action.nextEditorInGroup"]
-    },
-    {
-      "before": ["<leader>", "t", "l"],
-      "commands": ["workbench.action.nextEditorInGroup"]
-    },
-    // tab access via number
-    {
-      "before": ["<leader>", "t", "1"],
-      "commands": ["workbench.action.openEditorAtIndex1"]
-    },
-    {
-      "before": ["<leader>", "t", "2"],
-      "commands": ["workbench.action.openEditorAtIndex2"]
-    },
-    {
-      "before": ["<leader>", "t", "3"],
-      "commands": ["workbench.action.openEditorAtIndex3"]
-    },
-    {
-      "before": ["<leader>", "t", "4"],
-      "commands": ["workbench.action.openEditorAtIndex4"]
-    },
-    {
-      "before": ["<leader>", "t", "5"],
-      "commands": ["workbench.action.openEditorAtIndex5"]
-    },
-    {
-      "before": ["<leader>", "t", "6"],
-      "commands": ["workbench.action.openEditorAtIndex6"]
-    },
-    {
-      "before": ["<leader>", "t", "7"],
-      "commands": ["workbench.action.openEditorAtIndex7"]
-    },
-    {
-      "before": ["<leader>", "t", "8"],
-      "commands": ["workbench.action.openEditorAtIndex8"]
-    },
-    {
-      "before": ["<leader>", "t", "9"],
-      "commands": ["workbench.action.openEditorAtIndex9"]
-    }
-  ],
-  "markdown-preview-enhanced.previewTheme": "github-light.css"
+
+    // VIM
+
+    "vim.leader": ",",
+    "vim.useSystemClipboard": true,
+    "vim.scroll": 20,
+    // moving cursor over folded text without entering it
+    "vim.foldfix": true,
+    // search
+    "vim.hlsearch": true,
+    "vim.smartcase": true,
+    // easymotion
+    "vim.easymotion": true,
+
+    // keybindings
+    "vim.changeWordIncludesWhitespace": true,
+    "vim.visualModeKeyBindingsNonRecursive": [
+
+        // UTILS
+        // (dont forget normal-mode)
+
+        { "before": ["<leader>", "p"], "commands": ["workbench.action.quickOpen"] },
+        { "before": ["<leader>", "P"], "commands": ["workbench.action.showCommands"] },
+        { "before": ["<leader>", "e"], "commands": ["workbench.action.toggleSidebarVisibility"] },
+
+        // CODE INTERACTION
+        // (dont forget normal-mode)
+
+        { "before": ["<leader>", "U"], "commands": ["editor.action.transformToUppercase"] },
+        { "before": ["<leader>", "u"], "commands": ["editor.action.transformToLowercase"] },
+        { "before": ["<leader>", "/"], "commands": ["editor.action.commentLine"] },
+        { "before": [">"], "commands": ["editor.action.indentLines"] },
+        { "before": ["<"], "commands": ["editor.action.outdentLines"] }
+    ],
+    "vim.normalModeKeyBindingsNonRecursive": [
+
+        // UTILS
+        // (dont forget visual-mode)
+
+        { "before": ["<leader>", "p"], "commands": ["workbench.action.quickOpen"] },
+        { "before": ["<leader>", "P"], "commands": ["workbench.action.showCommands"] },
+        { "before": ["<leader>", "e"], "commands": ["workbench.action.toggleSidebarVisibility"] },
+
+        // CODE INTERACTION
+        // (dont forget visual-mode)
+
+        { "before": ["<leader>", "U"], "commands": ["editor.action.transformToUppercase"] },
+        { "before": ["<leader>", "u"], "commands": ["editor.action.transformToLowercase"] },
+        { "before": ["<leader>", "/"], "commands": ["editor.action.commentLine"] },
+        { "before": [">"], "commands": ["editor.action.indentLines"] },
+        { "before": ["<"], "commands": ["editor.action.outdentLines"] },
+
+        // CURSOR
+
+        { "before": ["<leader>", "c", "j"], "commands": ["editor.action.insertCursorBelow"] },
+        { "before": ["<leader>", "c", "k"], "commands": ["editor.action.insertCursorAbove"] },
+
+        // CODE NAVIGATION
+
+        { "before": ["<leader>", "b"], "commands": ["workbench.action.navigateBack"] },
+        { "before": ["<leader>", "f"], "commands": ["workbench.action.navigateForward"] },
+        { "before": ["<leader>", "#"], "commands": ["editor.action.goToDeclaration"] },
+
+        // TAB SPLITTING
+
+        { "before": ["<leader>", "s", "h"], "commands": ["workbench.action.splitEditorLeft"] },
+        { "before": ["<leader>", "s", "j"], "commands": ["workbench.action.splitEditorDown"] },
+        { "before": ["<leader>", "s", "k"], "commands": ["workbench.action.splitEditorUp"] },
+        { "before": ["<leader>", "s", "l"], "commands": ["workbench.action.splitEditorRight"] },
+
+        // TAB MOVING
+
+        { "before": ["<leader>", "m", "h"], "commands": ["workbench.action.moveEditorToLeftGroup"] },
+        { "before": ["<leader>", "m", "j"], "commands": ["workbench.action.moveEditorToBelowGroup"] },
+        { "before": ["<leader>", "m", "k"], "commands": ["workbench.action.moveEditorToAboveGroup"] },
+        { "before": ["<leader>", "m", "l"], "commands": ["workbench.action.moveEditorToRightGroup"] },
+
+        // GROUP NAVIGATION
+
+        { "before": ["<leader>", "w", "h"], "commands": ["workbench.action.navigateLeft"] },
+        { "before": ["<leader>", "w", "j"], "commands": ["workbench.action.navigateDown"] },
+        { "before": ["<leader>", "w", "k"], "commands": ["workbench.action.navigateUp"] },
+        { "before": ["<leader>", "w", "l"], "commands": ["workbench.action.navigateRight"] },
+
+        // TAB NAVIGATION
+
+        { "before": ["<leader>", "t", "h"], "commands": ["workbench.action.previousEditorInGroup"] },
+        { "before": ["<leader>", "t", "j"], "commands": ["workbench.action.previousEditorInGroup"] },
+        { "before": ["<leader>", "t", "k"], "commands": ["workbench.action.nextEditorInGroup"] },
+        { "before": ["<leader>", "t", "l"], "commands": ["workbench.action.nextEditorInGroup"] },
+
+        // TAB ACCESS VIA NUMBER
+
+        { "before": ["<leader>", "t", "1"], "commands": ["workbench.action.openEditorAtIndex1"] },
+        { "before": ["<leader>", "t", "2"], "commands": ["workbench.action.openEditorAtIndex2"] },
+        { "before": ["<leader>", "t", "3"], "commands": ["workbench.action.openEditorAtIndex3"] },
+        { "before": ["<leader>", "t", "4"], "commands": ["workbench.action.openEditorAtIndex4"] },
+        { "before": ["<leader>", "t", "5"], "commands": ["workbench.action.openEditorAtIndex5"] },
+        { "before": ["<leader>", "t", "6"], "commands": ["workbench.action.openEditorAtIndex6"] },
+        { "before": ["<leader>", "t", "7"], "commands": ["workbench.action.openEditorAtIndex7"] },
+        { "before": ["<leader>", "t", "8"], "commands": ["workbench.action.openEditorAtIndex8"] },
+        { "before": ["<leader>", "t", "9"], "commands": ["workbench.action.openEditorAtIndex9"] }
+    ],
 }
