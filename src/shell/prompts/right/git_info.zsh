@@ -21,27 +21,27 @@ __is_HEAD_dirty() {
 
 __update_RPS1() {
     #reset
-    __RPS1_COMMIT_LABEL=''
+    __rps1_commit_label=''
 
     # get commit-label and make it pretty
-    if __RPS1_COMMIT_LABEL="$(__get_commit_label)"; then
+    if __rps1_commit_label="$(__get_commit_label)"; then
         # remove prefixes
-        __RPS1_COMMIT_LABEL="${__RPS1_COMMIT_LABEL#(refs/heads/|tags/)}"
+        __rps1_commit_label="${__rps1_commit_label#(refs/heads/|tags/)}"
 
         # add brackets
-        __RPS1_COMMIT_LABEL="${__COLOR_FG_CYAN}[${__RPS1_COMMIT_LABEL}]${__COLOR_RESET}"
+        __rps1_commit_label="${__color_fg_cyan}[${__rps1_commit_label}]${__color_reset}"
 
         # add dirty-sign
         if ( __is_HEAD_dirty ); then
-            __RPS1_COMMIT_LABEL="${__COLOR_FG_MAGENTA}*${__COLOR_RESET}${__RPS1_COMMIT_LABEL}"
+            __rps1_commit_label="${__color_fg_magenta}*${__color_reset}${__rps1_commit_label}"
         fi
     fi
-    echo "${__RPS1_COMMIT_LABEL}"
+    echo "${__rps1_commit_label}"
 }
 
 # setup
 setopt prompt_subst
 # prepare colors and details
-. "${DOTFILES}/utils/formatting.zsh"
+. "${DOTFILES}/src/shell/libs/formatting.zsh"
 # stick everything together
 RPS1='$(__update_RPS1)'

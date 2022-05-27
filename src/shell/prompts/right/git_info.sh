@@ -1,7 +1,7 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env sh
 
-. "${DOTFILES}/utils/faq.sh"
+. "${DOTFILES}/src/shell/libs/faq.sh"
 
-if ( __is_zsh ); then
+if ( is_zsh ); then
     . "${DOTFILES}/src/shell/prompts/right/git_info.zsh"
 fi

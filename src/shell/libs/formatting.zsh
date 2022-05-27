@@ -1,49 +1,47 @@
 #!/usr/bin/env zsh
 
-. "${DOTFILES}/utils/faq.sh"
+. "${DOTFILES}/src/shell/libs/faq.sh"
 
-#------------------------------------------------------------------------------#
-# colors
+# COLORS
 
-if ( __is_colored ); then
+if ( is_colored ); then
     # general formatting
-    __COLOR_RESET="%{${reset_color}%}"
-    __BOLD_START='%B'
-    __BOLD_END='%b'
+    __color_reset="%{${reset_color}%}"
+    __bold_start='%B'
+    __bold_end='%b'
 
     # foreground colors
-    __COLOR_FG_BLACK="%{${fg[black]}%}"
-    __COLOR_FG_RED="%{${fg[red]}%}"
-    __COLOR_FG_GREEN="%{${fg[green]}%}"
-    __COLOR_FG_YELLOW="%{${fg[yellow]}%}"
-    __COLOR_FG_BLUE="%{${fg[blue]}%}"
-    __COLOR_FG_MAGENTA="%{${fg[magenta]}%}"
-    __COLOR_FG_CYAN="%{${fg[cyan]}%}"
-    __COLOR_FG_LIGHT_GRAY="%{${fg[white]}%}"
+    __color_fg_black="%{${fg[black]}%}"
+    __color_fg_red="%{${fg[red]}%}"
+    __color_fg_green="%{${fg[green]}%}"
+    __color_fg_yellow="%{${fg[yellow]}%}"
+    __color_fg_blue="%{${fg[blue]}%}"
+    __color_fg_magenta="%{${fg[magenta]}%}"
+    __color_fg_cyan="%{${fg[cyan]}%}"
+    __color_fg_light_gray="%{${fg[white]}%}"
 
     # background colors
-    __COLOR_BG_BLACK="%{${bg[black]}%}"
-    __COLOR_BG_RED="%{${bg[red]}%}"
-    __COLOR_BG_GREEN="%{${bg[green]}%}"
-    __COLOR_BG_YELLOW="%{${bg[yellow]}%}"
-    __COLOR_BG_BLUE="%{${bg[blue]}%}"
-    __COLOR_BG_MAGENTA="%{${bg[magenta]}%}"
-    __COLOR_BG_CYAN="%{${bg[cyan]}%}"
-    __COLOR_BG_LIGHT_GRAY="%{${bg[gray]}%}"
+    __color_bg_black="%{${bg[black]}%}"
+    __color_bg_red="%{${bg[red]}%}"
+    __color_bg_green="%{${bg[green]}%}"
+    __color_bg_yellow="%{${bg[yellow]}%}"
+    __color_bg_blue="%{${bg[blue]}%}"
+    __color_bg_magenta="%{${bg[magenta]}%}"
+    __color_bg_cyan="%{${bg[cyan]}%}"
+    __color_bg_light_gray="%{${bg[gray]}%}"
 
     # custom
-    __COLOR_INFO="${__COLOR_FG_BLUE}"
-    __COLOR_WARN="${__COLOR_FG_YELLOW}"
-    __COLOR_ERR="${__COLOR_FG_RED}"
-    __COLOR_SUCC="${__COLOR_FG_GREEN}"
+    __color_info="${__color_fg_blue}"
+    __color_warn="${__color_fg_yellow}"
+    __color_err="${__color_fg_red}"
+    __color_succ="${__color_fg_green}"
 fi
 
-#------------------------------------------------------------------------------#
-# details
+# DETAILS
 
-__USED_SHELL='zsh'
-__USERNAME='%n'
-__HOSTNAME='%m'
-__HOSTNAME_IP='%M'
-__SHORT_PWD='%2~'
-__LONG_PWD='%~'
+__used_shell='zsh'
+__username='%n'
+__hostname='%m'
+__hostname_ip='%M'
+__short_pwd='%2~'
+__long_pwd='%~'

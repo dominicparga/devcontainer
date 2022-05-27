@@ -3,17 +3,15 @@
 # disabling warnings about unused variables
 # shellcheck disable=SC2034
 
-#------------------------------------------------------------------------------#
-# formatting-settings
+# FORMATTING-SETTINGS
 
-. "${DOTFILES}/utils/formatting.sh"
+. "${DOTFILES}/src/shell/libs/formatting.sh"
 
-#------------------------------------------------------------------------------#
-# shell-info
+# SHELL-INFO
 
-__USED_SHELL='bash'
-__USERNAME='\u'
-__HOSTNAME='\h'
-__HOSTNAME_IP='\H'
-__SHORT_PWD='\W'
-__LONG_PWD='\w'
+__used_shell='bash'
+__username='\u'
+__hostname='\h'
+__hostname_ip='\H'
+__short_pwd='\W'
+__long_pwd='\w'

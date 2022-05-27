@@ -4,12 +4,12 @@
 # autoloading own functions
 
 fpath=(
-    "${__CUSTOM_SHELL_LIB}/func"
-    "${__SHELL_LIB}/func"
+    "${DOTFILES}/custom/shell/func"
+    "${DOTFILES}/src/shell/func"
     "${fpath[@]}"
 )
 
-dirs=( "${__SHELL_LIB}" "${__CUSTOM_SHELL_LIB}" )
+dirs=( "${DOTFILES}/src/shell" "${DOTFILES}/custom/shell" )
 for dir in "${dirs[@]}"; do
     if [ -d "${dir}/func" ]; then
         # is folder empty?

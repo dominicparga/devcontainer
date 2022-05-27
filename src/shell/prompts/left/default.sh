@@ -1,23 +1,20 @@
 #!/usr/bin/env sh
 
-#------------------------------------------------------------------------------#
-# helpers
+# HELPERS
 
-. "${DOTFILES}/utils/faq.sh"
+. "${DOTFILES}/src/shell/libs/faq.sh"
 
-#------------------------------------------------------------------------------#
-# prepare colors and details
+# PREPARE COLORS AND DETAILS
 
-if ( __is_zsh ); then
-    . "${DOTFILES}/utils/formatting.zsh"
-elif ( __is_bash ); then
-    . "${DOTFILES}/utils/formatting.bash"
+if ( is_zsh ); then
+    . "${DOTFILES}/src/shell/libs/formatting.zsh"
+elif ( is_bash ); then
+    . "${DOTFILES}/src/shell/libs/formatting.bash"
 fi
 
-#---------------------------------------------------------------------------
-# stick everything together
+# STICK EVERYTHING TOGETHER
 # goal:
-# [dominic:~/dotfiles]$ echo 'yay my prompt'
+# [dominic@aqua:~/dotfiles]$ echo 'yay my prompt'
 
 # reset
 PS1=''
@@ -25,70 +22,70 @@ PS1=''
 # window title
 # goal:
 # (zsh) ~/dotfiles
-__WINDOW_TITLE="\[\e]0;(${__USED_SHELL}) ${__LONG_PWD}\a\]"
-if ( __is_zsh ); then
+__window_title="\[\e]0;(${__used_shell}) ${__long_pwd}\a\]"
+if ( is_zsh ); then
     case ${TERM} in
     xterm*)
-        precmd() { print -Pn "${__WINDOW_TITLE}"; }
+        precmd() { print -Pn "${__window_title}"; }
         ;;
     esac
-elif ( __is_bash ); then
-    PS1="${__WINDOW_TITLE}${PS1}"
+elif ( is_bash ); then
+    PS1="${__window_title}${PS1}"
 fi
 
 # opening [
-PS1="${PS1}${__BOLD_START}[${__BOLD_END}"
+PS1="${PS1}${__bold_start}[${__bold_end}"
 
 # debian root (if changed)
 # set variable identifying the chroot you work in (used in the prompt below)
-__DEBIAN_CHROOT="${debian_chroot:-}"
-if [ -z "${__DEBIAN_CHROOT}" ] && [ -r '/etc/debian_chroot' ]; then
-    __DEBIAN_CHROOT=$(cat /etc/debian_chroot)
+__debian_chroot="${debian_chroot:-}"
+if [ -z "${__debian_chroot}" ] && [ -r '/etc/debian_chroot' ]; then
+    __debian_chroot=$(cat /etc/debian_chroot)
 fi
-__DEBIAN_CHROOT="${__DEBIAN_CHROOT:+(${__DEBIAN_CHROOT})}"
-PS1="${PS1}${__DEBIAN_CHROOT}"
+__debian_chroot="${__debian_chroot:+(${__debian_chroot})}"
+PS1="${PS1}${__debian_chroot}"
 
 # username
-PS1="${PS1}${__COLOR_FG_MAGENTA}${__BOLD_START}${__USERNAME}${__BOLD_END}${__COLOR_RESET}"
+PS1="${PS1}${__color_fg_magenta}${__bold_start}${__username}${__bold_end}${__color_reset}"
 
 # hostname
-PS1="${PS1}${__COLOR_FG_WHITE}${__BOLD_START}@${__COLOR_FG_BLUE}${__HOSTNAME}${__BOLD_END}${__COLOR_RESET}"
+PS1="${PS1}${__color_fg_white}${__bold_start}@${__color_fg_blue}${__hostname}${__bold_end}${__color_reset}"
 # current dir
-PS1="${PS1}${__BOLD_START}:${__BOLD_END}"
-PS1="${PS1}${__COLOR_FG_CYAN}${__BOLD_START}${__SHORT_PWD}${__BOLD_END}${__COLOR_RESET}"
+PS1="${PS1}${__bold_start}:${__bold_end}"
+PS1="${PS1}${__color_fg_cyan}${__bold_start}${__short_pwd}${__bold_end}${__color_reset}"
 
 # closing ]
-PS1="${PS1}${__BOLD_START}]${__BOLD_END}"
+PS1="${PS1}${__bold_start}]${__bold_end}"
 
 # colored dollar sign depending on successful precommand
-__COLOR_LAST_EXIT_0="${__COLOR_FG_YELLOW}"
-__COLOR_LAST_EXIT_1="${__COLOR_FG_MAGENTA}"
-__CHAR_LAST_EXIT_0='$'
-__CHAR_LAST_EXIT_1='$'
-if ( __is_zsh ); then
-    # __COLOR_LAST_EXIT="%(?.${__COLOR_LAST_EXIT_0}.${__COLOR_LAST_EXIT_1})"
+__color_last_exit_0="${__color_fg_yellow}"
+__color_last_exit_1="${__color_fg_magenta}"
+__char_last_exit_0='$'
+__char_last_exit_1='$'
+if ( is_zsh ); then
+    # __color_last_exit="%(?.${__color_last_exit_0}.${__color_last_exit_1})"
 
     __last_exit_char() {
         # shellcheck disable=2181
         # -> check ${?}, not cmd itself
         if [ "${?}" = 0 ]; then
-            printf "%s%s%s%s%s" "${__COLOR_LAST_EXIT_0}" "${__BOLD_START}" "${__CHAR_LAST_EXIT_0}" "${__BOLD_END}" "${__COLOR_RESET}"
+            printf "%s%s%s%s%s" "${__color_last_exit_0}" "${__bold_start}" "${__char_last_exit_0}" "${__bold_end}" "${__color_reset}"
         else
-            printf "%s%s%s%s%s" "${__COLOR_LAST_EXIT_1}" "${__BOLD_START}" "${__CHAR_LAST_EXIT_1}" "${__BOLD_END}" "${__COLOR_RESET}"
+            printf "%s%s%s%s%s" "${__color_last_exit_1}" "${__bold_start}" "${__char_last_exit_1}" "${__bold_end}" "${__color_reset}"
         fi
     }
-elif ( __is_bash ); then
+elif ( is_bash ); then
     __last_exit_char() {
         # shellcheck disable=2181
         # -> check ${?}, not cmd itself
         if [ "${?}" = 0 ]; then
             # shellcheck disable=2059
             # -> printf should interpret variable
-            printf "${__COLOR_LAST_EXIT_0}${__BOLD_START}${__CHAR_LAST_EXIT_0}${__BOLD_END}${__COLOR_RESET}"
+            printf "${__color_last_exit_0}${__bold_start}${__char_last_exit_0}${__bold_end}${__color_reset}"
         else
             # shellcheck disable=2059
             # -> printf should interpret variable
-            printf "${__COLOR_LAST_EXIT_1}${__BOLD_START}${__CHAR_LAST_EXIT_1}${__BOLD_END}${__COLOR_RESET}"
+            printf "${__color_last_exit_1}${__bold_start}${__char_last_exit_1}${__bold_end}${__color_reset}"
         fi
     }
 fi

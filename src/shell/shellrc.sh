@@ -6,31 +6,26 @@ case $- in
       *) return ;;
 esac
 
-#------------------------------------------------------------------------------#
-# initialization
+# INITIALIZATION
 
 if [ -z "${DOTFILES}" ] || [ ! -d "${DOTFILES}" ]; then
-    echo "ERROR: \${DOTFILES} is set incorrectly or is empty: ${DOTFILES}" >&2
+    echo "ERROR: \${DOTFILES}=${DOTFILES}" >&2
     sleep 4
     exit 1
 fi
-DOT_SRC_DIR="${DOTFILES}/src"
-export __SHELL_LIB="${DOT_SRC_DIR}/shell"
-export __CUSTOM_SHELL_LIB="${DOT_SRC_DIR}/custom/shell"
 
-. "${DOTFILES}/utils/faq.sh"
+. "${DOTFILES}/src/shell/libs/faq.sh"
 
-#------------------------------------------------------------------------------#
-# load gear for used shell
-
-if ( __is_zsh ); then
-    . "${__SHELL_LIB}/gear.zsh"
-elif ( __is_bash ); then
-    . "${__SHELL_LIB}/gear.bash"
+# load interaction-defaults for used shell
+if ( is_zsh ); then
+    . "${DOTFILES}/src/shell/interaction-defaults.zsh"
+elif ( is_bash ); then
+    . "${DOTFILES}/src/shell/interaction-defaults.bash"
+else
+    echo "ERROR: Could not set interaction-defaults due to unknown shell."
 fi
 
-#------------------------------------------------------------------------------#
-# exports
+# EXPORTS
 
 # general
 export EDITOR='vim'
@@ -44,16 +39,10 @@ else
     export GIT_EDITOR="${EDITOR}"
 fi
 
-# python
-# used in vscode to find a default python interpreter
-export PYTHON_INTERPRETER_PATH='python'
-export PIPENV_VENV_IN_PROJECT='yes'
-
 # rust
 export PATH="${HOME}/.cargo/bin:${PATH}"
 
-#------------------------------------------------------------------------------#
-# aliases
+# ALIASES
 
 alias reboot='shutdown now --reboot'
 
@@ -93,15 +82,13 @@ alias py='python'
 alias py2='python2'
 alias py3='python3'
 
-#------------------------------------------------------------------------------#
-# prompt
+# PROMPT
 
-. "${__SHELL_LIB}/prompts/left/default.sh"
-. "${__SHELL_LIB}/prompts/right/git_info.sh"
+. "${DOTFILES}/src/shell/prompts/left/default.sh"
+. "${DOTFILES}/src/shell/prompts/right/git_info.sh"
 
-#------------------------------------------------------------------------------#
-# cleanup
+# CLEANUP
 
 #unset DOTFILES
-unset __SHELL_LIB
-unset __CUSTOM_SHELL_LIB
+unset SHELL_LIB
+unset CUSTOM_SHELL_LIB

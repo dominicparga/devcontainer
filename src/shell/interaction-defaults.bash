@@ -4,13 +4,13 @@
 # sourcing own functions
 # check in both cases whether directory exists and is not empty
 
-__DIRS=( "${__SHELL_LIB}" "${__CUSTOM_SHELL_LIB}" )
-for __DIR in "${__DIRS[@]}"; do
-    if [ -d "${__DIR}/func" ]; then
+dirs=( "${DOTFILES}/src/shell" "${DOTFILES}/custom/shell" )
+for dir in "${dirs[@]}"; do
+    if [ -d "${dir}/func" ]; then
         # is folder empty?
-        if [ -n "$(ls -A "${__DIR}/func")" ]; then
-            for __FILE in "${__DIR}/func/"*; do
-                source "${__FILE}";
+        if [ -n "$(ls -A "${dir}/func")" ]; then
+            for FILE in "${dir}/func/"*; do
+                source "${FILE}";
             done
         fi
     fi
