@@ -1,5 +1,5 @@
 [include]
-    path = "~/.gitconfig.general"
+    path = "~/.gitconfig.global"
 [user]
     name = undefined user
     email = undefined email

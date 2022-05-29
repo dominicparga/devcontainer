@@ -1,0 +1,7 @@
+# git clone github:<user>/<repo>
+# instead of https://github.com/<user>/<repo>.git
+HOST github
+    USER git
+    HOSTNAME github.com
+    IDENTITYFILE ~/.ssh/id_rsa
+    PREFERREDAUTHENTICATIONS publickey
