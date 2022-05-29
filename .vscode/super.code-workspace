@@ -149,7 +149,12 @@
 
         "[shellscript]": {
             "editor.rulers": [80],
-            "editor.trimAutoWhitespace": true
+            "editor.trimAutoWhitespace": true,
+            "editor.quickSuggestions": {
+                "other": "on",
+                "comments": "on",
+                "strings": "on"
+            }
         },
         "shellcheck.enable": true,
         "shellcheck.run": "onType",
