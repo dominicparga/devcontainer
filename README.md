@@ -1,7 +1,6 @@
 # dotfiles
 
-[![Last commit](https://img.shields.io/github/last-commit/dominicparga/dotfiles?style=for-the-badge)](https://github.com/dominicparga/dotfiles/commits) [![License](https://img.shields.io/github/license/dominicparga/dotfiles?style=for-the-badge)](https://github.com/dominicparga/dotfiles/blob/nightly/LICENSE)
-
+[![Tags](https://img.shields.io/github/v/tag/dominicparga/dotfiles?style=for-the-badge)](https://github.com/dominicparga/dotfiles/tags) [![Last commit](https://img.shields.io/github/last-commit/dominicparga/dotfiles?style=for-the-badge)](https://github.com/dominicparga/dotfiles/commits) [![License](https://img.shields.io/github/license/dominicparga/dotfiles?style=for-the-badge)](https://github.com/dominicparga/dotfiles/blob/nightly/LICENSE)
 
 ## Table of Contents
 
