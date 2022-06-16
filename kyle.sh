@@ -79,8 +79,8 @@ symlink_r() {
 create_r() {
     symlink_r
 
-    safe_ln "${DOTFILES}/custom/R/profile.R" "${SRC_DIR}/R/profile.R"
-    safe_ln "${DOTFILES}/custom/R/environ.sh" "${SRC_DIR}/R/environ.sh"
+    safe_ln "${DOTFILES}/custom/R/profile.R" "${DOTFILES}/src/R/profile.R"
+    safe_ln "${DOTFILES}/custom/R/environ.sh" "${DOTFILES}/src/R/environ.sh"
 }
 
 symlink_termux() {
