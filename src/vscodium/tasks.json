@@ -1,0 +1,30 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Open VSCodium",
+            "type": "shell",
+            "command": "vscodium ${input:repo}",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "new",
+                "showReuseMessage": false,
+                "clear": false
+            }
+        }
+    ],
+    "inputs": [
+        {
+            "id": "repo",
+            "type": "pickString",
+            "description": "",
+            "options": [
+                { "label": "[dotfiles]", "value": "~/dotfiles" },
+                { "label": "[little-cluster]", "value": "~/Documents/development/little-cluster" }
+            ]
+        }
+    ]
+}

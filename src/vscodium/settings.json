@@ -4,6 +4,8 @@
     // Also usage data is included in the crash-reporter
     // and we're talking about microsoft.
     "telemetry.telemetryLevel": "off",
+    "gitlens.telemetry.enabled": false,
+    "redhat.telemetry.enabled": false,
 
     // APPEARANCE
 
@@ -12,7 +14,7 @@
     "window.title": "${activeEditorMedium}${separator}${rootName}",
     "window.titleBarStyle": "custom",
     "window.menuBarVisibility": "compact",
-    "window.zoomLevel": 1,
+    "window.zoomLevel": 0,
 
     // settings
 
@@ -25,8 +27,12 @@
     "workbench.editor.showTabs": true,
     "workbench.sideBar.location": "left",
     "workbench.statusBar.visible": true,
+    // "workbench.colorTheme": "Catppuccin Latte",
+    // "workbench.colorTheme": "Dracula",
+    // "workbench.colorTheme": "Nord",
+    // "workbench.colorTheme": "Quiet Light",
+    "workbench.colorTheme": "Quiet Light",
     "workbench.iconTheme": "material-icon-theme",
-    "workbench.colorTheme": "Dracula", // "Dracula",
     "workbench.activityBar.visible": true,
     "explorer.sortOrder": "filesFirst",
     "explorer.confirmDragAndDrop": false,
@@ -82,7 +88,7 @@
 
     // whitespaces
 
-    "editor.renderWhitespace": "none",
+    "editor.renderWhitespace": "selection",
     "editor.insertSpaces": true,
     "editor.tabSize": 4,
     "editor.detectIndentation": false,
@@ -100,7 +106,18 @@
 
     "terminal.integrated.scrollback": 100000,
 
-    // general
+    // ssh
+
+    "remote.SSH.remoteServerListenOnSocket": true,
+    "remote.SSH.useLocalServer": false,
+    "remote.SSH.remotePlatform": {
+        "glow": "linux",
+        "dirt": "linux",
+        "spark": "linux",
+        "raspberry": "linux"
+    },
+
+    // others
 
     "extensions.ignoreRecommendations": false,
     // utility
@@ -109,6 +126,7 @@
     "files.associations": {
         ".latexmkrc": "perl",
         "*.mdx": "markdown",
+        "*.nginx": "properties",
         "config.general": "properties",
         "config": "properties",
         "SConscript": "python",
@@ -123,6 +141,27 @@
         "**/.pyc": true,
         "**/.svn": true,
         "**/CVS": true
+    },
+
+    // MARKDOWN
+
+    "[markdown]": {
+        "editor.formatOnSave": true,
+    },
+    "markdownlint.config": {
+        // ul-indent
+        "MD007": {
+            "indent": 4
+        },
+        // no-multiple-space-blockquote
+        "MD027": true,
+        // list-marker-space
+        "MD030": {
+            "ul_single": 3,
+            "ul_multi": 3,
+            "ol_single": 2,
+            "ol_multi": 2
+        },
     },
 
     // GIT

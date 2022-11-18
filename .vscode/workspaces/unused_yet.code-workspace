@@ -1,8 +1,14 @@
 {
     "folders": [
-        { "name": "dotfiles", "path": ".." }
+        { "name": ".vscode", "path": "." },
+        { "name": "[DOTFILES]", "path": ".." },
+        { "name": "[RASPIS]", "path": "/home/dominic/Documents/development/raspberries" }
     ],
     "settings": {
+        // SSH
+
+        "remote.SSH.remoteServerListenOnSocket": true,
+
         // CPP
 
         "[cpp]": {
@@ -95,7 +101,11 @@
         "[markdown]": {
             "editor.rulers": [80, 120],
             "editor.wordWrap": "off",
-            "editor.quickSuggestions": true,
+            "editor.quickSuggestions": {
+                "comments": "on",
+                "strings": "on",
+                "other": "on"
+            },
             "editor.tabSize": 2
         },
         "markdownlint.config": {
@@ -199,6 +209,8 @@
             "nhoizey.gremlins",
             // shows trailing whitespaces
             "shardulm94.trailing-spaces",
+            // open remote files with code
+            "ms-vscode-remote.remote-ssh",
 
             // COLOR THEMES
 

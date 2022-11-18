@@ -82,6 +82,14 @@ alias py='python'
 alias py2='python2'
 alias py3='python3'
 
+# FROM MANJARO
+# aliases
+#alias ls="exa -alh"
+#alias tree="exa --tree"
+#alias cat="bat"
+# use custom fd command for fzf incl. showing hidden files by default
+#export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+
 # PROMPT
 
 . "${DOTFILES}/src/shell/prompts/left/default.sh"

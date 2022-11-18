@@ -19,6 +19,6 @@ jobs:
           git fetch --all
       - name: Deploy and tag
         run: |
-          DATE=$(date --utc +%Y-%m-%d)
-          git tag --annotate "${DATE}" --message="Version ${DATE}"
+          date=$(date --utc +%Y%m%d)
+          git tag --annotate "${date}" --message="Version ${date}"
           git push --tags

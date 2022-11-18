@@ -1,0 +1,21 @@
+{
+    "recommendations": [
+        // shows trailing whitespaces
+        "shardulm94.trailing-spaces",
+
+        // git
+        "donjayamanne.githistory",
+        "eamodio.gitlens",
+
+        // markdown
+        "shd101wyy.markdown-preview-enhanced",
+        "DavidAnson.vscode-markdownlint",
+
+        // bash
+        "timonwong.shellcheck",
+
+        // yaml
+        "redhat.vscode-yaml",
+    ],
+    "unwantedRecommendations": []
+}

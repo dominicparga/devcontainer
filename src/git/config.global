@@ -1,3 +1,7 @@
+[diff]
+    tool = visual
+[difftool "visual"]
+    cmd = ${VISUAL} --wait --diff $LOCAL $REMOTE
 [push]
     default = simple
 [pull]

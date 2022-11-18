@@ -2,18 +2,19 @@
 
 # DEFAULTS
 
-F_CREATE='create'
-F_SYMLINK='symlink'
-F_P_ALL='all'
-F_P_SHELL='shell'
-F_P_GIT='git'
-F_P_VSCODE='vscode'
-F_P_ALACRITTY='alacritty'
-F_P_TERMUX='termux'
-F_P_R='R'
+f_create='create'
+f_symlink='symlink'
+f_help='help'
+f_p_all='all'
+f_p_shell='shell'
+f_p_git='git'
+f_p_vscodium='vscodium'
+f_p_vscode='vscode'
+f_p_termux='termux'
+f_p_r='R'
 
-ARG_F_P="F_${F_CREATE}_P_${F_P_ALL}"
-ARG_IS_FORCED=false
+arg_f_p="f_${f_create}_p_${f_p_all}"
+arg_is_forced=false
 
 exists() {
     [ -e "${1}" ] || [ -L "${1}" ]
@@ -28,8 +29,8 @@ yn_is_yes() {
 
 safe_rm() {
     new_file="${1}"
-    if "${ARG_IS_FORCED}"; then
-        rm -f "${new_file}"
+    if "${arg_is_forced}"; then
+        rm -rf "${new_file}"
     elif exists "${new_file}"; then
         if [ -L "${new_file}" ]; then
             printf "Replace %s@? [y|n] " "${new_file}"
@@ -51,7 +52,7 @@ safe_ln() {
         # If a new file was created but 'no' has been selected in prompt,
         # the file is brand new, hence echo message for user.
         if ! yn_is_yes; then
-            echo "INFO: Created ${src}@"
+            echo "INFO: Processed ${src}@"
         fi
     fi
 }
@@ -66,7 +67,7 @@ safe_cp() {
         # If a new file was created but 'no' has been selected in prompt,
         # the file is brand new, hence echo message for user.
         if ! yn_is_yes; then
-            echo "INFO: Created ${dst}"
+            echo "INFO: Processed ${dst}"
         fi
     fi
 }
@@ -93,39 +94,52 @@ create_termux() {
     safe_ln "${DOTFILES}/custom/termux.properties" "${DOTFILES}/src/termux.properties"
 }
 
-symlink_alacritty() {
-    safe_ln "${HOME}/.alacritty.yml" "${DOTFILES}/custom/alacritty.yml"
+set_vscodium_home() {
+    dir="${HOME}/.config/VSCodium/User"
+    unset vscodium_home
+    if exists "${dir}"; then
+        vscodium_home="${dir}"
+    fi
+
+    if [ -z "${vscodium_home}" ]; then
+        echo "[ERROR] Could not find vscodium-folder"
+        false
+    else
+        true
+    fi
 }
 
-create_alacritty() {
-    symlink_alacritty
+symlink_vscodium() {
+    if set_vscodium_home; then
+        safe_ln "${vscodium_home}/settings.json" "${DOTFILES}/custom/vscodium/settings.json"
+        safe_ln "${vscodium_home}/keybindings.json" "${DOTFILES}/custom/vscodium/keybindings.json"
+        safe_ln "${vscodium_home}/tasks.json" "${DOTFILES}/custom/vscodium/tasks.json"
+        safe_ln "${vscodium_home}/snippets" "${DOTFILES}/custom/vscodium/snippets"
+    fi
+}
 
-    safe_ln "${DOTFILES}/custom/alacritty.yml" "${DOTFILES}/src/alacritty.yml"
+create_vscodium() {
+    symlink_vscodium
+
+    if set_vscodium_home; then
+        safe_ln "${DOTFILES}/custom/vscodium/settings.json" "${DOTFILES}/src/vscodium/settings.json"
+        safe_ln "${DOTFILES}/custom/vscodium/keybindings.json" "${DOTFILES}/src/vscodium/keybindings.json"
+        safe_ln "${DOTFILES}/custom/vscodium/tasks.json" "${DOTFILES}/src/vscodium/tasks.json"
+        safe_ln "${DOTFILES}/custom/vscodium/snippets" "${DOTFILES}/src/vscodium/snippets"
+    fi
 }
 
 set_vscode_home() {
-    # VSCODE_HOME depends on OS, see
+    # depends on OS, see
     # https://code.visualstudio.com/docs/getstarted/settings#_settings-file-locations
-    #
-    # macOS
-    # linux - microsoft-release
-    # linux - open-source-release
-    # windows (path is for git-bash)
-    for dir in \
-        "${HOME}/Library/Application Support/Code/User" \
-        "${HOME}/.config/Code/User" \
-        "${HOME}/.config/Code - OSS/User" \
-        "${HOME}/AppData/Roaming/Code/User"
-    do
-        unset VSCODE_HOME
-        if exists "${dir}"; then
-            VSCODE_HOME="${dir}"
-            break
-        fi
-    done
+    dir="${HOME}/.config/Code/User"
+    unset vscode_home
+    if exists "${dir}"; then
+        vscode_home="${dir}"
+    fi
 
-    if [ -z "${VSCODE_HOME}" ]; then
-        echo "ERROR: Could not find vscode-folder"
+    if [ -z "${vscode_home}" ]; then
+        echo "[ERROR] Could not find vscode-folder"
         false
     else
         true
@@ -134,8 +148,10 @@ set_vscode_home() {
 
 symlink_vscode() {
     if set_vscode_home; then
-        safe_ln "${VSCODE_HOME}/settings.json" "${DOTFILES}/custom/vscode/settings.json"
-        safe_ln "${VSCODE_HOME}/keybindings.json" "${DOTFILES}/custom/vscode/keybindings.json"
+        safe_ln "${vscode_home}/settings.json" "${DOTFILES}/custom/vscodium/settings.json"
+        safe_ln "${vscode_home}/keybindings.json" "${DOTFILES}/custom/vscodium/keybindings.json"
+        safe_ln "${vscode_home}/tasks.json" "${DOTFILES}/custom/vscodium/tasks.json"
+        safe_ln "${vscode_home}/snippets" "${DOTFILES}/custom/vscodium/snippets"
     fi
 }
 
@@ -143,8 +159,10 @@ create_vscode() {
     symlink_vscode
 
     if set_vscode_home; then
-        safe_ln "${DOTFILES}/custom/vscode/settings.json" "${DOTFILES}/src/vscode/settings.json"
-        safe_ln "${DOTFILES}/custom/vscode/keybindings.json" "${DOTFILES}/src/vscode/keybindings.json"
+        safe_ln "${DOTFILES}/custom/vscodium/settings.json" "${DOTFILES}/src/vscodium/settings.json"
+        safe_ln "${DOTFILES}/custom/vscodium/keybindings.json" "${DOTFILES}/src/vscodium/keybindings.json"
+        safe_ln "${DOTFILES}/custom/vscodium/tasks.json" "${DOTFILES}/src/vscodium/tasks.json"
+        safe_ln "${DOTFILES}/custom/vscodium/snippets" "${DOTFILES}/src/vscodium/snippets"
     fi
 }
 
@@ -227,7 +245,7 @@ create_shell() {
         # If a new file was created but 'no' has been selected in prompt,
         # the file is brand new, hence echo message for user.
         if ! yn_is_yes; then
-            echo "INFO: Created ${dst}"
+            echo "INFO: Processed ${dst}"
         fi
     fi
 }
@@ -239,9 +257,7 @@ symlink_all() {
     echo ""
     symlink_git
     echo ""
-    symlink_vscode
-    echo ""
-    symlink_alacritty
+    symlink_vscodium
     echo ""
     symlink_termux
     echo ""
@@ -255,9 +271,7 @@ create_all() {
     echo ""
     create_git
     echo ""
-    create_vscode
-    echo ""
-    create_alacritty
+    create_vscodium
     echo ""
     create_termux
     echo ""
@@ -265,47 +279,49 @@ create_all() {
 }
 
 update_dotfiles_path() {
-    DOTFILES="$(dirname "$(pwd)"/"${0}")"
+    DOTFILES="$(dirname "$(realpath "${0}")")"
     export DOTFILES
-    echo "INFO: DOTFILES='${DOTFILES}'"
+    echo "[INFO] DOTFILES='${DOTFILES}'"
 }
 
 # CMDLINE-PARSER
 
 print_help() {
     echo "USAGE"
-    echo "    ${0} [help|-h|--help] [-f|--force] [FUNCTION PARAM]"
+    echo "    ${0} [${f_help}|-h|--${f_help}] [-f|--force] [FUNCTION PARAM]"
+    echo ""
+    update_dotfiles_path
     echo ""
     echo "DESCRIPTION"
-    echo "    Kyle helps you with the setup."
+    echo "    Dotty helps you with the setup."
     echo ""
-    echo "    help -h --help"
+    echo "    ${f_help} -h --${f_help}"
     echo "        Print this help message."
     echo ""
     echo "    -f --force"
     echo "        Does not ask before replacing existing files."
     echo ""
     echo "    FUNCTION"
-    echo "        create"
+    echo "        ${f_create}"
     echo "            Exports \${DOTFILES}. Further, creates and symlinks everything."
-    echo "        symlink"
+    echo "        ${f_symlink}"
     echo "            Creates just the symlinks without the need of touching"
     echo "            \${DOTFILES}/custom/ (most in \${HOME})"
     echo ""
     echo "    OPTION"
-    echo "        all"
+    echo "        ${f_p_all}"
     echo "            Exports \${DOTFILES}, creates and symlinks everything."
-    echo "        shell"
+    echo "        ${f_p_shell}"
     echo "            Creates and symlinks your shellrc."
-    echo "        git"
+    echo "        ${f_p_git}"
     echo "            Creates a global git-config and symlinks a user-specific git-config."
-    echo "        vscode"
+    echo "        ${f_p_vscodium}"
+    echo "            Creates and symlinks your configs for VSCodium."
+    echo "        ${f_p_vscode}"
     echo "            Creates and symlinks your configs for VSCode."
-    echo "        alacritty"
-    echo "            Creates and symlinks your alacritty-configs."
-    echo "        termux"
+    echo "        ${f_p_termux}"
     echo "            Creates and symlinks your termux-configs."
-    echo "        R"
+    echo "        ${f_p_r}"
     echo "            Creates and symlinks your R-configs."
 }
 
@@ -316,39 +332,39 @@ parse_cmdline() {
     fi
     while [ "${#}" -gt 0 ]; do
         case "${1}" in
-        '-h'|'--help'|'help')
-            ERRCODE=0
+        '-h'|"--${f_help}"|"${f_help}")
+            errcode=0
             ;;
         'create'|'symlink')
             if [ -z "${2}" ]; then
-                echo "ERROR: Missing value for function ${1}"
+                echo "[ERROR] Missing value for function ${1}"
                 echo ""
-                ERRCODE=1
+                errcode=1
             else
-                ARG_F_P="F_${1}_P_${2}"
+                arg_f_p="f_${1}_p_${2}"
                 shift
                 shift
             fi
             ;;
         '-f'|'--force')
-            ARG_IS_FORCED=true
+            arg_is_forced=true
             shift
             ;;
         '-'*)
-            echo "ERROR: Unknown argument ${1}"
+            echo "[ERROR] Unknown argument ${1}"
             echo ""
-            ERRCODE=1
+            errcode=1
             ;;
         *)
-            echo "ERROR: Unknown function/value ${1}"
+            echo "[ERROR] Unknown function/value ${1}"
             echo ""
-            ERRCODE=1
+            errcode=1
             ;;
         esac
 
-        if [ -n "${ERRCODE}" ]; then
+        if [ -n "${errcode}" ]; then
             print_help
-            exit ${ERRCODE}
+            exit ${errcode}
         fi
     done
 }
@@ -356,32 +372,33 @@ parse_cmdline() {
 main() {
     parse_cmdline "${@}"
     is_error=false
-    case "${ARG_F_P}" in
-    "F_${F_CREATE}_P_"*)
+
+    case "${arg_f_p}" in
+    "f_${f_create}_p_"*)
         update_dotfiles_path
-        case "${ARG_F_P}" in
-        "F_${F_CREATE}_P_${F_P_ALL}")       create_all   ;;
-        "F_${F_CREATE}_P_${F_P_SHELL}")     create_shell ;;
-        "F_${F_CREATE}_P_${F_P_GIT}")       create_git   ;;
-        "F_${F_CREATE}_P_${F_P_VSCODE}")    create_vscode ;;
-        "F_${F_CREATE}_P_${F_P_ALACRITTY}") create_alacritty ;;
-        "F_${F_CREATE}_P_${F_P_TERMUX}")    create_termux ;;
-        "F_${F_CREATE}_P_${F_P_R}")         create_r ;;
+        case "${arg_f_p}" in
+        "f_${f_create}_p_${f_p_all}")       create_all   ;;
+        "f_${f_create}_p_${f_p_shell}")     create_shell ;;
+        "f_${f_create}_p_${f_p_git}")       create_git   ;;
+        "f_${f_create}_p_${f_p_vscodium}")  create_vscodium ;;
+        "f_${f_create}_p_${f_p_vscode}")    create_vscode ;;
+        "f_${f_create}_p_${f_p_termux}")    create_termux ;;
+        "f_${f_create}_p_${f_p_r}")         create_r ;;
         *) is_error=true ;;
         esac
         ;;
-    "F_${F_SYMLINK}_P_${F_P_ALL}")       symlink_all   ;;
-    "F_${F_SYMLINK}_P_${F_P_SHELL}")     symlink_shell ;;
-    "F_${F_SYMLINK}_P_${F_P_GIT}")       symlink_git   ;;
-    "F_${F_SYMLINK}_P_${F_P_VSCODE}")    symlink_vscode ;;
-    "F_${F_SYMLINK}_P_${F_P_ALACRITTY}") symlink_alacritty ;;
-    "F_${F_SYMLINK}_P_${F_P_TERMUX}")    symlink_termux ;;
-    "F_${F_SYMLINK}_P_${F_P_R}")         symlink_r ;;
+    "f_${f_symlink}_p_${f_p_all}")       symlink_all   ;;
+    "f_${f_symlink}_p_${f_p_shell}")     symlink_shell ;;
+    "f_${f_symlink}_p_${f_p_git}")       symlink_git   ;;
+    "f_${f_symlink}_p_${f_p_vscodium}")  symlink_vscodium ;;
+    "f_${f_symlink}_p_${f_p_vscode}")    symlink_vscode ;;
+    "f_${f_symlink}_p_${f_p_termux}")    symlink_termux ;;
+    "f_${f_symlink}_p_${f_p_r}")         symlink_r ;;
     *) is_error=true ;;
     esac
 
     if "${is_error}"; then
-        echo "ERROR: Unknown combi ${ARG_F_P}"
+        echo "[ERROR] Unknown combi ${arg_f_p}"
         print_help
         false
     fi
