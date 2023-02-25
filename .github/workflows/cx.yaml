@@ -19,7 +19,7 @@ jobs:
         with:
           context: ./src
           load: true
-          tags: dominicparga/devcontainer:${{GITHUB_SHA}}
+          tags: dominicparga/devcontainer:${{ github.sha }}
       - name: Build
         uses: docker/build-push-action@v4
         with:
