@@ -19,13 +19,13 @@ jobs:
         with:
           context: ./src
           load: true
-          tags: docker.io/dominicparga/devcontainer:${GITHUB_SHA}
+          tags: dominicparga/devcontainer:${GITHUB_SHA}
       - name: Build
         uses: docker/build-push-action@v4
         with:
           context: ./src
           load: true
-          tags: docker.io/dominicparga/devcontainer:latest
+          tags: dominicparga/devcontainer:latest
       - name: Inspect
         run: |
           docker image inspect myimage:latest
