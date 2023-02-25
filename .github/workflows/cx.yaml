@@ -28,4 +28,4 @@ jobs:
           tags: dominicparga/devcontainer:latest
       - name: Inspect
         run: |
-          docker image inspect myimage:latest
+          docker image inspect dominicparga/devcontainer:latest
