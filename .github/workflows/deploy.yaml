@@ -1,0 +1,24 @@
+# name: Deployment
+# on:
+#   push:
+#   pull_request:
+# jobs:
+#   tag:
+#     if: github.ref == 'refs/heads/stable'
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v2
+#       - name: Setup git-user
+#         env:
+#           GIT_USER_NAME: "GitHub Actions Runner"
+#           GIT_USER_EMAIL: "actions@users.noreply.github.com"
+#         run: |
+#           git config --global user.name "${GIT_USER_NAME}"
+#           git config --global user.email "${GIT_USER_EMAIL}"
+#           git fetch --all
+#       - name: Deploy and tag
+#         run: |
+#           DATE=$(date --utc +%Y-%m-%d)
+#           git tag --annotate "${DATE}" --message="Version ${DATE}"
+#           git push --tags

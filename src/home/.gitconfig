@@ -1,3 +1,10 @@
+[user]
+    name = "dominicparga"
+    email = "dominic.parga@gmail.com"
+[diff]
+    tool = visual
+[difftool "visual"]
+    cmd = ${VISUAL} --wait --diff $LOCAL $REMOTE
 [push]
     default = simple
 [pull]

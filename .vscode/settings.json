@@ -1,0 +1,46 @@
+{
+    "markdownlint.config": {
+        // rules: https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md
+        // official CommonMark-specification: https://spec.commonmark.org
+
+        // ul-indent
+        "MD007": {
+            // conform according to https://spec.commonmark.org/0.30/#list-items
+            "indent": 4
+        },
+        // no-trailing-spaces
+        "MD009": {
+            "strict": true,
+            "br_spaces": 0
+        },
+        // no multiple blanks
+        "MD012": true,
+        // line-length
+        "MD013": {
+            "line_length": -1
+        },
+        // no duplicate heading/header
+        "MD024": true,
+        // ol-prefix
+        "MD029": {
+            "style": "one"
+        },
+        // list-marker-space
+        "MD030": {
+            // conform according to https://spec.commonmark.org/0.30/#list-items
+            "ul_single": 3,
+            "ul_multi": 3,
+            "ol_single": 2,
+            "ol_multi": 2,
+        },
+        // no inline-html
+        "MD033": false,
+        // first line should be '# h1'
+        "MD041": false,
+        // code-block-style
+        "MD046": {
+            // recommended code block style for sphinx
+            "style": "fenced"
+        }
+    }
+}

@@ -1,0 +1,43 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/ubuntu
+{
+	"name": "dotfiles",
+    "build": {
+        "dockerfile": "../src/Dockerfile"
+    },
+
+	"onCreateCommand": "",
+	"postCreateCommand": "",
+
+	"customizations": {
+		"vscode": {
+            "settings": {},
+			"extensions": [
+                // color themes
+                "dracula-theme.theme-dracula",
+                "arcticicestudio.nord-visual-studio-code",
+                // icon themes
+                "pkief.material-icon-theme",
+
+                // shows trailing whitespaces
+                "shardulm94.trailing-spaces",
+
+                // data files
+                "mechatroner.rainbow-csv",
+                "redhat.vscode-yaml",
+                "redhat.vscode-xml",
+                "bungcip.better-toml",
+
+                // git
+                "donjayamanne.githistory",
+                "eamodio.gitlens",
+
+                // markdown
+                "DavidAnson.vscode-markdownlint",
+
+                // bash
+                "timonwong.shellcheck"
+			]
+		}
+	}
+}

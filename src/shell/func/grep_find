@@ -1,9 +1,0 @@
-#!/usr/bin/env sh
-
-grep_find() {
-    find . -type f -exec grep -i "${1}" --color=auto {} +
-}
-
-if [ -n "${ZSH_NAME}" ]; then
-    grep_find "${@}"
-fi
