@@ -25,7 +25,5 @@ jobs:
           context: ./src
           tags: dominicparga/devcontainer:${{ github.sha }},dominicparga/devcontainer:latest
           push: true
-      - name: Inspect latest
-        run: docker image inspect dominicparga/devcontainer:latest
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
