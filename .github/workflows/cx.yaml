@@ -19,7 +19,6 @@ jobs:
         with:
           context: ./src
           tags: dominicparga/devcontainer:${{ github.sha }},dominicparga/devcontainer:latest
-          load: true
           push: true
       - name: Inspect latest
         run: docker image inspect dominicparga/devcontainer:latest
