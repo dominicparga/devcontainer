@@ -14,18 +14,14 @@ jobs:
         uses: actions/checkout@v3
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-      - name: Build
+      - name: Build ${{ github.sha }}
         uses: docker/build-push-action@v4
         with:
           context: ./src
+          tags: dominicparga/devcontainer:${{ github.sha }},dominicparga/devcontainer:latest
           load: true
-          tags: dominicparga/devcontainer:${{ github.sha }}
-      - name: Build
-        uses: docker/build-push-action@v4
-        with:
-          context: ./src
-          load: true
-          tags: dominicparga/devcontainer:latest
-      - name: Inspect
-        run: |
-          docker image inspect dominicparga/devcontainer:latest
+          push: true
+      - name: Inspect latest
+        run: docker image inspect dominicparga/devcontainer:latest
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
