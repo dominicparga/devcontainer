@@ -1,6 +1,6 @@
 # Git aliases
 
-Have a look at the handy [git aliases](https://github.com/dominicparga/dotfiles/blob/nightly/git/config.general).
+Have a look at the handy [git aliases](src/home/.gitconfig).
 In addition, visual-studio-code is opening as diff-tool and for commit-messages.
 
 `g` is alias for `git` (see above).

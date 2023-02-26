@@ -1,6 +1,8 @@
 # devcontainer
 
-[![Tags](https://img.shields.io/github/v/tag/dominicparga/devcontainer?style=for-the-badge)](https://github.com/dominicparga/devcontainer/tags) [![Last commit](https://img.shields.io/github/last-commit/dominicparga/devcontainer?style=for-the-badge)](https://github.com/dominicparga/devcontainer/commits) [![License](https://img.shields.io/github/license/dominicparga/devcontainer?style=for-the-badge)](https://github.com/dominicparga/devcontainer/blob/stable/LICENSE)
+[![License](https://img.shields.io/github/license/dominicparga/devcontainer?style=for-the-badge)](https://github.com/dominicparga/devcontainer/blob/stable/LICENSE)
+[![Tags](https://img.shields.io/docker/v/dominicparga/devcontainer?label=Latest%20tag&logo=docker&style=for-the-badge)](https://hub.docker.com/r/dominicparga/devcontainer)
+[![Last commit](https://img.shields.io/github/last-commit/dominicparga/devcontainer?label=Latest%20tag&logo=github&style=for-the-badge)](https://github.com/dominicparga/devcontainer/commits)
 
 ## Usage
 
