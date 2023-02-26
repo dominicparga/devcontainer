@@ -4,6 +4,7 @@ RUN apt-get update &&\
         ca-certificates \
         git \
         less \
+        openssh-client \
         vim \
     &&\
     apt-get clean
