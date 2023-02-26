@@ -26,5 +26,3 @@ jobs:
           context: ./src
           tags: dominicparga/devcontainer:${{ github.sha }},dominicparga/devcontainer:latest
           push: true
-      - name: Image digest
-        run: echo ${{ steps.build.outputs.digest }}
