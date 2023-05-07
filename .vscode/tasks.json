@@ -10,7 +10,7 @@
             "presentation": {
                 "clear": true,
                 "reveal": "always",
-                "focus": false,
+                "focus": true,
             },
             "group": "build"
         }

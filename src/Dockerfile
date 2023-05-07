@@ -12,10 +12,11 @@ RUN apt-get update &&\
 
 ARG USERNAME=vscode
 
-USER root
-
+# USER root
+#
 # Create the user
-RUN useradd --system --create-home --shell /bin/bash ${USERNAME}
+# EDIT: Nope because already exists
+# RUN useradd --system --create-home --shell /bin/bash ${USERNAME}
     #
     # [Optional] Add sudo support. Omit if you don't need to install software after connecting.
     # && apt-get update \
