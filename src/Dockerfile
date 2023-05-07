@@ -1,4 +1,5 @@
-FROM docker.io/ubuntu
+# FROM docker.io/ubuntu
+FROM mcr.microsoft.com/devcontainers/base:latest
 RUN apt-get update &&\
     apt-get install --yes --no-install-suggests --no-install-recommends \
         ca-certificates \
@@ -6,7 +7,6 @@ RUN apt-get update &&\
         less \
         openssh-client \
         vim \
-        man \
     &&\
     apt-get clean
 
