@@ -2,10 +2,9 @@
 
 hub='docker.io/dominicparga'
 image_name='devcontainer'
-tag='2023022500'
+tag='latest'
 
 docker \
-    --context desktop-linux \
     run \
     --rm \
     --name devcontainer \

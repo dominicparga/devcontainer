@@ -1,0 +1,18 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "docker build",
+            "type": "shell",
+            "command": "sh ${workspaceFolder}/scripts/docker_build.sh",
+            "args": [],
+            "problemMatcher": [],
+            "presentation": {
+                "clear": true,
+                "reveal": "always",
+                "focus": false,
+            },
+            "group": "build"
+        }
+    ]
+}
