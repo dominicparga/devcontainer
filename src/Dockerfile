@@ -6,6 +6,7 @@ RUN apt-get update &&\
         less \
         openssh-client \
         vim \
+        man \
     &&\
     apt-get clean
 
