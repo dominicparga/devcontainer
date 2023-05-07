@@ -1,5 +1,6 @@
 # FROM docker.io/ubuntu
-FROM mcr.microsoft.com/devcontainers/base:latest
+# FROM mcr.microsoft.com/devcontainers/base:latest
+FROM mcr.microsoft.com/devcontainers/base:ubuntu
 RUN apt-get update &&\
     apt-get install --yes --no-install-suggests --no-install-recommends \
         ca-certificates \
@@ -32,4 +33,4 @@ COPY home/* .
 
 # credits 8)
 LABEL maintainer="dominicparga"
-LABEL description="Base VSCode .devcontainer image"
+LABEL description="My base VSCode .devcontainer image"
