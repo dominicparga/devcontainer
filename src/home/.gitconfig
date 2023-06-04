@@ -1,6 +1,6 @@
-[user]
-    name = "dominicparga"
-    email = "dominic.parga@gmail.com"
+#[user]
+#    name = "dominicparga"
+#    email = "dominic.parga@gmail.com"
 [diff]
     tool = visual
 [difftool "visual"]
