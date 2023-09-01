@@ -24,5 +24,6 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: ./src
+          platforms: linux/amd64, linux/arm64
           tags: dominicparga/devcontainer:${{ github.sha }},dominicparga/devcontainer:latest
           push: true
